@@ -1,0 +1,7 @@
+﻿<NUnitProject>
+  <Settings activeconfig="Default" />
+  <Config name="Default" binpathtype="Auto">
+    <assembly path="bin\Habanero.Faces.Test.Win.dll" />
+    <assembly path="bin\Habanero.Faces.Test.VWG.dll" />
+  </Config>
+</NUnitProject>
