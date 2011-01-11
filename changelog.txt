@@ -1,0 +1,93 @@
+Habanero Faces Change log
+
+v2.5.0 - 09 September 2010
+
+Major Changes
+#531 - Moved to VWG 6.4 RC0a 
+#793 - Virtualised loading in grid. Instead of pagination, the grid now supports virtualised loading, where objects are loaded as you scroll down the grid.
+
+Enhancements
+#594 - Added BOGridAndEditorControlVWG
+#595 - Added ExtendedComboBoxVWG and ExtendedTextBoxVWG
+
+Minor Changes
+#785 - BooleanComboBoxFilterControl for filtering a boolean property using a combo box with True, False and Null string
+#786 - ExtendedTextBoxMapper needs properties to get at buttons on the form it pops up
+#789 - Move Date Range classes into Habanero Core. This was done so as to move this logic from Habanero.Faces to Habanero Core since it is not UISpecific logic.
+#527 - Wizard controller - new methods CanCancel and CanFinish. Added FinishButton to Wizard Control. Added CanFinish to IWizardStep. Added CanCancel to IWizardStep. Modified WizardController so that Finish() can be called as long as it is the last step or the controller returns CanFinish() true. The CancelButton is disabled on the WizardControl if the WizardController.CanCancel = false. Fixed WizardControl where the FinishButton.Click was not checking CanMoveOn.
+#539 - Modify Wizard Form so that you can pass the wizard control in. This is required if you specialise the WizardControl.
+#673 - Add support for using the ComboBoxLinker with any selector and with the mapper controls
+#784 - Format a grid column (specified in classDef) for currency - added support for decimal types
+#796 - AddStaticStringFilterClause missing on FilterControlWin. This was added
+#613 - Generalise code between EditableGridControlVWG and EditableGridControlWin) moved to a Manager.
+
+Bug Fixes
+#788 - ExtendedTextBoxMapper not setting BusinessObject correctly
+#790 - Bugs in functionality of ExtendedTextBox and ExtendedTextBoxMapper
+#787 - Layout of BOGridAndEditorControlWin needs improvement
+#791 - Excessive compiler warnings
+#792 - Randomly failing test: TestDateRangeComboBox.TestRealNow
+#544 - Bug in ExtendedTextBox
+#523 - Clear button on FilterControl doesn't clear the text in combo-box filters (VWG)
+#794 - Hanging pop up windows in IE8 and VWG 6.4 preview. To fix this:
+ - Added a settings dictionary on IUISettings and UISettings
+ - Created settings for VWG to work around a bug with 6.4 preview in IE:
+   - PauseBeforeClosingForm : set this to true to enable a short pause before closing forms
+   - LengthOfPauseBeforeClosingForm : set this to the number of milliseconds to wait. I have found that 1000 ensures reliable results. With 500 it still sometimes locks up. 
+ If you experience this set these settings with the following code in your startup:
+	GlobalUIRegistry.UISettings["PauseBeforeClosingForm"] = true;
+    GlobalUIRegistry.UISettings["LengthOfPauseBeforeClosingForm"] = 1000;
+#795 - Should use % as the like operator when creating filter clause)
+#614 - Debug.Assert in FilterControlVWG. Removed these as A they were incorrect and B caused Resharper TestRunner to hang.
+#612 - AdditionalSearchCriteria on GridControls resulted in Hacky duplicate code. Moved duplicate code to managers and replaced hack code with using StringLiteralCustomFilter
+#615 - Bug with Changing the DataSource of a grid directly resulted in filtering not working
+#674 - ComboBoxCollectionSelector - when a custom string item is selected, the SelectedBusinessObject should return Null
+
+v2.4.0 - 10 May 2010
+
+Major Changes
+- Renamed Habanero.UI to Habanero.Faces. Split out these binaries into a separate project called Faces
+- VWG: upgraded to VWG 6.4 beta 1. 
+
+Enhancements
+- Added Capability to HabaneroMenu where you can set the ManagedControl i.e. the control that is being managed by the menu item. This managed control is then wrapped by a default IControlManager and the remainder of the menu stays the same.
+- Added a ControlsVisible property to IPanelInfo to set the visibility of the controls made by the PanelBuilder
+- Added ComboBoxLinker class to Faces.Base. This class links to ComboBoxes together. This is typically used where the value from one combo filters the value in another combo.
+- Added ability to indicate a compulsory relationship field on a form when using one of the RelationshipComboBoxMappers
+
+Minor Changes
+- Made some IControlFactory methods virtual: CreateButtonCollapsibleStyle() and CreateMainTitleIconControl().
+- Changed MainTitleIconControl to have a fixed height of 23 as it was setting the height to its default.
+- Added the Title for a Habanero Menu Item to the CollapsibleMenuItemWin Title, i.e. the label on the top of the right panel.
+- Made PreferredWidth on LabelVWG virtual
+- Added Method to IFilterControl to Allow AddDateFilterDateTimePicker with Fewer parameters.
+- Added another overloaded constructor to BOEditorControlWin
+- Implemented Functionality for ReadOnlyGridControl whereby the ConfirmDeletion is actually used for Both VWG and Win. extracted common functionality to ReadOnlyGridControlManager.cs.
+- Moved String Resources to Messages.resx instead of CollapsiblePanelResource
+- Added overload method "GetSaveFileName" which allows you to specify the InitialDirectory of the SaveFileDialog in the DialogUtilities class.
+- PanelBuilder: Added support for the TextAlign property in VWG.
+- Made the AutoLoadingRelationshipComboBoxMapper sort its items (string sort)
+- Changed Behaviour of LookupComboBoxMapper to always have a non null LookupList even immediately after construction.
+- Added EventHandler Closing in IFormHabanero.
+- Added new images for the collapsible panel. Modified the MinimumSize of the Collapsible Panel.
+- Added the ability to set a width for your menu if you're using the CollapsibleMenu classes
+- Added a RefreshFilter method on IGridControl which will reapply the filter or search
+- Added a LayoutManager readonly property to the IButtonGroupControl so that you can adjust its alignment or ButtonSizePolicy
+- Added a ParentMenu property to HabaneroMenu.Item so that you can get at an item's parent. 
+- Made changes to WizardController where it keeps track of the visited steps in a stack so that the MovePrevious will skip the step when going back as well.
+- Added Support for DeleteConfirmation Delegate to ReadOnlyGridControlWin.
+
+Bug Fixes
+- Implemented the Methods used for Paging e.g. ItemsPerPage on DataGridViewWin.cs. This is to prevent a Control that is set up in VWG with paging from giving not implemented exception in win. Note that paging still doesn't happen in Win, but this just allows for easier porting.
+- Added the IControlFactory as a parameter to TabControlVWG's constructor. Changed the ControlFactoryVWG to use this. It was using GlobalRegistry.ControlFactory (which could be null).
+- Fixed Bug in BOEditorControlWin where the size and minimum size where not being set based on the BOPanel
+- Fixed Bug in RelationshipComboBoxMapper where the RelatedBusinessObject was being set to null.
+- Fixed Minor Bug in ExtendedComboBoxMapper where the value selected in the PopupForm was not being set as the selected value for the ComboBox the combo box was instead being cleared of all values.
+- Added some validation to the ControlMapper and LookupComboBoxMapper to ensure that errors are not thrown if strategy from ControlFactory is null.
+- Fixed Bug in LookupComboBoxMapper where if you set the LookupList to null you get a null reference exception.
+- Made PanelBuilder take into account the KeepValuePrivate setting of a property (sets the password char of the textbox to * for these)
+- Removed the parameterless constructors from TreeViewVWG because the GlobalUIRegistry.ControlFactory might be null and shouldn't be accessed there.
+
+
+
+For previous changes look at the Habanero Core changelog
