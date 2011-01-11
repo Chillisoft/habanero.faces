@@ -1,0 +1,50 @@
+Habanero Faces Change log
+
+v2.4.0 - 10 May 2010
+
+Major Changes
+- Renamed Habanero.UI to Habanero.Faces. Split out these binaries into a separate project called Faces
+- VWG: upgraded to VWG 6.4 beta 1. 
+
+Enhancements
+- Added Capability to HabaneroMenu where you can set the ManagedControl i.e. the control that is being managed by the menu item. This managed control is then wrapped by a default IControlManager and the remainder of the menu stays the same.
+- Added a ControlsVisible property to IPanelInfo to set the visibility of the controls made by the PanelBuilder
+- Added ComboBoxLinker class to Faces.Base. This class links to ComboBoxes together. This is typically used where the value from one combo filters the value in another combo.
+- Added ability to indicate a compulsory relationship field on a form when using one of the RelationshipComboBoxMappers
+
+Minor Changes
+- Made some IControlFactory methods virtual: CreateButtonCollapsibleStyle() and CreateMainTitleIconControl().
+- Changed MainTitleIconControl to have a fixed height of 23 as it was setting the height to its default.
+- Added the Title for a Habanero Menu Item to the CollapsibleMenuItemWin Title, i.e. the label on the top of the right panel.
+- Made PreferredWidth on LabelVWG virtual
+- Added Method to IFilterControl to Allow AddDateFilterDateTimePicker with Fewer parameters.
+- Added another overloaded constructor to BOEditorControlWin
+- Implemented Functionality for ReadOnlyGridControl whereby the ConfirmDeletion is actually used for Both VWG and Win. extracted common functionality to ReadOnlyGridControlManager.cs.
+- Moved String Resources to Messages.resx instead of CollapsiblePanelResource
+- Added overload method "GetSaveFileName" which allows you to specify the InitialDirectory of the SaveFileDialog in the DialogUtilities class.
+- PanelBuilder: Added support for the TextAlign property in VWG.
+- Made the AutoLoadingRelationshipComboBoxMapper sort its items (string sort)
+- Changed Behaviour of LookupComboBoxMapper to always have a non null LookupList even immediately after construction.
+- Added EventHandler Closing in IFormHabanero.
+- Added new images for the collapsible panel. Modified the MinimumSize of the Collapsible Panel.
+- Added the ability to set a width for your menu if you're using the CollapsibleMenu classes
+- Added a RefreshFilter method on IGridControl which will reapply the filter or search
+- Added a LayoutManager readonly property to the IButtonGroupControl so that you can adjust its alignment or ButtonSizePolicy
+- Added a ParentMenu property to HabaneroMenu.Item so that you can get at an item's parent. 
+- Made changes to WizardController where it keeps track of the visited steps in a stack so that the MovePrevious will skip the step when going back as well.
+- Added Support for DeleteConfirmation Delegate to ReadOnlyGridControlWin.
+
+Bug Fixes
+- Implemented the Methods used for Paging e.g. ItemsPerPage on DataGridViewWin.cs. This is to prevent a Control that is set up in VWG with paging from giving not implemented exception in win. Note that paging still doesn't happen in Win, but this just allows for easier porting.
+- Added the IControlFactory as a parameter to TabControlVWG's constructor. Changed the ControlFactoryVWG to use this. It was using GlobalRegistry.ControlFactory (which could be null).
+- Fixed Bug in BOEditorControlWin where the size and minimum size where not being set based on the BOPanel
+- Fixed Bug in RelationshipComboBoxMapper where the RelatedBusinessObject was being set to null.
+- Fixed Minor Bug in ExtendedComboBoxMapper where the value selected in the PopupForm was not being set as the selected value for the ComboBox the combo box was instead being cleared of all values.
+- Added some validation to the ControlMapper and LookupComboBoxMapper to ensure that errors are not thrown if strategy from ControlFactory is null.
+- Fixed Bug in LookupComboBoxMapper where if you set the LookupList to null you get a null reference exception.
+- Made PanelBuilder take into account the KeepValuePrivate setting of a property (sets the password char of the textbox to * for these)
+- Removed the parameterless constructors from TreeViewVWG because the GlobalUIRegistry.ControlFactory might be null and shouldn't be accessed there.
+
+
+
+For previous changes look at the Habanero Core changelog
