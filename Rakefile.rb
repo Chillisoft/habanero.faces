@@ -7,9 +7,7 @@ task :do_habanero => [:clean_habanero,:checkout_habanero,:msdo_habanero] # these
 
 task :do_smooth => [:checkout_smooth,:copy_dlls_to_smooth_lib,:clean_smooth,:msdo_smooth]
 
-#task :do_faces => [:copy_dlls_to_faces_lib,:clean_faces,:msdo_faces,:run_nunit,:commit_lib]
-
-task :do_faces => [:copy_dlls_to_faces_lib,:clean_faces,:msdo_faces,:commit_lib]
+task :do_faces => [:copy_dlls_to_faces_lib,:clean_faces,:msdo_faces,:run_nunit,:commit_lib]
 
 $Ncover_path = "C:/Program Files (x86)/NCover/NCover.Console.exe"
 $Nunit_path = "C:/Program Files (x86)/NUnit 2.5.6/bin/net-2.0/nunit-console-x86.exe"# nunit-console-x86.exe is run to prevent the "Profiler connection not established" error from old Ncover versions
