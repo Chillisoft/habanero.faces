@@ -52,7 +52,7 @@ namespace Habanero.Faces.Base
         public IErrorProvider ErrorProvider { get; private set; }
 
 //        private IBusinessObjectCollection _businessObjectCollection;
-        private IBusinessObject _businessObject;
+        protected IBusinessObject _businessObject;
 
         /// <summary>
         /// The relationshipDef that is used for this Mapper.
@@ -251,9 +251,9 @@ namespace Habanero.Faces.Base
         private void UpdateLinkedRelationshipAndControl()
         {
             RemoveCurrentBOHandlers();
-            SetupSingleRelationship(); //_businessObject == null ? null : GetRelationship();
+            SetupSingleRelationship(); 
             UpdateIsEditable();
-            IBusinessObject tmpBO = _businessObject;
+            var tmpBO = _businessObject;//This does something strange for some reason.
             _businessObject = null;
             _comboBoxCollectionSelector.DeregisterForControlEvents();
             LoadCollectionForBusinessObject();
@@ -409,10 +409,10 @@ namespace Habanero.Faces.Base
         /// </summary>
         protected virtual void InternalUpdateControlValueFromBo()
         {
-            IBusinessObject relatedBO = GetRelatedBusinessObject();
+            var relatedBO = GetRelatedBusinessObject();
             if (relatedBO != null)
             {
-                IListControlObjectCollection comboBoxObjectCollection = this.Control.Items;
+                var comboBoxObjectCollection = this.Control.Items;
                 if (!comboBoxObjectCollection.Contains(relatedBO))
                 {
                     comboBoxObjectCollection.Add(relatedBO);

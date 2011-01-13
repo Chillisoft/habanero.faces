@@ -6,6 +6,7 @@ using Habanero.Faces.Base;
 using Habanero.Faces.Win;
 using NUnit.Framework;
 
+// ReSharper disable InconsistentNaming
 namespace Habanero.Faces.Test.Win.Mappers
 {
     [TestFixture]
@@ -122,15 +123,16 @@ namespace Habanero.Faces.Test.Win.Mappers
         }
 
         [Test]
-        public void Test_ChangeComboBoxUpdatesBusinessObject_WithoutCallingApplyChanges()
+        public virtual void Test_ChangeComboBoxUpdatesBusinessObject_WithoutCallingApplyChanges()
         {
             //---------------Set up test pack-------------------
-            IComboBox cmbox = CreateComboBox();
+            var cmbox = CreateComboBox();
             BusinessObjectCollection<OrganisationTestBO> boCol;
-            RelationshipComboBoxMapper mapper = GetMapperBoColHasOneItem(cmbox, out boCol);
-            OrganisationTestBO newBO = boCol.CreateBusinessObject();
-            OrganisationTestBO organisationTestBO = boCol[0];
-            ContactPersonTestBO person = CreateCPWithRelatedOrganisation(organisationTestBO);
+            var mapper = GetMapperBoColHasOneItem(cmbox, out boCol);
+            var newBO = boCol.CreateBusinessObject();
+
+            var organisationTestBO = boCol[0];
+            var person = CreateCPWithRelatedOrganisation(organisationTestBO);
             mapper.BusinessObject = person;
             //---------------Execute Test ----------------------
             cmbox.SelectedItem = newBO;
@@ -139,15 +141,15 @@ namespace Habanero.Faces.Test.Win.Mappers
         }
 
         [Test]
-        public void Test_KeyPressEventUpdatesBusinessObject_WithoutCallingApplyChanges()
+        public virtual void Test_KeyPressEventUpdatesBusinessObject_WithoutCallingApplyChanges()
         {
             //---------------Set up test pack-------------------
-            IComboBox cmbox = CreateComboBox();
+            var cmbox = CreateComboBox();
             BusinessObjectCollection<OrganisationTestBO> boCol;
-            RelationshipComboBoxMapper mapper = GetMapperBoColHasOneItem(cmbox, out boCol);
-            OrganisationTestBO newBO = boCol.CreateBusinessObject();
-            OrganisationTestBO organisationTestBO = boCol[0];
-            ContactPersonTestBO person = CreateCPWithRelatedOrganisation(organisationTestBO);
+            var mapper = GetMapperBoColHasOneItem(cmbox, out boCol);
+            var newBO = boCol.CreateBusinessObject();
+            var organisationTestBO = boCol[0];
+            var person = CreateCPWithRelatedOrganisation(organisationTestBO);
             mapper.BusinessObject = person;
             //---------------Execute Test ----------------------
             cmbox.Text = newBO.ToString();
@@ -156,7 +158,7 @@ namespace Habanero.Faces.Test.Win.Mappers
         }
 
         [Test]
-        public void Test_KeyPressStrategy_UpdatesBusinessObject_WhenEnterKeyPressed()
+        public virtual void Test_KeyPressStrategy_UpdatesBusinessObject_WhenEnterKeyPressed()
         {
             //---------------Set up test pack-------------------
             ComboBoxWinStub cmbox = new ComboBoxWinStub();
@@ -176,7 +178,6 @@ namespace Habanero.Faces.Test.Win.Mappers
             Assert.IsInstanceOf(typeof(ComboBoxKeyPressMapperStrategyWin), mapper.MapperStrategy);
             Assert.AreSame(newBO, person.Organisation, "For Windows the value should be changed.");
         }
-
 
         [Test]
         public void Test_KeyPressStrategy_DoesNotUpdateBusinessObject_SelectedIndexChanged()
@@ -273,7 +274,27 @@ namespace Habanero.Faces.Test.Win.Mappers
             Assert.IsNotNull(person.Organisation);
         }
 
-        private class ComboBoxWinStub : ComboBoxWin
+        [Test]
+        public void Test_SetSelectedItem_WhenAnItemIsSelectedAndRelatedBusnessObjectWasNull_ShouldUpdateBusinessObjectWithSelectedValue()
+        {
+            //---------------Set up test pack-------------------
+            IComboBox cmbox = CreateComboBox();
+            BusinessObjectCollection<OrganisationTestBO> boCol;
+            RelationshipComboBoxMapper mapper = GetMapperBoColHasOneItem(cmbox, out boCol);
+            var newOrganisation = boCol.CreateBusinessObject();
+            newOrganisation.Save();
+            ContactPersonTestBO person = new ContactPersonTestBO();
+            mapper.BusinessObject = person;
+            //---------------Assert Precondition----------------
+            Assert.IsNull(person.Organisation);
+            //---------------Execute Test ----------------------
+            cmbox.SelectedItem = newOrganisation;
+            //---------------Test Result -----------------------
+            Assert.AreSame(newOrganisation, cmbox.SelectedItem);
+            Assert.AreSame(newOrganisation, person.Organisation);
+        }
+
+        protected class ComboBoxWinStub : ComboBoxWin
         {
             public void CallSendKeyBob()
             {

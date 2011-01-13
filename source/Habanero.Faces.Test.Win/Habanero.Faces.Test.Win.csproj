@@ -153,6 +153,7 @@
     <Compile Include="LayoutManager\TestFlowLayoutManagerWin.cs" />
     <Compile Include="LayoutManager\TestGridLayoutManagerWin.cs" />
     <Compile Include="LayoutManager\TestLayoutManagerWin.cs" />
+    <Compile Include="Mappers\TestAutoLoadingRelationshipComboBoxMapperWin.cs" />
     <Compile Include="Mappers\TestCollectionComboBoxMapperWin.cs" />
     <Compile Include="Mappers\TestCollectionTabControlMapperWin.cs" />
     <Compile Include="Mappers\TestControlMapperCollectionWin.cs" />

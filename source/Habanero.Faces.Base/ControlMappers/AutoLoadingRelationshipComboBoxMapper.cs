@@ -38,20 +38,16 @@ namespace Habanero.Faces.Base
         /// <param name="controlFactory">A control factory that is used to create control mappers etc</param>
         public AutoLoadingRelationshipComboBoxMapper(IComboBox comboBox, string relationshipName, bool isReadOnly, IControlFactory controlFactory) : base(comboBox, relationshipName, isReadOnly, controlFactory) {}
 
-
         /// <summary>
         /// Provides an overrideable method for Loading the collection of business objects
         /// </summary>
         protected override void LoadCollectionForBusinessObject()
         {
-            // if (this.BusinessObjectCollection == null)
-            //{
-
-            IBusinessObjectCollection collection = BORegistry.DataAccessor.BusinessObjectLoader.GetBusinessObjectCollection(
+            if (this.RelatedObjectClassDef == null) return;
+            var collection = BORegistry.DataAccessor.BusinessObjectLoader.GetBusinessObjectCollection(
                 RelatedObjectClassDef, "");
             collection.Sort(new ToStringComparer());
-            this.BusinessObjectCollection = collection;
-            //}       
+            this.BusinessObjectCollection = collection;     
         }
 
         private class ToStringComparer : IComparer
