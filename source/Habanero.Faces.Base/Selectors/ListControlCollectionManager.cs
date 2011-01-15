@@ -17,12 +17,12 @@ namespace Habanero.Faces.Base
         /// <summary>
         /// A handler for the SelectedIndexChanged Event
         /// </summary>
-        protected EventHandler _selectedIndexChanged;
+        private EventHandler _selectedIndexChanged;
         /// <summary>
         /// Constructor to create a new collection ListBox mapper object.
         /// </summary>
         /// <param name="listControl">The ListBox object to map</param>
-        public ListControlCollectionManager(T listControl)
+        protected ListControlCollectionManager(T listControl)
         {
             if (ReferenceEquals(listControl, null)) throw new ArgumentNullException("listControl");
             Control = listControl;
@@ -193,12 +193,14 @@ namespace Habanero.Faces.Base
 
         protected void UpdateBusinessObject(IBusinessObject businessObject)
         {
+            var selectedBO = this.Control.SelectedItem;
             var indexOf = this.Control.Items.IndexOf(businessObject);
             if (indexOf == -1) return;
             var isSelectedItem = this.Control.SelectedItem == businessObject;
             var isInSelectedItemsList = this.Control.SelectedItems.Contains(businessObject);
             this.Control.Items.Remove(businessObject);
             this.Control.Items.Insert(indexOf, businessObject);
+            this.Control.SelectedItem = selectedBO;
             if (isSelectedItem) this.Control.SelectedItem = businessObject;
             if (isInSelectedItemsList) this.Control.SelectedItems.Add(businessObject);
         }

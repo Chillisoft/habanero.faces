@@ -388,6 +388,39 @@ namespace Habanero.Faces.Test.Base.Controllers
         }
 
         [Test]
+        public void Test_EditUnselectedItemFromCollection_WhenAnotherItemIsSelected_UpdatesItemInCombo_MaintainsSelectedItem_FixBugBug1469()
+        {
+            //---------------Set up test pack-------------------
+            var cmbox = GetControlFactory().CreateComboBox();
+            var controlFactory = GetControlFactory();
+            var selectorManager = new ComboBoxCollectionSelector(cmbox, controlFactory, false);
+            MyBO.LoadDefaultClassDef();
+
+            var myBOs = new BusinessObjectCollection<MyBO> { { new MyBO(), new MyBO(), new MyBO() } };
+            selectorManager.SetCollection(myBOs);
+            var myBO = myBOs[1];
+            var selectBo = myBOs[2];
+            selectorManager.SelectedBusinessObject = selectBo;
+            var origToString = myBO.ToString();
+            var newValue = Guid.NewGuid();
+            var index = cmbox.Items.IndexOf(myBO);
+            //---------------Assert precondition----------------
+            Assert.AreSame(selectBo, selectorManager.SelectedBusinessObject);
+            Assert.AreSame(selectBo, cmbox.SelectedItem);
+
+            Assert.AreSame(myBO, cmbox.Items[index]);
+            Assert.AreNotEqual(index, cmbox.SelectedIndex);
+            //---------------Execute Test ----------------------
+            myBO.MyBoID = newValue;
+            //---------------Test Result -----------------------
+            var newToString = myBO.ToString();
+            Assert.AreNotEqual(origToString, newToString);
+            Assert.AreSame(selectBo, selectorManager.SelectedBusinessObject);
+            Assert.AreSame(selectBo, cmbox.SelectedItem);
+            //            Assert.AreNotEqual(origToString, cmbox.Text);
+            //            Assert.AreEqual(newToString, cmbox.Text);
+        }
+        [Test]
         public void Test_CancelEditsItemFromCollection_UpdatesItemInCombo()
         {
             //---------------Set up test pack-------------------
