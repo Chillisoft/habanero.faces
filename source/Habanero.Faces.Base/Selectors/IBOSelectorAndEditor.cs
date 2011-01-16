@@ -8,9 +8,9 @@ namespace Habanero.Faces.Base
     /// The common controls used for selecting business objects are ComboBox, ListBox, ListView, Grid,
     ///  <see cref="ICollapsiblePanelGroupControl"/>, <see cref="IBOColTabControl"/>, a <see cref="IMultiSelector{T}"/>
     ///  or an <see cref="ITreeView"/>.
-    /// For an <see cref="IEditableGridControl"/> the business objects can be edited directly in the grid. In the case of 
-    ///  a <see cref="IReadOnlyGridControl"/> the business objects are edited via pop up forms that open when appropriate.
-    /// The <see cref="IBOGridAndEditorControl"/> has a grid selector with the functionality to edit the business obects to the right.
+    /// E.g. For an <see cref="IEditableGridControl"/> the business objects can be edited directly in the grid. In the case of 
+    ///    - The <see cref="IReadOnlyGridControl"/> the business objects are edited via pop up forms that open when appropriate.
+    ///    - The <see cref="IBOGridAndEditorControl"/> has a grid selector with the functionality to edit the business obects to the right.
     /// This interface inherits from the <see cref="IBOColSelectorControl"/> and adds three additional methods.
     /// <li><see cref="AllowUsersToAddBO"/></li>"
     /// <li><see cref="AllowUsersToDeleteBO"/></li>"
@@ -38,7 +38,7 @@ namespace Habanero.Faces.Base
 
         /// <summary>
         /// Gets or sets a boolean value that determines whether to confirm
-        /// deletion with the user when they have chosen to delete a row
+        /// deletion with the user when they have chosen to delete a row/ businessObject
         /// </summary>
         bool ConfirmDeletion { get; set; }
 

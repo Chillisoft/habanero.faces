@@ -20,6 +20,7 @@ using System;
 using Habanero.Base;
 using Habanero.BO;
 
+// ReSharper disable ClassWithVirtualMembersNeverInherited.Global
 namespace Habanero.Faces.Base
 {
     ///<summary>

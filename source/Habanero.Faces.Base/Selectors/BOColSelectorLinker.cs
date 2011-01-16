@@ -66,10 +66,10 @@ namespace Habanero.Faces.Base
             ParentSelector = parentSelector;
             ChildSelector = childSelector;
             RelationshipName = relationshipName;
-            parentSelector.BusinessObjectSelected += this.ParentComboBox_BusinessObjectSelected;
+            parentSelector.BusinessObjectSelected += this.ParentComboBoxBusinessObjectSelected;
         }
 
-        private void ParentComboBox_BusinessObjectSelected(object sender, System.EventArgs e)
+        private void ParentComboBoxBusinessObjectSelected(object sender, System.EventArgs e)
         {
             UpdateChildSelectorCollection();
         }
