@@ -72,7 +72,7 @@ namespace Habanero.Faces.Base
         /// <returns>true if the cancel was successful; otherwise, false.</returns>
         /// <filterpriority>1</filterpriority>
         bool CancelEdit();
-
+/*
         /// <summary>Clears the current selection by unselecting all selected cells.</summary>
         /// <filterpriority>1</filterpriority>
         /// <PermissionSet>
@@ -120,7 +120,7 @@ namespace Habanero.Faces.Base
         /// DataSource is not null.</exception>
         /// <exception cref="T:System.ArgumentNullException">comparer is null.</exception>
         /// <filterpriority>1</filterpriority>
-        void Sort(IComparer comparer);
+        void Sort(IComparer comparer);*/
 
         /// <summary>Sorts the contents of the <see cref="IDataGridView"></see> control in ascending or
         /// descending order based on the contents of the specified column.</summary>
@@ -146,7 +146,7 @@ namespace Habanero.Faces.Base
         /// <param name="columnName">The column number to sort on</param>
         /// <param name="ascending">True for ascending order, false for descending order</param>
         void Sort(string columnName, bool ascending);
-
+/*
         /// <summary>Forces the control to update its display of the cell at the specified location based 
         /// on its new value, applying any automatic sizing modes currently in effect. </summary>
         /// <param name="columnIndex">The zero-based column index of the cell with the new value.</param>
@@ -154,7 +154,7 @@ namespace Habanero.Faces.Base
         /// <exception cref="T:System.ArgumentOutOfRangeException">columnIndex is less than zero or greater
         /// than the number of columns in the control minus one.-or-rowIndex is less than zero or
         /// greater than the number of rows in the control minus one.</exception>
-        void UpdateCellValue(int columnIndex, int rowIndex);
+        void UpdateCellValue(int columnIndex, int rowIndex);*/
 
         //[EditorBrowsable(EditorBrowsableState.Advanced), Browsable(false)]
         //IControlHabanero EditingControl { get; }
@@ -169,7 +169,7 @@ namespace Habanero.Faces.Base
         /// <returns>true if the user can delete rows; otherwise, false. The default is true.</returns>
         /// <filterpriority>1</filterpriority>
         bool AllowUserToDeleteRows { get; set; }
-
+/*
         /// <summary>Gets or sets a value indicating whether manual column repositioning is enabled.</summary>
         /// <returns>true if the user can change the column order; otherwise, false. The default is false.</returns>
         /// <filterpriority>1</filterpriority>
@@ -181,7 +181,7 @@ namespace Habanero.Faces.Base
 
         /// <summary>Gets or sets a value indicating whether users can resize rows.</summary>
         /// <returns>true if all the rows are resizable; otherwise, false. The default is true.</returns>
-        bool AllowUserToResizeRows { get; set; }
+        bool AllowUserToResizeRows { get; set; }*/
 
         /// <summary>Gets or sets a value indicating whether columns are created automatically when
         /// the DataSource or DataMember properties are set.</summary>
@@ -189,7 +189,7 @@ namespace Habanero.Faces.Base
         /// <filterpriority>1</filterpriority>
         [EditorBrowsable(EditorBrowsableState.Advanced), DefaultValue(true), Browsable(false)]
         bool AutoGenerateColumns { get; set; }
-
+/*
         /// <summary>Gets or sets the number of columns displayed in the <see cref="IDataGridView"></see>.</summary>
         /// <returns>The number of columns displayed in the <see cref="IDataGridView"></see>.</returns>
         /// <exception cref="T:System.InvalidOperationException">When setting this property,
@@ -207,7 +207,7 @@ namespace Habanero.Faces.Base
         /// property value of DataGridViewAutoSizeColumnMode.ColumnHeader.</exception>
         /// <filterpriority>1</filterpriority>
         [DefaultValue(true)]
-        bool ColumnHeadersVisible { get; set; }
+        bool ColumnHeadersVisible { get; set; }*/
 
         /// <summary>Gets a collection that contains all the columns in the control.</summary>
         /// <returns>The <see cref="IDataGridViewColumnCollection"></see> that contains all the columns
@@ -231,20 +231,20 @@ namespace Habanero.Faces.Base
         /// <filterpriority>1</filterpriority>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         IDataGridViewCell CurrentCell { get; set; }
-
+/*
         /// <summary>Gets the row and column indexes of the currently active cell.</summary>
         /// <returns>A <see cref="T:System.Drawing.Point"></see> that represents the row and column indexes 
         /// of the currently active cell.</returns>
         /// <filterpriority>1</filterpriority>
         [Browsable(false)]
-        Point CurrentCellAddress { get; }
+        Point CurrentCellAddress { get; }*/
 
         /// <summary>Gets the row containing the current cell.</summary>
         /// <returns>The <see cref="IDataGridViewRow"></see> that represents the row containing the current 
         /// cell, or null if there is no current cell.</returns>
         [Browsable(false)]
         IDataGridViewRow CurrentRow { get; }
-
+/*
         /// <summary>Gets or sets the name of the list or table in the data source for which the 
         /// <see cref="IDataGridView"></see> is displaying data.</summary>
         /// <returns>The name of the table or list in the <see cref="DataSource"></see> for which the 
@@ -256,7 +256,7 @@ namespace Habanero.Faces.Base
         [Editor(
             "Gizmox.WebGUI.Forms.Design.DataMemberListEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
             , typeof (UITypeEditor)), DefaultValue("")]
-        string DataMember { get; set; }
+        string DataMember { get; set; }*/
 
         /// <summary>Gets or sets the data source that the <see cref="IDataGridView"></see> is displaying data for.</summary>
         /// <returns>The object that contains data for the <see cref="IDataGridView"></see> to display.</returns>
@@ -286,7 +286,7 @@ namespace Habanero.Faces.Base
         /// Gets or sets the index of the row that is the first row displayed on the DataGridView
         /// </summary>
         int FirstDisplayedScrollingRowIndex { get; set; }
-
+/*
         /// <summary>Gets a value indicating whether the current cell has uncommitted changes.</summary>
         /// <returns>true if the current cell has uncommitted changes; otherwise, false.</returns>
         /// <filterpriority>1</filterpriority>
@@ -297,9 +297,8 @@ namespace Habanero.Faces.Base
         /// <returns>true if the current row has uncommitted changes; otherwise, false.</returns>
         /// <filterpriority>1</filterpriority>
         [Browsable(false)]
-        bool IsCurrentRowDirty { get; }
+        bool IsCurrentRowDirty { get; }*/
 
-        // TODO: THESE TWO AREN'T IN THE WINFORMS ONE
         ///// <summary>Gets or sets the cell located at the intersection of the row with the specified 
         ///// index and the column with the specified name. </summary>
         ///// <returns>The <see cref="IDataGridViewCell"></see> at the specified location.</returns>
@@ -315,6 +314,7 @@ namespace Habanero.Faces.Base
         //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         //IDataGridViewCell this[int columnIndex, int rowIndex] { get; set; }
 
+/*
         /// <summary>Gets or sets a value indicating whether the user is allowed to select more than one 
         /// cell, row, or column of the <see cref="IDataGridView"></see> at a time.</summary>
         /// <returns>true if the user can select more than one cell, row, or column at a time; otherwise, 
@@ -326,7 +326,7 @@ namespace Habanero.Faces.Base
         /// <summary>Gets the index of the row for new records.</summary>
         /// <returns>The index of the row for new records, or -1 if <see cref="AllowUserToAddRows"></see> is false.</returns>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
-        int NewRowIndex { get; }
+        int NewRowIndex { get; }*/
 
         /// <summary>Gets a value indicating whether the user can edit the cells of the <see cref="IDataGridView"></see> control.</summary>
         /// <returns>true if the user cannot edit the cells of the <see cref="IDataGridView"></see> control; 
@@ -340,12 +340,12 @@ namespace Habanero.Faces.Base
         /// <filterpriority>1</filterpriority>
         [DefaultValue(false), Browsable(true)]
         bool ReadOnly { get; set; }
-
+/*
         /// <summary>
         /// Uses internal paging algorithem
         /// </summary>
         [System.ComponentModel.DefaultValue(true)]
-        bool UseInternalPaging { get; set; }
+        bool UseInternalPaging { get; set; }*/
 
         /// <summary>
         /// Gets or sets the current page.
@@ -432,14 +432,14 @@ namespace Habanero.Faces.Base
         ///// <filterpriority>1</filterpriority>
         //[Browsable(false)]
         //SortOrder SortOrder { get; }
-
+/*
         /// <summary>Gets or sets a value indicating whether the TAB key moves the focus to the next 
         /// control in the tab order rather than moving focus to the next cell in the control.</summary>
         /// <returns>true if the TAB key moves the focus to the next control in the tab order; otherwise, false.</returns>
         /// <filterpriority>1</filterpriority>
         [DefaultValue(false),
          EditorBrowsable(EditorBrowsableState.Advanced)]
-        bool StandardTab { get; set; }
+        bool StandardTab { get; set; }*/
 
         /// <summary>
         /// Gets the collection of currently selected rows
@@ -463,18 +463,18 @@ namespace Habanero.Faces.Base
         /// <exception cref="T:System.ComponentModel.InvalidEnumArgumentException">The specified value when setting this property is not a valid DataGridViewSelectionMode value.</exception>
         DataGridViewSelectionMode SelectionMode { get; set; }
 
-        /// <summary>
+/*        /// <summary>
         /// Provides an indexer to get or set the cell located at the intersection of the column and row with the specified indexes.
         /// </summary>
         /// <param name="columnIndex">The index of the column containing the cell.</param>
         /// <param name="rowIndex">The index of the row containing the cell</param>
         /// <returns>The DataGridViewCell at the specified location</returns>
-        IDataGridViewCell this[int columnIndex, int rowIndex] { set; get; }
-
+        IDataGridViewCell this[int columnIndex, int rowIndex] { set; get; }*/
+/*
 
         /// <summary>
         /// Updates the Grid with the latest data. (This updates the visual aspects of the grid.
         /// </summary>
-        void Update();
+        void Update();*/
     }
 }
