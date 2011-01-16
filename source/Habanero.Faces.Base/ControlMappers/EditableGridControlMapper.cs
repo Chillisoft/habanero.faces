@@ -36,10 +36,10 @@ namespace Habanero.Faces.Base
         /// <param name="relationshipName">This is the relationship name to use - this relationship must be a multiple relationship and exist on the BusinessObject</param>
         /// <param name="isReadOnly">Whether the editable grid should be read only or not. Ignored</param>
         /// <param name="factory">The control factory to use</param>
-        public EditableGridControlMapper(IControlHabanero ctl, string relationshipName, bool isReadOnly, IControlFactory factory)
+        public EditableGridControlMapper(IEditableGridControl ctl, string relationshipName, bool isReadOnly, IControlFactory factory)
             : base(ctl, relationshipName, isReadOnly, factory)
         {
-            _editableGrid = (IEditableGridControl)ctl;
+            _editableGrid = ctl;
             _editableGrid.Buttons.Visible = false;
         }
 
