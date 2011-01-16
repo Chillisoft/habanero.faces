@@ -94,7 +94,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             ITransactionCommitter transactionCommitter = GetTransactionCommitter();
             DefaultBODeletor businessObjectDeletor = new DefaultBODeletor();
-            IBusinessObject boToDelete = MockRepository.GenerateMock<IBusinessObject>();
+            IBusinessObject boToDelete = new FakeAddress();
             Exception expectedException = new Exception();
             transactionCommitter.Stub(t => t.CommitTransaction()).Throw(expectedException);
             //---------------Assert Precondition----------------

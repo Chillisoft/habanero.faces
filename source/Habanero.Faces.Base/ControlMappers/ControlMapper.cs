@@ -172,7 +172,9 @@ namespace Habanero.Faces.Base
             {
                 string additionalMessage = "There was a problem updating the Control '" + Control.Name + "' of type " +
                                            Control.GetType() + " mapped to the property '" + this.PropertyName + "'" + Environment.NewLine;
-                throw new HabaneroApplicationException(additionalMessage + e.Message, e);
+                var message = additionalMessage + e.Message;
+                var exception = new HabaneroApplicationException(message, message, e);
+                throw exception;
             }
         }
 

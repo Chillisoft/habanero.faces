@@ -180,6 +180,7 @@ namespace Habanero.Faces.Base
             this.Control.Items.Remove(businessObject);
             if (isSelectedItem)
             {
+                //Fires the event with business object selected null since the selected bo has been removed
                 FireBusinessObjectSelected();
             }
         }
@@ -196,12 +197,12 @@ namespace Habanero.Faces.Base
             var selectedBO = this.Control.SelectedItem;
             var indexOf = this.Control.Items.IndexOf(businessObject);
             if (indexOf == -1) return;
-            var isSelectedItem = this.Control.SelectedItem == businessObject;
+            //var isSelectedItem = this.Control.SelectedItem == businessObject;
             var isInSelectedItemsList = this.Control.SelectedItems.Contains(businessObject);
             this.Control.Items.Remove(businessObject);
             this.Control.Items.Insert(indexOf, businessObject);
             this.Control.SelectedItem = selectedBO;
-            if (isSelectedItem) this.Control.SelectedItem = businessObject;
+            //if (isSelectedItem) this.Control.SelectedItem = businessObject;
             if (isInSelectedItemsList) this.Control.SelectedItems.Add(businessObject);
         }
 

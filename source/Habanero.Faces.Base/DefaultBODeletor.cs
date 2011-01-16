@@ -38,7 +38,9 @@ namespace Habanero.Faces.Base
             try
             {
                 businessObject.MarkForDelete();
-                businessObject.Save();
+                var committer = BORegistry.DataAccessor.CreateTransactionCommitter();
+                committer.AddBusinessObject(businessObject);
+                committer.CommitTransaction();
             }
             catch (Exception)
             {

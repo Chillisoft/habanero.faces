@@ -129,7 +129,7 @@ namespace Habanero.Faces.Base
         {
             if (BusinessObjectCollection == null && this.BusinessObject != null)
             {
-                const string message = "The BusinessObjectCollection is null when in the CollectionComboBoxMapper when the BusinessObject is set ";
+                const string message = "The BusinessObjectCollection is null in the CollectionComboBoxMapper when the BusinessObject is set ";
                 throw new HabaneroDeveloperException(message, message);
             }
             if (PropertyHasAValue())

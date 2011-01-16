@@ -129,7 +129,7 @@ namespace Habanero.Faces.Test.Base.Mappers
                 //---------------Test Result -----------------------
                 Assert.Fail("Expected to throw an InvalidPropertyException");
             }
-            catch (InvalidPropertyException ex)
+            catch (HabaneroApplicationException ex)
             {
                 StringAssert.Contains("EnumComboBoxMapper can only be used for an enum property type", ex.Message);
             }
