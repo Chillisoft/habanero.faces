@@ -165,6 +165,7 @@
     <Compile Include="Mappers\TestMapperBase.cs" />
     <Compile Include="Mappers\TestNumericUpDownCurrencyMapper.cs" />
     <Compile Include="Mappers\TestNumericUpDownIntegerMapper.cs" />
+    <Compile Include="Mappers\TestReadOnlyGridMapper.cs" />
     <Compile Include="Mappers\TestRelationshipComboBoxMapper.cs" />
     <Compile Include="Mappers\TestTextBoxMapper.cs" />
     <Compile Include="Selectors\TestBOColSelectorLinker.cs" />

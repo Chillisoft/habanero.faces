@@ -169,6 +169,7 @@
     <Compile Include="Mappers\TestLookupComboBoxMapperWin.cs" />
     <Compile Include="Mappers\TestNumericUpDownCurrencyMapperWin.cs" />
     <Compile Include="Mappers\TestNumericUpDownIntegerMapperWin.cs" />
+    <Compile Include="Mappers\TestReadOnlyGridMapperWin.cs" />
     <Compile Include="Mappers\TestRelationshipComboBoxMapperWin.cs" />
     <Compile Include="Mappers\TestTextBoxMapperWin.cs" />
     <Compile Include="Menu\TestContextMenuBuilderWin.cs" />

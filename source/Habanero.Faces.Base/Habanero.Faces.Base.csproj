@@ -146,6 +146,7 @@
     <Compile Include="ControlMappers\ExtendedComboBoxMapper.cs" />
     <Compile Include="ControlMappers\ISelectItemForm.cs" />
     <Compile Include="ControlMappers\ListComboBoxMapper.cs" />
+    <Compile Include="ControlMappers\ReadOnlyGridMapper.cs" />
     <Compile Include="ControlMappers\RelationshipComboBoxMapper.cs" />
     <Compile Include="ControlMappers\ExtendedTextBoxMapper.cs" />
     <Compile Include="ControlMappers\Watcher.cs" />
