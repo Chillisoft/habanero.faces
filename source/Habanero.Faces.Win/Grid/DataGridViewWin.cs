@@ -39,10 +39,10 @@ namespace Habanero.Faces.Win
         public DataGridViewWin()
         {
             _manager = new DataGridViewManager(this);
-            this.DataError +=delegate
-                             {
-                                 //do nothing  necessary because of strange behaviour in windows grid
-                             };
+            this.DataError += delegate
+                                  {
+                                      //do nothing  necessary because of strange behaviour in windows grid
+                                  };
         }
 
         /// <summary>
@@ -95,10 +95,7 @@ namespace Habanero.Faces.Win
         /// </summary>
         public new IDataGridViewRow CurrentRow
         {
-            get
-            {
-                return base.CurrentRow == null ? null : new DataGridViewRowWin(base.CurrentRow);
-            }
+            get { return base.CurrentRow == null ? null : new DataGridViewRowWin(base.CurrentRow); }
         }
 
         /// <summary>
@@ -349,11 +346,16 @@ namespace Habanero.Faces.Win
         /// <summary>
         /// Represents a collection of DataGridViewColumn objects in a DataGridView control.
         /// </summary>
-        internal class DataGridViewColumnCollectionWin : IDataGridViewColumnCollection
+        public class DataGridViewColumnCollectionWin : IDataGridViewColumnCollection
         {
             private readonly DataGridViewColumnCollection _columns;
 
-            internal DataGridViewColumnCollectionWin(DataGridViewColumnCollection columns)
+            /// <summary>
+            /// Constructs a Habanero.Faces DataGridViewColumnCollection as a wrapper around the 
+            /// WinForms one.
+            /// </summary>
+            /// <param name="columns"></param>
+            public DataGridViewColumnCollectionWin(DataGridViewColumnCollection columns)
             {
                 if (columns == null)
                 {
@@ -400,6 +402,7 @@ namespace Habanero.Faces.Win
                 _columns[addedColumn].DataPropertyName = columnName;
                 return addedColumn;
             }
+
             /// <summary>
             /// Gets or sets the column at the given index in the collection
             /// </summary>
@@ -430,11 +433,11 @@ namespace Habanero.Faces.Win
             {
                 if (column is DataGridViewImageColumn)
                 {
-                    return new DataGridViewImageColumnWin((DataGridViewImageColumn)column);
+                    return new DataGridViewImageColumnWin((DataGridViewImageColumn) column);
                 }
                 if (column is DataGridViewComboBoxColumn)
                 {
-                    return new DataGridViewComboBoxColumnWin((DataGridViewComboBoxColumn)column);
+                    return new DataGridViewComboBoxColumnWin((DataGridViewComboBoxColumn) column);
                 }
                 return new DataGridViewColumnWin(column);
             }
@@ -598,6 +601,11 @@ namespace Habanero.Faces.Win
         {
             private readonly DataGridViewCellCollection _cells;
 
+            /// <summary>
+            /// Constructs a Habanero.Faces DataGridViewCellCollectionWin as a adapter around the 
+            /// WinForms one.
+            /// </summary>
+            /// <param name="cells"></param>
             public DataGridViewCellCollectionWin(DataGridViewCellCollection cells)
             {
                 _cells = cells;
@@ -734,10 +742,15 @@ namespace Habanero.Faces.Win
         /// <summary>
         /// Represents a collection of DataGridViewRow objects that are selected in a DataGridView
         /// </summary>
-        private class DataGridViewSelectedRowCollectionWin : IDataGridViewSelectedRowCollection
+        public class DataGridViewSelectedRowCollectionWin : IDataGridViewSelectedRowCollection
         {
             private readonly DataGridViewSelectedRowCollection _selectedRows;
 
+            /// <summary>
+            /// Constructs a Habanero.Faces DataGridViewSelectedRowCollectionWin as a adapter around the 
+            /// WinForms one.
+            /// </summary>
+            /// <param name="selectedRows"></param>
             public DataGridViewSelectedRowCollectionWin(DataGridViewSelectedRowCollection selectedRows)
             {
                 _selectedRows = selectedRows;
@@ -779,10 +792,15 @@ namespace Habanero.Faces.Win
         /// <summary>
         /// Represents a collection of cells that are selected in a DataGridView
         /// </summary>
-        private class DataGridViewSelectedCellCollectionWin : IDataGridViewSelectedCellCollection
+        public class DataGridViewSelectedCellCollectionWin : IDataGridViewSelectedCellCollection
         {
             private readonly DataGridViewSelectedCellCollection _selectedCells;
 
+            /// <summary>
+            /// Provides a adapter around the <see cref="DataGridViewSelectedCellCollection"/>.
+            /// So that it can be used by Habanero.Faces generically.
+            /// </summary>
+            /// <param name="selectedCells"></param>
             public DataGridViewSelectedCellCollectionWin(DataGridViewSelectedCellCollection selectedCells)
             {
                 _selectedCells = selectedCells;
@@ -830,9 +848,11 @@ namespace Habanero.Faces.Win
     {
         private readonly DataGridViewCellStyle _dataGridViewCellStyle;
 
-        ///<summary>
-        ///</summary>
-        ///<param name="dataGridViewCellStyle"></param>
+        /// <summary>
+        /// Constructs a Habanero.Faces DataGridViewCellStyleWin as a adapter around the 
+        /// WinForms one.
+        /// </summary>
+        /// <param name="dataGridViewCellStyle"></param>
         public DataGridViewCellStyleWin(DataGridViewCellStyle dataGridViewCellStyle)
         {
             _dataGridViewCellStyle = dataGridViewCellStyle;
