@@ -230,10 +230,14 @@ namespace Habanero.Faces.Win
         /// <summary>
         /// A collection of DataGridViewRow objects
         /// </summary>
-        private class DataGridViewRowCollectionWin : IDataGridViewRowCollection
+        public class DataGridViewRowCollectionWin : IDataGridViewRowCollection
         {
             private readonly DataGridViewRowCollection _rows;
-
+            /// <summary>
+            /// Constructs a Habanero.Faces DataGridViewRowCollectionWin as a adaoter around the 
+            /// WinForms one.
+            /// </summary>
+            /// <param name="rows"></param>
             public DataGridViewRowCollectionWin(DataGridViewRowCollection rows)
             {
                 if (rows == null)
