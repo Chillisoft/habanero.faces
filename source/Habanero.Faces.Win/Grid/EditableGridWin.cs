@@ -40,7 +40,9 @@ namespace Habanero.Faces.Win
     /// </summary>
     public class EditableGridWin : GridBaseWin, IEditableGrid
     {
-        private static readonly ILog _log = LogManager.GetLogger("Habanero.Faces.Win.EditableGridWin");
+        private readonly IHabaneroLogger _logger =
+            GlobalRegistry.LoggerFactory.GetLogger(
+                "Habanero.ProgramaticBinding.ControlAdaptors.WinFormsEditableGridAdapter");
 
         private DeleteKeyBehaviours _deleteKeyBehaviour;
 
@@ -145,8 +147,6 @@ namespace Habanero.Faces.Win
             }
         }
 
-
-
         /// <summary>
         /// Indicates what action should be taken when a selection of
         /// cells is selected and the Delete key is pressed.
@@ -182,7 +182,7 @@ namespace Habanero.Faces.Win
                     //GlobalUIRegistry.ControlFactory.ShowMessageBox(
                     //    "There was a problem deleting the selected item please try again");
 
-                    _log.Debug("ConfirmRowDeletion - Row Index :" + e.Row.Index + " - No business object found");
+                    _logger.Log("ConfirmRowDeletion - Row Index :" + e.Row.Index + " - No business object found", LogCategory.Debug);
                     e.Cancel = true;
                     return;
                 }
@@ -285,7 +285,7 @@ namespace Habanero.Faces.Win
         {
             bool setToEditMode = CheckIfComboBoxShouldSetToEditMode(e.ColumnIndex, e.RowIndex);
             if (!setToEditMode) return;
-            DataGridViewColumn dataGridViewColumn =
+            var dataGridViewColumn =
                 ((DataGridViewColumnWin) Columns[e.ColumnIndex]).DataGridViewColumn;
             ControlsHelper.SafeGui(this, () => BeginEdit(true));
             if (EditingControl is DataGridViewComboBoxEditingControl)
@@ -310,7 +310,7 @@ namespace Habanero.Faces.Win
         {
             if (columnIndex > -1 && rowIndex > -1 && !CurrentCell.IsInEditMode && this.ComboBoxClickOnce)
             {
-                DataGridViewColumn dataGridViewColumn =
+                var dataGridViewColumn =
                     ((DataGridViewColumnWin) Columns[columnIndex]).DataGridViewColumn;
                 if (dataGridViewColumn is DataGridViewComboBoxColumn)
                 {
