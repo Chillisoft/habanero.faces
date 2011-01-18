@@ -46,6 +46,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         {
             //Code that is executed before any test is run in this class. If multiple tests
             // are executed then it will still only be called once.
+            GlobalRegistry.LoggerFactory = new HabaneroLoggerFactoryStub();
         }
 
         [TearDown]
@@ -115,6 +116,19 @@ namespace Habanero.Faces.Test.Base.Mappers
             Assert.IsFalse(control.Enabled);
         }
 
+        [Test]
+        public void Test_IsReadOnly_Set_ShouldSet()
+        {
+            //---------------Set up test pack-------------------
+            var control = GenerateStub<IControlHabanero>();
+            IControlMapper mapper = new ControlMapperStub2(control);
+            //---------------Assert Precondition----------------
+            Assert.IsFalse(mapper.IsReadOnly);
+            //---------------Execute Test ----------------------
+            mapper.IsReadOnly = true;
+            //---------------Test Result -----------------------
+            Assert.IsTrue(mapper.IsReadOnly);
+        }
         private static T GenerateStub<T>() where T : class
         {
             return MockRepository.GenerateStub<T>();
@@ -175,8 +189,7 @@ namespace Habanero.Faces.Test.Base.Mappers
                 (_txtReflectedProperty, "-ShapeNameGetOnly-", false, GetControlFactory());
             _txtNormal = GetControlFactory().CreateTextBox();
             _normalMapper = new TextBoxMapper(_txtNormal, "ShapeName", false, GetControlFactory());
-            _shape = new Shape();
-            _shape.ShapeName = "TestShapeName";
+            _shape = new Shape {ShapeName = "TestShapeName"};
         }
 
         #endregion //Setup for Tests
@@ -840,7 +853,7 @@ namespace Habanero.Faces.Test.Base.Mappers
             ClassDef.ClassDefs.Clear();
             MyBO.LoadClassDefWithSimpleIntegerLookup(); //valid values 1, 2, 3
             MyBO testBo = new MyBO();
-            ControlMapperStub mapperStub = new ControlMapperStub(_txtNormal, "TestProp2", false, GetControlFactory());
+            ControlMapperStub mapperStub = CreateControlMapperStub();
             mapperStub.BusinessObject = testBo;
             //---------------Assert Precondition---- ------------
 
@@ -850,6 +863,11 @@ namespace Habanero.Faces.Test.Base.Mappers
             //---------------Test Result -----------------------
             string errorMessage = mapperStub.ErrorProvider.GetError(_txtNormal);
             Assert.IsTrue(string.IsNullOrEmpty(errorMessage), "Should have no error. Error was : " + errorMessage);
+        }
+
+        private ControlMapperStub CreateControlMapperStub()
+        {
+            return new ControlMapperStub(_txtNormal, "TestProp2", false, GetControlFactory());
         }
 
         [Test]
@@ -1013,6 +1031,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         }
 
         #endregion //LookupList
+
 
         [Test]
         public void TestReadOnlyChangeBO()

@@ -102,7 +102,7 @@ namespace Habanero.Faces.Base
         /// <summary>
         /// Is this control readonly or can the value be changed via the user interface.
         /// </summary>
-        public bool IsReadOnly { get; private set; }
+        public bool IsReadOnly { get; set; }
 
         /// <summary>
         /// The Control factory used to create controls of the specified type.

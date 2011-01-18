@@ -61,6 +61,11 @@ namespace Habanero.Faces.Base
         /// </summary>
         bool ControlEnabled { get; set; }
 
+        ///<summary>
+        /// Returns the value of the IsReadonly field as set up in the Control Mappers's construtor.
+        ///</summary>
+        bool IsReadOnly { get; set; }
+
         /// <summary>
         /// Updates the properties on the represented business object
         /// </summary>

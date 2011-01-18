@@ -70,7 +70,7 @@ namespace Habanero.Faces.Base
         ///<summary>
         /// Returns the value of the IsReadonly field as set up in the Control Mappers's construtor.
         ///</summary>
-        public bool IsReadOnly { get; private set; }
+        public bool IsReadOnly { get; set; }
 
         #region IControlMapper Members
 

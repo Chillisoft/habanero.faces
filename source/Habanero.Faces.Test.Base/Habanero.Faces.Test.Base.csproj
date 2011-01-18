@@ -151,6 +151,7 @@
     <Compile Include="FilterController\TestStringStaticFilter.cs" />
     <Compile Include="Grid\TestGridBaseInitialiser.cs" />
     <Compile Include="Grid\TestGridBaseManager.cs" />
+    <Compile Include="HabaneroLoggerFactoryStub.cs" />
     <Compile Include="Mappers\TestCheckBoxMapper.cs" />
     <Compile Include="Mappers\TestCollectionComboBoxMapper.cs" />
     <Compile Include="Mappers\TestCollectionTabControlMapper.cs" />
