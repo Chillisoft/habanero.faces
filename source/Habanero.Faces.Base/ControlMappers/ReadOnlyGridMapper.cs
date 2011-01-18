@@ -38,6 +38,7 @@ namespace Habanero.Faces.Base
             if (_businessObject != null)
             {
                 var relationship = _businessObject.Relationships[PropertyName];
+                //if grid has columns then should not initialise.
                 _gridInitialiser.InitialiseGrid(relationship.RelatedObjectClassDef);
                 _readOnlyGrid.BusinessObjectCollection =_businessObject.Relationships.GetRelatedCollection(PropertyName);
             } else

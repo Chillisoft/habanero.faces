@@ -36,16 +36,19 @@ namespace Habanero.Faces.Base
     {
         private readonly IGridBase _gridBase;
         private IBusinessObjectCollection _boCol;
+
         /// <summary>
         /// Occurs when a business object is selected
         /// </summary>
         public event EventHandler<BOEventArgs> BusinessObjectSelected;
+
         /// <summary>
         /// Handler for the CollectionChanged Event
         /// </summary>
         public event EventHandler CollectionChanged;
 
         private readonly EventHandler _gridBaseOnSelectionChangedHandler;
+
         /// <summary>
         /// Boolean so that we can switch on and off the firing of certain events e.g
         /// during loading. This is required to prevent the Grid or other controls 
@@ -172,7 +175,9 @@ namespace Habanero.Faces.Base
         public IDataSetProvider DataSetProvider { get; private set; }
 
         /// <summary>
-        /// Sets the default grid loader
+        /// Sets the default grid loader which is used as the default for the GridLoader delegate.
+        /// If you want to load in any other way then please set the <see cref="GridLoader"/>
+        /// delegate to load your business objects as you require.
         /// </summary>
         public void DefaultGridLoader(IGridBase gridBase, IBusinessObjectCollection boCol)
         {
@@ -181,12 +186,12 @@ namespace Habanero.Faces.Base
                 gridBase.DataSource = null;
                 return;
             }
-            IBindingListView table = GetBindingListView(boCol);
+            var bindingListView = GetBindingListView(boCol);
             try
             {
                 gridBase.SelectionChanged -= _gridBaseOnSelectionChangedHandler;
                 _fireBusinessObjectSelectedEvent = false;
-                gridBase.DataSource = table;
+                gridBase.DataSource = bindingListView;
                 if (!AutoSelectFirstItem) gridBase.SelectedBusinessObject = null;
             }
             finally
@@ -205,6 +210,7 @@ namespace Habanero.Faces.Base
             if (DataSetProvider == null) return;
             DataSetProvider.UpdateBusinessObjectRowValues(businessObject);
         }
+
         /// <summary>
         /// Returns a DataView based on the <see cref="IBusinessObjectCollection"/> defined by <paramref name="boCol"/>.
         /// The Columns in the <see cref="DataView"/> will be the collumns defined in the Grids <see cref="UiDefName"/>
@@ -218,13 +224,13 @@ namespace Habanero.Faces.Base
             {
                 this.ClassDef = _boCol.ClassDef;
             }
-            IUIDef uiDef = ((ClassDef)this.ClassDef).GetUIDef(UiDefName);
+            IUIDef uiDef = ((ClassDef) this.ClassDef).GetUIDef(UiDefName);
             if (uiDef == null)
             {
                 throw new ArgumentException
                     (String.Format
                          ("You cannot Get the data for the grid {0} since the uiDef {1} cannot be found for the classDef {2}",
-                          this._gridBase.Name, UiDefName, ((ClassDef)this.ClassDef).ClassName));
+                          this._gridBase.Name, UiDefName, ((ClassDef) this.ClassDef).ClassName));
             }
             return DataSetProvider.GetDataView(uiDef.UIGrid);
         }
@@ -299,19 +305,19 @@ namespace Habanero.Faces.Base
                         }
                     }
                     if (_gridBase != null)
-                    if (_gridBase.CurrentRow != null && !_gridBase.CurrentRow.Displayed)
-                    {
-                        try
+                        if (_gridBase.CurrentRow != null && !_gridBase.CurrentRow.Displayed)
                         {
-                            _gridBase.FirstDisplayedScrollingRowIndex = _gridBase.Rows.IndexOf(_gridBase.CurrentRow);
-                            gridRows[rowNum].Selected = true; //Getting turned off for some reason
+                            try
+                            {
+                                _gridBase.FirstDisplayedScrollingRowIndex = _gridBase.Rows.IndexOf(_gridBase.CurrentRow);
+                                gridRows[rowNum].Selected = true; //Getting turned off for some reason
+                            }
+                            catch (InvalidOperationException)
+                            {
+                                //Do nothing - designed to catch error "No room is available to display rows"
+                                //  when grid height is insufficient
+                            }
                         }
-                        catch (InvalidOperationException)
-                        {
-                            //Do nothing - designed to catch error "No room is available to display rows"
-                            //  when grid height is insufficient
-                        }
-                    }
                 }
             }
         }
@@ -386,11 +392,11 @@ namespace Habanero.Faces.Base
             if (HasObjectIDColumn(findRow))
             {
                 Guid value = GetRowObjectIDValue(findRow);
-                if(this.DataSetProvider != null)
+                if (this.DataSetProvider != null)
                 {
                     return this.DataSetProvider.Find(value);
                 }
-                if(_boCol != null)
+                if (_boCol != null)
                 {
                     var businessObject = this._boCol.Find(value);
                     return businessObject ?? LoadBusinessObject(value);
@@ -399,15 +405,10 @@ namespace Habanero.Faces.Base
             if (_gridBase.DataSource is DataView && this.DataSetProvider != null)
             {
                 DataRowView dataRowView = GetDataRowView(rowIndex);
-                if(dataRowView == null) return null;
-/*                foreach (DataRowView dataRowView in _dataTableDefaultView)
-                {
-                    if (i++ == rowIndex)
-                    {*/
-                        Guid result = GetRowObjectIDValue(dataRowView);
-                        return this.DataSetProvider.Find(result);
-                    //}
-                //}
+                if (dataRowView == null) return null;
+
+                var result = GetRowObjectIDValue(dataRowView);
+                return this.DataSetProvider.Find(result);
             }
             return null;
         }
@@ -451,12 +452,11 @@ namespace Habanero.Faces.Base
         }
 
         // ReSharper disable EmptyGeneralCatchClause
-        #pragma warning disable 168
+#pragma warning disable 168
         private bool HasObjectIDColumn(IDataGridViewRow findRow)
         {
             try
             {
-
                 var dataGridViewCell = findRow.Cells[IDColumnName];
 
                 return true;
@@ -467,7 +467,7 @@ namespace Habanero.Faces.Base
             }
             return false;
         }
-        #pragma warning restore 168
+#pragma warning restore 168
         // ReSharper restore EmptyGeneralCatchClause
         /// <summary>
         /// See <see cref="IGridBase.GetBusinessObjectRow"/>
@@ -491,6 +491,7 @@ namespace Habanero.Faces.Base
             object idValue = dataRowView.Row[IDColumnName];
             return ConvertToGuid(idValue);
         }
+
         /// <summary>
         /// Gets the Object ID for a given row.
         /// This assumes that the row has a column <see cref="IDColumnName"/>.
@@ -506,7 +507,7 @@ namespace Habanero.Faces.Base
         private static Guid ConvertToGuid(object idValue)
         {
             if (idValue == null) return Guid.Empty;
-            if (idValue is Guid) return (Guid)idValue;
+            if (idValue is Guid) return (Guid) idValue;
             Guid result;
             StringUtilities.GuidTryParse(idValue.ToString(), out result);
             return result;
@@ -547,7 +548,7 @@ namespace Habanero.Faces.Base
                     ("You cannot apply filters as the grid DataSource has not been set with a IBindingListView");
             }
             var filterClauseString = filterClause != null ? filterClause.GetFilterClauseString("%", "#") : null;
-            
+
             try
             {
                 bindingList.Filter = filterClauseString;
@@ -555,10 +556,12 @@ namespace Habanero.Faces.Base
             catch (Exception e)
             {
                 throw new HabaneroApplicationException(
-                    e.Message + Environment.NewLine + "An Error Occured while trying to Filter the grid with filterClause '" +
+                    e.Message + Environment.NewLine +
+                    "An Error Occured while trying to Filter the grid with filterClause '" +
                     filterClauseString + "'", e);
             }
         }
+
         /// <summary>
         /// Applies a search clause to the underlying collection and reloads the grid.
         /// The search allows you to determine which objects to display using
@@ -569,9 +572,10 @@ namespace Habanero.Faces.Base
         public void ApplySearch(string searchClause, string orderBy)
         {
             IBusinessObjectCollection collection = BORegistry.DataAccessor.BusinessObjectLoader.
-               GetBusinessObjectCollection(ClassDef, searchClause, orderBy);
+                GetBusinessObjectCollection(ClassDef, searchClause, orderBy);
             SetBusinessObjectCollection(collection);
         }
+
         /// <summary>
         /// Applies a search clause to the underlying collection and reloads the grid.
         /// The search allows you to determine which objects to display using
@@ -584,6 +588,7 @@ namespace Habanero.Faces.Base
             string filterClauseString = searchClause.GetFilterClauseString("%", "'");
             ApplySearch(filterClauseString, orderBy);
         }
+
         /// <summary>
         /// See <see cref="IGridBase.RefreshGrid"/>.
         /// This actually just Cancels all edits and reloads the 
@@ -600,7 +605,6 @@ namespace Habanero.Faces.Base
             SetBusinessObjectCollection(col);
             SelectedBusinessObject = bo;
         }
-
     }
 
 
