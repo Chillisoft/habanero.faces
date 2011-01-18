@@ -1,88 +1,106 @@
 require 'rake'
 require 'albacore'
 
-task :default => [:clean_up,:do_habanero,:do_smooth,:do_faces] #This may look  wierd but what we are constructing is a hash where the key is :defaulte and the value for that key is the list of tasks
+#______________________________________________________________________________
+#---------------------------------SETTINGS-------------------------------------
 
-task :do_habanero => [:clean_habanero,:checkout_habanero,:msdo_habanero] # these are the sub tasks that the do_habanero task shall run
+# set up the build script folder so we can pull in shared rake scripts.
+# This should be the same for most projects, but if your project is a level
+# deeper in the repo you will need to add another ..
+bs = File.dirname(__FILE__)
+bs = File.join(bs, "..") if bs.index("branches") != nil
+bs = File.join(bs, "../../../HabaneroCommunity/BuildScripts")
+$:.unshift(File.expand_path(bs)) unless
+    $:.include?(bs) || $:.include?(File.expand_path(bs))
 
-task :do_smooth => [:checkout_smooth,:copy_dlls_to_smooth_lib,:clean_smooth,:msdo_smooth]
+#------------------------build settings--------------------------
+require 'rake-settings.rb'
 
-task :do_faces => [:copy_dlls_to_faces_lib,:clean_faces,:msdo_faces,:run_nunit,:commit_lib]
+msbuild_settings = {
+  :properties => {:configuration => :release},
+  :targets => [:clean, :rebuild],
+  :verbosity => :quiet,
+  #:use => :net35  ;uncomment to use .net 3.5 - default is 4.0
+}
 
-$Ncover_path = "C:/Program Files (x86)/NCover/NCover.Console.exe"
-$Nunit_path = "C:/Program Files (x86)/NUnit 2.5.6/bin/net-2.0/nunit-console-x86.exe"# nunit-console-x86.exe is run to prevent the "Profiler connection not established" error from old Ncover versions
-$Nunit_options = '/xml=nunit-result.xml /config=test.config'
-    
+#------------------------dependency settings---------------------
+$habanero_version = 'trunk'
+require 'rake-habanero.rb'
 
-#do_habanero tasks
-task :clean_habanero do #deletes bin folder before build
-	FileUtils.rm_rf 'temp/Habanero/trunk/bin/'
-end
-exec :checkout_habanero do |cmd| #command to check out habanero source using SVN
-	cmd.path_to_command = "../../../Utilities/BuildServer/Subversion/bin/svn.exe" # for some reason this doesn't pick up environment variables so I can't just use 'svn'
-	cmd.parameters 'checkout "http://delicious:8080/svn/habanero/Habanero/trunk" "temp/Habanero/trunk/" --username chilli --password chilli --non-interactive'
-end
+$smooth_version = 'trunk'
+require 'rake-smooth.rb'
 
-msbuild :msdo_habanero do |msb| #builds habanero with msbuild
-    msb.targets :rebuild 
-	msb.properties :configuration => :Debug
-	msb.path_to_command = "C:/Windows/Microsoft.NET/Framework64/v4.0.30319/MSBuild.exe"
-	msb.verbosity = "quiet"
-    msb.solution = "temp/Habanero/trunk/source/Habanero.sln"
-  end
-  
-  
-#do_smooth tasks
-  task :copy_dlls_to_smooth_lib  do #copies habanero DLLs to smooth lib
-	FileUtils.cp Dir.glob('temp/Habanero/trunk/bin/Habanero*.dll'), 'temp/HabaneroCommunity/SmoothHabanero/trunk/lib'
-end
+#------------------------project settings------------------------
+$basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/Faces/trunk'
+$solution = "source/Habanero.Faces - 2010.sln"
 
-  task :clean_smooth do #deletes bin folder before build
-	FileUtils.rm_rf 'temp/HabaneroCommunity/SmoothHabanero/trunk/bin'
-end
+#______________________________________________________________________________
+#---------------------------------TASKS----------------------------------------
 
-exec :checkout_smooth do |cmd| #command to check out smooth source using SVN
-	cmd.path_to_command = "../../../Utilities/BuildServer/Subversion/bin/svn.exe"
-	cmd.parameters %q(checkout "http://delicious:8080/svn/habanero/HabaneroCommunity/SmoothHabanero/trunk/" "temp/HabaneroCommunity/SmoothHabanero/trunk/" --username chilli --password chilli --non-interactive)
-	# %q(...) is used to encase the parameters in a quote, necessary  because of the space in 'HabaneroCommunity'
-end
+desc "Runs the build all task"
+task :default => [:build_all]
 
-msbuild :msdo_smooth do |msb| #builds smooth with msbuild
-    msb.targets :Build
-	msb.path_to_command = "C:/Windows/Microsoft.NET/Framework64/v4.0.30319/MSBuild.exe"
-	msb.verbosity = "quiet"
-    msb.solution = "temp/HabaneroCommunity/SmoothHabanero/trunk/source/SmoothHabanero_2010.sln"
-  end
-  
-  
-#do_faces tasks
-  task :copy_dlls_to_faces_lib  do #copies habanero and smooth DLLs to faces lib
-	FileUtils.cp Dir.glob('temp/Habanero/trunk/bin/Habanero*.dll'), 'lib'
-	FileUtils.cp Dir.glob('temp/HabaneroCommunity/SmoothHabanero/trunk/bin/Habanero.Smooth*.dll'), 'lib'
-end
-  
-    task :clean_faces do #deletes bin folder before build
+desc "Rakes habanero+smooth, builds Faces"
+task :build_all => [:create_temp, :rake_habanero, :rake_smooth, :build, :delete_temp]
+
+desc "Builds Faces, including tests"
+task :build => [:clean, :updatelib, :msbuild, :test, :commitlib]
+
+#------------------------build Faces  --------------------
+
+desc "Cleans the bin folder"
+task :clean do
+	puts cyan("Cleaning bin folder")
 	FileUtils.rm_rf 'bin'
 end
 
-msbuild :msdo_faces do |msb| #builds faces with msbuild
-    msb.targets :Build
-	msb.path_to_command = "C:/Windows/Microsoft.NET/Framework64/v4.0.30319/MSBuild.exe" #faces trunk at the time of the creation of this script was using .Net 4 features
-	msb.verbosity = "quiet"
-  msb.solution = "source/Habanero.Faces - 2010.sln"
-  end
-  
-nunit :run_nunit do |nunit|
- nunit.path_to_command = $Nunit_path
- nunit.assemblies 'bin\Habanero.Faces.Test.Win.dll','bin\Habanero.Faces.Test.VWG.dll','bin\Habanero.Faces.Test.Base.dll'
- nunit.options '/xml=nunit-result.xml'
+svn :update_lib_from_svn do |s|
+	s.parameters "update lib"
 end
 
-task :clean_up do
-FileUtils.rm_rf 'temp'
+task :updatelib => :update_lib_from_svn do 
+	puts cyan("Updating lib")
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Base.dll'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Base.pdb'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Base.xml'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.BO.dll'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.BO.pdb'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.BO.xml'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Console.dll'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Console.pdb'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Console.xml'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.DB.dll'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.DB.pdb'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.DB.xml'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.BO.dll'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.BO.pdb'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.DB.dll'), 'lib'	
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.DB.pdb'), 'lib'	
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.dll'), 'lib'	
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.pdb'), 'lib'	
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.Structure.dll'), 'lib'	
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.Structure.pdb'), 'lib'	
+	
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Smooth.dll'), 'lib'	
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Smooth.pdb'), 'lib'	
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Naked.dll'), 'lib'	
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Naked.pdb'), 'lib'	
 end
 
-exec :commit_lib do |cmd| #command to check out habanero source using SVN
-	cmd.path_to_command = "../../../Utilities/BuildServer/Subversion/bin/svn.exe" # for some reason this doesn't pick up environment variables so I can't just use 'svn'
-	cmd.parameters %q(ci -m autocheckin --username chilli --password chilli) 
+desc "Builds the solution with msbuild"
+msbuild :msbuild do |msb| 
+	puts cyan("Building #{$solution} with msbuild")
+	msb.update_attributes msbuild_settings
+	msb.solution = $solution
+end
+
+desc "Runs the tests"
+nunit :test do |nunit|
+	puts cyan("Running tests")
+	nunit.assemblies 'bin\Habanero.Faces.Test.Win.dll','bin\Habanero.Faces.Test.VWG.dll','bin\Habanero.Faces.Test.Base.dll'
+end
+
+svn :commitlib do |s|
+	puts cyan("Commiting lib")
+	s.parameters "ci lib -m autocheckin"
 end
