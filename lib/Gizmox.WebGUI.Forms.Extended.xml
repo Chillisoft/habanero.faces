@@ -4,34 +4,20 @@
         <name>Gizmox.WebGUI.Forms.Extended</name>
     </assembly>
     <members>
-        <member name="T:Gizmox.WebGUI.Forms.Editors.FCKeditorLanguageDirection">
+        <member name="T:Gizmox.WebGUI.Forms.Skins.WorkspaceTabsSkin">
             <summary>
-            Defines constants that specify the content flow direction for text in FCKeditor
+            WorkspaceTabs Skin
             </summary>
         </member>
-        <member name="F:Gizmox.WebGUI.Forms.Editors.FCKeditorLanguageDirection.LeftToRight">
+        <member name="P:Gizmox.WebGUI.Forms.Skins.WorkspaceTabsSkin.TabsTopContainerStyle">
             <summary>
-            Indicates that content should flow from left to right.
+            Gets the tabs container style.
             </summary>
-        </member>
-        <member name="F:Gizmox.WebGUI.Forms.Editors.FCKeditorLanguageDirection.RightToLeft">
-            <summary>
-            Indicates that content should flow from right to left.
-            </summary>
+            <value>The tabs container style.</value>
         </member>
         <member name="T:Gizmox.WebGUI.Forms.Editors.FCKEditor">
             <summary>
             Summary description for FCKEditor
-            </summary>
-        </member>
-        <member name="F:Gizmox.WebGUI.Forms.Editors.FCKEditor.ValueChangeEvent">
-            <summary>
-            The ValueChange event registration.
-            </summary>
-        </member>
-        <member name="F:Gizmox.WebGUI.Forms.Editors.FCKEditor.ValueChangeQueuedEvent">
-            <summary>
-            The ValueChange event registration.
             </summary>
         </member>
         <member name="F:Gizmox.WebGUI.Forms.Editors.FCKEditor.components">
@@ -81,24 +67,14 @@
             the contents of this method with the code editor.
             </summary>
         </member>
-        <member name="P:Gizmox.WebGUI.Forms.Editors.FCKEditor.ValueChangeHandler">
-            <summary>
-            Gets the hanlder for the ValueChange event.
-            </summary>
-        </member>
         <member name="E:Gizmox.WebGUI.Forms.Editors.FCKEditor.ValueChange">
             <summary>
-            Occurs when the Value property changes.
-            </summary>
-        </member>
-        <member name="P:Gizmox.WebGUI.Forms.Editors.FCKEditor.ValueChangeQueuedHandler">
-            <summary>
-            Gets the hanlder for the ValueChangeQueued event.
+            Occurs when the Value property changes.  
             </summary>
         </member>
         <member name="E:Gizmox.WebGUI.Forms.Editors.FCKEditor.ValueChangeQueued">
             <summary>
-            Occurs when the Value property changes (Queued).
+            Occurs when the Value property changes (Queued).  
             </summary>
         </member>
         <member name="P:Gizmox.WebGUI.Forms.Editors.FCKEditor.BasePath">
@@ -336,54 +312,6 @@
             </summary>
             <value>The image browser URL.</value>
         </member>
-        <member name="T:Gizmox.WebGUI.Forms.Editors.FCKeditorConfigurations">
-            <summary>
-            Hold the FCK editor Configurations
-            </summary>
-        </member>
-        <member name="M:Gizmox.WebGUI.Forms.Editors.FCKeditorConfigurations.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Gizmox.WebGUI.Forms.Editors.FCKeditorConfigurations"/> class.
-            </summary>
-            <param name="info">The info.</param>
-            <param name="context">The context.</param>
-        </member>
-        <member name="M:Gizmox.WebGUI.Forms.Editors.FCKeditorConfigurations.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Populates a <see cref="T:System.Runtime.Serialization.SerializationInfo"/> with the data needed to serialize the target object.
-            </summary>
-            <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> to populate with data.</param>
-            <param name="context">The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization.</param>
-            <exception cref="T:System.Security.SecurityException">
-            The caller does not have the required permission.
-            </exception>
-        </member>
-        <member name="P:Gizmox.WebGUI.Forms.Editors.FCKeditorConfigurations.Item(System.String)">
-            <summary>
-            Gets or sets the <see cref="T:System.String"/> with the specified configuration name.
-            </summary>
-            <value></value>
-        </member>
-        <member name="T:Gizmox.WebGUI.Forms.Editors.Skins.FCKEditorSkin">
-            <summary>
-            FCKEditor Skin
-            </summary>
-        </member>
-        <member name="T:Gizmox.WebGUI.Forms.SurfacePanel">
-            <summary>
-            Summary description for SurfacePanel
-            </summary>
-        </member>
-        <member name="M:Gizmox.WebGUI.Forms.SurfacePanel.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:Gizmox.WebGUI.Forms.SurfacePanel"/> class.
-            </summary>
-        </member>
-        <member name="T:Gizmox.WebGUI.Forms.Skins.SurfacePanelSkin">
-            <summary>
-            SurfacePanel Skin
-            </summary>
-        </member>
         <member name="T:Gizmox.WebGUI.Forms.WatermarkTextBox">
             <summary>
             Summary description for WatermarkTextBox
@@ -417,6 +345,36 @@
             WatermarkTextBox Skin
             </summary>
         </member>
+        <member name="T:Gizmox.WebGUI.Forms.SurfacePanel">
+            <summary>
+            Summary description for SurfacePanel
+            </summary>
+        </member>
+        <member name="M:Gizmox.WebGUI.Forms.SurfacePanel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Gizmox.WebGUI.Forms.SurfacePanel"/> class.
+            </summary>
+        </member>
+        <member name="T:Gizmox.WebGUI.Forms.Editors.Skins.FCKEditorSkin">
+            <summary>
+            FCKEditor Skin
+            </summary>
+        </member>
+        <member name="T:Gizmox.WebGUI.Forms.Editors.FCKeditorLanguageDirection">
+            <summary>
+            Defines constants that specify the content flow direction for text in FCKeditor
+            </summary>
+        </member>
+        <member name="F:Gizmox.WebGUI.Forms.Editors.FCKeditorLanguageDirection.LeftToRight">
+            <summary>
+            Indicates that content should flow from left to right.
+            </summary>
+        </member>
+        <member name="F:Gizmox.WebGUI.Forms.Editors.FCKeditorLanguageDirection.RightToLeft">
+            <summary>
+            Indicates that content should flow from right to left.
+            </summary>
+        </member>
         <member name="T:Gizmox.WebGUI.Forms.WorkspaceTabs">
             <summary>
             Manages a related set of tab pages.
@@ -433,36 +391,17 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="F:Gizmox.WebGUI.Forms.WorkspaceTabs.ShowCloseButtonProperty">
-            <summary>
-            Provides a property reference to ShowCloseButton property.
-            </summary>
-        </member>
         <member name="P:Gizmox.WebGUI.Forms.WorkspaceTabs.ClientUpdateHandler">
             <summary>
             Gets or sets the client update handler.
             </summary>
             <value>The client update handler.</value>
         </member>
-        <member name="P:Gizmox.WebGUI.Forms.WorkspaceTabs.Multiline">
-            <summary>
-            Gets or sets a value indicating whether more than one row of tabs can be displayed.
-            </summary>
-            <value></value>
-            <returns>true if more than one row of tabs can be displayed; otherwise, false. The default is true.</returns>
-            <PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
-        </member>
         <member name="P:Gizmox.WebGUI.Forms.WorkspaceTabs.TabPages">
             <summary>
             Gets the collection of tab pages in this tab control.
             </summary>
             <returns>A <see cref="T:Gizmox.WebGUI.Forms.TabPageCollection"></see> that contains the <see cref="T:Gizmox.WebGUI.Forms.TabPage"></see> objects in this <see cref="T:Gizmox.WebGUI.Forms.TabControl"></see>.</returns>
-        </member>
-        <member name="P:Gizmox.WebGUI.Forms.WorkspaceTabs.ShowCloseButton">
-            <summary>
-            Gets or Sets value indication if the close button (when Appearance==TabAppearance.Workspace) 
-            should be shown
-            </summary>
         </member>
         <member name="T:Gizmox.WebGUI.Forms.WorkspaceTab">
             <summary>
@@ -509,16 +448,38 @@
             </summary>
             <value></value>
         </member>
-        <member name="T:Gizmox.WebGUI.Forms.Skins.WorkspaceTabsSkin">
+        <member name="T:Gizmox.WebGUI.Forms.Editors.FCKeditorConfigurations">
             <summary>
-            WorkspaceTabs Skin
+            Hold the FCK editor Configurations
             </summary>
         </member>
-        <member name="P:Gizmox.WebGUI.Forms.Skins.WorkspaceTabsSkin.TabsTopContainerStyle">
+        <member name="M:Gizmox.WebGUI.Forms.Editors.FCKeditorConfigurations.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
-            Gets the tabs container style.
+            Initializes a new instance of the <see cref="T:Gizmox.WebGUI.Forms.Editors.FCKeditorConfigurations"/> class.
             </summary>
-            <value>The tabs container style.</value>
+            <param name="info">The info.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Gizmox.WebGUI.Forms.Editors.FCKeditorConfigurations.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Populates a <see cref="T:System.Runtime.Serialization.SerializationInfo"/> with the data needed to serialize the target object.
+            </summary>
+            <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> to populate with data.</param>
+            <param name="context">The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization.</param>
+            <exception cref="T:System.Security.SecurityException">
+            The caller does not have the required permission.
+            </exception>
+        </member>
+        <member name="P:Gizmox.WebGUI.Forms.Editors.FCKeditorConfigurations.Item(System.String)">
+            <summary>
+            Gets or sets the <see cref="T:System.String"/> with the specified configuration name.
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Gizmox.WebGUI.Forms.Skins.SurfacePanelSkin">
+            <summary>
+            SurfacePanel Skin
+            </summary>
         </member>
     </members>
 </doc>

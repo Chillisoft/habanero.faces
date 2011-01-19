@@ -238,28 +238,6 @@
             <param name="objWriter">The writer.</param>
             <returns>The writer for chaining.</returns>
         </member>
-        <member name="F:Gizmox.WebGUI.Forms.Charts.Data.mobjSeries">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:Gizmox.WebGUI.Forms.Charts.Data.mobjOwner">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:Gizmox.WebGUI.Forms.Charts.Data.GetChartDataXML(System.Xml.XmlTextWriter,System.Int32@)">
-            <summary>
-            Gets the chart data XML.
-            </summary>
-            <param name="objWriter">The obj writer.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Gizmox.WebGUI.Forms.Charts.Data.Gizmox#WebGUI#Forms#Charts#IChartData#FireClick">
-            <summary>
-            Fires the click.
-            </summary>
-        </member>
         <member name="M:Gizmox.WebGUI.Forms.Charts.AxisX.GetChartDataXML(System.Xml.XmlTextWriter,System.Int32@)">
             <summary>
             Gets the chart data XML.
@@ -350,6 +328,28 @@
             <returns></returns>
         </member>
         <member name="M:Gizmox.WebGUI.Forms.Charts.Title.Gizmox#WebGUI#Forms#Charts#IChartData#FireClick">
+            <summary>
+            Fires the click.
+            </summary>
+        </member>
+        <member name="F:Gizmox.WebGUI.Forms.Charts.Data.mobjSeries">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Gizmox.WebGUI.Forms.Charts.Data.mobjOwner">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Gizmox.WebGUI.Forms.Charts.Data.GetChartDataXML(System.Xml.XmlTextWriter,System.Int32@)">
+            <summary>
+            Gets the chart data XML.
+            </summary>
+            <param name="objWriter">The obj writer.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Gizmox.WebGUI.Forms.Charts.Data.Gizmox#WebGUI#Forms#Charts#IChartData#FireClick">
             <summary>
             Fires the click.
             </summary>
