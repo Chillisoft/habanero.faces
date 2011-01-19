@@ -99,6 +99,18 @@ namespace Habanero.Faces.VWG
             set { base.AutoCompleteSource = ComboBoxAutoCompleteSourceVWG.GetAutoCompleteSource(value); }
         }
 
+        int IComboBox.SelectedIndex
+        {
+            get { return base.SelectedIndex; }
+            set {
+                // Peter, 2011/01/19:
+                // this has to be done twice for a value of -1 because it doesn't change to -1 on the first set.
+                // this seems to be caused by a b ug in VWG 6.4.0
+                if (value == -1) base.SelectedIndex = value;
+                base.SelectedIndex = value;
+            }
+        }
+
 
         /// <summary>
         /// Represents the collection of items in a ComboBox

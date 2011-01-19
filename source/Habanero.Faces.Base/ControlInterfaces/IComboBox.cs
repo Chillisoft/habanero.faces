@@ -28,10 +28,10 @@ namespace Habanero.Faces.Base
     {
 
 
-//        /// <summary>
-//        /// Gets or sets the index specifying the currently selected item
-//        /// </summary>
-//        int SelectedIndex { get; set; }
+        /// <summary>
+        /// Gets or sets the index specifying the currently selected item
+        /// </summary>
+        new int SelectedIndex { get; set; }
 
 
         /// <summary>

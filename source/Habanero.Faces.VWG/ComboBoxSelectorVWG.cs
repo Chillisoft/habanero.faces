@@ -83,11 +83,11 @@ namespace Habanero.Faces.VWG
             set
             {
                 _manager.SelectedBusinessObject = value;
-                if (value == null)
+                if (value == null || _manager.SelectedBusinessObject == null)
                 {
                     this.SelectedValue = null;
                     this.Text = null;
-        }
+                }
             }
         }
 
