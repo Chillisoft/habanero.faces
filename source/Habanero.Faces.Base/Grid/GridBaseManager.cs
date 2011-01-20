@@ -224,7 +224,7 @@ namespace Habanero.Faces.Base
             {
                 this.ClassDef = _boCol.ClassDef;
             }
-            IUIDef uiDef = ((ClassDef) this.ClassDef).GetUIDef(UiDefName);
+            var uiDef = ((ClassDef) this.ClassDef).GetUIDef(UiDefName);
             if (uiDef == null)
             {
                 throw new ArgumentException
