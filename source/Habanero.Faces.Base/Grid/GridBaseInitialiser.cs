@@ -54,9 +54,9 @@ namespace Habanero.Faces.Base
                 //Try to get the id column from the grid. If there is no id column or if the id column
                 // is not set up with a header then an error should be thrown. This looks like checking if 
                 // column is null and throwing the error would achieve this objective.
-                IDataGridViewColumn column = GridBase.Columns[GetGridIDColumnName()];
+                IDataGridViewColumn idColumn = GetIDColumn();
 #pragma warning disable 168
-                string text = column.HeaderText;
+                string text = idColumn.HeaderText;
 #pragma warning restore 168
             }
             catch (NullReferenceException)
@@ -65,6 +65,11 @@ namespace Habanero.Faces.Base
                     ("You cannot call initialise with no classdef since the ID column has not been added to the grid");
             }
             IsInitialised = true;
+        }
+
+        private IDataGridViewColumn GetIDColumn()
+        {
+            return GridBase.Columns[GetGridIDColumnName()];
         }
 
         /// <summary>
