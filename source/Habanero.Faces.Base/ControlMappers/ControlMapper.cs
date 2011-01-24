@@ -522,7 +522,7 @@ namespace Habanero.Faces.Base
             SetError(CurrentBOProp().InvalidReason);
         }
 
-        private void SetError(string errorMessage)
+        protected void SetError(string errorMessage)
         {
             if (ErrorProvider == null) return;
             ErrorProvider.SetError(Control, errorMessage);
