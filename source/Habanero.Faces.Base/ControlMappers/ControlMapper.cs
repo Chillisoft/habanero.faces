@@ -248,7 +248,7 @@ namespace Habanero.Faces.Base
         /// Updates the isEditable flag and updates 
         /// the control according to the current state
         /// </summary>
-        private void UpdateIsEditable()
+        protected virtual void UpdateIsEditable()
         {
             bool virtualPropertySetExists = false;
             if (_businessObject != null && IsPropertyReflective()  &&  !IsPropertyViaRelationship())
@@ -460,9 +460,6 @@ namespace Habanero.Faces.Base
             return controlMapper;
         }
 
-
-
-
         private static bool IsTypeOfIControlMapper(Type mapperType)
         {
             return mapperType != null 
@@ -477,7 +474,7 @@ namespace Habanero.Faces.Base
         {
             if (_businessObject != null)
             {
-                BOMapper boMapper = new BOMapper(_businessObject);
+                var boMapper = new BOMapper(_businessObject);
                 return boMapper.GetPropertyValueToDisplay(PropertyName);
             }
             return null;
@@ -491,7 +488,7 @@ namespace Habanero.Faces.Base
         protected virtual void SetPropertyValue(object value)
         {
             if (_businessObject == null) return;
-            BOMapper boMapper = new BOMapper(_businessObject);
+            var boMapper = new BOMapper(_businessObject);
 
             try
             {
