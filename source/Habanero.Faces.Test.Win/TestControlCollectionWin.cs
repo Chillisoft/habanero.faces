@@ -39,7 +39,8 @@ namespace Habanero.Faces.Test.Win
             col.Add(adapter);
             //---------------Test Result -----------------------
             Assert.AreEqual(1, col.Count);
-            var controlHabanero = col[0] as IWinFormsControlAdapter; ;
+            var controlHabanero = col[0] as IWinFormsControlAdapter; 
+            Assert.IsNotNull(controlHabanero);
             Assert.AreSame(adapter.WrappedControl, controlHabanero.WrappedControl);
         }
 
