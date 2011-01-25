@@ -434,7 +434,8 @@ namespace Habanero.Faces.Win
             BorderLayoutManager layoutManager = this.ControlFactory.CreateBorderLayoutManager(form);
             layoutManager.AddControl(_splitContainer, BorderLayoutManager.Position.Centre);
             SplitContainer splitContainer1 = (SplitContainer)_splitContainer;
-            //            splitContainer1.IsSplitterFixed = true;
+            //splitContainer1.IsSplitterFixed = true;
+            splitContainer1.FixedPanel = FixedPanel.Panel1;
             splitContainer1.Size = new System.Drawing.Size(400, 450);
             splitContainer1.SplitterDistance = menuWidth;
             splitContainer1.Panel1MinSize = menuWidth;

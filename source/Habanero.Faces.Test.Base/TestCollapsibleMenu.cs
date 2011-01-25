@@ -108,6 +108,42 @@ namespace Habanero.Faces.Test.Base
             //---------------Test Result -----------------------
             Assert.AreEqual(1, formHabanero.Controls.Count);
         }
+
+        [Test]
+        public void Test_DockInForm_WithWidth_ShouldSetCollapsibleMenuWidth()
+        {
+            //---------------Set up test pack-------------------
+            IFormHabanero formHabanero = GetControlFactory().CreateForm();
+            formHabanero.Width = RandomValueGen.GetRandomInt(250, 300);
+            IMainMenuHabanero mainMenu = CreateControl();
+            int menuWidth = RandomValueGen.GetRandomInt(100, 200);
+            //---------------Assert Precondition----------------
+            Assert.AreEqual(0, formHabanero.Controls.Count);
+            //---------------Execute Test ----------------------
+            mainMenu.DockInForm(formHabanero, menuWidth);
+            //---------------Test Result -----------------------
+            var collapsiblePanelGroupControl = TestUtil.AssertIsInstanceOf<ICollapsiblePanelGroupControl>(mainMenu);
+            Assert.AreEqual(menuWidth, collapsiblePanelGroupControl.Width);
+        }
+
+        [Test]
+        public void Test_DockInForm_WithWidth_WhenResized_ShouldHaveFixedCollapsibleMenuWidth_BUGFIX_1510()
+        {
+            //---------------Set up test pack-------------------
+            IFormHabanero formHabanero = GetControlFactory().CreateForm();
+            formHabanero.Width = RandomValueGen.GetRandomInt(250, 300);
+            IMainMenuHabanero mainMenu = CreateControl();
+            int menuWidth = RandomValueGen.GetRandomInt(100, 200);
+            mainMenu.DockInForm(formHabanero, menuWidth);
+            var collapsiblePanelGroupControl = (ICollapsiblePanelGroupControl)mainMenu;
+            //---------------Assert Precondition----------------
+            Assert.AreEqual(menuWidth, collapsiblePanelGroupControl.Width);
+            //---------------Execute Test ----------------------
+            //Increase the form width by 2 to force a resize
+            formHabanero.Width *= 2;
+            //---------------Test Result -----------------------
+            Assert.AreEqual(menuWidth, collapsiblePanelGroupControl.Width);
+        }
     }
 
 
