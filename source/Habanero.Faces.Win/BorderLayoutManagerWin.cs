@@ -52,7 +52,7 @@ namespace Habanero.Faces.Win
         /// </summary>
         protected override void SetupDockOfControl(IControlHabanero control, Position pos)
         {
-            _ctl = (Control)control;
+            _ctl = control.GetControl();
             switch (pos)
             {
                 case Position.Centre:
