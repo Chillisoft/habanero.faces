@@ -29,6 +29,7 @@ using Habanero.Test.BO;
 using Habanero.Faces.Base;
 using NUnit.Framework;
 
+// ReSharper disable InconsistentNaming
 namespace Habanero.Faces.Test.Base
 {
     public abstract class TestGridBase 
@@ -1088,6 +1089,22 @@ namespace Habanero.Faces.Test.Base
             //---------------Test Result -----------------------
             IDataGridViewCell dataGridViewCell = gridBase.Rows[0].Cells[0];
             Assert.AreEqual(expectedDate.ToString(requiredFormat), dataGridViewCell.FormattedValue);
+        }
+
+        [Test]
+        public void Test_GetColumnCount_ShouldReturnTheNumberOfColumnsInTheGrid()
+        {
+            //---------------Set up test pack-------------------
+            MyBO.LoadClassDefWithDateTime();
+            const string requiredFormat = "dd.MMM.yyyy";
+            IDataGridViewColumn column;
+            IGridBase gridBase = CreateGridBaseWithDateCustomFormatCol(out column, requiredFormat);
+            //---------------Assert Precondition----------------
+            Assert.AreEqual(1, gridBase.Columns.Count);
+            //---------------Execute Test ----------------------
+            var columnCount = gridBase.ColumnCount;
+            //---------------Test Result -----------------------
+            Assert.AreEqual(1, columnCount);
         }
 
         #region Utility Methods 

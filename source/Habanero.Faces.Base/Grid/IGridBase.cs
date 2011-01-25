@@ -261,5 +261,12 @@ namespace Habanero.Faces.Base
         /// Gets or sets the delegate that checks whether the user wants to delete selected rows
         /// </summary>
         CheckUserConfirmsDeletion CheckUserConfirmsDeletionDelegate { get; set; }
+
+
+        /// <summary>
+        /// Gets the Number of Columns in the Grid
+        /// </summary>
+        int ColumnCount { get; }
+
     }
 }
