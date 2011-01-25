@@ -22,76 +22,7 @@ using Habanero.Faces.Base;
 
 namespace Habanero.Faces.Win
 {
-    /// <summary>
-    /// This is an interface used specificaly for adapting a any control that inherits for Control in 
-    /// so that it can be treated as an IControlHabanero and can therefore be used by Faces for Habanero.Binding,
-    /// <see cref="PanelBuilder"/>
-    /// or any other such required behaviour.
-    /// </summary>
-    public interface IWinFormsControlAdapter : IControlHabanero, IEquatable<Control>//, IComparable<Control>, IComparable<IWinFormsControlAdapter>
-    {
-        /// <summary>
-        /// The Control being wrapped
-        /// </summary>
-        Control WrappedControl { get; }
-    }
-
-    /// <summary>
-    /// This is an interface used specificaly for adapting a any control that inherits from System.Windows.Control 
-    /// so that it can be treated as an IControlHabanero and can therefore be used by Faces for Habanero.Binding,
-    /// <see cref="PanelBuilder"/>
-    /// or any other such required behaviour.
-    /// </summary>
-    public interface IWinFormsDateTimePickerAdapter : IDateTimePicker, IWinFormsControlAdapter
-    {
-    }
-    /// <summary>
-    /// This is an interface used specificaly for adapting a any control that inherits from System.Windows.Control 
-    /// so that it can be treated as an IControlHabanero and can therefore be used by Faces for Habanero.Binding,
-    /// <see cref="PanelBuilder"/>
-    /// or any other such required behaviour.
-    /// </summary>
-    public interface IWinFormsComboBoxAdapter : IComboBox, IWinFormsControlAdapter
-    {
-    }
-
-    /// <summary>
-    /// This is an interface used specificaly for adapting a any control that inherits from System.Windows.Control 
-    /// so that it can be treated as an IControlHabanero and can therefore be used by Faces for Habanero.Binding,
-    /// <see cref="PanelBuilder"/>
-    /// or any other such required behaviour.
-    /// </summary>
-    public interface IWinFormsGridAdapter : IDataGridView, IWinFormsControlAdapter
-    {
-    }
-
-    /// <summary>
-    /// This is an interface used specificaly for adapting a any control that inherits from System.Windows.Control 
-    /// so that it can be treated as an IControlHabanero and can therefore be used by Faces for Habanero.Binding,
-    /// <see cref="PanelBuilder"/>
-    /// or any other such required behaviour.
-    /// </summary>
-    public interface IWinFormsTextBoxAdapter : ITextBox, IWinFormsControlAdapter
-    {
-    }
-    /// <summary>
-    /// This is an interface used specificaly for adapting a any control that inherits from System.Windows.Control 
-    /// so that it can be treated as an IControlHabanero and can therefore be used by Faces for Habanero.Binding,
-    /// <see cref="PanelBuilder"/>
-    /// or any other such required behaviour.
-    /// </summary>
-    public interface IWinFormsCheckBoxAdapter : ICheckBox, IWinFormsControlAdapter
-    {
-    }
-    /// <summary>
-    /// This is an interface used specificaly for adapting a any control that inherits from System.Windows.Control 
-    /// so that it can be treated as an IControlHabanero and can therefore be used by Faces for Habanero.Binding,
-    /// <see cref="PanelBuilder"/>
-    /// or any other such required behaviour.
-    /// </summary>
-    public interface IWinFormsNumericUpDownAdapter : INumericUpDown, IWinFormsControlAdapter
-    {
-    }
+   
 
     /// <summary>
     /// Defines controls, which are components with visual representation

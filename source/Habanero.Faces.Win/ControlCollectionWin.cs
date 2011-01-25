@@ -44,7 +44,11 @@ namespace Habanero.Faces.Win
         /// </summary>
         public IControlHabanero this[int index]
         {
-            get { return (IControlHabanero)_col[index]; }
+            get
+            {
+                var control = _col[index];
+                return control as IControlHabanero ?? new WinFormsControlAdapter(control);
+            }
         }
 
         /// <summary>
@@ -62,7 +66,7 @@ namespace Habanero.Faces.Win
         /// <returns>Returns the position at which the control was added</returns>
         public void Add(IControlHabanero value)
         {
-            _col.Add((Control) value);
+            _col.Add(value.GetControl());
         }
 
         /// <summary>
@@ -72,7 +76,7 @@ namespace Habanero.Faces.Win
         /// <returns>Returns the index position if found, or -1</returns>
         public int IndexOf(IControlHabanero value)
         {
-            return _col.IndexOf((Control) value);
+            return _col.IndexOf(value.GetControl());
         }
 
         /// <summary>
