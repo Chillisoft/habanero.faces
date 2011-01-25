@@ -138,7 +138,6 @@ namespace Habanero.Faces.Base
         /// </summary>
         public ReadOnlyCollection<T> OptionsView
         {
-//            get { return _allOptions.AsReadOnly(); }
             get { return new ReadOnlyCollection<T>(_allOptions); }
         }
  
@@ -156,7 +155,6 @@ namespace Habanero.Faces.Base
                     _selectedOptions = new List<T>();
                 }
                 OriginalSelections = ShallowCopy(_selectedOptions);
-                //_originalSelections = .GetRange(0, _selectedOptions.Count);
                 FireSelectionsChanged();
             }
         }
@@ -173,7 +171,6 @@ namespace Habanero.Faces.Base
         {
             get
             {
-//                return _selectedOptions == null ? null : _selectedOptions.AsReadOnly();
                 return new ReadOnlyCollection<T>(_selectedOptions);
             }
         }
@@ -199,7 +196,6 @@ namespace Habanero.Faces.Base
                     }
                 }
                 return availableOptions;
-//                return _allOptions.FindAll(obj => !_selectedOptions.Contains(obj));
             }
         }
 
@@ -209,7 +205,6 @@ namespace Habanero.Faces.Base
         /// </summary>
         public IList<T> Added
         {
-//            get { return _selectedOptions.FindAll(obj => !OriginalSelections.Contains(obj)); }
             get {
                 IList<T> addedItems = new List<T>();
                 foreach (T item in _selectedOptions)
@@ -229,7 +224,6 @@ namespace Habanero.Faces.Base
         /// </summary>
         public IList<T> Removed
         {
-//            get { return OriginalSelections.FindAll(obj => !_selectedOptions.Contains(obj)); }
             get
             {
                 IList<T> removedItems = new List<T>();
@@ -254,7 +248,6 @@ namespace Habanero.Faces.Base
             {
                 Select(item);
             }
-//            items.ForEach(Select);
         }
 
         /// <summary>
@@ -294,7 +287,6 @@ namespace Habanero.Faces.Base
             {
                 Deselect(item);
             }
-//            items.ForEach(Deselect);
         }
 
         /// <summary>
@@ -366,7 +358,6 @@ namespace Habanero.Faces.Base
                 newList.Add(item);
             }
             return newList;
-//            return list.FindAll(delegate { return true; });
         }
     }
 }

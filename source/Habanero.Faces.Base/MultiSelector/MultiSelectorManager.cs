@@ -100,7 +100,6 @@ namespace Habanero.Faces.Base
             {
                 AvailableOptionsListBox.Items.Add(item);
             }
-//            _model.AvailableOptions.ForEach(obj => AvailableOptionsListBox.Items.Add(obj));
             SelectionsListBox.Items.Clear();
             foreach (T obj in _model.SelectionsView)
             {

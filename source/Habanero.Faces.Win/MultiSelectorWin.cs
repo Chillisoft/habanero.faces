@@ -194,7 +194,6 @@ namespace Habanero.Faces.Win
         /// </summary>
         public ReadOnlyCollection<T> SelectionsView
         {
-            //TODO Port: Fix and test this for windows.
             get { return this._manager.SelectionsView; }
         }
 
