@@ -85,15 +85,15 @@
       <HintPath>..\..\lib\Gizmox.WebGUI.Forms.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Habanero.Base, Version=2.4.0.255, Culture=neutral, PublicKeyToken=1fb6a9c86f815c07, processorArchitecture=MSIL">
+    <Reference Include="Habanero.Base">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Habanero.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Habanero.BO, Version=2.4.0.255, Culture=neutral, PublicKeyToken=b7599514c88df7f1, processorArchitecture=MSIL">
+    <Reference Include="Habanero.BO">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Habanero.BO.dll</HintPath>
     </Reference>
-    <Reference Include="Habanero.DB, Version=2.4.0.255, Culture=neutral, PublicKeyToken=13cd8e0ef3c14147, processorArchitecture=MSIL">
+    <Reference Include="Habanero.DB">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Habanero.DB.dll</HintPath>
     </Reference>
