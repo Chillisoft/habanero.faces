@@ -28,6 +28,7 @@ using Habanero.Faces.Base;
 using Habanero.Faces.Win;
 using NUnit.Framework;
 
+// ReSharper disable InconsistentNaming
 namespace Habanero.Faces.Test.Win.Selectors
 {
     [TestFixture]
@@ -309,6 +310,86 @@ namespace Habanero.Faces.Test.Win.Selectors
             Assert.AreEqual(2, control.Controls.Count);
             Assert.IsInstanceOf<IPanel>(control.Controls[0]);
             Assert.IsInstanceOf<IReadOnlyGridControl>(control.Controls[1]);
+        }
+
+        /// <summary>
+        /// The buttons should all be disabled since no object has been set on the editor.
+        /// The new button is enabled when the business object colleciton is set
+        ///  to a non null value.
+        /// When set current Business object an event is fired by the grid.
+        /// This causes the GridSelectionChanged to be called.
+        /// This causes the SetSelectedBusinessObject to be called.
+        /// This enables or disables the save cancel and delete buttons.
+        ///        _saveButton.Enabled = isEditable;
+        ///        _cancelButton.Enabled = selectedBusinessObject.Status.IsDirty;
+        ///        _deleteButton.Enabled = !selectedBusinessObject.Status.IsNew;
+        /// 
+        /// When BO is null should disable Save button
+        /// </summary>
+        [Test]
+        public void Test_Construct_ShouldDisableAllEditorButtons_Bug_1514()
+        {
+            //---------------Set up test pack-------------------
+            IClassDef classDef = GetCustomClassDef();
+            IBOEditorControl iboEditorControl = GetControlFactory().CreateBOEditorControl(classDef);
+            //---------------Assert Precondition----------------
+            //---------------Execute Test ----------------------
+            BOGridAndEditorControlWin control =
+                new BOGridAndEditorControlWin(GetControlFactory(), iboEditorControl, classDef, "default");
+            //---------------Test Result -----------------------
+
+            IButton saveButton = control.ButtonGroupControl["Save"];
+            Assert.IsFalse(saveButton.Enabled);
+            IButton cancelButton = control.ButtonGroupControl["Cancel"];
+            Assert.IsFalse(cancelButton.Enabled);
+            IButton deleteButton = control.ButtonGroupControl["Delete"];
+            Assert.IsFalse(deleteButton.Enabled);
+            IButton newButton = control.ButtonGroupControl["New"];
+            Assert.IsFalse(newButton.Enabled);
+
+        }
+
+        /// <summary>
+        /// 
+        /// private void SaveClickHandler(object sender, EventArgs e)
+        ///{
+        ///    try
+        ///    {
+        ///        IBusinessObject currentBO = CurrentBusinessObject;
+        ///        currentBO.Save();
+        ///    }
+        ///    catch (Exception ex)
+        ///    {
+        ///        GlobalRegistry.UIExceptionNotifier.Notify(ex, "", "Error ");
+        ///    }
+        ///}
+        /// </summary>
+        [Test]
+        public void Test_Save_ShouldNotRaiseError_ifBOIsNull_Bug_1514()
+        {
+            //---------------Set up test pack-------------------
+            IClassDef classDef = GetCustomClassDef();
+            IBOEditorControl iboEditorControl = GetControlFactory().CreateBOEditorControl(classDef);
+            BOGridAndEditorControlWin control =
+                new BOGridAndEditorControlWin(GetControlFactory(), iboEditorControl, classDef, "default");
+            IButton saveButton = control.ButtonGroupControl["Save"];
+            control.CurrentBusinessObject = null;
+            bool exThrown = false;
+            //---------------Assert Precondition----------------
+            Assert.IsNull(control.CurrentBusinessObject);
+            Assert.IsFalse(exThrown);
+            //---------------Execute Test ----------------------
+            try
+            {
+                saveButton.Enabled = true;
+                saveButton.PerformClick();
+            }
+            catch (Exception)
+            {
+                exThrown = true;
+            }
+            //---------------Test Result -----------------------
+            Assert.IsFalse(exThrown, "No exception should be thrown even when CurrentBusinessObject is null");
         }
 
         [Test]
@@ -639,6 +720,24 @@ namespace Habanero.Faces.Test.Win.Selectors
             //---------------Test Result -----------------------
             IButton deleteButton = andBOGridAndEditorControlWin.ButtonGroupControl["Delete"];
             Assert.IsFalse(deleteButton.Enabled);
+        }
+
+
+        [Test]
+        public void TestSaveButtonDisabledAtConstruction_Bug_1514()
+        {
+            // ---------------Set up test pack-------------------
+            GetCustomClassDef();
+            BORegistry.DataAccessor = new DataAccessorInMemory();
+            IBOEditorControl iboEditorControl = new BusinessObjectControlStub();
+            //  ---------------Assert Precondition----------------
+
+            // ---------------Execute Test ----------------------
+            BOGridAndEditorControlWin<OrganisationTestBO> andBOGridAndEditorControlWin =
+                new BOGridAndEditorControlWin<OrganisationTestBO>(GetControlFactory(), iboEditorControl);
+            //---------------Test Result -----------------------
+            IButton saveButton = andBOGridAndEditorControlWin.ButtonGroupControl["Save"];
+            Assert.IsFalse(saveButton.Enabled);
         }
 
         [Test]
