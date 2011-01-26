@@ -124,6 +124,7 @@ namespace Habanero.Faces.Win
             _saveButton = _buttonGroupControl.AddButton("Save", SaveClickHandler);
             _deleteButton = _buttonGroupControl.AddButton("Delete", DeleteButtonClicked);
             _newButton = _buttonGroupControl.AddButton("New", NewButtonClicked);
+            _saveButton.Enabled = false;
             _cancelButton.Enabled = false;
             _deleteButton.Enabled = false;
             _newButton.Enabled = false;
@@ -134,7 +135,7 @@ namespace Habanero.Faces.Win
             try
             {
                 IBusinessObject currentBO = CurrentBusinessObject;
-                currentBO.Save();
+                if (currentBO!=null) currentBO.Save();
             }
             catch (Exception ex)
             {
@@ -572,6 +573,7 @@ namespace Habanero.Faces.Win
             _saveButton = _buttonGroupControl.AddButton("Save", SaveClickHandler);
             _deleteButton = _buttonGroupControl.AddButton("Delete", DeleteButtonClicked);
             _newButton = _buttonGroupControl.AddButton("New", NewButtonClicked);
+            _saveButton.Enabled = false;
             _cancelButton.Enabled = false;
             _deleteButton.Enabled = false;
             _newButton.Enabled = false;
