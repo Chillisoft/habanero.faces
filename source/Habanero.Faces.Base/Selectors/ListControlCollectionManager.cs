@@ -18,6 +18,7 @@ namespace Habanero.Faces.Base
         /// A handler for the SelectedIndexChanged Event
         /// </summary>
         private EventHandler _selectedIndexChanged;
+
         /// <summary>
         /// Constructor to create a new collection ListBox mapper object.
         /// </summary>
@@ -85,7 +86,7 @@ namespace Habanero.Faces.Base
         ///</summary>
         public void Clear()
         {
-             SetCollection(null);
+            SetCollection(null);
         }
 
         /// <summary>Gets the number of items displayed in the <see cref="IBOColSelector"></see>.</summary>
@@ -100,6 +101,16 @@ namespace Habanero.Faces.Base
         /// </summary>
         public bool AutoSelectFirstItem { get; set; }
 
+
+        /// <summary>
+        /// Gets and sets whether the Control is enabled or not
+        /// </summary>
+        public bool ControlEnabled
+        {
+            get { return this.Control.Enabled; }
+            set { this.Control.Enabled = value; }
+        }
+
         /// <summary>
         /// Returns the business object at the specified row number
         /// </summary>
@@ -109,13 +120,14 @@ namespace Habanero.Faces.Base
         public IBusinessObject GetBusinessObjectAtRow(int row)
         {
             if (IndexOutOfRange(row)) return null;
-            return (IBusinessObject)Control.Items[row];
+            return (IBusinessObject) Control.Items[row];
         }
 
         private bool IndexOutOfRange(int row)
         {
             return row < 0 || row >= NoOfItems;
         }
+
         /// <summary>
         /// Returns the ListBox control
         /// </summary>

@@ -500,30 +500,29 @@ namespace Habanero.Faces.VWG
                         "You cannot call add as there is no business object creator set up for the grid");
                 }
                 _grid.SelectedBusinessObject = null;
-                IBusinessObject newBo = BusinessObjectCreator.CreateBusinessObject();
+                var newBo = BusinessObjectCreator.CreateBusinessObject();
                 if (BusinessObjectEditor != null && newBo != null)
                 {
                     //This cannot be generalised for Win an Web due to the fact that you cannot 
                     // have a true Modal dialogue in VWG see VWG website for more details.
                     BusinessObjectEditor.EditObject(newBo, UiDefName, delegate(IBusinessObject bo, bool cancelled)
-                                                                           {
-                                                                               IBusinessObjectCollection collection =
-                                                                                   this.Grid.BusinessObjectCollection;
-                                                                               if (cancelled)
-                                                                               {
-                                                                                   collection.Remove(bo);
-                                                                               }
-                                                                               else
-                                                                               {
-                                                                                   if (!collection.Contains(bo))
-                                                                                   {
-                                                                                       collection.Add(bo);
-                                                                                   }
-                                                                                   _grid.RefreshBusinessObjectRow(bo);
-                                                                                   _grid.Update();
-                                                                                   Grid.SelectedBusinessObject = bo;
-                                                                               }
-                                                                           });
+                                {
+                                    IBusinessObjectCollection collection = this.Grid.BusinessObjectCollection;
+                                    if (cancelled)
+                                    {
+                                        collection.Remove(bo);
+                                    }
+                                    else
+                                    {
+                                        if (!collection.Contains(bo))
+                                        {
+                                            collection.Add(bo);
+                                        }
+                                        _grid.RefreshBusinessObjectRow(bo);
+                                        _grid.Update();
+                                        Grid.SelectedBusinessObject = bo;
+                                    }
+                                });
                 }
             }
             catch (Exception ex)
@@ -533,7 +532,14 @@ namespace Habanero.Faces.VWG
         }
 
         #region Implementation of IBOSelectorAndEditor
-
+        /// <summary>
+        /// Gets and sets whether the Control is enabled or not
+        /// </summary>
+        public bool ControlEnabled
+        {
+            get { return this.Enabled; }
+            set { this.Enabled = value; }
+        }
         ///<summary>
         /// Gets and sets whether the user can add Business objects via this control.
         /// Note_This method is implemented so as to support the interface but always returns False and the set always sets false.

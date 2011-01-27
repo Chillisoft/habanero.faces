@@ -90,7 +90,8 @@ namespace Habanero.Faces.Base
 			Collection.BusinessObjectPropertyUpdated += BusinessObjectPropertyUpdatedHandler;
 		}
 
-		/// <summary>
+
+	    /// <summary>
 		/// Set the list of objects in the ComboBox to a specific collection of
 		/// business objects.<br/>
 		/// Important: If you are changing the business object collection,

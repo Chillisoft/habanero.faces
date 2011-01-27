@@ -120,5 +120,13 @@ namespace Habanero.Faces.Win
             get { return _manager.AutoSelectFirstItem; }
             set { _manager.AutoSelectFirstItem = value; }
         }
+        /// <summary>
+        /// Gets and sets whether the Control is enabled or not
+        /// </summary>
+        bool IBOColSelector.ControlEnabled
+        {
+            get { return this.Enabled; }
+            set { this.Enabled = value; }
+        }
     }
 }

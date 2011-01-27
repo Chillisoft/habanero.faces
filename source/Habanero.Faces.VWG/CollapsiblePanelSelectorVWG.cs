@@ -232,5 +232,14 @@ namespace Habanero.Faces.VWG
         /// Gets and sets whether this selector autoselects the first item or not when a new collection is set.
         /// </summary>
         public bool AutoSelectFirstItem { get; set; }
+
+        /// <summary>
+        /// Gets and sets whether the Control is enabled or not
+        /// </summary>
+        public bool ControlEnabled
+        {
+            get { return this.Enabled; }
+            set { this.Enabled = value; }
+        }
     }
 }

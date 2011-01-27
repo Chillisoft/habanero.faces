@@ -174,7 +174,14 @@ namespace Habanero.Faces.Win
         }
 
         #region IBOColSelectorControl
-
+        /// <summary>
+        /// Gets and sets whether the Control is enabled or not
+        /// </summary>
+        public bool ControlEnabled
+        {
+            get { return this.Enabled; }
+            set { this.Enabled = value; }
+        }
         /// <summary>
         /// Gets and sets the currently selected business object in the grid
         /// </summary>

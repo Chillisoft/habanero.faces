@@ -126,5 +126,13 @@ namespace Habanero.Faces.VWG
         {
             get { return this; }
         }
+        /// <summary>
+        /// Gets and sets whether the Control is enabled or not
+        /// </summary>
+        public bool ControlEnabled
+        {
+            get { return this.Enabled; }
+            set { this.Enabled = value; }
+        }
     }
 }

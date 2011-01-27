@@ -77,5 +77,10 @@ namespace Habanero.Faces.Base
         /// Gets and sets whether this selector autoselects the first item or not when a new collection is set.
         /// </summary>
         bool AutoSelectFirstItem { get; set; }
+
+        /// <summary>
+        /// Gets and sets whether the Control is enabled or not
+        /// </summary>
+        bool ControlEnabled { get; set; }
     }
 }

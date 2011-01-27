@@ -511,7 +511,14 @@ namespace Habanero.Faces.Win
 
         #region Implementation of IBOSelectorAndEditor
         //
-        
+        /// <summary>
+        /// Gets and sets whether the Control is enabled or not
+        /// </summary>
+        public bool ControlEnabled
+        {
+            get { return this.Enabled; }
+            set { this.Enabled = value; }
+        }
         ///<summary>
         /// Gets and sets whether the user can add Business objects via this control.
         /// Note_This method is implemented so as to support the interface but always returns False and the set always sets false.

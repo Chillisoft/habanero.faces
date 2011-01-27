@@ -1,6 +1,7 @@
 ﻿using Habanero.Faces.Base;
 using NUnit.Framework;
 
+// ReSharper disable InconsistentNaming
 namespace Habanero.Faces.Test.Base
 {
     public abstract class TestBOColSelectorLinkerComboBox : TestBOColSelectorLinker
@@ -24,7 +25,7 @@ namespace Habanero.Faces.Test.Base
             IBOComboBoxSelector childSelector = CreateComboBoxControl();
             const string relationshipName = "Addresses";
             new BOColSelectorLinker<FakeContactPerson, FakeAddress>(parentSelector, childSelector, relationshipName);
-            parentSelector.BusinessObjectCollection = GetFakeContactPersons();
+            parentSelector.BusinessObjectCollection = GetFakeContactPeople();
             parentSelector.SelectedBusinessObject = address.ContactPerson;
             //---------------Assert Precondition----------------
             Assert.AreEqual(3, parentSelector.NoOfItems, "Two departments and Blank Field");
@@ -52,7 +53,7 @@ namespace Habanero.Faces.Test.Base
             IBOComboBoxSelector childSelector = CreateComboBoxControl();
             const string relationshipName = "Addresses";
             new BOColSelectorLinker<FakeContactPerson, FakeAddress>(parentSelector, childSelector, relationshipName);
-            parentSelector.BusinessObjectCollection = GetFakeContactPersons();
+            parentSelector.BusinessObjectCollection = GetFakeContactPeople();
             parentSelector.SelectedBusinessObject = contactPersonNoAddress;
             //---------------Assert Precondition----------------
             Assert.AreEqual(3, parentSelector.NoOfItems, "Two departments and Blank Field");
@@ -64,6 +65,65 @@ namespace Habanero.Faces.Test.Base
             Assert.IsNotNull(parentSelector.SelectedBusinessObject);
             FakeContactPerson contactPerson = parentSelector.SelectedBusinessObject as FakeContactPerson;
             Assert.AreEqual(contactPerson.Addresses.Count + 1, childSelector.NoOfItems);
+        }
+
+
+        [Test]
+        public void Test_WhenParentSelectedBOIsNull_ShouldDisableChildSelector()
+        {
+            //---------------Set up test pack-------------------
+            var contactPersonNoAddress = CreateFakeContactPersonWithNoFakeAddress();
+            var address = CreateFakeAddressWithFakeContactPerson();
+
+            IBOComboBoxSelector parentSelector = CreateComboBoxControl();
+            IBOComboBoxSelector childSelector = CreateComboBoxControl();
+            const string relationshipName = "Addresses";
+            new BOColSelectorLinker<FakeContactPerson, FakeAddress>(parentSelector, childSelector, relationshipName);
+            parentSelector.BusinessObjectCollection = GetFakeContactPeople();
+            parentSelector.SelectedBusinessObject = address.ContactPerson;
+            //---------------Assert Precondition----------------
+            Assert.AreEqual(3, parentSelector.NoOfItems, "Two departments and Blank Field");
+            Assert.AreSame(address.ContactPerson, parentSelector.SelectedBusinessObject);
+            Assert.AreEqual(2, childSelector.NoOfItems, "The Blank Item and the address");
+            Assert.AreSame(address, childSelector.SelectedBusinessObject);
+            Assert.IsTrue(childSelector.ComboBox.Enabled, "Should be enabled");
+            //---------------Execute Test ----------------------
+            parentSelector.SelectedBusinessObject = null;
+            //---------------Test Result -----------------------
+            Assert.IsFalse(childSelector.ComboBox.Enabled, "Should be disabled");
+
+            Assert.AreEqual(3, parentSelector.NoOfItems, "Two departments and Blank Field");
+            Assert.IsNull(parentSelector.SelectedBusinessObject, "Should not have a selected parent");
+            Assert.AreEqual(1, childSelector.NoOfItems, "The Blank Item as there is no selected parent");
+            Assert.IsNull(childSelector.SelectedBusinessObject, "Should not have a selected child");
+        }
+
+        [Test]
+        public void Test_WhenParentSelectedBOIsNull_AndChangedToNotBO_ShouldEnableChildSelector()
+        {
+            //---------------Set up test pack-------------------
+            var contactPersonNoAddress = CreateFakeContactPersonWithNoFakeAddress();
+            var address = CreateFakeAddressWithFakeContactPerson();
+
+            IBOComboBoxSelector parentSelector = CreateComboBoxControl();
+            IBOComboBoxSelector childSelector = CreateComboBoxControl();
+            const string relationshipName = "Addresses";
+            new BOColSelectorLinker<FakeContactPerson, FakeAddress>(parentSelector, childSelector, relationshipName);
+            parentSelector.BusinessObjectCollection = GetFakeContactPeople();
+            
+            parentSelector.SelectedBusinessObject = null;
+            //---------------Assert Precondition----------------
+            Assert.IsFalse(childSelector.ComboBox.Enabled, "Should be disabled");
+
+            Assert.AreEqual(3, parentSelector.NoOfItems, "Two departments and Blank Field");
+            Assert.IsNull(parentSelector.SelectedBusinessObject, "Should not have a selected parent");
+            Assert.AreEqual(1, childSelector.NoOfItems, "The Blank Item as there is no selected parent");
+            Assert.IsNull(childSelector.SelectedBusinessObject, "Should not have a selected child");
+
+            //---------------Execute Test ----------------------
+            parentSelector.SelectedBusinessObject = address.ContactPerson;
+            //---------------Test Result -----------------------
+            Assert.IsTrue(childSelector.ComboBox.Enabled, "Should be enabled");
         }
     }
 }

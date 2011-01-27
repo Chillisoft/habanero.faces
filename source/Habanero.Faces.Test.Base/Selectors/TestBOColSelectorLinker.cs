@@ -23,6 +23,7 @@ using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
 using NUnit.Framework;
+// ReSharper disable InconsistentNaming
 
 namespace Habanero.Faces.Test.Base
 {
@@ -55,7 +56,7 @@ namespace Habanero.Faces.Test.Base
             return FakeContactPerson.CreateSavedContactPerson();
         }
 
-        protected static IBusinessObjectCollection GetFakeContactPersons()
+        protected static IBusinessObjectCollection GetFakeContactPeople()
         {
             BusinessObjectCollection<FakeContactPerson> col = new BusinessObjectCollection<FakeContactPerson>();
             col.LoadAll();
@@ -63,7 +64,7 @@ namespace Habanero.Faces.Test.Base
         }
 
         [Test]
-        public void Test_CreateComboBoxLinker__ShouldSetProps()
+        public void Test_Create__ShouldSetProps()
         {
             //---------------Set up test pack-------------------
             IBOColSelector parentSelector = CreateControl();
@@ -72,7 +73,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            BOColSelectorLinker<FakeContactPerson, FakeAddress> linker = new BOColSelectorLinker<FakeContactPerson, FakeAddress>(parentSelector, childSelector, relationshipName);
+            var linker = new BOColSelectorLinker<FakeContactPerson, FakeAddress>(parentSelector, childSelector, relationshipName);
             //---------------Test Result -----------------------
             Assert.AreSame(parentSelector, linker.ParentSelector);
             Assert.AreSame(childSelector, linker.ChildSelector);
@@ -80,16 +81,16 @@ namespace Habanero.Faces.Test.Base
         }
 
         [Test]
-        public void Test_CreateComboBoxLinker_ShouldSetProps()
+        public void Test_Create_ShouldSetProps()
         {
             //---------------Set up test pack-------------------
-            IBOColSelector parentSelector = CreateControl();
-            IBOColSelector childSelector = CreateControl();
+            var parentSelector = CreateControl();
+            var childSelector = CreateControl();
             const string relationshipName = "ChildLocations";
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            BOColSelectorLinker<FakeContactPerson, FakeAddress> linker = new BOColSelectorLinker<FakeContactPerson, FakeAddress>(parentSelector, childSelector, relationshipName);
+            var linker = new BOColSelectorLinker<FakeContactPerson, FakeAddress>(parentSelector, childSelector, relationshipName);
             //---------------Test Result -----------------------
             Assert.AreSame(parentSelector, linker.ParentSelector);
             Assert.AreSame(childSelector, linker.ChildSelector);
@@ -101,7 +102,7 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             IBOColSelector parentSelector = null;
-            IBOColSelector childSelector = CreateControl();
+            var childSelector = CreateControl();
             const string relationshipName = "ChildLocations";
             //---------------Assert Precondition----------------
             Assert.IsNull(parentSelector);
@@ -122,7 +123,7 @@ namespace Habanero.Faces.Test.Base
         public void Test_Construct_WithNullChildSelector_ShouldRaiseError()
         {
             //---------------Set up test pack-------------------
-            IBOColSelector parentSelector = CreateControl();
+            var parentSelector = CreateControl();
             IBOColSelector childSelector = null;
             const string relationshipName = "ChildLocations";
             //---------------Assert Precondition----------------
@@ -144,8 +145,8 @@ namespace Habanero.Faces.Test.Base
         public void Test_Construct_WithNullRelationship_ShouldRaiseError()
         {
             //---------------Set up test pack-------------------
-            IBOColSelector parentSelector = CreateControl();
-            IBOColSelector childSelector = CreateControl();
+            var parentSelector = CreateControl();
+            var childSelector = CreateControl();
             const string relationshipName = null;
             //---------------Assert Precondition----------------
             Assert.IsNull(relationshipName);
@@ -166,8 +167,8 @@ namespace Habanero.Faces.Test.Base
         public void Test_Construct_WithEmptyRelationship_ShouldRaiseError()
         {
             //---------------Set up test pack-------------------
-            IBOColSelector parentSelector = CreateControl();
-            IBOColSelector childSelector = CreateControl();
+            var parentSelector = CreateControl();
+            var childSelector = CreateControl();
             const string relationshipName = "";
             //---------------Assert Precondition----------------
             Assert.IsEmpty(relationshipName);
@@ -192,11 +193,11 @@ namespace Habanero.Faces.Test.Base
             var contactPersonNoFakeAddress = CreateFakeContactPersonWithNoFakeAddress();
             var address = CreateFakeAddressWithFakeContactPerson();
 
-            IBOColSelector parentSelector = CreateControl();
-            IBOColSelector childSelector = CreateControl();
+            var parentSelector = CreateControl();
+            var childSelector = CreateControl();
             const string relationshipName = "Addresses";
             new BOColSelectorLinker<FakeContactPerson, FakeAddress>(parentSelector, childSelector, relationshipName);
-            parentSelector.BusinessObjectCollection = GetFakeContactPersons();
+            parentSelector.BusinessObjectCollection = GetFakeContactPeople();
             parentSelector.SelectedBusinessObject = contactPersonNoFakeAddress;
             //---------------Assert Precondition----------------
             Assert.AreEqual(3, parentSelector.NoOfItems, "Two departments and Blank Field");
@@ -217,10 +218,10 @@ namespace Habanero.Faces.Test.Base
             var contactPersonNoFakeAddress = CreateFakeContactPersonWithNoFakeAddress();
             var address = CreateFakeAddressWithFakeContactPerson();
 
-            IBOColSelector parentSelector = CreateControl();
-            IBOColSelector childSelector = CreateControl();
+            var parentSelector = CreateControl();
+            var childSelector = CreateControl();
             const string relationshipName = "Addresses";
-            parentSelector.BusinessObjectCollection = GetFakeContactPersons();
+            parentSelector.BusinessObjectCollection = GetFakeContactPeople();
             parentSelector.SelectedBusinessObject = address.ContactPerson;
             BOColSelectorLinker<FakeContactPerson, FakeAddress> selectorLinker = new BOColSelectorLinker<FakeContactPerson, FakeAddress>(parentSelector, childSelector, relationshipName);
             //---------------Assert Precondition----------------
@@ -241,11 +242,11 @@ namespace Habanero.Faces.Test.Base
             CreateFakeContactPersonWithNoFakeAddress();
             var address = CreateFakeAddressWithFakeContactPerson();
 
-            IBOColSelector parentSelector = CreateControl();
-            IBOColSelector childSelector = CreateControl();
+            var parentSelector = CreateControl();
+            var childSelector = CreateControl();
             const string relationshipName = "Addresses";
             new BOColSelectorLinker<FakeContactPerson, FakeAddress>(parentSelector, childSelector, relationshipName);
-            parentSelector.BusinessObjectCollection = GetFakeContactPersons();
+            parentSelector.BusinessObjectCollection = GetFakeContactPeople();
             parentSelector.SelectedBusinessObject = address.ContactPerson;
             //---------------Assert Precondition----------------
             Assert.AreEqual(3, parentSelector.NoOfItems, "Two departments and Blank Field");
@@ -265,11 +266,11 @@ namespace Habanero.Faces.Test.Base
             var contactPersonNoAddress = CreateFakeContactPersonWithNoFakeAddress();
             var address = CreateFakeAddressWithFakeContactPerson();
 
-            IBOColSelector parentSelector = CreateControl();
-            IBOColSelector childSelector = CreateControl();
+            var parentSelector = CreateControl();
+            var childSelector = CreateControl();
             const string relationshipName = "Addresses";
             new BOColSelectorLinker<FakeContactPerson, FakeAddress>(parentSelector, childSelector, relationshipName);
-            parentSelector.BusinessObjectCollection = GetFakeContactPersons();
+            parentSelector.BusinessObjectCollection = GetFakeContactPeople();
             parentSelector.SelectedBusinessObject = address.ContactPerson;
             //---------------Assert Precondition----------------
             Assert.AreEqual(3, parentSelector.NoOfItems, "Two departments and Blank Field");

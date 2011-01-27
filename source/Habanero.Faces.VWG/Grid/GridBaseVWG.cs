@@ -353,5 +353,14 @@ namespace Habanero.Faces.VWG
         /// Gets or sets the delegate that checks whether the user wants to delete selected rows
         /// </summary>
         public CheckUserConfirmsDeletion CheckUserConfirmsDeletionDelegate { get; set; }
+
+        /// <summary>
+        /// Gets and sets whether the Control is enabled or not
+        /// </summary>
+        public bool ControlEnabled
+        {
+            get { return this.Enabled; }
+            set { this.Enabled = value; }
+        }
     }
 }

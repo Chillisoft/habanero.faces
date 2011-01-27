@@ -253,5 +253,13 @@ namespace Habanero.Faces.Win
         {
             return row < 0 || row >= NoOfItems;
         }
+        /// <summary>
+        /// Gets and sets whether the Control is enabled or not
+        /// </summary>
+        public bool ControlEnabled
+        {
+            get { return this.Enabled; }
+            set { this.Enabled = value; }
+        }
     }
 }

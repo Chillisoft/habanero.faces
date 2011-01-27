@@ -436,5 +436,13 @@ namespace Habanero.Faces.Win
         {
             return !ConfirmDeletion || (ConfirmDeletion && CheckUserConfirmsDeletionDelegate());
         }
+        /// <summary>
+        /// Gets and sets whether the Control is enabled or not
+        /// </summary>
+        bool IBOColSelector.ControlEnabled
+        {
+            get { return this.Enabled; }
+            set { this.Enabled = value; }
+        }
     }
 }

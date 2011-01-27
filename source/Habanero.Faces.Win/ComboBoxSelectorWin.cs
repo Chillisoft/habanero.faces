@@ -146,5 +146,13 @@ namespace Habanero.Faces.Win
             get { return _manager.PreserveSelectedItem; }
             set { _manager.PreserveSelectedItem = value; }
         }
+        /// <summary>
+        /// Gets and sets whether the Control is enabled or not
+        /// </summary>
+        public bool ControlEnabled
+        {
+            get { return this.Enabled; }
+            set { this.Enabled = value; }
+        }
     }
 }

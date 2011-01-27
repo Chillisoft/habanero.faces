@@ -221,6 +221,12 @@ namespace Habanero.Faces.VWG
             set { this.BOColTabControlManager.AutoSelectFirstItem = value; }
         }
 
+        public bool ControlEnabled
+        {
+            get {return this.Enabled; }
+            set { this.Enabled = value; }
+        }
+
         #endregion
 
     }

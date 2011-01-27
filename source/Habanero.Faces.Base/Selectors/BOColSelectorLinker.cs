@@ -83,12 +83,14 @@ namespace Habanero.Faces.Base
             if (selectedItem == null || Convert.ToString(selectedItem) == "")
             {
                 ChildSelector.BusinessObjectCollection = null;
+                ChildSelector.ControlEnabled = false;
                 return;
             }
             TParentType selectedParentBusinessObject = (TParentType) selectedItem;
             var childRelationship = GetChildRelationship(selectedParentBusinessObject);
             if (childRelationship == null) return;
             ChildSelector.BusinessObjectCollection = childRelationship.BusinessObjectCollection;
+            ChildSelector.ControlEnabled = true;
         }
 
         private MultipleRelationship<TChildType> GetChildRelationship(TParentType selectedParentBusinessObject)

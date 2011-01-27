@@ -268,5 +268,6 @@ namespace Habanero.Faces.Base
         /// </summary>
         int ColumnCount { get; }
 
+
     }
 }
