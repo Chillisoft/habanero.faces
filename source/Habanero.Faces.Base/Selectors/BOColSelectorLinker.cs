@@ -17,9 +17,12 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
+using System.Linq.Expressions;
+using System.Reflection;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
 using Habanero.BO;
+using Habanero.Util;
 
 namespace Habanero.Faces.Base
 {
@@ -71,7 +74,14 @@ namespace Habanero.Faces.Base
 
         private void ParentComboBoxBusinessObjectSelected(object sender, System.EventArgs e)
         {
-            UpdateChildSelectorCollection();
+            try
+            {
+                UpdateChildSelectorCollection();
+            }
+            catch (Exception ex)
+            {
+                GlobalRegistry.UIExceptionNotifier.Notify(ex, "", "Error ");
+            }
         }
 
         ///<summary>
@@ -87,15 +97,41 @@ namespace Habanero.Faces.Base
                 return;
             }
             TParentType selectedParentBusinessObject = (TParentType) selectedItem;
+            ChildSelector.BusinessObjectCollection = GetBusinessObjectCollection(selectedParentBusinessObject);
+            ChildSelector.ControlEnabled = HasCollectionSet;
+        }
+
+        private bool HasCollectionSet
+        {
+            get { return (ChildSelector.BusinessObjectCollection != null); }
+        }
+
+        protected virtual BusinessObjectCollection<TChildType> GetBusinessObjectCollection(TParentType selectedParentBusinessObject)
+        {
             var childRelationship = GetChildRelationship(selectedParentBusinessObject);
-            if (childRelationship == null) return;
-            ChildSelector.BusinessObjectCollection = childRelationship.BusinessObjectCollection;
-            ChildSelector.ControlEnabled = true;
+            if (childRelationship == null) return null;
+            return childRelationship.BusinessObjectCollection;
         }
 
         private MultipleRelationship<TChildType> GetChildRelationship(TParentType selectedParentBusinessObject)
         {
             return selectedParentBusinessObject.Relationships[RelationshipName] as MultipleRelationship<TChildType>;
+        }
+    }
+
+    class BOColSelectorLinkerReflectedRel<TParentType, TChildType> : BOColSelectorLinker<TParentType, TChildType> where TParentType : IBusinessObject where TChildType : class, IBusinessObject, new()
+    {
+        private PropertyInfo _relationshipPropertyInfo;
+
+        public BOColSelectorLinkerReflectedRel(IBOColSelector parentSelector, IBOColSelector childSelector, Expression<Func<TParentType, BusinessObjectCollection<TChildType>>> relationshipExpresion)
+            : base(parentSelector, childSelector, ReflectionUtilities.GetPropertyName(relationshipExpresion))
+        {
+            _relationshipPropertyInfo = ReflectionUtilities.GetPropertyInfo(relationshipExpresion);
+        }
+
+        protected override BusinessObjectCollection<TChildType> GetBusinessObjectCollection(TParentType selectedParentBusinessObject)
+        {
+            return _relationshipPropertyInfo.GetValue(selectedParentBusinessObject, new object[] { }) as BusinessObjectCollection<TChildType>;
         }
     }
 }
