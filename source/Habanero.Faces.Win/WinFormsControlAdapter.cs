@@ -46,10 +46,20 @@ namespace Habanero.Faces.Win
     /// <see cref="PanelBuilder"/>
     /// or any other such required behaviour.
     /// </summary>
-    public interface IWinFormsGridAdapter : IDataGridView, IWinFormsControlAdapter
+    public interface IWinFormsDataGridViewAdapter : IDataGridView, IWinFormsControlAdapter
     {
     }
 
+
+    /// <summary>
+    /// This is an interface used specificaly for adapting a any control that inherits from System.Windows.Control 
+    /// so that it can be treated as an IControlHabanero and can therefore be used by Faces for Habanero.Binding,
+    /// <see cref="PanelBuilder"/>
+    /// or any other such required behaviour.
+    /// </summary>
+    public interface IWinFormsGridBaseAdapter : IGridBase, IWinFormsControlAdapter
+    {
+    }
     /// <summary>
     /// This is an interface used specificaly for adapting a any control that inherits from System.Windows.Control 
     /// so that it can be treated as an IControlHabanero and can therefore be used by Faces for Habanero.Binding,

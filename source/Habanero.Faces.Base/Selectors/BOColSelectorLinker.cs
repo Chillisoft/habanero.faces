@@ -119,19 +119,4 @@ namespace Habanero.Faces.Base
         }
     }
 
-    class BOColSelectorLinkerReflectedRel<TParentType, TChildType> : BOColSelectorLinker<TParentType, TChildType> where TParentType : IBusinessObject where TChildType : class, IBusinessObject, new()
-    {
-        private PropertyInfo _relationshipPropertyInfo;
-
-        public BOColSelectorLinkerReflectedRel(IBOColSelector parentSelector, IBOColSelector childSelector, Expression<Func<TParentType, BusinessObjectCollection<TChildType>>> relationshipExpresion)
-            : base(parentSelector, childSelector, ReflectionUtilities.GetPropertyName(relationshipExpresion))
-        {
-            _relationshipPropertyInfo = ReflectionUtilities.GetPropertyInfo(relationshipExpresion);
-        }
-
-        protected override BusinessObjectCollection<TChildType> GetBusinessObjectCollection(TParentType selectedParentBusinessObject)
-        {
-            return _relationshipPropertyInfo.GetValue(selectedParentBusinessObject, new object[] { }) as BusinessObjectCollection<TChildType>;
-        }
-    }
 }
