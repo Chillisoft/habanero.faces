@@ -217,7 +217,7 @@ namespace Habanero.Faces.Base
         /// </summary>
         /// <param name="boCol">The collection that the DataView is based on</param>
         /// <returns></returns>
-        protected IBindingListView GetBindingListView(IBusinessObjectCollection boCol)
+        protected virtual IBindingListView GetBindingListView(IBusinessObjectCollection boCol)
         {
             DataSetProvider = _gridBase.CreateDataSetProvider(boCol);
             if (this.ClassDef == null || this.ClassDef != _boCol.ClassDef)
