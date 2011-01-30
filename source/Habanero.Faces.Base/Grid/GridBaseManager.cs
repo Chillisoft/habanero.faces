@@ -35,7 +35,7 @@ namespace Habanero.Faces.Base
     public class GridBaseManager
     {
         protected readonly IGridBase _gridBase;
-        private IBusinessObjectCollection _boCol;
+        protected IBusinessObjectCollection _boCol;
 
         /// <summary>
         /// Occurs when a business object is selected
