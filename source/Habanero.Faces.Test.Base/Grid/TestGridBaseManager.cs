@@ -1,23 +1,19 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
-using Habanero.Test;
-using Habanero.Test.BO;
 using Habanero.Test.Structure;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace Habanero.Faces.Test.Base
+// ReSharper disable InconsistentNaming
+namespace Habanero.Faces.Test.Base.Grid
 {
     [TestFixture]
     public class TestGridBaseManager 
     {
-        protected const string _gridIdColumnName = "HABANERO_OBJECTID";
+//        protected const string _gridIdColumnName = "HABANERO_OBJECTID";
 
         [SetUp]
         public void SetupTest()
@@ -102,7 +98,7 @@ namespace Habanero.Faces.Test.Base
             return MockRepository.GenerateStub<T>();
         }
 
-        private class GridBaseManagerSpy : GridBaseManager
+/*        private class GridBaseManagerSpy : GridBaseManager
         {
             public GridBaseManagerSpy()
                 : base(MockRepository.GenerateStub<IGridBase>())
@@ -112,6 +108,6 @@ namespace Habanero.Faces.Test.Base
             public GridBaseManagerSpy(IGridBase gridBase) : base(gridBase)
             {
             }
-        }
+        }*/
     }
 }

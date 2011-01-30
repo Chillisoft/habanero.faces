@@ -1,6 +1,7 @@
 using System;
 using Habanero.Base;
 using Habanero.BO;
+using Habanero.Faces.Test.Base.Grid;
 using Habanero.Test;
 using Habanero.Test.BO;
 using Habanero.Faces.Test.Base;

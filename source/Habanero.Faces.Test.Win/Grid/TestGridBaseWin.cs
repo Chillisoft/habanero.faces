@@ -3,10 +3,12 @@ using Habanero.Base;
 using Habanero.BO;
 using Habanero.Faces.Test.Base;
 using Habanero.Faces.Base;
+using Habanero.Faces.Test.Base.Grid;
 using Habanero.Faces.Win;
 using Habanero.Test;
 using NUnit.Framework;
 using Rhino.Mocks;
+// ReSharper disable InconsistentNaming
 
 namespace Habanero.Faces.Test.Win.Grid
 {

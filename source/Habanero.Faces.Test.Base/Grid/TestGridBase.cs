@@ -19,7 +19,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using Habanero.Base;
 using Habanero.BO;
@@ -30,7 +29,7 @@ using Habanero.Faces.Base;
 using NUnit.Framework;
 
 // ReSharper disable InconsistentNaming
-namespace Habanero.Faces.Test.Base
+namespace Habanero.Faces.Test.Base.Grid
 {
     public abstract class TestGridBase 
     {
@@ -60,8 +59,6 @@ namespace Habanero.Faces.Test.Base
         protected abstract IGridBase CreateGridBaseStub();
         protected abstract void AddControlToForm(IGridBase gridBase);
 
-
-
         [Test]
         public void TestCreateGridBase()
         {
@@ -80,8 +77,8 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             MyBO.LoadDefaultClassDef();
-            BusinessObjectCollection<MyBO> col = new BusinessObjectCollection<MyBO>();
-            IGridBase gridBase = CreateGridBaseStub();
+            var col = new BusinessObjectCollection<MyBO>();
+            var gridBase = CreateGridBaseStub();
             SetupGridColumnsForMyBo(gridBase);
             //---------------Execute Test ----------------------
 #pragma warning disable 618,612
@@ -98,8 +95,8 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             MyBO.LoadDefaultClassDef();
-            BusinessObjectCollection<MyBO> col = new BusinessObjectCollection<MyBO>();
-            IGridBase gridBase = CreateGridBaseStub();
+            var col = new BusinessObjectCollection<MyBO>();
+            var gridBase = CreateGridBaseStub();
             SetupGridColumnsForMyBo(gridBase);
             //---------------Execute Test ----------------------
             gridBase.BusinessObjectCollection = col;
@@ -821,21 +818,21 @@ namespace Habanero.Faces.Test.Base
             MyBO bo_c = col[2];
             MyBO bo_a = col[3];
             //---------------Verify PreConditions --------------
-            Assert.AreEqual("b", bo_b.TestProp);
-            Assert.AreEqual("d", bo_d.TestProp);
-            Assert.AreEqual("c", bo_c.TestProp);
-            Assert.AreEqual("a", bo_a.TestProp);
-            Assert.AreEqual(bo_b, gridBase.GetBusinessObjectAtRow(0));
-            Assert.AreEqual(bo_d, gridBase.GetBusinessObjectAtRow(1));
-            Assert.AreEqual(bo_c, gridBase.GetBusinessObjectAtRow(2));
-            Assert.AreEqual(bo_a, gridBase.GetBusinessObjectAtRow(3));
+            StringAssert.StartsWith("b", bo_b.TestProp);
+            StringAssert.StartsWith("d", bo_d.TestProp);
+            StringAssert.StartsWith("c", bo_c.TestProp);
+            StringAssert.StartsWith("a", bo_a.TestProp);
+            Assert.AreSame(bo_b, gridBase.GetBusinessObjectAtRow(0));
+            Assert.AreSame(bo_d, gridBase.GetBusinessObjectAtRow(1));
+            Assert.AreSame(bo_c, gridBase.GetBusinessObjectAtRow(2));
+            Assert.AreSame(bo_a, gridBase.GetBusinessObjectAtRow(3));
             //---------------Execute Test ----------------------
             gridBase.Sort("TestProp", true);
             //---------------Test Result -----------------------
-            Assert.AreEqual(bo_a, gridBase.GetBusinessObjectAtRow(0));
-            Assert.AreEqual(bo_b, gridBase.GetBusinessObjectAtRow(1));
-            Assert.AreEqual(bo_c, gridBase.GetBusinessObjectAtRow(2));
-            Assert.AreEqual(bo_d, gridBase.GetBusinessObjectAtRow(3));
+            Assert.AreSame(bo_a, gridBase.GetBusinessObjectAtRow(0));
+            Assert.AreSame(bo_b, gridBase.GetBusinessObjectAtRow(1));
+            Assert.AreSame(bo_c, gridBase.GetBusinessObjectAtRow(2));
+            Assert.AreSame(bo_d, gridBase.GetBusinessObjectAtRow(3));
         }
         //TODO: Peter we need to finalise decisions on enums 
         //[Test]
@@ -882,6 +879,29 @@ namespace Habanero.Faces.Test.Base
             //---------------Tear Down -------------------------
         }
 
+
+        [Test]
+        public void TestApplyFilter_SetBusinessObject_SetsTheCorrectBusinessObject()
+        {
+            //---------------Set up test pack-------------------
+            BusinessObjectCollection<MyBO> boColllection;
+            var gridBase = GetGridBaseWith_4_Rows(out boColllection);
+            var filterString = boColllection[2].TestProp.Substring(5, 10);
+            IFilterClauseFactory factory = new DataViewFilterClauseFactory();
+            IFilterClause filterClause =
+                factory.CreateStringFilterClause("TestProp", FilterClauseOperator.OpLike, filterString);
+            MyBO bo = boColllection[2];
+            //---------------Execute Test ----------------------
+
+            gridBase.ApplyFilter(filterClause);
+            gridBase.SelectedBusinessObject = bo;
+            //---------------Test Result -----------------------
+
+            Assert.AreSame(bo, gridBase.SelectedBusinessObject);
+            //---------------Tear Down -------------------------
+        }
+/*
+
         [Test]
         public void TestApplyFilter_SetBusinessObject_SetsTheCorrectBusinessObject()
         {
@@ -902,6 +922,7 @@ namespace Habanero.Faces.Test.Base
             Assert.AreSame(bo, gridBase.SelectedBusinessObject);
             //---------------Tear Down -------------------------
         }
+*/
 
         [Test]
         public void TestApplyFilter_SetBusinessObject_ToAnObjectNoLongerInTheGrid_ReturnsNullSelectedBO()
@@ -910,10 +931,10 @@ namespace Habanero.Faces.Test.Base
             BusinessObjectCollection<MyBO> boColllection;
             IGridBase gridBase = GetGridBaseWith_4_Rows(out boColllection);
             MyBO boRemainingInThisGrid = boColllection[2];
-            string filterString = boRemainingInThisGrid.ID.ToString().Substring(5, 30);
+            string filterString = boRemainingInThisGrid.TestProp.ToString().Substring(5, 10);
             IFilterClauseFactory factory = new DataViewFilterClauseFactory();
             IFilterClause filterClause =
-                factory.CreateStringFilterClause(_gridIdColumnName, FilterClauseOperator.OpLike, filterString);
+                factory.CreateStringFilterClause("TestProp", FilterClauseOperator.OpLike, filterString);
             MyBO boNotInGrid = boColllection[1];
             //---------------Execute Test ----------------------
 
@@ -931,10 +952,10 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             BusinessObjectCollection<MyBO> col;
             IGridBase gridBase = GetGridBaseWith_4_Rows(out col);
-            string filterString = col[2].ID.ToString().Substring(5, 30);
+            string filterString = col[2].TestProp.ToString().Substring(5, 10);
             IFilterClauseFactory factory = new DataViewFilterClauseFactory();
             IFilterClause filterClause =
-                factory.CreateStringFilterClause(_gridIdColumnName, FilterClauseOperator.OpLike, filterString);
+                factory.CreateStringFilterClause("TestProp", FilterClauseOperator.OpLike, filterString);
             gridBase.ApplyFilter(filterClause);
 
             //---------------Verify PreConditions --------------
@@ -1134,21 +1155,21 @@ namespace Habanero.Faces.Test.Base
         }
         protected static BusinessObjectCollection<MyBO> CreateCollectionWith_4_Objects()
         {
-            MyBO cp = new MyBO {TestProp = "b"};
-            MyBO cp2 = new MyBO {TestProp = "d"};
-            MyBO cp3 = new MyBO {TestProp = "c"};
-            MyBO cp4 = new MyBO {TestProp = "a"};
+            MyBO cp = new MyBO {TestProp = "bcdsfradfasdfsda"};
+            MyBO cp2 = new MyBO {TestProp = "dfdafasdfsda"};
+            MyBO cp3 = new MyBO {TestProp = "cfdafasdfasdfsda"};
+            MyBO cp4 = new MyBO {TestProp = "afdsafasdfasdfasdf"};
             return new BusinessObjectCollection<MyBO> {{cp, cp2, cp3, cp4}};
         }
         protected static BusinessObjectCollection<MyBO> CreateCollectionWith_4_SavedObjects()
         {
-            MyBO cp = new MyBO {TestProp = "b"};
+            MyBO cp = new MyBO {TestProp = "bfdasfasdfasd"};
             cp.Save();
-            MyBO cp2 = new MyBO {TestProp = "d"};
+            MyBO cp2 = new MyBO {TestProp = "dfdsafsdfsdafasd"};
             cp2.Save();
-            MyBO cp3 = new MyBO {TestProp = "c"};
+            MyBO cp3 = new MyBO {TestProp = "cfdsafasdfasdf"};
             cp3.Save();
-            MyBO cp4 =new MyBO {TestProp = "a"};
+            MyBO cp4 =new MyBO {TestProp = "afsdafdasfasdfdas"};
             cp4.Save();
             return new BusinessObjectCollection<MyBO> {{cp, cp2, cp3, cp4}};
         }
