@@ -47,7 +47,7 @@ namespace Habanero.Faces.Base
         /// </summary>
         public event EventHandler CollectionChanged;
 
-        private readonly EventHandler _gridBaseOnSelectionChangedHandler;
+        protected readonly EventHandler _gridBaseOnSelectionChangedHandler;
 
         /// <summary>
         /// Boolean so that we can switch on and off the firing of certain events e.g
