@@ -182,7 +182,7 @@ namespace Habanero.Faces.Test.Win.Grid
         private static System.Windows.Forms.DataGridViewCell GetCell(int rowIndex, string propName,
                                                                      IGridBase gridBase)
         {
-            System.Windows.Forms.DataGridView dgv = (System.Windows.Forms.DataGridView)gridBase;
+            System.Windows.Forms.DataGridView dgv = (System.Windows.Forms.DataGridView)gridBase.GetControl();
             System.Windows.Forms.DataGridViewRow row = dgv.Rows[rowIndex];
             return row.Cells[propName];
         }
