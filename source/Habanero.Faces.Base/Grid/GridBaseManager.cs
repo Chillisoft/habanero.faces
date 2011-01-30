@@ -571,7 +571,7 @@ namespace Habanero.Faces.Base
         /// <param name="orderBy"></param>
         public void ApplySearch(string searchClause, string orderBy)
         {
-            IBusinessObjectCollection collection = BORegistry.DataAccessor.BusinessObjectLoader.
+            var collection = BORegistry.DataAccessor.BusinessObjectLoader.
                 GetBusinessObjectCollection(this.ClassDef, searchClause, orderBy);
             SetBusinessObjectCollection(collection);
         }
