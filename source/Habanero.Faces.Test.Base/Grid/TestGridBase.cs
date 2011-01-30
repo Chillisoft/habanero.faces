@@ -1192,7 +1192,7 @@ namespace Habanero.Faces.Test.Base.Grid
                 _colToLoadFrom = colToLoadFrom;
             }
 
-            internal void GridLoaderDelegateLoadFromDiffCol(IGridBase grid, IBusinessObjectCollection col)
+            public void GridLoaderDelegateLoadFromDiffCol(IGridBase grid, IBusinessObjectCollection col)
             {
                 var dataSetProvider = new ReadOnlyDataSetProvider(_colToLoadFrom);
                 IUIDef uiDef = ((ClassDef)col.ClassDef).GetUIDef(grid.UiDefName);
