@@ -865,10 +865,10 @@ namespace Habanero.Faces.Test.Base.Grid
             //---------------Set up test pack-------------------
             BusinessObjectCollection<MyBO> col;
             IGridBase gridBase = GetGridBaseWith_4_Rows(out col);
-            string filterString = col[2].ID.ToString().Substring(5, 30);
+            string filterString = col[2].TestProp.Substring(5, 10);
             IFilterClauseFactory factory = new DataViewFilterClauseFactory();
             IFilterClause filterClause =
-                factory.CreateStringFilterClause(_gridIdColumnName, FilterClauseOperator.OpLike, filterString);
+                factory.CreateStringFilterClause("TestProp", FilterClauseOperator.OpLike, filterString);
             //---------------Execute Test ----------------------
 
             gridBase.ApplyFilter(filterClause);
@@ -884,13 +884,13 @@ namespace Habanero.Faces.Test.Base.Grid
         public void TestApplyFilter_SetBusinessObject_SetsTheCorrectBusinessObject()
         {
             //---------------Set up test pack-------------------
-            BusinessObjectCollection<MyBO> boColllection;
-            var gridBase = GetGridBaseWith_4_Rows(out boColllection);
-            var filterString = boColllection[2].TestProp.Substring(5, 10);
-            IFilterClauseFactory factory = new DataViewFilterClauseFactory();
-            IFilterClause filterClause =
+            BusinessObjectCollection<MyBO> boCollection;
+            var gridBase = GetGridBaseWith_4_Rows(out boCollection);
+            var filterString = boCollection[2].TestProp.Substring(5, 10);
+            var factory = new DataViewFilterClauseFactory();
+            var filterClause =
                 factory.CreateStringFilterClause("TestProp", FilterClauseOperator.OpLike, filterString);
-            MyBO bo = boColllection[2];
+            var bo = boCollection[2];
             //---------------Execute Test ----------------------
 
             gridBase.ApplyFilter(filterClause);
@@ -898,7 +898,6 @@ namespace Habanero.Faces.Test.Base.Grid
             //---------------Test Result -----------------------
 
             Assert.AreSame(bo, gridBase.SelectedBusinessObject);
-            //---------------Tear Down -------------------------
         }
 /*
 
@@ -931,7 +930,7 @@ namespace Habanero.Faces.Test.Base.Grid
             BusinessObjectCollection<MyBO> boColllection;
             IGridBase gridBase = GetGridBaseWith_4_Rows(out boColllection);
             MyBO boRemainingInThisGrid = boColllection[2];
-            string filterString = boRemainingInThisGrid.TestProp.ToString().Substring(5, 10);
+            string filterString = boRemainingInThisGrid.TestProp.Substring(5, 10);
             IFilterClauseFactory factory = new DataViewFilterClauseFactory();
             IFilterClause filterClause =
                 factory.CreateStringFilterClause("TestProp", FilterClauseOperator.OpLike, filterString);
@@ -952,7 +951,7 @@ namespace Habanero.Faces.Test.Base.Grid
             //---------------Set up test pack-------------------
             BusinessObjectCollection<MyBO> col;
             IGridBase gridBase = GetGridBaseWith_4_Rows(out col);
-            string filterString = col[2].TestProp.ToString().Substring(5, 10);
+            string filterString = col[2].TestProp.Substring(5, 10);
             IFilterClauseFactory factory = new DataViewFilterClauseFactory();
             IFilterClause filterClause =
                 factory.CreateStringFilterClause("TestProp", FilterClauseOperator.OpLike, filterString);
@@ -1139,37 +1138,23 @@ namespace Habanero.Faces.Test.Base.Grid
             return gridBase;
         }
 
-        protected static void AddColumnsForContactPerson(IBusinessObjectCollection businessObjectCollection, IGridBase gridBase, string propName)
-        {
-            gridBase.Columns.Add(_gridIdColumnName, _gridIdColumnName);
-            gridBase.Columns.Add(propName, propName);
-            gridBase.BusinessObjectCollection =businessObjectCollection;
-        }
-
-        protected static void CreateBOAndAddToCollection(
-            BusinessObjectCollection<ContactPersonTestBO> businessObjectCollection)
-        {
-            ContactPersonTestBO cp = new ContactPersonTestBO {Surname = Guid.NewGuid().ToString("N")};
-            cp.Save();
-            businessObjectCollection.Add(cp);
-        }
         protected static BusinessObjectCollection<MyBO> CreateCollectionWith_4_Objects()
         {
-            MyBO cp = new MyBO {TestProp = "bcdsfradfasdfsda"};
-            MyBO cp2 = new MyBO {TestProp = "dfdafasdfsda"};
-            MyBO cp3 = new MyBO {TestProp = "cfdafasdfasdfsda"};
-            MyBO cp4 = new MyBO {TestProp = "afdsafasdfasdfasdf"};
+            MyBO cp = new MyBO {TestProp = "b" + TestUtil.GetRandomString()};
+            MyBO cp2 = new MyBO { TestProp = "d" + TestUtil.GetRandomString() };
+            MyBO cp3 = new MyBO { TestProp = "c" + TestUtil.GetRandomString() };
+            MyBO cp4 = new MyBO { TestProp = "a" + TestUtil.GetRandomString() };
             return new BusinessObjectCollection<MyBO> {{cp, cp2, cp3, cp4}};
         }
         protected static BusinessObjectCollection<MyBO> CreateCollectionWith_4_SavedObjects()
         {
-            MyBO cp = new MyBO {TestProp = "bfdasfasdfasd"};
+            MyBO cp = new MyBO { TestProp = "b" + TestUtil.GetRandomString() };
             cp.Save();
-            MyBO cp2 = new MyBO {TestProp = "dfdsafsdfsdafasd"};
+            MyBO cp2 = new MyBO { TestProp = "d" + TestUtil.GetRandomString() };
             cp2.Save();
-            MyBO cp3 = new MyBO {TestProp = "cfdsafasdfasdf"};
+            MyBO cp3 = new MyBO { TestProp = "c" + TestUtil.GetRandomString() };
             cp3.Save();
-            MyBO cp4 =new MyBO {TestProp = "afsdafdasfasdfdas"};
+            MyBO cp4 = new MyBO { TestProp = "a" + TestUtil.GetRandomString() };
             cp4.Save();
             return new BusinessObjectCollection<MyBO> {{cp, cp2, cp3, cp4}};
         }
