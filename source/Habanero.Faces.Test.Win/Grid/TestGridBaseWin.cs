@@ -111,7 +111,7 @@ namespace Habanero.Faces.Test.Win.Grid
         }
 
         [Test]
-        public void TestWinApplyFilterFiresFilterUpdatedEvent()
+        public virtual void TestWinApplyFilterFiresFilterUpdatedEvent()
         {
             //---------------Set up test pack-------------------
             BusinessObjectCollection<MyBO> col;
@@ -128,7 +128,7 @@ namespace Habanero.Faces.Test.Win.Grid
             Assert.IsTrue(filterUpdatedFired);
         }
         [Test]
-        public void TestWinApplySearch_ShouldFireFilterUpdatedEvent()
+        public virtual void TestWinApplySearch_ShouldFireFilterUpdatedEvent()
         {
             //---------------Set up test pack-------------------
             BusinessObjectCollection<MyBO> col;
@@ -141,7 +141,7 @@ namespace Habanero.Faces.Test.Win.Grid
             Assert.IsTrue(filterUpdatedFired);
         }
         [Test]
-        public void TestWinApplySearch_WithFilterClause_ShouldFireFilterUpdatedEvent()
+        public virtual void TestWinApplySearch_WithFilterClause_ShouldFireFilterUpdatedEvent()
         {
             //---------------Set up test pack-------------------
             BusinessObjectCollection<MyBO> col;
