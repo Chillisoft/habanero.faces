@@ -753,7 +753,7 @@ namespace Habanero.Faces.Test.Base.Grid
             Assert.AreEqual(0, gridBase.Rows.Count);
         }
         [Test]
-        public void TestAddItemToCollectionAddsItemToGrid()
+        public virtual void TestAddItemToCollectionAddsItemToGrid()
         {
             //---------------Set up test pack-------------------
             BusinessObjectCollection<MyBO> col;
@@ -1070,7 +1070,7 @@ namespace Habanero.Faces.Test.Base.Grid
 
 
         [Test]
-        public void Test_SetDateToGridCustomFormat_LoadViaCollection()
+        public virtual void Test_SetDateToGridCustomFormat_LoadViaCollection()
         {
             //---------------Set up test pack-------------------
             MyBO.LoadClassDefWithDateTime();
@@ -1092,7 +1092,7 @@ namespace Habanero.Faces.Test.Base.Grid
         }
 
         [Test]
-        public void Test_SetDateToGridCustomFormat_LoadViaDataTable()
+        public virtual void Test_SetDateToGridCustomFormat_LoadViaDataTable()
         {
             //---------------Set up test pack-------------------
             MyBO.LoadClassDefWithDateTime();
@@ -1130,7 +1130,7 @@ namespace Habanero.Faces.Test.Base.Grid
 
         #region Utility Methods 
 
-        private IGridBase CreateGridBaseWithDateCustomFormatCol(out IDataGridViewColumn col, string requiredFormat)
+        protected IGridBase CreateGridBaseWithDateCustomFormatCol(out IDataGridViewColumn col, string requiredFormat)
         {
             IGridBase gridBase = CreateGridBaseStub();
             gridBase.Columns.Add("TestDateTime", "TestDateTime");
