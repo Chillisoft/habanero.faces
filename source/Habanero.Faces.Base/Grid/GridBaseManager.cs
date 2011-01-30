@@ -385,7 +385,7 @@ namespace Habanero.Faces.Base
         /// <summary>
         /// See <see cref="IBOColSelectorControl.GetBusinessObjectAtRow"/>
         /// </summary>
-        public IBusinessObject GetBusinessObjectAtRow(int rowIndex)
+        public virtual IBusinessObject GetBusinessObjectAtRow(int rowIndex)
         {
             IDataGridViewRow findRow = GetGridRow(rowIndex);
 
