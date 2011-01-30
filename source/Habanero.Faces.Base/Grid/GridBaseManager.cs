@@ -34,7 +34,7 @@ namespace Habanero.Faces.Base
     /// </summary>
     public class GridBaseManager
     {
-        private readonly IGridBase _gridBase;
+        protected readonly IGridBase _gridBase;
         private IBusinessObjectCollection _boCol;
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Habanero.Faces.Base
         /// <summary>
         /// See <see cref="IBOColSelectorControl.SelectedBusinessObject"/>
         /// </summary>
-        public IBusinessObject SelectedBusinessObject
+        public virtual IBusinessObject SelectedBusinessObject
         {
             get
             {
