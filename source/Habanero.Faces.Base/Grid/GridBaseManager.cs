@@ -54,7 +54,7 @@ namespace Habanero.Faces.Base
         /// during loading. This is required to prevent the Grid or other controls 
         /// responding to these events innappropriately.
         /// </summary>
-        private bool _fireBusinessObjectSelectedEvent = true;
+        protected bool _fireBusinessObjectSelectedEvent = true;
 
         ///<summary>
         /// Constructor
