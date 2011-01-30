@@ -179,8 +179,9 @@ namespace Habanero.Faces.Test.Base.Grid
             Assert.AreEqual(4, gridBase.Rows.Count);
         }
 
+         
         [Test]
-        public void TestRefreshBusinessObjectRow()
+        public virtual void TestRefreshBusinessObjectRow()
         {
             //---------------Set up test pack-------------------
             MyBO.LoadDefaultClassDef();
