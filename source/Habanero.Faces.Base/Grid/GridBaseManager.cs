@@ -205,7 +205,7 @@ namespace Habanero.Faces.Base
         /// Refreshes the row values for the specified <see cref="IBusinessObject"/>.
         ///</summary>
         ///<param name="businessObject">The <see cref="IBusinessObject"/> for which the row must be refreshed.</param>
-        public void RefreshBusinessObjectRow(IBusinessObject businessObject)
+        public virtual void RefreshBusinessObjectRow(IBusinessObject businessObject)
         {
             if (DataSetProvider == null) return;
             DataSetProvider.UpdateBusinessObjectRowValues(businessObject);
@@ -335,7 +335,7 @@ namespace Habanero.Faces.Base
         /// <summary>
         /// See <see cref="IGridBase.SelectedBusinessObjects"/>
         /// </summary>
-        public IList<BusinessObject> SelectedBusinessObjects
+        public virtual IList<BusinessObject> SelectedBusinessObjects
         {
             get
             {
@@ -426,7 +426,7 @@ namespace Habanero.Faces.Base
             return null;
         }
 
-        private DataRowView GetDataRowView(int rowIndex)
+        private  DataRowView GetDataRowView(int rowIndex)
         {
             try
             {
@@ -472,7 +472,7 @@ namespace Habanero.Faces.Base
         /// <summary>
         /// See <see cref="IGridBase.GetBusinessObjectRow"/>
         /// </summary>
-        public IDataGridViewRow GetBusinessObjectRow(IBusinessObject businessObject)
+        public virtual IDataGridViewRow GetBusinessObjectRow(IBusinessObject businessObject)
         {
             if (businessObject == null) return null;
             Guid boIdGuid = businessObject.ID.ObjectID;
