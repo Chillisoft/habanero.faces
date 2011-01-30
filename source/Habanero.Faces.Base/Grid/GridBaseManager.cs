@@ -323,7 +323,7 @@ namespace Habanero.Faces.Base
         }
 
 
-        private static void ClearAllSelectedRows(IDataGridViewRowCollection gridRows)
+        protected static void ClearAllSelectedRows(IDataGridViewRowCollection gridRows)
         {
             for (int i = 0; i < gridRows.Count; i++)
             {
