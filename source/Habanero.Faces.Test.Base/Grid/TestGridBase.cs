@@ -421,7 +421,7 @@ namespace Habanero.Faces.Test.Base.Grid
         }
 
         [Test]
-        public void TestGetBusinessObjectAtRow()
+        public virtual void TestGetBusinessObjectAtRow()
         {
             //---------------Set up test pack-------------------
             BusinessObjectCollection<MyBO> col;
@@ -434,7 +434,7 @@ namespace Habanero.Faces.Test.Base.Grid
             Assert.AreSame(col[3], businessObject3);
         }
         [Test]
-        public void TestGetBusinessObjectAtRow_WhenCustomLoad_ShouldReturnBO()
+        public virtual void TestGetBusinessObjectAtRow_WhenCustomLoad_ShouldReturnBO()
         {
             //---------------Set up test pack-------------------
             MyBO.LoadDefaultClassDef();
@@ -454,7 +454,7 @@ namespace Habanero.Faces.Test.Base.Grid
             Assert.AreSame(col[3], businessObject3);
         }
         [Test]
-        public void TestGetBusinessObjectAtRow_WhenDataSourceNotNullButDataSetProviderNull_ShouldReturnBO()
+        public virtual void TestGetBusinessObjectAtRow_WhenDataSourceNotNullButDataSetProviderNull_ShouldReturnBO()
         {
             //---------------Set up test pack-------------------
             MyBO.LoadDefaultClassDef();
@@ -475,7 +475,7 @@ namespace Habanero.Faces.Test.Base.Grid
         }
 
         [Test]
-        public void TestGetBusinessObjectAtRow_WhenGridHasObjectIDButBOColNotHasObject_ShouldLoadBO()
+        public virtual void TestGetBusinessObjectAtRow_WhenGridHasObjectIDButBOColNotHasObject_ShouldLoadBO()
         {
             //This is a fairly specific situation but can occur when you are using
             // a CachedBindingList or a paginaged BindingList where the BOCol that the
@@ -504,7 +504,7 @@ namespace Habanero.Faces.Test.Base.Grid
         }
 
         [Test]
-        public void TestSetSelectedBO_WhenGridHasObjectIDButBOColNotHasObject_ShouldSetBO()
+        public virtual void TestSetSelectedBO_WhenGridHasObjectIDButBOColNotHasObject_ShouldSetBO()
         {
             //This is a fairly specific situation but can occur when you are using
             // a CachedBindingList or a paginaged BindingList where the BOCol that the
@@ -559,7 +559,7 @@ namespace Habanero.Faces.Test.Base.Grid
         }
 
         [Test]
-        public void TestGetBusinessObjectRow()
+        public virtual  void TestGetBusinessObjectRow()
         {
             //---------------Set up test pack-------------------
             BusinessObjectCollection<MyBO> col;
@@ -576,7 +576,7 @@ namespace Habanero.Faces.Test.Base.Grid
         }
 
         [Test]
-        public void TestGetBusinessObjectRow_NullBO()
+        public virtual  void TestGetBusinessObjectRow_NullBO()
         {
             //---------------Set up test pack-------------------
             BusinessObjectCollection<MyBO> col;
@@ -589,7 +589,7 @@ namespace Habanero.Faces.Test.Base.Grid
         }
 
         [Test]
-        public void TestGetBusinessObjectRow_ReturnsNullIfNotFound()
+        public virtual  void TestGetBusinessObjectRow_ReturnsNullIfNotFound()
         {
             //---------------Set up test pack-------------------
             BusinessObjectCollection<MyBO> col;
@@ -1182,11 +1182,8 @@ namespace Habanero.Faces.Test.Base.Grid
             gridBase.Columns.Add("TestProp", "TestProp");
         }
 
-
-        
-
         #endregion
-        private class CustomDelegateLoaderClass
+        protected class CustomDelegateLoaderClass
         {
             private readonly IBusinessObjectCollection _colToLoadFrom;
 
