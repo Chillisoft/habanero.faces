@@ -1135,6 +1135,7 @@ namespace Habanero.Faces.Test.Base.Grid
             IGridBase gridBase = CreateGridBaseStub();
             gridBase.Columns.Add("TestDateTime", "TestDateTime");
             col = gridBase.Columns[0];
+            col.DataPropertyName = "TestDateTime";
             col.DefaultCellStyle.Format = requiredFormat;
             return gridBase;
         }
