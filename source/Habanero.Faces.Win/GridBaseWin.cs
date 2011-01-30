@@ -320,7 +320,7 @@ namespace Habanero.Faces.Win
             get { return GridBaseManager.IDColumnName; }
         }
 
-        /// <summary>
+/*        /// <summary>
         /// Fires an event indicating that the selected business object
         /// is being edited
         /// </summary>
@@ -328,28 +328,28 @@ namespace Habanero.Faces.Win
         public void SelectedBusinessObjectEdited(BusinessObject bo)
         {
             FireSelectedBusinessObjectEdited(bo);
-        }
+        }*/
 
-        private void FireSelectedBusinessObjectEdited(IBusinessObject bo)
+/*        private void FireSelectedBusinessObjectEdited(IBusinessObject bo)
         {
             if (this.BusinessObjectEdited != null)
             {
                 this.BusinessObjectEdited(this, new BOEventArgs(bo));
             }
-        }
-        /// <summary>
+        }*/
+/*        /// <summary>
         /// Fires the Selected Business Object Edited Event for <paramref name="bo"/>
         /// </summary>
         /// <param name="bo">The Business object the event is being fired for</param>
         public void FireBusinessObjectEditedEvent(BusinessObject bo)
         {
             FireSelectedBusinessObjectEdited(bo);
-        }
-
+        }*/
+/*
         /// <summary>
         /// Occurs when a business object is being edited
         /// </summary>
-        public event EventHandler<BOEventArgs> BusinessObjectEdited;
+        public event EventHandler<BOEventArgs> BusinessObjectEdited;*/
 
         /// <summary>
         /// Reloads the grid based on the grid returned by GetBusinessObjectCollection

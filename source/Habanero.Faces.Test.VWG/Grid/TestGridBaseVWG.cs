@@ -129,7 +129,7 @@ namespace Habanero.Faces.Test.VWG.Grid
 
         //}
 
-        [Test]
+/*        [Test]
         public void TestVWG_NonSelectedBusinessObjectEdited()
         {
             //---------------Set up test pack-------------------
@@ -168,7 +168,7 @@ namespace Habanero.Faces.Test.VWG.Grid
             //Should not cause an update
             Assert.IsFalse(_boUpdated);
 
-        }
+        }*/
 
 
 

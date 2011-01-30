@@ -51,7 +51,7 @@ namespace Habanero.Faces.Base
         /// </summary>
         /// <param name="col">The collection of business objects to display.  This
         /// collection must be pre-loaded.</param>
-        [Obsolete("Should be replaced with 'BusinessObjectCollection' property")] //01 Mar 2009
+        [Obsolete("V2.5 Should be replaced with 'BusinessObjectCollection' property")] //01 Mar 2009
         [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         void SetBusinessObjectCollection(IBusinessObjectCollection col);
 
@@ -110,7 +110,7 @@ namespace Habanero.Faces.Base
         /// Returns the business object collection being displayed in the grid
         /// </summary>
         /// <returns>Returns a business collection</returns>
-        [Obsolete("Should be replaced with 'BusinessObjectCollection' property")]
+        [Obsolete("V2.5 Should be replaced with 'BusinessObjectCollection' property")]
         [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         IBusinessObjectCollection GetBusinessObjectCollection();
 
@@ -191,28 +191,30 @@ namespace Habanero.Faces.Base
         [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         string IDColumnName { get; }
         // ReSharper disable UnusedMember.Global
-        /// <summary>
+/*        /// <summary>
         /// Fires an event indicating that the selected business object
         /// is being edited
         /// </summary>
         /// <param name="bo">The business object being edited</param>
-        [Obsolete("Should use FireBusinessObjectEditedEvent")]
+        [Obsolete(" V 2.2. Should use FireBusinessObjectEditedEvent")]
         [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        void SelectedBusinessObjectEdited(BusinessObject bo);
+        void SelectedBusinessObjectEdited(BusinessObject bo);*/
 
-        /// <summary>
+/*        /// <summary>
         /// Fires an event indicating that the selected business object
         /// is being edited
         /// </summary>
         /// <param name="bo">The business object being edited</param>
         [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        void FireBusinessObjectEditedEvent(BusinessObject bo);
+        void FireBusinessObjectEditedEvent(BusinessObject bo);*/
+
+/*
         // ReSharper restore UnusedMember.Global
         /// <summary>
         /// Occurs when a business object is being edited
         /// </summary>
         [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        event EventHandler<BOEventArgs> BusinessObjectEdited;
+        event EventHandler<BOEventArgs> BusinessObjectEdited;*/
 
         /// <summary>
         /// Reloads the grid based on the collection returned by GetBusinessObjectCollection

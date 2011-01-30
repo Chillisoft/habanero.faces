@@ -66,7 +66,7 @@ namespace Habanero.Faces.VWG
         /// </summary>
         public event EventHandler CollectionChanged;
 
-        /// <summary>
+/*        /// <summary>
         /// Fires an event indicating that the selected business object
         /// is being edited
         /// </summary>
@@ -74,12 +74,12 @@ namespace Habanero.Faces.VWG
         public void FireBusinessObjectEditedEvent(BusinessObject bo)
         {
             FireSelectedBusinessObjectEdited(bo);
-        }
+        }*/
 
-        /// <summary>
+/*        /// <summary>
         /// Occurs when a business object is being edited
         /// </summary>
-        public event EventHandler<BOEventArgs> BusinessObjectEdited;
+        public event EventHandler<BOEventArgs> BusinessObjectEdited;*/
 
         private readonly GridBaseManager _manager;
 
@@ -319,7 +319,7 @@ namespace Habanero.Faces.VWG
         {
             get { return GridBaseManager.IDColumnName; }
         }
-
+/*
         /// <summary>
         /// Fires an event indicating that the selected business object
         /// is being edited
@@ -328,15 +328,15 @@ namespace Habanero.Faces.VWG
         public void SelectedBusinessObjectEdited(BusinessObject bo)
         {
             FireSelectedBusinessObjectEdited(bo);
-        }
-
+        }*/
+/*
         private void FireSelectedBusinessObjectEdited(IBusinessObject bo)
         {
             if (this.BusinessObjectEdited != null)
             {
                 this.BusinessObjectEdited(this, new BOEventArgs(bo));
             }
-        }
+        }*/
         /// <summary>Gets the number of items displayed in the <see cref="IBOColSelector"></see>.</summary>
         /// <returns>The number of items in the <see cref="IBOColSelector"></see>.</returns>
         int IBOColSelector.NoOfItems
