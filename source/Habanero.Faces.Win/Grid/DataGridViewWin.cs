@@ -161,7 +161,7 @@ namespace Habanero.Faces.Win
         /// <filterpriority>1</filterpriority>
         public void Sort(IDataGridViewColumn dataGridViewColumn, ListSortDirection direction)
         {
-            Sort(dataGridViewColumn.Name, direction == ListSortDirection.Ascending);
+            Sort(dataGridViewColumn.DataPropertyName, direction == ListSortDirection.Ascending);
         }
 
         /// <summary>

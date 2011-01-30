@@ -16,6 +16,7 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
+using System.ComponentModel;
 using System.Data;
 
 namespace Habanero.Faces.Base
@@ -55,6 +56,18 @@ namespace Habanero.Faces.Base
                     ((DataView) _grid.DataSource).Sort = columnName + " DESC";
                 }
             }
-        }        
+            var bindingListView = _grid.DataSource as IBindingListView;
+            if (bindingListView != null && bindingListView is ITypedList)
+            {
+                var sortDirection = isAscending ? ListSortDirection.Ascending : ListSortDirection.Descending;
+                var propertyDescriptor = GetDescriptor((ITypedList) bindingListView, columnName);
+                bindingListView.ApplySort(propertyDescriptor, sortDirection);
+            }
+        }
+        private static PropertyDescriptor GetDescriptor(ITypedList bindingListView, string propName)
+        {
+            var descriptorCollection = bindingListView.GetItemProperties(new PropertyDescriptor[0]);
+            return descriptorCollection.Find(propName, true);
+        }
     }    
 }

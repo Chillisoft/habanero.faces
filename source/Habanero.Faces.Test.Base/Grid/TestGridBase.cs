@@ -807,7 +807,7 @@ namespace Habanero.Faces.Test.Base.Grid
         }
 
         [Test]
-        public void TestSetSortColumn()
+        public virtual void TestSetSortColumn()
         {
             //---------------Set up test pack-------------------
 

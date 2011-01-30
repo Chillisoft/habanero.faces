@@ -118,7 +118,7 @@ namespace Habanero.Faces.VWG
         /// <filterpriority>1</filterpriority>
         public void Sort(IDataGridViewColumn dataGridViewColumn, ListSortDirection direction)
         {
-            Sort(dataGridViewColumn.Name, direction == ListSortDirection.Ascending);
+            Sort(dataGridViewColumn.DataPropertyName, direction == ListSortDirection.Ascending);
         }
 
         /// <summary>Gets the column by which the <see cref="IDataGridView"></see> contents are currently sorted.</summary>
