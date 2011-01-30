@@ -49,19 +49,22 @@ namespace Habanero.Faces.Base
             {
                 if (isAscending)
                 {
-                    ((DataView) _grid.DataSource).Sort = columnName + " ASC";
+                    ((DataView)_grid.DataSource).Sort = columnName + " ASC";
                 }
                 else
                 {
-                    ((DataView) _grid.DataSource).Sort = columnName + " DESC";
+                    ((DataView)_grid.DataSource).Sort = columnName + " DESC";
                 }
             }
-            var bindingListView = _grid.DataSource as IBindingListView;
-            if (bindingListView != null && bindingListView is ITypedList)
+            else
             {
-                var sortDirection = isAscending ? ListSortDirection.Ascending : ListSortDirection.Descending;
-                var propertyDescriptor = GetDescriptor((ITypedList) bindingListView, columnName);
-                bindingListView.ApplySort(propertyDescriptor, sortDirection);
+                var bindingListView = _grid.DataSource as IBindingListView;
+                if (bindingListView != null && bindingListView is ITypedList)
+                {
+                    var sortDirection = isAscending ? ListSortDirection.Ascending : ListSortDirection.Descending;
+                    var propertyDescriptor = GetDescriptor((ITypedList) bindingListView, columnName);
+                    bindingListView.ApplySort(propertyDescriptor, sortDirection);
+                }
             }
         }
         private static PropertyDescriptor GetDescriptor(ITypedList bindingListView, string propName)

@@ -132,10 +132,11 @@ namespace Habanero.Faces.Base
                 {
                     SelectFirstRow();
                 }
-                if (AutoSelectFirstItem)
-                {
-                    FireBusinessObjectSelected();
-                }
+            }
+
+            if (AutoSelectFirstItem)
+            {
+                FireBusinessObjectSelected();
             }
             FireCollectionChanged();
         }
