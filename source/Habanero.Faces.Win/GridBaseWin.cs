@@ -48,6 +48,7 @@ namespace Habanero.Faces.Win
             GridBaseManager.BusinessObjectSelected += delegate { FireBusinessObjectSelected(); };
             DoubleClick += DoubleClickHandler;
         }
+
         /// <summary>
         /// Displays a message box to the user to check if they want to proceed with
         /// deleting the selected rows.
