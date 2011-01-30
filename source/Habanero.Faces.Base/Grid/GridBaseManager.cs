@@ -94,7 +94,7 @@ namespace Habanero.Faces.Base
         {
         }
 
-        private void FireBusinessObjectSelected()
+        protected void FireBusinessObjectSelected()
         {
             if (this.BusinessObjectSelected != null && _fireBusinessObjectSelectedEvent)
             {
