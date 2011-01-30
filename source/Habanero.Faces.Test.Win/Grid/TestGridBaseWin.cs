@@ -115,7 +115,7 @@ namespace Habanero.Faces.Test.Win.Grid
         {
             //---------------Set up test pack-------------------
             BusinessObjectCollection<MyBO> col;
-            GridBaseWin gridBase = (GridBaseWin)GetGridBaseWith_4_Rows(out col);
+            GridBaseWin gridBase = (GridBaseWin)GetGridBaseWith_4_Rows(out col).GetControl();
             string filterString = col[2].ID.ToString().Substring(5, 30);
             IFilterClauseFactory factory = new DataViewFilterClauseFactory();
             IFilterClause filterClause =
@@ -132,7 +132,7 @@ namespace Habanero.Faces.Test.Win.Grid
         {
             //---------------Set up test pack-------------------
             BusinessObjectCollection<MyBO> col;
-            GridBaseWin gridBase = (GridBaseWin)GetGridBaseWith_4_Rows(out col);
+            GridBaseWin gridBase = (GridBaseWin)GetGridBaseWith_4_Rows(out col).GetControl();
             bool filterUpdatedFired = false;
             gridBase.FilterUpdated += delegate { filterUpdatedFired = true; };
             //---------------Execute Test ----------------------
@@ -145,7 +145,7 @@ namespace Habanero.Faces.Test.Win.Grid
         {
             //---------------Set up test pack-------------------
             BusinessObjectCollection<MyBO> col;
-            GridBaseWin gridBase = (GridBaseWin)GetGridBaseWith_4_Rows(out col);
+            GridBaseWin gridBase = (GridBaseWin)GetGridBaseWith_4_Rows(out col).GetControl();
             string filterString = col[2].ID.ToString().Substring(5, 30);
             IFilterClauseFactory factory = new DataViewFilterClauseFactory();
             IFilterClause filterClause =
