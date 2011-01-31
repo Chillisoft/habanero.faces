@@ -428,7 +428,7 @@ namespace Habanero.Faces.Test.VWG.Mappers
             base.SetupPopupForm();
         }
 
-        protected override void CloseForm()
+        protected override void CloseForm(IBusinessObject selectedBusinessObject)
         {
             FormClosed = true;
             HandlePopUpFormClosedEvent(new object(), new CancelEventArgs());

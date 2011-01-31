@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using Habanero.Base;
 using Habanero.BO;
@@ -14,6 +13,8 @@ namespace Habanero.Faces.Base
     // ReSharper disable MemberCanBePrivate.Global
     public class ExtendedTextBoxMapper : ControlMapper
     {
+        private IBusinessObject _selectedBusinessObject;
+
         /// <summary>
         /// The extended Text box being mapped to the property by this mapper.
         /// </summary>
@@ -34,7 +35,7 @@ namespace Habanero.Faces.Base
             ExtendedTextBox.Button.Click += delegate
                      {
                          SetupPopupForm();
-                         PopupForm.Closing += HandlePopUpFormClosedEvent;
+                         //PopupForm.Closing += HandlePopUpFormClosedEvent;
                          PopupForm.ShowDialog();
                      };
         }
@@ -48,13 +49,21 @@ namespace Habanero.Faces.Base
         /// <param name="e"></param>
         protected virtual void HandlePopUpFormClosedEvent(object sender, CancelEventArgs e)
         {
-            IBusinessObject currentBusinessObject = GetSelectedBusinessObject();
-            //TODO brett 27 May 2010: Check if dirty if dirty then 
-            // if valid Ask  have option of Save, CancelEdits, CancelClose.
-            // if not valid ask if want to CancelEdits or CancelClose
-            if ((currentBusinessObject != null) && currentBusinessObject.IsValid())
+            try
             {
-                currentBusinessObject.Save();
+                IBusinessObject currentBusinessObject = GetSelectedBusinessObject();
+                //TODO brett 27 May 2010: Check if dirty if dirty then 
+                // if valid Ask  have option of Save, CancelEdits, CancelClose.
+                // if not valid ask if want to CancelEdits or CancelClose
+                /*if ((currentBusinessObject != null) && currentBusinessObject.IsValid())
+                {
+                    currentBusinessObject.Save();
+                }*/
+            }
+            catch (Exception ex)
+            {
+                GlobalRegistry.UIExceptionNotifier.Notify(ex, "", "Error ");
+                return;
             }
         }
 
@@ -121,23 +130,45 @@ namespace Habanero.Faces.Base
         /// </summary>
         protected virtual void SelectClickHandler(object sender, EventArgs e)
         {
-            var selectedBusinessObject = GetSelectedBusinessObject();
-            CloseForm();
-            SetPropertyValue(selectedBusinessObject);
+            _selectedBusinessObject = GetSelectedBusinessObject();
+            SetPropertyValue(_selectedBusinessObject);
+            CloseForm(_selectedBusinessObject);
         }
+
+        protected override void SetPropertyValue(object value)
+        {
+            var businessObject = value as BusinessObject;
+            if (businessObject == null || !businessObject.Status.IsValid()) return;
+            base.SetPropertyValue(businessObject);
+        }
+
         /// <summary>
         /// Handler for the Cancel click
         /// </summary>
         protected virtual void CancelClickHandler(object sender, EventArgs e)
         {
-            CloseForm();
+            CloseForm(_selectedBusinessObject);
         }
 
         ///<summary>
         ///</summary>
-        protected virtual void CloseForm()
+        ///<param name="selectedBusinessObject"></param>
+        protected virtual void CloseForm(IBusinessObject selectedBusinessObject)
         {
-            PopupForm.Close();
+            var confirmer = new MessageBoxConfirmer(ControlFactory, "Confirmation", MessageBoxIcon.Question);
+            confirmer.Confirm("Do you want to save '" + selectedBusinessObject.ToString() + "'?", delegate(bool confirmed) 
+            {
+                if (confirmed)
+                {
+                    selectedBusinessObject.Save();
+                    PopupForm.Close();  
+                }
+                else
+                {
+                    selectedBusinessObject.CancelEdits();
+                    PopupForm.Close();   
+                }
+            });
         }
 
         private IClassDef GetLookupTypeClassDef(out Type classType)
@@ -181,7 +212,8 @@ namespace Habanero.Faces.Base
         /// </summary>
         protected override void InternalUpdateControlValueFromBo()
         {
-            ExtendedTextBox.Text = Convert.ToString(GetPropertyValue());
+            if(this.BusinessObject.Status.IsValid())
+                ExtendedTextBox.Text = Convert.ToString(GetPropertyValue());    
         }
     }
 }

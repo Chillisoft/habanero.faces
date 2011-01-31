@@ -269,6 +269,27 @@ namespace Habanero.Faces.Test.Win.Mappers
             IExtendedTextBox extendedTextBox = (IExtendedTextBox)mapper.Control;
             Assert.AreEqual(expectedTextBoxValue, extendedTextBox.Text, "Text should be set on TextBox");
         }
+
+        [Test]
+        public void Test_WhenSetInvalidBusinessObject_ShouldNotSetTextOnExtendedTextBox()
+        {
+            //--------------- Set up test pack ------------------
+            ExtendedTextBoxMapper mapper = CreateExtendedLookupComboBoxMapper("Surname");
+
+            var invalidContactPerson = new ContactPersonTestBO();
+            var expectedTextBoxValue = TestUtil.GetRandomString();
+            invalidContactPerson.Surname = expectedTextBoxValue;
+            //--------------- Test Preconditions ----------------
+            Assert.IsNotNullOrEmpty(invalidContactPerson.Surname);
+            Assert.IsFalse(invalidContactPerson.Status.IsValid());
+            //--------------- Execute Test ----------------------
+            mapper.BusinessObject = invalidContactPerson;
+            //--------------- Test Result -----------------------
+            Assert.AreSame(invalidContactPerson, mapper.BusinessObject);
+            var extendedTextBox = (IExtendedTextBox)mapper.Control;
+            Assert.AreEqual("", extendedTextBox.Text, "Text should be set on TextBox");
+        }
+
         [Test]
         public void Test_SetBusinessObject_WhenPropValueNull_ShouldSetTextOnExtendedTextBoxToEmpty()
         {
@@ -354,6 +375,33 @@ namespace Habanero.Faces.Test.Win.Mappers
             Assert.IsTrue(mapperSpy.FormClosed);
         }
 
+        [Test]
+        public void Test_SelectButtonWhenClicked_AndContactPersonNotValid_ShouldPromptUser_FixBugBug1531()
+        {
+            GetClassDefs();
+            IControlFactory controlFactory = GetControlFactory();
+            var extendedTextBoxWin = new ExtendedTextBoxWin(controlFactory);
+            const string propName = "OrganisationID";
+            var mapperSpy = new ExtendedTextBoxMapperSpy(
+                extendedTextBoxWin, propName, true, controlFactory);
+            var contactPersonTestBo = new ContactPersonTestBO();
+            mapperSpy.BusinessObject = contactPersonTestBo;
+            mapperSpy.SelectedBO = new OrganisationTestBO();
+            //---------------Assert Precondition----------------
+            Assert.IsFalse(mapperSpy.FormClosed);
+            Assert.IsFalse(contactPersonTestBo.Status.IsValid());
+            Assert.IsTrue(mapperSpy.SelectedBO.Status.IsValid());
+            Assert.IsNotNull(mapperSpy.SelectedBO);
+            Assert.AreEqual("", extendedTextBoxWin.Text);
+            //---------------Execute Test ----------------------
+            mapperSpy.CallSetupPopupForm();
+            mapperSpy.CallSelectClick();
+            //---------------Test Result -----------------------
+            Assert.IsFalse(contactPersonTestBo.Status.IsValid());
+            Assert.IsTrue(mapperSpy.FormClosed);
+
+        }
+
         [ Test]
         public void Test_CancelButton_WhenClicked_ShouldCancelEditsAndCloseForm()
         {
@@ -425,7 +473,7 @@ namespace Habanero.Faces.Test.Win.Mappers
             base.SetupPopupForm();
         }
 
-        protected override void CloseForm()
+        protected override void CloseForm(IBusinessObject selectedBusinessObject)
         {
             FormClosed = true;
             HandlePopUpFormClosedEvent(new object(), new CancelEventArgs());
