@@ -155,6 +155,11 @@ namespace Habanero.Faces.Base
         ///<param name="selectedBusinessObject"></param>
         protected virtual void CloseForm(IBusinessObject selectedBusinessObject)
         {
+            if (selectedBusinessObject == null)
+            {
+                PopupForm.Close();
+                return;
+            }
             var confirmer = new MessageBoxConfirmer(ControlFactory, "Confirmation", MessageBoxIcon.Question);
             confirmer.Confirm("Do you want to save '" + selectedBusinessObject.ToString() + "'?", delegate(bool confirmed) 
             {
