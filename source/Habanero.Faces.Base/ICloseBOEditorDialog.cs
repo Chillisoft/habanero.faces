@@ -1,3 +1,5 @@
+using Habanero.Base;
+
 namespace Habanero.Faces.Base
 {
     /// <summary>
@@ -17,6 +19,7 @@ namespace Habanero.Faces.Base
         /// Close the form and lose all changes to the Busienss Object(s).
         /// </summary>
         CloseWithoutSaving
+
     }
     /// <summary>
     /// This the interface for a Dialog Box that is specialiased for dealing with the
@@ -25,7 +28,7 @@ namespace Habanero.Faces.Base
     /// whether they want to Close the Origional form without saving, Save the BO and then
     /// Close or Cancel the Closing of the origional form.
     /// </summary>
-    public interface ICloseBOEditorDialog:IFormHabanero
+    public interface ICloseBOEditorDialog
     {
         /// <summary>
         /// The CancelClose Button.
@@ -41,6 +44,16 @@ namespace Habanero.Faces.Base
         /// The Close without saving Button.
         /// </summary>
         IButton CloseWithoutSavingBtn { get; }
+
+        /// <summary>
+        /// Shows the Dialog form with the relevant options and messages for the business object.
+        /// In certain circumstances this dialog form will not be shown/visble e.g. if the business object is null
+        /// Or if the business object is not dirty.
+        /// In these circumstances the Dialog should make its own decision e.g. CloseWithoutSaving.
+        /// </summary>
+        /// <param name="businessObject">The business Object whose Dirty state is being checked.</param>
+        /// <returns>Returns the option selected by the user.</returns>
+        CloseBOEditorDialogResult ShowDialog(IBusinessObject businessObject);
 
         /// <summary>
         /// The Result from this Form.

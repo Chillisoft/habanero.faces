@@ -16,6 +16,8 @@ namespace Habanero.Faces.Win
     /// </summary>
     public class CloseBOEditorDialogWin : FormWin, ICloseBOEditorDialog
     {
+        private ILabel _label;
+
         /// <summary>
         /// The CancelClose Button.
         /// </summary>
@@ -28,7 +30,55 @@ namespace Habanero.Faces.Win
         /// The Close without saving Button.
         /// </summary>
         public IButton CloseWithoutSavingBtn { get; private set; }
-        private IBusinessObject BusinessObject { get; set; }
+
+        public CloseBOEditorDialogResult ShowDialog(IBusinessObject businessObject)
+        {
+            if (businessObject == null)
+            {
+                BOEditorDialogResult = CloseBOEditorDialogResult.CloseWithoutSaving;
+                this.Close();
+                return BOEditorDialogResult;
+            }
+
+
+            var isInValidState = businessObject.Status.IsValid();
+            var isDirty = businessObject.Status.IsDirty;
+            SaveAndCloseBtn.Enabled = isInValidState;
+            this.BOEditorDialogResult = CloseBOEditorDialogResult.CancelClose;
+
+
+            if (!isDirty)
+            {
+                this.BOEditorDialogResult = CloseBOEditorDialogResult.CloseWithoutSaving;
+                this.Close();
+                return this.BOEditorDialogResult;
+            }
+            string isValidString;
+            if (isInValidState)
+            {
+                isValidString = " and is in a valid state to be saved";
+            }
+
+            else
+            {
+                string isValidMessage = businessObject.Status.IsValidMessage;
+
+                isValidString = " and is not in a valid state to be saved: " + Environment.NewLine +
+                                isValidMessage + Environment.NewLine;
+            }
+            var fullDisplayName = businessObject.ClassDef.DisplayName
+                    + " '" + businessObject.ToString() + "'";
+            _label.Text = "The " + fullDisplayName + " is has been edited" + isValidString +
+                          ". Please choose the appropriate action";
+            this.SaveAndCloseBtn.Enabled = isInValidState;
+            ShowForm();
+            return this.BOEditorDialogResult;
+        }
+
+        protected virtual void ShowForm()
+        {
+            base.ShowDialog();
+        }
         /// <summary>
         /// The Result from this Form.
         /// </summary>
@@ -37,15 +87,11 @@ namespace Habanero.Faces.Win
         /// Constructor 
         /// </summary>
         /// <param name="controlFactory">The control Factory used to construct buttons, labels etc by ths control</param>
-        /// <param name="businessObject">The business Object whose Dirty state is being checked.</param>
-        public CloseBOEditorDialogWin(IControlFactory controlFactory, IBusinessObject businessObject)
+        public CloseBOEditorDialogWin(IControlFactory controlFactory)
         {
             if (controlFactory == null) throw new ArgumentNullException("controlFactory");
-            if (businessObject == null) throw new ArgumentNullException("businessObject");
-            BusinessObject = businessObject;
-            var fullDisplayName = businessObject.ClassDef.DisplayName
-                    + " '" + businessObject.ToString() + "'";
-            ConstructControl(controlFactory, fullDisplayName, this.BusinessObject.Status.IsValid(), this.BusinessObject.Status.IsDirty);
+
+            ConstructControl(controlFactory);
             SetSize();
         }
 
@@ -54,7 +100,7 @@ namespace Habanero.Faces.Win
             this.MinimumSize = new Size(400, 200);
             this.Size = this.MinimumSize;
         }
-
+/*
         ///<summary>
         /// Construct the Dialog form for any situation e.g. where the Form being closed has 
         /// Mutliple Business Objects is a wizard etc.
@@ -69,31 +115,20 @@ namespace Habanero.Faces.Win
             if (controlFactory == null) throw new ArgumentNullException("controlFactory");
             ConstructControl(controlFactory, fullDisplayName, isInValidState, isDirty);
             SetSize();
-        }
+        }*/
 
 
 
-        private void ConstructControl(IControlFactory controlFactory, string fullDisplayName, bool isInValidState, bool isDirty)
+        private void ConstructControl(IControlFactory controlFactory)
         {
             IButtonGroupControl buttonGroupControl = controlFactory.CreateButtonGroupControl();
             CancelCloseBtn = buttonGroupControl.AddButton("CancelClose", "Cancel Close", ButtonClick);
             CloseWithoutSavingBtn = buttonGroupControl.AddButton("CloseWithoutSaving", "&Close without saving", ButtonClick);
             SaveAndCloseBtn = buttonGroupControl.AddButton("SaveAndClose","&Save & Close", ButtonClick);
-            SaveAndCloseBtn.Enabled = isInValidState;
-            BOEditorDialogResult = CloseBOEditorDialogResult.CancelClose;
-            if (!isDirty)
-            {
-                BOEditorDialogResult = CloseBOEditorDialogResult.CloseWithoutSaving;
-                this.Close();               
-            }
-            var isValidString = "";
-            if (isInValidState)
-            {
-                isValidString = " and is in a valid state to be saved";                 
-            }
-            ILabel label = controlFactory.CreateLabel("The " + fullDisplayName + " is has been edited" + isValidString + ". Please choose the appropriate action");
+            
+            _label = controlFactory.CreateLabel();
             BorderLayoutManager layoutManager = controlFactory.CreateBorderLayoutManager(this);
-            layoutManager.AddControl(label, BorderLayoutManager.Position.Centre);
+            layoutManager.AddControl(_label, BorderLayoutManager.Position.Centre);
             layoutManager.AddControl(buttonGroupControl, BorderLayoutManager.Position.South);
         }
 
@@ -105,4 +140,5 @@ namespace Habanero.Faces.Win
             this.Close();
         }
     }
+
 }

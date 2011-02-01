@@ -4,7 +4,7 @@ using Habanero.Faces.Base;
 using Habanero.Faces.Win;
 using NUnit.Framework;
 using Rhino.Mocks;
-
+// ReSharper disable InconsistentNaming
 namespace Habanero.Faces.Test.Win.HabaneroControls
 {
     [TestFixture]
@@ -25,20 +25,20 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
             return new ControlFactoryWin();
         }
 
-        protected virtual CloseBOEditorDialogWin CreateDialogBox(IControlFactory factory, IBusinessObject businessObject)
+        protected virtual CloseBOEditorDialogWin CreateDialogBox(IControlFactory factory)
         {
-            return new CloseBOEditorDialogWin(factory, businessObject);
+            return new CloseBOEditorDialogWinFake(factory);
         }
         protected virtual CloseBOEditorDialogWin CreateDialogBoxWithDisplayName(IControlFactory factory)
         {
-            return new CloseBOEditorDialogWin(factory, "fdsafasd", true, true);
+            return new CloseBOEditorDialogWinFake(factory);
         }
 
         protected virtual ICloseBOEditorDialog CreateDialogBox()
         {
             IControlFactory factory = CreateControlFactoryWin();
-            var businessObject = CreateMockBO();
-            return CreateDialogBox(factory, businessObject);
+            //var businessObject = CreateMockBO();
+            return CreateDialogBox(factory);
         }
 
         private static IBusinessObject CreateMockBO()
@@ -66,7 +66,7 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
             IControlFactory factory = CreateControlFactoryWin();
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
-            ICloseBOEditorDialog dialogWin = CreateDialogBox(factory, CreateMockBO());
+            ICloseBOEditorDialog dialogWin = CreateDialogBox(factory);
             //---------------Test Result -----------------------
             Assert.IsNotNull(dialogWin);
             Assert.IsNotNull(dialogWin.SaveAndCloseBtn);
@@ -89,25 +89,6 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
         }
 
         [Test]
-        public void Test_Construct_WhenNullBO_ShouldRaiseError()
-        {
-            //---------------Set up test pack-------------------
-            IControlFactory factory = MockRepository.GenerateMock<IControlFactory>();
-            //---------------Assert Precondition----------------
-            //---------------Execute Test ----------------------
-            try
-            {
-                CreateDialogBox(factory, null);
-                Assert.Fail("expected ArgumentNullException");
-            }
-                //---------------Test Result -----------------------
-            catch (ArgumentNullException ex)
-            {
-                StringAssert.Contains("Value cannot be null", ex.Message);
-                StringAssert.Contains("businessObject", ex.ParamName);
-            }
-        }
-        [Test]
         public void Test_Construct_WhenNullControlFactory_ShouldRaiseError()
         {
             //---------------Set up test pack-------------------
@@ -115,7 +96,7 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
             //---------------Execute Test ----------------------
             try
             {
-                CreateDialogBox(null, CreateMockBO());
+                CreateDialogBox(null);
                 Assert.Fail("expected ArgumentNullException");
             }
                 //---------------Test Result -----------------------
@@ -135,7 +116,7 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
             //---------------Assert Precondition----------------
             Assert.IsNotNull(dialogWin.SaveAndCloseBtn);
             //---------------Execute Test ----------------------
-            dialogWin.Show();
+            dialogWin.ShowDialog(CreateMockBO());
             dialogWin.SaveAndCloseBtn.PerformClick();
             //---------------Test Result -----------------------
             Assert.AreEqual(CloseBOEditorDialogResult.SaveAndClose, dialogWin.BOEditorDialogResult);
@@ -146,13 +127,13 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
         public void Test_ClickSaveAndClose_ShouldCloseForm()
         {
             //---------------Set up test pack-------------------
-            ICloseBOEditorDialog dialogWin = CreateDialogBox();
+            CloseBOEditorDialogWin dialogWin = (CloseBOEditorDialogWin)CreateDialogBox();
             EventHandler closedEventHandler = MockRepository.GenerateStub<EventHandler>();
             dialogWin.Closed += closedEventHandler;
             //---------------Assert Precondition----------------
             Assert.IsNotNull(dialogWin.SaveAndCloseBtn);
             //---------------Execute Test ----------------------
-            dialogWin.Show();
+            dialogWin.ShowDialog(CreateMockBO());
             dialogWin.SaveAndCloseBtn.PerformClick();
             //---------------Test Result -----------------------
             closedEventHandler.AssertWasCalled(handler => handler(Arg<object>.Is.Anything, Arg<EventArgs>.Is.Anything));
@@ -166,7 +147,7 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
             //---------------Assert Precondition----------------
             Assert.IsNotNull(dialogWin.CloseWithoutSavingBtn);
             //---------------Execute Test ----------------------
-            dialogWin.Show();
+            dialogWin.ShowDialog(CreateMockBO());
             dialogWin.CloseWithoutSavingBtn.PerformClick();
             //---------------Test Result -----------------------
             Assert.AreEqual(CloseBOEditorDialogResult.CloseWithoutSaving, dialogWin.BOEditorDialogResult);
@@ -176,13 +157,13 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
         public void Test_CloseWithoutSaving_ShouldCloseForm()
         {
             //---------------Set up test pack-------------------
-            ICloseBOEditorDialog dialogWin = CreateDialogBox();
+            CloseBOEditorDialogWin dialogWin = (CloseBOEditorDialogWin)CreateDialogBox();
             EventHandler closedEventHandler = MockRepository.GenerateStub<EventHandler>();
             dialogWin.Closed += closedEventHandler;
             //---------------Assert Precondition----------------
             Assert.IsNotNull(dialogWin.CloseWithoutSavingBtn);
             //---------------Execute Test ----------------------
-            dialogWin.Show();
+            dialogWin.ShowDialog(CreateMockBO());
             dialogWin.CloseWithoutSavingBtn.PerformClick();
             //---------------Test Result -----------------------
             closedEventHandler.AssertWasCalled(handler => handler(Arg<object>.Is.Anything, Arg<EventArgs>.Is.Anything));
@@ -205,13 +186,13 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
         public void Test_CancelCloseBtn_ShouldCloseForm()
         {
             //---------------Set up test pack-------------------
-            ICloseBOEditorDialog dialogWin = CreateDialogBox();
+            CloseBOEditorDialogWin dialogWin = (CloseBOEditorDialogWin)CreateDialogBox();
             EventHandler closedEventHandler = MockRepository.GenerateStub<EventHandler>();
             dialogWin.Closed += closedEventHandler;
             //---------------Assert Precondition----------------
             Assert.IsNotNull(dialogWin.CancelCloseBtn);
             //---------------Execute Test ----------------------
-            dialogWin.Show();
+            dialogWin.ShowDialog(CreateMockBO());
             dialogWin.CancelCloseBtn.PerformClick();
             //---------------Test Result -----------------------
             closedEventHandler.AssertWasCalled(handler => handler(Arg<object>.Is.Anything, Arg<EventArgs>.Is.Anything));
@@ -228,7 +209,8 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
             Assert.IsTrue(businessObject.Status.IsDirty);
             Assert.IsTrue(businessObject.Status.IsValid());
             //---------------Execute Test ----------------------
-            CloseBOEditorDialogWin dialogWin = CreateDialogBox(factory, businessObject);
+            ICloseBOEditorDialog dialogWin = new CloseBOEditorDialogWinFake(factory);
+            dialogWin.ShowDialog(businessObject);
             //---------------Test Result -----------------------
             Assert.IsTrue(dialogWin.SaveAndCloseBtn.Enabled);
             Assert.IsTrue(dialogWin.CloseWithoutSavingBtn.Enabled);
@@ -245,7 +227,8 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
             Assert.IsTrue(businessObject.Status.IsDirty);
             Assert.IsFalse(businessObject.Status.IsValid());
             //---------------Execute Test ----------------------
-            CloseBOEditorDialogWin dialogWin = new CloseBOEditorDialogWin(factory, businessObject);
+            ICloseBOEditorDialog dialogWin = new CloseBOEditorDialogWinFake(factory);
+            dialogWin.ShowDialog(businessObject);
             //---------------Test Result -----------------------
             Assert.IsFalse(dialogWin.SaveAndCloseBtn.Enabled, "Should be disabled");
             Assert.IsTrue(dialogWin.CloseWithoutSavingBtn.Enabled);
@@ -261,10 +244,31 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
             Assert.IsFalse(businessObject.Status.IsDirty);
             Assert.IsTrue(businessObject.Status.IsValid());
             //---------------Execute Test ----------------------
-            CloseBOEditorDialogWin dialogWin = new CloseBOEditorDialogWin(factory, businessObject);
+            ICloseBOEditorDialog dialogWin = new CloseBOEditorDialogWinFake(factory);
+            dialogWin.ShowDialog(businessObject);
             //---------------Test Result -----------------------
             Assert.AreEqual(CloseBOEditorDialogResult.CloseWithoutSaving, dialogWin.BOEditorDialogResult);
         }
 
+        private class CloseBOEditorDialogWinFake : CloseBOEditorDialogWin
+        {
+            public CloseBOEditorDialogWinFake()
+                : base(GlobalUIRegistry.ControlFactory)
+            {
+            }
+            public CloseBOEditorDialogWinFake(IControlFactory controlFactory) : base(controlFactory)
+            {
+            }
+
+            protected override void ShowForm()
+            {
+                this.Show();//This is necessarry so that can test the button click events just dont want to show
+                //ShowDialog because that would hang the test runner.
+                ShowDialogWasCalled = true;
+            }
+
+            public bool ShowDialogWasCalled { get; private set; }
+        }
     }
+
 }
