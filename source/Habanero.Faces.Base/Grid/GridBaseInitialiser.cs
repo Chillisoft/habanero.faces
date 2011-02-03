@@ -170,13 +170,13 @@ namespace Habanero.Faces.Base
             return this.GridBase.Columns[colIndex];
         }
 
-        private IDataGridViewColumn CreateCustomColumn(UIGridColumn columnDef)
+        private IDataGridViewColumn CreateCustomColumn(IUIGridColumn columnDef)
         {
             IDataGridViewColumn newColumn;
-
-            if (columnDef.GridControlType != null)
+            var uiGridColumn = columnDef as UIGridColumn;
+            if (uiGridColumn != null && uiGridColumn.GridControlType != null)
             {
-                newColumn = _controlFactory.CreateDataGridViewColumn(columnDef.GridControlType);
+                newColumn = _controlFactory.CreateDataGridViewColumn(uiGridColumn.GridControlType);
             }
             else
             {
@@ -190,7 +190,7 @@ namespace Habanero.Faces.Base
 
         private void CreateColumnForUIDef(IClassDef classDef, IUIGrid gridDef)
         {
-            foreach (UIGridColumn gridColDef in gridDef)
+            foreach (IUIGridColumn gridColDef in gridDef)
             {
                 IDataGridViewColumn col;
                 if (gridColDef.GridControlTypeName == "DataGridViewComboBoxColumn")

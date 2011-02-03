@@ -64,7 +64,7 @@ namespace Habanero.Faces.Base
 
             SetupLayoutManager(filterControl, filterDef);
 
-            foreach (FilterPropertyDef filterPropertyDef in filterDef.FilterPropertyDefs)
+            foreach (IFilterPropertyDef filterPropertyDef in filterDef.FilterPropertyDefs)
             {
                 Type filterType = TypeLoader.LoadType(filterPropertyDef.FilterTypeAssembly, filterPropertyDef.FilterType);
                 ICustomFilter customFilter = (ICustomFilter)Activator.CreateInstance(filterType, _controlFactory,
@@ -86,7 +86,7 @@ namespace Habanero.Faces.Base
             filterControl.LayoutManager = layoutManager;
         }
 
-        private static void SetParametersOnFilter(FilterPropertyDef filterPropertyDef, Type filterType, ICustomFilter customFilter)
+        private static void SetParametersOnFilter(IFilterPropertyDef filterPropertyDef, Type filterType, ICustomFilter customFilter)
         {
             if (filterPropertyDef.Parameters == null) return;
 
