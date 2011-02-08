@@ -1,4 +1,5 @@
-﻿using Habanero.Base;
+﻿using System;
+using Habanero.Base.Logging;
 
 namespace Habanero.Faces.Test.Base
 {
@@ -7,6 +8,11 @@ namespace Habanero.Faces.Test.Base
         private readonly HabaneroLoggerStub _habaneroLoggerStub = new HabaneroLoggerStub();
 
         public IHabaneroLogger GetLogger(string contextName)
+        {
+            return _habaneroLoggerStub;
+        }
+
+        public IHabaneroLogger GetLogger(Type type)
         {
             return _habaneroLoggerStub;
         }
@@ -22,6 +28,19 @@ namespace Habanero.Faces.Test.Base
         public void Log(string message, LogCategory logCategory)
         {
 
+        }
+
+        public void Log(Exception exception)
+        {
+            
+        }
+
+        public void Log(string message, Exception exception)
+        {
+        }
+
+        public void Log(string message, Exception exception, LogCategory logCategory)
+        {
         }
 
         public string ContextName
