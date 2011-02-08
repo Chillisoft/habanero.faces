@@ -22,6 +22,7 @@ using System.Drawing;
 using System.Reflection;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
+using Habanero.Base.Logging;
 using Habanero.BO;
 using Habanero.Util;
 using log4net;
