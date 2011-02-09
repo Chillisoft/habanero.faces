@@ -1,7 +1,9 @@
 using System;
+using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
+using Habanero.Faces.Base.ControlMappers;
 using Habanero.Faces.Test.Base.Mappers;
 using Habanero.Faces.Win;
 using Habanero.Test.BO;
@@ -265,5 +267,87 @@ namespace Habanero.Faces.Test.Win.Mappers
             Assert.AreSame(newOrganisation, cmbox.SelectedItem);
             Assert.AreSame(newOrganisation, person.Organisation);
         }
+
+        [Test]
+        public void Test_LoadCollection_WithingTimeOut_ShouldNotReload()
+        {
+            //---------------Set up test pack-------------------
+            var cmbox = CreateComboBox();
+            var mapper =  new AutoLoadingRelationshipComboBoxMapperSpy(cmbox, "Organisation", false, GetControlFactory())
+                              {TimeOut = 5000};
+            mapper.SetRelatedObjectClassDef(_orgClassDef);
+            //---------------Assert Precondition----------------
+            Assert.Greater(mapper.TimeOut, 0, "Timeout setting of zero or less results in no caching");
+            //---------------Execute Test ----------------------
+            mapper.CallLoadCollectionForBusinessObject();
+            var boColAfterCall1 = mapper.BusinessObjectCollection;
+
+            mapper.CallLoadCollectionForBusinessObject();
+            var boColAfterCall2 = mapper.BusinessObjectCollection;
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(boColAfterCall1);
+            Assert.AreSame(boColAfterCall1, boColAfterCall2, "Since both calls are withing timeout should not reload");
+        }
+        [Test]
+        public void Test_LoadCollection_WhenTimeOutZero_ShouldReload()
+        {
+            //---------------Set up test pack-------------------
+            var cmbox = CreateComboBox();
+            var mapper =  new AutoLoadingRelationshipComboBoxMapperSpy(cmbox, "Organisation", false, GetControlFactory())
+                              {TimeOut = 0};
+            mapper.SetRelatedObjectClassDef(_orgClassDef);
+            //---------------Assert Precondition----------------
+            Assert.AreEqual(mapper.TimeOut, 0, "Timeout setting of zero or less results in no caching");
+            //---------------Execute Test ----------------------
+            mapper.CallLoadCollectionForBusinessObject();
+            var boColAfterCall1 = mapper.BusinessObjectCollection;
+
+            mapper.CallLoadCollectionForBusinessObject();
+            var boColAfterCall2 = mapper.BusinessObjectCollection;
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(boColAfterCall1);
+            Assert.AreNotSame(boColAfterCall1, boColAfterCall2, "Since there is no timeout should reload");
+        }
+        [Test]
+        public void Test_LoadCollection_WhenHasTimedOut_ShouldReload()
+        {
+            //---------------Set up test pack-------------------
+            var cmbox = CreateComboBox();
+            var mapper =  new AutoLoadingRelationshipComboBoxMapperSpy(cmbox, "Organisation", false, GetControlFactory())
+                              {TimeOut = 5000};
+            mapper.SetRelatedObjectClassDef(_orgClassDef);
+            //---------------Assert Precondition----------------
+            Assert.AreEqual(mapper.TimeOut, 5000, "Timeout setting of zero or less results in no caching");
+            //---------------Execute Test ----------------------
+            mapper.CallLoadCollectionForBusinessObject();
+            var boColAfterCall1 = mapper.BusinessObjectCollection;
+            mapper.SetLastCallTime(DateTime.Now.AddMilliseconds(-5001));
+            mapper.CallLoadCollectionForBusinessObject();
+            var boColAfterCall2 = mapper.BusinessObjectCollection;
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(boColAfterCall1);
+            Assert.AreNotSame(boColAfterCall1, boColAfterCall2, "Since cache has timed out should reload");
+        }
+
+        private class AutoLoadingRelationshipComboBoxMapperSpy : AutoLoadingRelationshipComboBoxMapper
+        {
+            public AutoLoadingRelationshipComboBoxMapperSpy(IComboBox comboBox, string relationshipName, bool isReadOnly, IControlFactory controlFactory)
+                : base(comboBox, relationshipName, isReadOnly, controlFactory)
+            {
+            }
+            public void CallLoadCollectionForBusinessObject()
+            {
+                base.LoadCollectionForBusinessObject();
+            }
+            public void SetRelatedObjectClassDef(IClassDef classDef)
+            {
+                RelatedObjectClassDef = classDef;
+            }
+            public void SetLastCallTime(DateTime lastCallTime)
+            {
+                _lastCallTime = lastCallTime;
+            }
+        }
     }
+
 }

@@ -70,13 +70,14 @@ namespace Habanero.Faces.Base
             ChildSelector = childSelector;
             RelationshipName = relationshipName;
             parentSelector.BusinessObjectSelected += this.ParentComboBoxBusinessObjectSelected;
+            this.Enabled = true;
         }
 
         private void ParentComboBoxBusinessObjectSelected(object sender, System.EventArgs e)
         {
             try
             {
-                UpdateChildSelectorCollection();
+                if(this.Enabled) UpdateChildSelectorCollection();
             }
             catch (Exception ex)
             {
@@ -90,14 +91,19 @@ namespace Habanero.Faces.Base
         public void UpdateChildSelectorCollection()
         {
             var selectedItem = ParentSelector.SelectedBusinessObject;
+            var childSelectedItem = ChildSelector.SelectedBusinessObject;
             if (selectedItem == null || Convert.ToString(selectedItem) == "")
             {
                 ChildSelector.BusinessObjectCollection = null;
                 ChildSelector.ControlEnabled = false;
                 return;
             }
-            TParentType selectedParentBusinessObject = (TParentType) selectedItem;
+            var selectedParentBusinessObject = (TParentType) selectedItem;
             ChildSelector.BusinessObjectCollection = GetBusinessObjectCollection(selectedParentBusinessObject);
+            if (childSelectedItem != null && ChildSelector.BusinessObjectCollection.Contains(childSelectedItem))
+            {
+                ChildSelector.SelectedBusinessObject = childSelectedItem;
+            }
             ChildSelector.ControlEnabled = HasCollectionSet;
         }
 
@@ -105,6 +111,11 @@ namespace Habanero.Faces.Base
         {
             get { return (ChildSelector.BusinessObjectCollection != null); }
         }
+        /// <summary>
+        /// Gets and Sets whether Linking is currently enabled. This can be used for fine grained control e.g. where
+        /// the user would want to disable the linker during control loading etc.
+        /// </summary>
+        public bool Enabled { get; set; }
 
         protected virtual BusinessObjectCollection<TChildType> GetBusinessObjectCollection(TParentType selectedParentBusinessObject)
         {

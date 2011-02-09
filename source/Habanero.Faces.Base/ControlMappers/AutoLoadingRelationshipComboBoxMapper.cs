@@ -18,7 +18,6 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.Collections;
-using Habanero.Base;
 using Habanero.BO;
 
 namespace Habanero.Faces.Base
@@ -28,6 +27,7 @@ namespace Habanero.Faces.Base
     /// </summary>
     public class AutoLoadingRelationshipComboBoxMapper : RelationshipComboBoxMapper
     {
+        protected DateTime _lastCallTime;
         /// <summary>
         /// Constructs an <see cref="AutoLoadingRelationshipComboBoxMapper"/> with the <paramref name="comboBox"/>
         ///  <paramref name="relationshipName"/>
@@ -36,7 +36,15 @@ namespace Habanero.Faces.Base
         /// <param name="relationshipName">The name of the relation that is being mapped to</param>
         /// <param name="isReadOnly">Whether the Combo box can be used to edit from or whether it is only viewable</param>
         /// <param name="controlFactory">A control factory that is used to create control mappers etc</param>
-        public AutoLoadingRelationshipComboBoxMapper(IComboBox comboBox, string relationshipName, bool isReadOnly, IControlFactory controlFactory) : base(comboBox, relationshipName, isReadOnly, controlFactory) {}
+        public AutoLoadingRelationshipComboBoxMapper(IComboBox comboBox, string relationshipName, bool isReadOnly, IControlFactory controlFactory) : base(comboBox, relationshipName, isReadOnly, controlFactory)
+        {
+            _lastCallTime = DateTime.MinValue;
+        }
+
+        /// <summary>
+        /// The time that the collection of business objects will be cached before reloading from the database a second time.
+        /// </summary>
+        public int TimeOut { get; set; }
 
         /// <summary>
         /// Provides an overrideable method for Loading the collection of business objects
@@ -44,12 +52,20 @@ namespace Habanero.Faces.Base
         protected override void LoadCollectionForBusinessObject()
         {
             if (this.RelatedObjectClassDef == null) return;
+            _logger.Log("LoadCollectionForBusinessObjects B4 CacheHasNotTimedOut : Control (" + this.Control.Name + ") Rel (" + this.RelationshipName + ")");
+            if (CacheHasNotTimedOut()) return;
+            _logger.Log("LoadCollectionForBusinessObjects B4 GetBOCol : Control (" + this.Control.Name +") Rel (" + this.RelationshipName + ")");
             var collection = BORegistry.DataAccessor.BusinessObjectLoader.GetBusinessObjectCollection(
                 RelatedObjectClassDef, "");
+            _lastCallTime = DateTime.Now;
             collection.Sort(new ToStringComparer());
             this.BusinessObjectCollection = collection;     
         }
 
+        private bool CacheHasNotTimedOut()
+        {
+            return DateTime.Now.Subtract(_lastCallTime).TotalMilliseconds < this.TimeOut;
+        }
         private class ToStringComparer : IComparer
         {
             #region Implementation of IComparer

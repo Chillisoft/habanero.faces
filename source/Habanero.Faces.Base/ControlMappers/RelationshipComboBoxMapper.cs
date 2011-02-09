@@ -20,8 +20,10 @@ using System;
 using System.Collections;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
+using Habanero.Base.Logging;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
+using Habanero.Faces.Base.ControlMappers;
 using log4net;
 
 namespace Habanero.Faces.Base
@@ -44,7 +46,7 @@ namespace Habanero.Faces.Base
         /// <summary>
         /// Uses for logging 
         /// </summary>
-        protected static readonly ILog log = LogManager.GetLogger("Habanero.Faces.Base.RelationshipComboBoxMapper");
+        protected static readonly IHabaneroLogger _logger = GlobalRegistry.LoggerFactory.GetLogger("Habanero.Faces.Base.RelationshipComboBoxMapper");
 
         /// <summary>
         /// Gets the error provider for this control <see cref="IErrorProvider"/>
@@ -265,7 +267,7 @@ namespace Habanero.Faces.Base
 
         private void SetupSingleRelationship()
         {
-            IRelationship relationship = _boRelationshipMapper.Relationship;
+            var relationship = _boRelationshipMapper.Relationship;
             if (relationship == null) _singleRelationship = null;
             else if (relationship is ISingleRelationship)
             {

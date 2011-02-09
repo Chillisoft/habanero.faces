@@ -19,6 +19,8 @@
 using System;
 using System.IO;
 using Habanero.Base;
+using Habanero.Base.Exceptions;
+using Habanero.Base.Logging;
 using Habanero.BO.ClassDefinition;
 using Habanero.BO.Loaders;
 
@@ -111,6 +113,49 @@ namespace Habanero.Faces.Base
                                                 "and that the file is being copied to your output directory (eg. bin/debug).",
                                                 ex);
             }
+        }
+        private void LogAppStartingInfo(IHabaneroLogger log)
+        {
+            log.Log("---------------------------------------------------------------------", LogCategory.Debug);
+            log.Log(string.Format("{0} v{1} starting", AppName, AppVersion), LogCategory.Debug);
+            log.Log("---------------------------------------------------------------------", LogCategory.Debug);
+        }
+        //TODO brett 08 Feb 2011: move this back to base later
+        public override bool Startup()
+        {
+            IHabaneroLogger log = null;
+            try
+            {
+                SetupExceptionNotifier();
+                SetupApplicationNameAndVersion();
+                SetupLogging();
+
+                log = GlobalRegistry.LoggerFactory.GetLogger("HabaneroApp");
+                LogAppStartingInfo(log);
+
+                SetupDatabaseConnection();
+                SetupSettings();
+                SetupClassDefs();
+                Upgrade();
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = "There was a problem starting the application.";
+                if (log != null)
+                {
+                    log.Log("---------------------------------------------" +
+                              Environment.NewLine + ExceptionUtilities.GetExceptionString(ex, 0, true), LogCategory.Exception);
+                    errorMessage += " Please look at the log file for details of the problem.";
+                }
+                if (GlobalRegistry.UIExceptionNotifier != null)
+                {
+                    GlobalRegistry.UIExceptionNotifier.Notify(
+                        new UserException(errorMessage, ex),
+                        "Problem in Startup:", "Problem in Startup");
+                }
+                return false;
+            }
+            return true;
         }
 
         /// <summary>

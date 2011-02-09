@@ -50,6 +50,15 @@ namespace Habanero.Faces.Test.Base
         {
             return FakeAddress.CreateSavedAddress(FakeContactPerson.CreateSavedContactPerson());
         }
+        protected static FakeContactPerson CreateFakeContactPersonWithManyAddresses()
+        {
+            var savedContactPerson = FakeContactPerson.CreateSavedContactPerson();
+            FakeAddress.CreateSavedAddress(savedContactPerson);
+            FakeAddress.CreateSavedAddress(savedContactPerson);
+            FakeAddress.CreateSavedAddress(savedContactPerson);
+            return savedContactPerson;
+        }
+
 
         protected static FakeContactPerson CreateFakeContactPersonWithNoFakeAddress()
         {
@@ -64,24 +73,7 @@ namespace Habanero.Faces.Test.Base
         }
 
         [Test]
-        public void Test_Create__ShouldSetProps()
-        {
-            //---------------Set up test pack-------------------
-            IBOColSelector parentSelector = CreateControl();
-            IBOColSelector childSelector = CreateControl();
-            const string relationshipName = "Addresses";
-            //---------------Assert Precondition----------------
-
-            //---------------Execute Test ----------------------
-            var linker = new BOColSelectorLinker<FakeContactPerson, FakeAddress>(parentSelector, childSelector, relationshipName);
-            //---------------Test Result -----------------------
-            Assert.AreSame(parentSelector, linker.ParentSelector);
-            Assert.AreSame(childSelector, linker.ChildSelector);
-            Assert.AreSame(relationshipName, linker.RelationshipName);
-        }
-
-        [Test]
-        public void Test_Create_ShouldSetProps()
+        public void Test_Construct_ShouldSetProps()
         {
             //---------------Set up test pack-------------------
             var parentSelector = CreateControl();
@@ -95,6 +87,20 @@ namespace Habanero.Faces.Test.Base
             Assert.AreSame(parentSelector, linker.ParentSelector);
             Assert.AreSame(childSelector, linker.ChildSelector);
             Assert.AreSame(relationshipName, linker.RelationshipName);
+        }
+        [Test]
+        public void Test_Construct_ShouldSetLinkerEnabled()
+        {
+            //---------------Set up test pack-------------------
+            var parentSelector = CreateControl();
+            var childSelector = CreateControl();
+            const string relationshipName = "ChildLocations";
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var linker = new BOColSelectorLinker<FakeContactPerson, FakeAddress>(parentSelector, childSelector, relationshipName);
+            //---------------Test Result -----------------------
+            Assert.IsTrue(linker.Enabled);
         }
 
         [Test]
@@ -210,12 +216,39 @@ namespace Habanero.Faces.Test.Base
             Assert.AreEqual(2, childSelector.NoOfItems, "The Blank Item and the address");
             Assert.AreSame(address, childSelector.SelectedBusinessObject);
         }
+        [Test]
+        public void Test_ChangeParentSelectedBO_WithSomething_WhenLinkerDisabled_ShouldNotUpdateChildSelector()
+        {
+            //---------------Set up test pack-------------------
+            var contactPersonNoFakeAddress = CreateFakeContactPersonWithNoFakeAddress();
+            var address = CreateFakeAddressWithFakeContactPerson();
+
+            var parentSelector = CreateControl();
+            var childSelector = CreateControl();
+            const string relationshipName = "Addresses";
+            var linker = new BOColSelectorLinker<FakeContactPerson, FakeAddress>(parentSelector, childSelector, relationshipName);
+            parentSelector.BusinessObjectCollection = GetFakeContactPeople();
+            parentSelector.SelectedBusinessObject = contactPersonNoFakeAddress;
+            linker.Enabled = false;
+            //---------------Assert Precondition----------------
+            Assert.AreEqual(3, parentSelector.NoOfItems, "Two departments and Blank Field");
+            Assert.AreSame(contactPersonNoFakeAddress, parentSelector.SelectedBusinessObject);
+            Assert.AreEqual(1, childSelector.NoOfItems, "The Blank Item");
+            Assert.IsFalse(linker.Enabled);
+            //---------------Execute Test ----------------------
+            parentSelector.SelectedBusinessObject = address.ContactPerson;
+            //---------------Test Result -----------------------
+            Assert.IsFalse(linker.Enabled);
+            Assert.AreSame(address.ContactPerson, parentSelector.SelectedBusinessObject);
+            Assert.AreEqual(3, parentSelector.NoOfItems, "Two departments and Blank Field");
+            Assert.AreNotSame(address, childSelector.SelectedBusinessObject);
+        }
 
         [Test]
         public void Test_UpdateChildSelectorCollection_WhenSomethingIsSelectedBeforeHand_ShouldUpdateChildSelector()
         {
             //---------------Set up test pack-------------------
-            var contactPersonNoFakeAddress = CreateFakeContactPersonWithNoFakeAddress();
+            CreateFakeContactPersonWithNoFakeAddress();
             var address = CreateFakeAddressWithFakeContactPerson();
 
             var parentSelector = CreateControl();
@@ -233,6 +266,29 @@ namespace Habanero.Faces.Test.Base
             Assert.AreSame(address.ContactPerson, parentSelector.SelectedBusinessObject);
             Assert.AreEqual(2, childSelector.NoOfItems, "The Blank Item and the address");
             Assert.AreSame(address, childSelector.SelectedBusinessObject);
+        }
+        [Test]
+        public void Test_UpdateChildSelectorCollection_WhenSpecificChildWasSelectedBeforeHand_ShouldRetainSelectedChild()
+        {
+            //---------------Set up test pack-------------------
+            CreateFakeContactPersonWithNoFakeAddress();
+            var contactPerson = CreateFakeContactPersonWithManyAddresses();
+
+            var parentSelector = CreateControl();
+            var childSelector = CreateControl();
+            const string relationshipName = "Addresses";
+            parentSelector.BusinessObjectCollection = GetFakeContactPeople();
+            var originallySelectedAddress = contactPerson.Addresses[1];
+            BOColSelectorLinker<FakeContactPerson, FakeAddress> selectorLinker = new BOColSelectorLinker<FakeContactPerson, FakeAddress>(parentSelector, childSelector, relationshipName);
+            parentSelector.SelectedBusinessObject = contactPerson;
+            selectorLinker.UpdateChildSelectorCollection();
+            childSelector.SelectedBusinessObject = originallySelectedAddress;
+            //---------------Assert Precondition----------------
+            Assert.AreSame(originallySelectedAddress, childSelector.SelectedBusinessObject);
+            //---------------Execute Test ----------------------
+            selectorLinker.UpdateChildSelectorCollection();
+            //---------------Test Result -----------------------
+            Assert.AreSame(originallySelectedAddress, childSelector.SelectedBusinessObject);
         }
 
         [Test]

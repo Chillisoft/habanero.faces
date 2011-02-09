@@ -20,6 +20,7 @@ using System;
 using System.Reflection;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
+using Habanero.Base.Logging;
 
 namespace Habanero.Faces.Base
 {
@@ -130,6 +131,7 @@ namespace Habanero.Faces.Base
             if (BusinessObjectCollection == null && this.BusinessObject != null)
             {
                 const string message = "The BusinessObjectCollection is null in the CollectionComboBoxMapper when the BusinessObject is set ";
+                _logger.Log(" CollectionComboBoxMapper (" + this.BusinessObject + ") For Control (" + this.Control.Name + ") error : " + message, LogCategory.Debug);
                 throw new HabaneroDeveloperException(message, message);
             }
             if (PropertyHasAValue())
@@ -163,6 +165,7 @@ namespace Habanero.Faces.Base
             try
             {
                 object boPropertyValue = GetPropertyValue();
+                _logger.Log(" CollectionComboBoxMapper Start SetValueFromLookupList (" + this.BusinessObject + ") For Control (" + this.Control.Name + ") PropValue : " + boPropertyValue, LogCategory.Debug);
                 foreach (IBusinessObject bo in this.BusinessObjectCollection)
                 {
                     if (bo == null) continue;
@@ -171,13 +174,15 @@ namespace Habanero.Faces.Base
                                      : Object.Equals(bo.GetPropertyValueString(OwningBoPropertyName), Convert.ToString(boPropertyValue));
                     if (found)
                     {
+                        _logger.Log(" CollectionComboBoxMapped SetValueFromLookupList in If (found) (" + this.BusinessObject + ") For Control (" + this.Control.Name + ") PropValue : " + boPropertyValue, LogCategory.Debug);
                         _comboBoxCollectionSelector.SelectedBusinessObject = bo;
                         break;
                     }
                 }
             }
-            catch (ObjectDisposedException)
+            catch (ObjectDisposedException ex)
             {
+                _logger.Log("CollectionComboBoxMapper SetValueFromLookupList (" + this.BusinessObject + ") For Control (" + this.Control.Name + ")", ex, LogCategory.Warn);
             }
         }
 

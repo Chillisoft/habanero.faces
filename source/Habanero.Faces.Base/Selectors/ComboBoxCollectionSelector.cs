@@ -17,8 +17,10 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
+using System.Diagnostics;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
+using Habanero.Base.Logging;
 using Habanero.BO;
 
 namespace Habanero.Faces.Base
@@ -33,7 +35,8 @@ namespace Habanero.Faces.Base
 	public class ComboBoxCollectionSelector : ListControlCollectionManager<IComboBox>
 	{
 		private readonly IControlFactory _controlFactory;
-
+		private static readonly IHabaneroLogger _logger =
+				GlobalRegistry.LoggerFactory.GetLogger("Habanero.Faces.Base.ComboBoxCollectionSelector");
 		/// <summary>
 		/// Constructor to create a new collection ComboBox mapper object.
 		/// </summary>
@@ -91,7 +94,7 @@ namespace Habanero.Faces.Base
 		}
 
 
-	    /// <summary>
+		/// <summary>
 		/// Set the list of objects in the ComboBox to a specific collection of
 		/// business objects.<br/>
 		/// Important: If you are changing the business object collection,
@@ -105,7 +108,11 @@ namespace Habanero.Faces.Base
 			int width = cbx.Width;
 
 			IBusinessObject selectedBusinessObject = SelectedBusinessObject;
-
+			_logger.Log("Start SetComboBoxCollectionInternal Combo : " + cbx.Name, LogCategory.Debug);
+            _logger.Log(GetStackTrace(), LogCategory.Debug);
+			_logger.Log("Start SetComboBoxCollectionInternal SelectedBO : (" + SelectedBusinessObject + ")", LogCategory.Debug);
+			_logger.Log("Start SetComboBoxCollectionInternal PreserveSelectedItem : (" + PreserveSelectedItem + ")", LogCategory.Debug);
+			_logger.Log("Start SetComboBoxCollectionInternal AutoSelectFirstItem : (" + AutoSelectFirstItem + ")", LogCategory.Debug);
 			cbx.SelectedIndex = -1;
 			cbx.Text = null;
 			cbx.Items.Clear();
@@ -113,7 +120,7 @@ namespace Habanero.Faces.Base
 			if (this.IncludeBlankItem)
 			{
 				cbx.Items.Add("");
-				numBlankItems++;
+				numBlankItems++;//The some purpose of this is to set the selected item later if AutoSelectFirstItem is true.
 			}
 
 			if (col == null) return;
@@ -134,12 +141,19 @@ namespace Habanero.Faces.Base
 			}
 			if (PreserveSelectedItem)
 			{
-				SelectedBusinessObject = col.Contains(selectedBusinessObject) ? selectedBusinessObject : null;
+				SelectedBusinessObject = (col.Contains(selectedBusinessObject) ? selectedBusinessObject : null);
 			}
-			else if (col.Count > 0 && AutoSelectFirstItem) cbx.SelectedIndex = numBlankItems;
+			else if (col.Count > 0 && AutoSelectFirstItem && selectedBusinessObject == null) cbx.SelectedIndex = numBlankItems;
 			if (width == 0) width = 1;
 			cbx.DropDownWidth = width > cbx.Width ? width : cbx.Width;
 		}
+
+        private static string GetStackTrace()
+        {
+            var stack = new StackTrace();
+            return stack.ToString();
+            // var frame = stack.GetFrame(1);
+        }
 
 		///<summary>
 		/// Gets or sets whether the current <see cref="IBOColSelectorControl.SelectedBusinessObject">SelectedBusinessObject</see> should be preserved in the selector when the 

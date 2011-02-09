@@ -16,7 +16,10 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
+using System;
+using System.Xml;
 using Habanero.Base;
+using Habanero.Base.Logging;
 using Habanero.BO;
 using Habanero.DB;
 using Habanero.Faces.Base;
@@ -99,7 +102,21 @@ namespace Habanero.Faces.Win
                 BORegistry.DataAccessor = new DataAccessorDB();
             }
         }
-
+        protected override void SetupLogging()
+        {
+            try
+            {
+                GlobalRegistry.LoggerFactory = new Log4NetLoggerFactory();
+            }
+            catch (Exception ex)
+            {
+                throw new XmlException("There was an error reading the XML configuration file. " +
+                                       "Check that all custom configurations, such as DatabaseConfig, are well-formed, " +
+                                       "spelt correctly and have been declared correctly in configSections.  See the " +
+                                       "Habanero tutorial for example usage or see official " +
+                                       "documentation on configuration files if the error is not resolved.", ex);
+            }
+        }
         /// <summary>
         /// Sets the database configuration object, which contains basic 
         /// connection information along with the database vendor name 

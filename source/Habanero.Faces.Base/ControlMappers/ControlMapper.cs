@@ -132,6 +132,7 @@ namespace Habanero.Faces.Base
             {
                 RemoveCurrentBOPropHandlers();
                 _businessObject = value;
+                _logger.Log("Start Set BusinessObject (" + value + ") For Mapper (" + this.Control.Name + ")", LogCategory.Debug);
                 if (value != null) value.IsValid();//This forces the object to do validation so that the error provider is filled correctly.
 
                 if (_businessObject != null && _businessObject.Props.Contains(PropertyName))
@@ -164,6 +165,7 @@ namespace Habanero.Faces.Base
         {
             try
             {
+                _logger.Log("Start UpdateControlValueFromBusinessObject (" + this.BusinessObject + ") For Mapper (" + this.Control.Name + ")", LogCategory.Debug);
                 //This calls a method that specifically knows how to update
                 // the control with the BOProp value. 
                 // This is an implementation of the GOF Template Method.

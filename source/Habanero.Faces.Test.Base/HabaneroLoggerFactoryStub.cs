@@ -1,4 +1,5 @@
 ﻿using System;
+using Habanero.Base;
 using Habanero.Base.Logging;
 
 namespace Habanero.Faces.Test.Base
@@ -32,7 +33,6 @@ namespace Habanero.Faces.Test.Base
 
         public void Log(Exception exception)
         {
-            
         }
 
         public void Log(string message, Exception exception)
