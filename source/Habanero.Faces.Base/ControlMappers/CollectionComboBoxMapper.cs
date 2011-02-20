@@ -114,7 +114,7 @@ namespace Habanero.Faces.Base
 
 
         /// <summary>
-        /// This is a hack that allows Extended Combo box mapper to use Lookup ComboBox mapper code
+        /// This is a hack that allows Extended Combo box mapper to use Collection ComboBox mapper code
         ///  without having to inherit from it.
         /// </summary>
         internal void DoUpdateControlValueFromBO()

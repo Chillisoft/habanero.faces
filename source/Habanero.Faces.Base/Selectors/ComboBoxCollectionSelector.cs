@@ -108,15 +108,28 @@ namespace Habanero.Faces.Base
 			int width = cbx.Width;
 
 			IBusinessObject selectedBusinessObject = SelectedBusinessObject;
-			_logger.Log("Start SetComboBoxCollectionInternal Combo : " + cbx.Name, LogCategory.Debug);
-            _logger.Log(GetStackTrace(), LogCategory.Debug);
-			_logger.Log("Start SetComboBoxCollectionInternal SelectedBO : (" + SelectedBusinessObject + ")", LogCategory.Debug);
+			_logger.Log("Start SetComboBoxCollectionInternal Combo : " + cbx.Name + " SelectedBO : (" + SelectedBusinessObject + ")", LogCategory.Debug);
+		   // _logger.Log(GetStackTrace(), LogCategory.Debug);
+			if (this.PreserveSelectedItem && this.AutoSelectFirstItem)
+			{
+				_logger.Log("Start SetComboBoxCollectionInternal Combo : " + cbx.Name + " for BOCol of " + col.ClassDef + " has PreserveSelectedItem and AutoSelectFirstItem. These are mutually exclusive settings", LogCategory.Warn);
+			}
+/*			_logger.Log("Start SetComboBoxCollectionInternal SelectedBO : (" + SelectedBusinessObject + ")", LogCategory.Debug);
 			_logger.Log("Start SetComboBoxCollectionInternal PreserveSelectedItem : (" + PreserveSelectedItem + ")", LogCategory.Debug);
-			_logger.Log("Start SetComboBoxCollectionInternal AutoSelectFirstItem : (" + AutoSelectFirstItem + ")", LogCategory.Debug);
-			cbx.SelectedIndex = -1;
-			cbx.Text = null;
-			cbx.Items.Clear();
-			int numBlankItems = 0;
+			_logger.Log("Start SetComboBoxCollectionInternal AutoSelectFirstItem : (" + AutoSelectFirstItem + ")", LogCategory.Debug);*/
+
+			try
+			{
+				//cbx.MustRaiseSelectionChangedEvents = false;
+				cbx.SelectedIndex = -1;
+				cbx.Text = null;
+				cbx.Items.Clear();
+			}
+			finally
+			{
+				//cbx.MustRaiseSelectionChangedEvents = true;
+			}
+			var numBlankItems = 0;
 			if (this.IncludeBlankItem)
 			{
 				cbx.Items.Add("");
@@ -148,12 +161,12 @@ namespace Habanero.Faces.Base
 			cbx.DropDownWidth = width > cbx.Width ? width : cbx.Width;
 		}
 
-        private static string GetStackTrace()
-        {
-            var stack = new StackTrace();
-            return stack.ToString();
-            // var frame = stack.GetFrame(1);
-        }
+		private static string GetStackTrace()
+		{
+			var stack = new StackTrace();
+			return stack.ToString();
+			// var frame = stack.GetFrame(1);
+		}
 
 		///<summary>
 		/// Gets or sets whether the current <see cref="IBOColSelectorControl.SelectedBusinessObject">SelectedBusinessObject</see> should be preserved in the selector when the 

@@ -18,6 +18,7 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.Collections;
+using System.Diagnostics;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
 using Habanero.Base.Logging;
@@ -64,6 +65,7 @@ namespace Habanero.Faces.Base
         private IComboBoxMapperStrategy _mapperStrategy;
         private readonly ComboBoxCollectionSelector _comboBoxCollectionSelector;
         private readonly BORelationshipMapper _boRelationshipMapper;
+        private IBusinessObject _relatedBO;
 
         /// <summary>
         /// Constructs a <see cref="RelationshipComboBoxMapper"/> with the <paramref name="comboBox"/>
@@ -240,6 +242,7 @@ namespace Habanero.Faces.Base
             get { return _businessObject; }
             set
             {
+                _logger.Log("Start Set BusinessObject (" + value + ") For Mapper (" + this.Control.Name + ") for relationship (" + _boRelationshipMapper.RelationshipName + ")", LogCategory.Debug);
                 SetupRelationshipForBO(value);
                 CheckBusinessObjectCorrectType(value);
 
@@ -257,6 +260,7 @@ namespace Habanero.Faces.Base
             UpdateIsEditable();
             var tmpBO = _businessObject;//This does something strange for some reason.
             _businessObject = null;
+            _relatedBO = GetRelatedBusinessObject();
             _comboBoxCollectionSelector.DeregisterForControlEvents();
             LoadCollectionForBusinessObject();
             _comboBoxCollectionSelector.RegisterForControlEvents();
@@ -411,27 +415,35 @@ namespace Habanero.Faces.Base
         /// </summary>
         protected virtual void InternalUpdateControlValueFromBo()
         {
-            var relatedBO = GetRelatedBusinessObject();
-            if (relatedBO != null)
+           // var relatedBO = GetRelatedBusinessObject();
+            _logger.Log("Begin InternalUpdateControlValueFromBo BO (" + this.BusinessObject + ") RelatedBO (" + _relatedBO + ") For Mapper (" + this.Control.Name + ")", LogCategory.Debug);
+            if (_relatedBO != null)
             {
                 var comboBoxObjectCollection = this.Control.Items;
-                if (!comboBoxObjectCollection.Contains(relatedBO))
+                if (!comboBoxObjectCollection.Contains(_relatedBO))
                 {
-                    comboBoxObjectCollection.Add(relatedBO);
+                    comboBoxObjectCollection.Add(_relatedBO);
                 }
             }
             _comboBoxCollectionSelector.DeregisterForControlEvents();
             try
             {
-                Control.SelectedItem = relatedBO;
-                if (relatedBO == null && !String.IsNullOrEmpty(Control.Text)) Control.Text = "";
+                _logger.Log("B4 SelectedItem InternalUpdateControlValueFromBo BO (" + this.BusinessObject + ") RelatedBO (" + _relatedBO + ") For Mapper (" + this.Control.Name + ")", LogCategory.Debug);
+                _logger.Log(GetStackTrace());
+                Control.SelectedItem = _relatedBO;
+                if (_relatedBO == null && !String.IsNullOrEmpty(Control.Text)) Control.Text = "";
             }
             finally
             {
                 _comboBoxCollectionSelector.RegisterForControlEvents();
             }
         }
-
+        private static string GetStackTrace()
+        {
+            var stack = new StackTrace();
+            return stack.ToString();
+            // var frame = stack.GetFrame(1);
+        }
         /// <summary>
         /// Returns the property value of the business object being mapped
         /// </summary>
