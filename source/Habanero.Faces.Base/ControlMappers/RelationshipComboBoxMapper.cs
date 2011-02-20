@@ -384,7 +384,16 @@ namespace Habanero.Faces.Base
 
         private void RelatedBusinessObjectChanged_Handler(object sender, EventArgs e)
         {
-            UpdateControlValueFromBusinessObject();
+            try
+            {
+
+                _relatedBO = GetRelatedBusinessObject();
+                UpdateControlValueFromBusinessObject();
+            }
+            catch (Exception ex)
+            {
+                GlobalRegistry.UIExceptionNotifier.Notify(ex, "", "Error ");
+            }
         }
 
         private void CheckBusinessObjectCorrectType(IBusinessObject value)
