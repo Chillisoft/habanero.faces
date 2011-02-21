@@ -544,8 +544,8 @@ namespace Habanero.Faces.Test.Base.Mappers
 			//---------------Set up test pack-------------------
 
 			ClassDef.ClassDefs.Clear();
-		    var classDef = MyTestBO.LoadClassDefWithIntegerRule();
-            var testBo = new MyTestBO(classDef);
+			var classDef = MyTestBO.LoadClassDefWithIntegerRule();
+			var testBo = new MyTestBO(classDef);
 			ControlMapperStub mapperStub = new ControlMapperStub(_txtNormal, "TestIntProp", false, GetControlFactory())
 											   {BusinessObject = testBo};
 			mapperStub.TestSetPropertyValue("7");
