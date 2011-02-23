@@ -78,6 +78,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Habanero.Base, Version=2.5.0.0, Culture=neutral, PublicKeyToken=1fb6a9c86f815c07, processorArchitecture=MSIL">
+	  <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Habanero.Base.dll</HintPath>
     </Reference>
     <Reference Include="Habanero.BO, Version=2.4.0.255, Culture=neutral, PublicKeyToken=b7599514c88df7f1, processorArchitecture=MSIL">
