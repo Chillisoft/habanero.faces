@@ -135,7 +135,6 @@
     <Compile Include="ControlInterfaces\IMainEditorPanel.cs" />
     <Compile Include="ControlInterfaces\IMainTitleIconControl.cs" />
     <Compile Include="ControlInterfaces\IPictureBox.cs" />
-    <Compile Include="ControlInterfaces\ISelectedObjectCollection.cs" />
     <Compile Include="ControlInterfaces\ISplitContainer.cs" />
     <Compile Include="ControlInterfaces\IStaticDataEditor.cs" />
     <Compile Include="ControlInterfaces\IUserControlHabanero.cs" />
@@ -147,6 +146,7 @@
     <Compile Include="ControlMappers\ExtendedComboBoxMapper.cs" />
     <Compile Include="ControlMappers\ISelectItemForm.cs" />
     <Compile Include="ControlMappers\ListComboBoxMapper.cs" />
+    <Compile Include="ControlMappers\ReadOnlyGridMapper.cs" />
     <Compile Include="ControlMappers\RelationshipComboBoxMapper.cs" />
     <Compile Include="ControlMappers\ExtendedTextBoxMapper.cs" />
     <Compile Include="ControlMappers\Watcher.cs" />
@@ -299,6 +299,7 @@
     <Compile Include="ControlInterfaces\ILabel.cs" />
     <Compile Include="ControlInterfaces\IListBox.cs" />
     <Compile Include="ControlInterfaces\IListBoxObjectCollection.cs" />
+    <Compile Include="ControlInterfaces\ISelectedObjectCollection.cs" />
     <Compile Include="MultiSelector\IMultiSelector.cs" />
     <Compile Include="ControlInterfaces\ITextBox.cs" />
     <Compile Include="LayoutManagers\LayoutManager.cs" />

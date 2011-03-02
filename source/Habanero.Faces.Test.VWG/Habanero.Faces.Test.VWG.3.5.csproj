@@ -14,13 +14,6 @@
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <TargetFrameworkProfile />
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -33,8 +26,10 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -223,15 +218,15 @@
     <Compile Include="Wizard\TestWizardStepVWG.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Habanero.Faces.Test.Base\Habanero.Faces.Test.Base.2008.csproj">
+    <ProjectReference Include="..\Habanero.Faces.Test.Base\Habanero.Faces.Test.Base.3.5.csproj">
       <Project>{12A701DA-DAF5-4709-942E-17F1EFA381D8}</Project>
       <Name>Habanero.Faces.Test.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Habanero.Faces.Base\Habanero.Faces.Base.2008.csproj">
+    <ProjectReference Include="..\Habanero.Faces.Base\Habanero.Faces.Base.3.5.csproj">
       <Project>{18828910-F528-48F5-B56D-7C1658D0987A}</Project>
       <Name>Habanero.Faces.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Habanero.Faces.VWG\Habanero.Faces.VWG.2008.csproj">
+    <ProjectReference Include="..\Habanero.Faces.VWG\Habanero.Faces.VWG.3.5.csproj">
       <Project>{04E4FF45-6C20-46EB-A9AD-2B04895F6218}</Project>
       <Name>Habanero.Faces.VWG</Name>
     </ProjectReference>
