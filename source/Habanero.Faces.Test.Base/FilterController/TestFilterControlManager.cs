@@ -22,7 +22,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Habanero.Base;
 using Habanero.Base.Util;
-using Habanero.Faces.Base;
+using Habanero.Faces.Base.CF;
 using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base.FilterController

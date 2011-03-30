@@ -19,7 +19,7 @@
 using System.Collections;
 using System.Drawing;
 using Habanero.Base.Exceptions;
-using Habanero.Faces.Base;
+using Habanero.Faces.Base.CF;
 
 
 using NUnit.Framework;

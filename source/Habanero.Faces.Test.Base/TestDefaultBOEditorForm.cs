@@ -22,7 +22,7 @@ using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Console;
 using Habanero.Test.Structure;
-using Habanero.Faces.Base;
+using Habanero.Faces.Base.CF;
 using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base

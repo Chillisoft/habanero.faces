@@ -1,4 +1,4 @@
-﻿using Habanero.Faces.Base;
+﻿using Habanero.Faces.Base.CF;
 using NUnit.Framework;
 
 // ReSharper disable InconsistentNaming

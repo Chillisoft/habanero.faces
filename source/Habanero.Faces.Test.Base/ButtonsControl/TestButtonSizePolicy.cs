@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Habanero.BO.ClassDefinition;
-using Habanero.Faces.Base;
 
 using NUnit.Framework;
 

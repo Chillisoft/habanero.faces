@@ -21,7 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Habanero.Base;
-using Habanero.Faces.Base;
+using Habanero.Faces.Base.CF;
 using Habanero.Test;
 using NUnit.Framework;
 

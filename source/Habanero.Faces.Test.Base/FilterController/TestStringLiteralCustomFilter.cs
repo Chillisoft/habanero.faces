@@ -1,5 +1,5 @@
 using Habanero.Base;
-using Habanero.Faces.Base;
+using Habanero.Faces.Base.CF;
 using Habanero.Faces.Base.Grid;
 using Habanero.Test.Structure;
 using NUnit.Framework;

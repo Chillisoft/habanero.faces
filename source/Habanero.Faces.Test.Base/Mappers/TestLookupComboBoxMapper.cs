@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
-using Habanero.Faces.Base;
+using Habanero.Faces.Base.CF;
 using Habanero.Test;
 using Habanero.Util;
 using NUnit.Framework;

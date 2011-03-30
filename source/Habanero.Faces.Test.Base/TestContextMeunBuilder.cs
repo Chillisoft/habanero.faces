@@ -6,7 +6,7 @@ using Habanero.BO.ClassDefinition;
 using Habanero.BO.Loaders;
 using Habanero.Test;
 using Habanero.Test.Structure;
-using Habanero.Faces.Base;
+using Habanero.Faces.Base.CF;
 
 using NUnit.Framework;
 

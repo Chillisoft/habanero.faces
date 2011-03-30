@@ -26,7 +26,7 @@ using Habanero.Base.Exceptions;
 using Habanero.BO.ClassDefinition;
 using Habanero.Test;
 using Habanero.Test.Structure;
-using Habanero.Faces.Base;
+using Habanero.Faces.Base.CF;
 
 
 using NUnit.Framework;

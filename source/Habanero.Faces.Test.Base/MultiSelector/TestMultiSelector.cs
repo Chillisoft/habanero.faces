@@ -19,7 +19,7 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Habanero.Faces.Base;
+using Habanero.Faces.Base.CF;
 
 
 using NUnit.Framework;

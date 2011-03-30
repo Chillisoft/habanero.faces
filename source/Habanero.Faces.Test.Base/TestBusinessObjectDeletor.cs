@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Habanero.Base;
 using Habanero.BO;
-using Habanero.Faces.Base;
+using Habanero.Faces.Base.CF;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Rhino.Mocks.MethodRecorders;

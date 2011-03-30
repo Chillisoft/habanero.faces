@@ -18,7 +18,7 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.Drawing;
-using Habanero.Faces.Base;
+using Habanero.Faces.Base.CF;
 using Habanero.Test;
 using NUnit.Extensions.Forms;
 using NUnit.Framework;

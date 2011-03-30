@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
-using Habanero.Faces.Base;
+using Habanero.Faces.Base.CF;
 
 using NUnit.Framework;
 

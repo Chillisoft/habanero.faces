@@ -18,7 +18,7 @@
 //---------------------------------------------------------------------------------
 
 using System.Drawing;
-using Habanero.Faces.Base;
+using Habanero.Faces.Base.CF;
 using NUnit.Framework;
 using DockStyle=Habanero.Faces.Base.DockStyle;
 

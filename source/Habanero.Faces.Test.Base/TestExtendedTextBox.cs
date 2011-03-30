@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using Habanero.Faces.Base;
+using Habanero.Faces.Base.CF;
 using Habanero.Faces.Base.ControlMappers;
 using NUnit.Framework;
 

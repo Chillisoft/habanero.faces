@@ -20,7 +20,7 @@
 using System;
 using System.Collections;
 using Habanero.Base;
-using Habanero.Faces.Base;
+using Habanero.Faces.Base.CF;
 using Habanero.Test;
 using NUnit.Framework;
 

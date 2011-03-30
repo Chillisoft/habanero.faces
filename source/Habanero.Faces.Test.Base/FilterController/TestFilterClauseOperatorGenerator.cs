@@ -1,7 +1,7 @@
 using System;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
-using Habanero.Faces.Base;
+using Habanero.Faces.Base.CF;
 using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base

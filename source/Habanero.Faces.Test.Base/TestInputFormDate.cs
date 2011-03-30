@@ -17,7 +17,7 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
-using Habanero.Faces.Base;
+using Habanero.Faces.Base.CF;
 
 
 using NUnit.Framework;

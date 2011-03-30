@@ -1,5 +1,5 @@
 using System.Drawing;
-using Habanero.Faces.Base;
+using Habanero.Faces.Base.CF;
 using Habanero.Faces.Base.ControlMappers;
 using NUnit.Framework;
 

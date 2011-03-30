@@ -1,7 +1,7 @@
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Test.BO;
-using Habanero.Faces.Base;
+using Habanero.Faces.Base.CF;
 using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base.Mappers
