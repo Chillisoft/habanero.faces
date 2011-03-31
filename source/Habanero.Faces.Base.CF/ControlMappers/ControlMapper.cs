@@ -40,8 +40,8 @@ namespace Habanero.Faces.Base
         /// the <see cref="ILog"/> used to log any messages for this class or its children
         /// </summary>
         //protected static readonly ILog Log = LogManager.GetLogger("Habanero.Faces.Forms.ControlMapper");
-        protected static readonly IHabaneroLogger _logger =
-            GlobalRegistry.LoggerFactory.GetLogger("Habanero.Faces.Forms.ControlMapper");
+        protected static readonly IHabaneroLogger _logger = new HabaneroLoggerNull();
+            //GlobalRegistry.LoggerFactory.GetLogger("Habanero.Faces.Forms.ControlMapper");
         /// <summary>
         /// A Hash table of additional Attributes available for this Control Mapper e.g. for DateTimePickerMapper may have date format
         /// </summary>

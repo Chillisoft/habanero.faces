@@ -6,17 +6,22 @@ using Habanero.Base.Exceptions;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
-
+using Habanero.Faces.Win;
+using Habanero.Test;
 using NUnit.Framework;
 
 // ReSharper disable InconsistentNaming
 
 namespace Habanero.Faces.Test.Base.Mappers
 {
-    public abstract class TestCollectionComboBoxMapper
+    [TestFixture]
+    public class TestCollectionComboBoxMapper
     {
         protected DataStoreInMemory _store;
-        protected abstract IControlFactory GetControlFactory();
+        protected IControlFactory GetControlFactory()
+        {
+            return new ControlFactoryWin();
+        }
 
         [TestFixtureSetUp]
         public void TestFixtureSetup()

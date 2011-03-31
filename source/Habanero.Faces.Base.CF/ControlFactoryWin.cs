@@ -156,8 +156,7 @@ namespace Habanero.Faces.Win
         ///<returns>The created NumericUpDown control</returns>
         public virtual NumericUpDown CreateNumericUpDown()
         {
-                            throw new NotImplementedException("CF Not implemented");
-            //return new NumericUpDownWin();
+            return new NumericUpDown();
         }
 
         /// <summary>
@@ -640,13 +639,6 @@ namespace Habanero.Faces.Win
             return tb;
         }
 
-        /// <summary>
-        /// Creates a ToolTip
-        /// </summary>
-        public virtual IToolTip CreateToolTip()
-        {
-            return new NullToolTip();
-        }
 
         /// <summary>
         /// Creates a generic control
@@ -694,31 +686,6 @@ namespace Habanero.Faces.Win
         {
             return new PictureBox();
         }
-
-
-        ///<summary>
-        /// Creates an <see cref="IBOListBoxSelector"/>
-        ///</summary>
-        ///<returns></returns>
-        public virtual IBOListBoxSelector CreateListBoxSelector()
-        {
-            return new NullBOListBoxSelector();
-        }
-
-
-
-        ///<summary>
-        /// Creates a <see cref="IExtendedComboBox"/>. This is essentially
-        /// a disabled ComboBox with a Search button.
-        ///</summary>
-        ///<returns></returns>
-        public IExtendedComboBox CreateExtendedComboBox()
-        {
-            return new NullExtendedComboBox();
-        }
-
-
-
     }
 
 }

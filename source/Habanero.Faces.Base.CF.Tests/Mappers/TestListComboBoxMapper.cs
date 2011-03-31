@@ -19,14 +19,18 @@
 
 using System.Windows.Forms;
 using Habanero.Faces.Base;
-
+using Habanero.Faces.Win;
 using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base.Mappers
 {
-    public abstract class TestListComboBoxMapper : TestMapperBase
+    [TestFixture]
+    public class TestListComboBoxMapper : TestMapperBase
     {
-        protected abstract IControlFactory GetControlFactory();
+        protected IControlFactory GetControlFactory()
+        {
+            return new ControlFactoryWin();
+        }
 
         [Test]
         public void TestConstructor()

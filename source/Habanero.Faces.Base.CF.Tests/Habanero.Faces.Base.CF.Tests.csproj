@@ -77,7 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlInterfaces\TestButton.cs" />
-    <Compile Include="ControlInterfaces\TestCheckBox.cs" />
     <Compile Include="ControlInterfaces\TestComboBox.cs" />
     <Compile Include="HabaneroLoggerFactoryStub.cs" />
     <Compile Include="Mappers\TestCheckBoxMapper.cs" />
@@ -91,28 +90,15 @@
     <Compile Include="Mappers\TestNumericUpDownIntegerMapper.cs" />
     <Compile Include="Mappers\TestRelationshipComboBoxMapper.cs" />
     <Compile Include="Mappers\TestTextBoxMapper.cs" />
-    <Compile Include="Selectors\TestBOColSelector.cs" />
-    <Compile Include="Selectors\TestListBoxSelector.cs" />
+    <Compile Include="Selectors\MyBO.cs" />
     <Compile Include="Shape.cs" />
-    <Compile Include="TestBaseMethods.cs" />
-    <Compile Include="TestConfirmingBusinessObjectDeletor.cs" />
-    <Compile Include="ControlInterfaces\TestControl.cs" />
-    <Compile Include="ControlInterfaces\TestControlCollection.cs" />
     <Compile Include="ControlInterfaces\TestControlFactory.cs" />
-    <Compile Include="ControlInterfaces\TestDateTimePickerController.cs" />
-    <Compile Include="ControlInterfaces\TestForm.cs" />
     <Compile Include="ControlInterfaces\TestLabel.cs" />
     <Compile Include="ControlInterfaces\TestListBox.cs" />
     <Compile Include="ControlInterfaces\TestMessageBoxConfirmer.cs" />
-    <Compile Include="ControlInterfaces\TestNumericUpDown.cs" />
-    <Compile Include="ControlInterfaces\TestPanel.cs" />
     <Compile Include="ControlInterfaces\TestPictureBox.cs" />
-    <Compile Include="ControlInterfaces\TestProgressBar.cs" />
-    <Compile Include="ControlInterfaces\TestRadioButton.cs" />
-    <Compile Include="ControlInterfaces\TestSplitter.cs" />
     <Compile Include="ControlInterfaces\TestTextBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestBusinessObjectDeletor.cs" />
     <Compile Include="TestGlobalUIRegistry.cs" />
   </ItemGroup>
   <ItemGroup>

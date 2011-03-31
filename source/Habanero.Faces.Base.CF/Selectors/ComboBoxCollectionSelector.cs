@@ -35,8 +35,9 @@ namespace Habanero.Faces.Base
     public class ComboBoxCollectionSelector : IBOColSelector
 	{
 		private readonly IControlFactory _controlFactory;
-		private static readonly IHabaneroLogger _logger =
-				GlobalRegistry.LoggerFactory.GetLogger("Habanero.Faces.Base.ComboBoxCollectionSelector");
+/*		private static readonly IHabaneroLogger _logger =
+				GlobalRegistry.LoggerFactory.GetLogger("Habanero.Faces.Base.ComboBoxCollectionSelector");*/
+        private static readonly IHabaneroLogger _logger = new HabaneroLoggerNull();
 		/// <summary>
 		/// Constructor to create a new collection ComboBox mapper object.
 		/// </summary>
@@ -386,4 +387,22 @@ namespace Habanero.Faces.Base
 		/// </summary>
 		public bool IncludeBlankItem { get; set; }
 	}
+
+    internal class HabaneroLoggerNull : IHabaneroLogger
+    {
+        public void Log(string message)
+        {
+            
+        }
+
+        public void Log(string message, LogCategory logCategory)
+        {
+            
+        }
+
+        public string ContextName
+        {
+            get { return ""; }
+        }
+    }
 }

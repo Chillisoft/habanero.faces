@@ -19,14 +19,19 @@
 
 using System.Windows.Forms;
 using Habanero.Faces.Base;
-
+using Habanero.Faces.Win;
+using Habanero.Test;
 using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base.Mappers
 {
-    public abstract class TestNumericUpDownCurrencyMapper
+    [TestFixture]
+    public class TestNumericUpDownCurrencyMapper
     {
-        public abstract IControlFactory GetControlFactory();
+        protected IControlFactory GetControlFactory()
+        {
+            return new ControlFactoryWin();
+        }
         protected const string CURRENCY_PROP_NAME = "SampleMoney";
 
    

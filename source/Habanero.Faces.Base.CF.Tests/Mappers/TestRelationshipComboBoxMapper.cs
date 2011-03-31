@@ -6,13 +6,13 @@ using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
 
 using Habanero.Faces.Base;
-
-
+using Habanero.Faces.Win;
 using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base.Mappers
 {
-    public abstract class TestRelationshipComboBoxMapper
+    [TestFixture]
+    public class TestRelationshipComboBoxMapper
     {
         protected IControlFactory _controlFactory;
         protected IClassDef _cpClassDef;
@@ -24,7 +24,10 @@ namespace Habanero.Faces.Test.Base.Mappers
             return _controlFactory;
         }
 
-        protected abstract void CreateControlFactory();
+        protected IControlFactory CreateControlFactory()
+        {
+            return new ControlFactoryWin();
+        }
 
         [TestFixtureSetUp]
         public void TestFixtureSetup()

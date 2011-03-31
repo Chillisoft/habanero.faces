@@ -19,6 +19,7 @@
 
 using System.Windows.Forms;
 using Habanero.Faces.Base;
+using Habanero.Faces.Win;
 using Habanero.Test;
 using NUnit.Framework;
 
@@ -27,10 +28,14 @@ namespace Habanero.Faces.Test.Base.Mappers
     /// <summary>
     /// Summary description for TestTextBoxMapper.
     /// </summary>
-    public abstract class TestTextBoxMapper : TestMapperBase
+    [TestFixture]
+    public class TestTextBoxMapper : TestMapperBase
     {
 
-        protected abstract IControlFactory GetControlFactory();
+        protected IControlFactory GetControlFactory()
+        {
+            return new ControlFactoryWin();
+        }
 
 
         protected TextBox _textBox;

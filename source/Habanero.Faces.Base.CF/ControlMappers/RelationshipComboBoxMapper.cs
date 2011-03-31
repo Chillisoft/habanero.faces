@@ -47,9 +47,9 @@ namespace Habanero.Faces.Base
         /// <summary>
         /// Uses for logging 
         /// </summary>
-        protected static readonly IHabaneroLogger _logger = GlobalRegistry.LoggerFactory.GetLogger("Habanero.Faces.Base.RelationshipComboBoxMapper");
+       //CF protected static readonly IHabaneroLogger _logger = GlobalRegistry.LoggerFactory.GetLogger("Habanero.Faces.Base.RelationshipComboBoxMapper");
 
-
+        protected static readonly IHabaneroLogger _logger =  new HabaneroLoggerNull();
 //        private IBusinessObjectCollection _businessObjectCollection;
         protected IBusinessObject _businessObject;
 

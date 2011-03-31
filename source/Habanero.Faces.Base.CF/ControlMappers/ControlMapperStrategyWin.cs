@@ -210,12 +210,6 @@ namespace Habanero.Faces.Win
         {
             var myControl = control as Control;
             if (myControl != null) return myControl;
-
-            var controlAdapter = control as IWinFormsControlAdapter;
-            if (controlAdapter != null)
-            {
-                return controlAdapter.WrappedControl;
-            }
             return null;
         }
 

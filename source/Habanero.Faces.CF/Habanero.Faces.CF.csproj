@@ -76,23 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\CheckBoxStrategyWin.cs" />
-    <Compile Include="CloseBOEditorDialogWin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ControlFactoryWin.cs" />
-    <Compile Include="Mappers\ListComboBoxMapperStrategyWin.cs" />
-    <Compile Include="Mappers\NumericUpDownMapperStrategyWin.cs" />
-    <Compile Include="Mappers\TextBoxMapperStrategyWin.cs" />
-    <Compile Include="Mappers\ControlMapperStrategyWin.cs" />
-    <Compile Include="Controls\ComboBoxAutoCompleteModeWin.cs" />
-    <Compile Include="Controls\ComboBoxAutoCompleteSourceWin.cs" />
-    <Compile Include="Controls\ComboBoxDefaultMapperStrategyWin.cs" />
-    <Compile Include="Controls\ComboBoxKeyPressMapperStrategyWin.cs" />
-    <Compile Include="Controls\ComboBoxSelectorWin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Util\DialogUtilities.cs" />
-    <Compile Include="WinFormsControlAdapter.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +84,10 @@
       <Project>{6EECF70C-D930-4CC2-81FE-6E05E956F336}</Project>
       <Name>Habanero.Faces.Base.CF</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\" />
+    <Folder Include="Util\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>

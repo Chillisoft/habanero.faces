@@ -26,14 +26,18 @@ using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.BO.Loaders;
 using Habanero.Faces.Base;
-
+using Habanero.Faces.Win;
 using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base.Mappers
 {
-    public abstract class TestNumericUpDownIntegerMapper
+    [TestFixture]
+    public class TestNumericUpDownIntegerMapper
     {
-        public abstract IControlFactory GetControlFactory();
+        protected IControlFactory GetControlFactory()
+        {
+            return new ControlFactoryWin();
+        }
         protected const string INT_PROP_NAME = "SampleInt";
 
 

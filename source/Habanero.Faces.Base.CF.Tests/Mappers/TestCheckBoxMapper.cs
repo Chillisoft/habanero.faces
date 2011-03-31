@@ -18,17 +18,28 @@
 //---------------------------------------------------------------------------------
 
 using System.Windows.Forms;
-using Habanero.Faces.Base;
+using Habanero.Faces.Test.Base.Mappers;
+using Habanero.Faces.Win;
+using Habanero.Test;
 using NUnit.Framework;
 
-namespace Habanero.Faces.Test.Base.Mappers
+namespace Habanero.Faces.Base.CF.Tests.Mappers
 {
     /// <summary>
     /// Summary description for TestCheckBoxMapper.
     /// </summary>
-    public abstract class TestCheckBoxMapper : TestMapperBase
+    [TestFixture]
+    public class TestCheckBoxMapper : TestMapperBase
     {
-        protected abstract IControlFactory GetControlFactory();
+        [TestFixtureSetUp]
+        private void TestFixtureSetup()
+        {
+            SetupClassDefs("s");
+        }
+        protected IControlFactory GetControlFactory()
+        {
+            return new ControlFactoryWin();
+        }
 
 
         protected CheckBox _cb;

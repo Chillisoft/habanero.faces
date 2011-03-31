@@ -125,12 +125,6 @@ namespace Habanero.Faces.Base
         /// <param name="controlFactory">The factory that this panel will use to create any controls on it</param>
         Panel CreatePanel(string name, IControlFactory controlFactory);
 
-
-        /// <summary>
-        /// Creates a ToolTip
-        /// </summary>
-        IToolTip CreateToolTip();
-
         /// <summary>
         /// Creates a TextBox control
         /// </summary>
@@ -346,21 +340,6 @@ namespace Habanero.Faces.Base
         /// Creates a TextBox that provides filtering of characters depending on the property type.
         /// </summary>
         PictureBox CreatePictureBox();
-
-
-        ///<summary>
-        /// Creates an <see cref="IBOListBoxSelector"/>
-        ///</summary>
-        ///<returns></returns>
-        IBOListBoxSelector CreateListBoxSelector();
-
-
-        ///<summary>
-        /// Creates a <see cref="IExtendedComboBox"/>. This is essentially
-        /// a disabled ComboBox with a Search button.
-        ///</summary>
-        ///<returns></returns>
-        IExtendedComboBox CreateExtendedComboBox();
     }
 /*
     /// <summary>

@@ -24,19 +24,23 @@ using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
-
+using Habanero.Faces.Win;
 using Habanero.Util;
 using NUnit.Framework;
 using Rhino.Mocks;
 
 namespace Habanero.Faces.Test.Base.Mappers
 {
-    public abstract class TestLookupComboBoxMapper
+    [TestFixture]
+    public class TestLookupComboBoxMapper
     {
         protected DataStoreInMemory _store;
         protected const string LOOKUP_ITEM_2 = "Test2";
         protected const string LOOKUP_ITEM_1 = "Test1";
-        protected abstract IControlFactory GetControlFactory();
+        protected IControlFactory GetControlFactory()
+        {
+            return new ControlFactoryWin();
+        }
 
         [TestFixtureSetUp]
         public void TestFixtureSetup()
