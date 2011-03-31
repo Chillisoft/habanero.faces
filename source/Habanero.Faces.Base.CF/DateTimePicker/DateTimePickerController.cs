@@ -18,6 +18,7 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace Habanero.Faces.Base
 {
@@ -118,8 +119,8 @@ namespace Habanero.Faces.Base
             _displayText.Text = "";
             //_displayText.MouseUp += DateTimePicker_MouseUp;
             //_displayText.KeyDown += DateTimePicker_KeyDown;
-            _displayBox.Controls.Add(_displayText);
-            _dateTimePicker.Controls.Add(_displayBox);
+            _displayBox.Controls.Add(_displayText as Control);
+            _dateTimePicker.Controls.Add(_displayBox as Control);
             _displayBox.Visible = false;
             //});
         }

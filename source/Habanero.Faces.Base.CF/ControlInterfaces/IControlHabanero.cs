@@ -19,6 +19,7 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Habanero.Faces.Base
 {
@@ -228,25 +229,13 @@ namespace Habanero.Faces.Base
         event EventHandler Resize;
 
         /// <summary>
-        /// Occurs when the Visible property value changes
-        /// </summary>
-        event EventHandler VisibleChanged;
-
-        /// <summary>
-        /// Gets or sets the anchoring style.
-        /// </summary>
-        /// <value></value>
-        AnchorStyles Anchor { get; set; }
-
-        /// <summary>
         /// Gets or sets the width of the control
         /// </summary>
         int Width { get; set; }
-
         /// <summary>
         /// Gets the collection of controls contained within the control
         /// </summary>
-        IControlCollection Controls { get; }
+        Control.ControlCollection Controls { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the control is displayed
@@ -298,8 +287,6 @@ namespace Habanero.Faces.Base
         /// control and the left edge of its container's client area
         /// </summary>
         
-        
-            
         int Left { set; get; }
 
         /// <summary>
@@ -307,8 +294,6 @@ namespace Habanero.Faces.Base
         /// control and the left edge of its container's client area
         /// </summary>
         
-        
-            
         int Right { get; }
 
         /// <summary>
@@ -365,59 +350,12 @@ namespace Habanero.Faces.Base
         Size ClientSize { get; set; }
 
         /// <summary>
-        /// Activates the control  
-        /// </summary>
-        void Select();
-
-        ///// <summary>
-        ///// Gets a value indicating whether this instance has controls.
-        ///// </summary>
-        ///// <value>
-        ///// 	<c>true</c> if this instance has controls; otherwise, <c>false</c>.
-        ///// </value>
-        //
-        //bool HasControls { get; }
-
-        /// <summary>
-        /// Gets a value indicating whether the control contains one or more child controls
-        /// </summary>
-        /// <value>
-        /// 	<c>true</c> if this control has children; otherwise, <c>false</c>.
-        /// </value>
-        
-        bool HasChildren { get; }
-
-        /// <summary>
-        /// Gets or sets the size that is the upper limit that
-        /// GetPreferredSize(System.Drawing.Size) can specify
-        /// </summary>
-        /// <returns>An ordered pair of type System.Drawing.Size
-        /// representing the width and height of a rectangle</returns>
-        /// <filterpriority>1</filterpriority>
-        Size MaximumSize { get; set; }
-
-        /// <summary>
-        /// Gets or sets the size that is the lower limit that
-        /// GetPreferredSize(System.Drawing.Size) can specify
-        /// </summary>
-        /// <returns>An ordered pair of type System.Drawing.Size
-        /// representing the width and height of a rectangle</returns>
-        /// <filterpriority>1</filterpriority>
-        Size MinimumSize { get; set; }
-
-        /// <summary>
         /// Gets or sets the font of the text displayed by the control
         /// </summary>
         /// <value>The System.Drawing.Font to apply to the text displayed
         /// by the control. The default is the value of the DefaultFont property.</value>
         Font Font { get; set; }
 
-        ///// <summary>
-        ///// Gets or sets the width of the border.
-        ///// </summary>
-        ///// <value></value>
-        //[System.ComponentModel.DefaultValue(1)]
-        //int BorderWidth { get; set; }
 
         /// <summary>
         /// Temporarily suspends the layout logic for the control
@@ -443,17 +381,6 @@ namespace Habanero.Faces.Base
         /// corner of the control relative to the upper-left corner of its container</value>
         Point Location { get; set; }
 
-        ///// <summary>
-        ///// Gets or sets the border style.
-        ///// </summary>
-        ///// <value></value>
-        //ControlBorderStyle BorderStyle { get; set; }
-
-        /// <summary>
-        /// Gets or sets which control borders are docked to its parent
-        /// control and determines how a control is resized with its parent
-        /// </summary>
-        DockStyle Dock { get; set; }
 
         /// <summary>
         /// Releases all resources used by the Component.
@@ -465,12 +392,6 @@ namespace Habanero.Faces.Base
         /// </summary>
         event EventHandler TextChanged;
 
-        //----This will require catching the keypress event and refiring it in the constructor, because
-        //----the signature is different
-        ///// <summary>
-        ///// Occurs when a key is pressed while the control has focus
-        ///// </summary>
-        //event KeyPressEventHandler KeyPress;
     }
 
 }
