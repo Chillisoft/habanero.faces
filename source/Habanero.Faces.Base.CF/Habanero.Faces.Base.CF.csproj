@@ -160,14 +160,6 @@
     <Compile Include="Util\IUISettings.cs" />
     <Compile Include="Util\MessageBox.cs" />
     <Compile Include="Util\UISettings.cs" />
-    <Compile Include="Wizard\IMessageWizardStep.cs" />
-    <Compile Include="Wizard\IWizardControl.cs" />
-    <Compile Include="Wizard\IWizardController.cs" />
-    <Compile Include="Wizard\IWizardForm.cs" />
-    <Compile Include="Wizard\IWizardStep.cs" />
-    <Compile Include="Wizard\WizardController.cs" />
-    <Compile Include="Wizard\WizardControlManager.cs" />
-    <Compile Include="Wizard\WizardStepException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>

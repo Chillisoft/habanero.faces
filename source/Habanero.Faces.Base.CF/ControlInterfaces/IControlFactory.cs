@@ -243,7 +243,8 @@ namespace Habanero.Faces.Base
         /// <param name="title">The page title to appear in the tab</param>
         ITabPage CreateTabPage(string title);
 
-        /// <summary>
+/* //TODO brett 31 Mar 2011: CF
+ /// <summary>
         /// Creates a control that can be placed on a form or a panel to implement a wizard user interface.
         /// The wizard control will have a next and previous button and a panel to place the wizard step on.
         /// </summary>
@@ -262,7 +263,7 @@ namespace Habanero.Faces.Base
         /// </summary>
         /// <param name="wizardControl">The Wizard control that will be displayed on the form</param>
         /// <returns></returns>
-        IWizardForm CreateWizardForm(IWizardControl wizardControl);
+        IWizardForm CreateWizardForm(IWizardControl wizardControl);*/
 
 
         /// <summary>
