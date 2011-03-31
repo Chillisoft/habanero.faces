@@ -67,7 +67,7 @@ namespace Habanero.Faces.Win
         /// the enter key cause focus to move to the next control).
         /// </summary>
         /// <param name="control">The control whose events will be handled</param>
-        public void AddKeyPressEventHandler(IControlHabanero control)
+        public void AddKeyPressEventHandler(Control control)
         {
             if (control == null) throw new ArgumentNullException("control");
             _control = control.GetControl();
@@ -163,7 +163,8 @@ namespace Habanero.Faces.Win
 
         private static Control GetNextControl(Control parentControl, Control control)
         {
-            return parentControl.GetNextControl(control, true);
+            return control;
+            // CF return parentControl.GetNextControl(control, true);
         }
 
         /// <summary>
@@ -195,7 +196,8 @@ namespace Habanero.Faces.Win
 
         private static Control GetPreviousControl(Control parentControl, Control currentControl)
         {
-            return parentControl.GetNextControl(currentControl, false);
+            return currentControl;
+          // CF return parentControl.GetNextControl(currentControl, false);
         }
     }
 
@@ -204,7 +206,7 @@ namespace Habanero.Faces.Win
     /// </summary>
     internal static class ControlHabaneroExtensions
     {
-        internal static Control GetControl(this IControlHabanero control)
+        internal static Control GetControl(this Control control)
         {
             var myControl = control as Control;
             if (myControl != null) return myControl;

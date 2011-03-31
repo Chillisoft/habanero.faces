@@ -37,7 +37,7 @@ namespace Habanero.Faces.Base
     //    Fixed3D,
     //    None
     //}
-
+/*
     /// <summary>
     /// Indicates how to dock the control within its container and how the control
     /// resizes when its parent is resized 
@@ -68,7 +68,8 @@ namespace Habanero.Faces.Base
         /// The control's left edge is docked to the left edge of its containing control.
         /// </summary>
         Left = 5
-    }
+    }*/
+/*
 
     /// <summary>
     /// Control anchoring styles
@@ -97,6 +98,8 @@ namespace Habanero.Faces.Base
         /// </summary>
         Top = 1
     }
+*/
+/*
 
     /// <summary>
     /// Specifies the mode for the automatic completion feature used in the 
@@ -123,6 +126,8 @@ namespace Habanero.Faces.Base
         /// </summary>
         SuggestAppend,
     }
+*/
+/*
 
     /// <summary>
     /// Specifies the source for ComboBox and TextBox automatic completion functionality.
@@ -169,7 +174,8 @@ namespace Habanero.Faces.Base
         /// </summary>
         RecentlyUsedList = 4
     }
-
+*/
+/*
         /// <summary>
         /// Specifies how an object or text in a control is horizontally aligned relative to an element of the control.  
         /// </summary>
@@ -191,207 +197,8 @@ namespace Habanero.Faces.Base
             ///  The object or text is aligned in the center of the control element.   
             /// </summary>
             Center
-        }
+        }*/
 
 
-    /// <summary>
-    /// Defines controls, which are components with visual representation
-    /// </summary>
-    public interface IControlHabanero
-    {
-
-        /// <summary>
-        /// Occurs when the control is clicked
-        /// </summary>
-        event EventHandler Click;
-
-        /////// <summary>
-        /////// Occurs when a key is pressed while the control has focus
-        /////// </summary>
-        //event KeyPressEventHandler KeyPress;
-        /////// <summary>
-        /////// Occurs when a key is released while the control has focus
-        /////// </summary>
-        //event KeyPressEventHandler KeyUp;
-        /////// <summary>
-        /////// Occurs when a key is pressed while the control has focus
-        /////// </summary>
-        //event KeyPressEventHandler KeyDown;
-
-        /// <summary>
-        /// Occurs when the control is double-clicked
-        /// </summary>
-        event EventHandler DoubleClick;
-
-        /// <summary>
-        /// Occurs when the control is resized
-        /// </summary>
-        event EventHandler Resize;
-
-        /// <summary>
-        /// Gets or sets the width of the control
-        /// </summary>
-        int Width { get; set; }
-        /// <summary>
-        /// Gets the collection of controls contained within the control
-        /// </summary>
-        Control.ControlCollection Controls { get; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the control is displayed
-        /// </summary>
-        [System.ComponentModel.DefaultValue(true)]
-        bool Visible { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tab order of the control within its container
-        /// </summary>
-        int TabIndex { get; set; }
-
-        /// <summary>
-        /// Sets focus to this control
-        /// </summary>
-        /// <returns>true if the input focus request was successful; otherwise, false.</returns>
-        bool Focus();
-
-        /// <summary>Gets a value indicating whether the control has input focus.</summary>
-        /// <returns>true if the control has focus; otherwise, false.</returns>
-        bool Focused { get; }
-
-        /// <summary>
-        /// Gets or sets the height of the control
-        /// </summary>
-
-        int Height { get; set; }
-
-        /// <summary>
-        /// Gets or sets the distance, in pixels, between the top edge of the
-        /// control and the top edge of its container's client area
-        /// </summary>
-        
-        
-            
-        int Top { get; set; }
-
-        /// <summary>
-        /// Gets the distance, in pixels, between the bottom edge of the
-        /// control and the top edge of its container's client area
-        /// </summary>
-        
-        
-            
-        int Bottom { get; }
-
-        /// <summary>
-        /// Gets or sets the distance, in pixels, between the left edge of the
-        /// control and the left edge of its container's client area
-        /// </summary>
-        
-        int Left { set; get; }
-
-        /// <summary>
-        /// Gets the distance, in pixels, between the right edge of the
-        /// control and the left edge of its container's client area
-        /// </summary>
-        
-        int Right { get; }
-
-        /// <summary>
-        /// Gets or sets the text associated with this control
-        /// </summary>
-        string Text { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the control
-        /// </summary>
-        
-        [System.ComponentModel.DefaultValue("")]
-        string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the control can respond to user interaction
-        /// </summary>
-        [System.ComponentModel.DefaultValue(true)]
-        bool Enabled { get; set; }
-
-        /// <summary>
-        /// Gets or sets the foreground color of the control
-        /// </summary>
-        Color ForeColor { get; set; }
-
-        /// <summary>
-        /// Gets or sets the background color for the control
-        /// </summary>
-        Color BackColor { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the user can give the
-        /// focus to this control using the TAB key
-        /// </summary>
-        /// <value>true if the user can give the focus to the control using the
-        /// TAB key; otherwise, false. The default is true.This property will
-        /// always return true for an instance of the Form class.
-        /// </value>
-        [System.ComponentModel.DefaultValue(true)]
-        bool TabStop { get; set; }
-
-        /// <summary>
-        /// Gets or sets the height and width of the control
-        /// </summary>
-        /// <value>The System.Drawing.Size that represents the height
-        /// and width of the control in pixels</value>
-        Size Size { get; set; }
-
-        /// <summary>
-        /// Gets or sets the client size the control
-        /// </summary>
-        /// <value>The System.Drawing.Size that represents the height
-        /// and width of the client area of the control in pixels</value>
-        Size ClientSize { get; set; }
-
-        /// <summary>
-        /// Gets or sets the font of the text displayed by the control
-        /// </summary>
-        /// <value>The System.Drawing.Font to apply to the text displayed
-        /// by the control. The default is the value of the DefaultFont property.</value>
-        Font Font { get; set; }
-
-
-        /// <summary>
-        /// Temporarily suspends the layout logic for the control
-        /// </summary>
-        void SuspendLayout();
-
-        /// <summary>
-        /// Resumes usual layout logic, optionally forcing an immediate
-        /// layout of pending layout requests
-        /// </summary>
-        void ResumeLayout(bool performLayout);
-
-        /// <summary>
-        /// Invalidates the entire surface of the control and causes the control to be redrawn
-        /// </summary>
-        void Invalidate();
-
-        /// <summary>
-        /// Gets or sets the coordinates of the upper-left corner of the
-        /// control relative to the upper-left corner of its container
-        /// </summary>
-        /// <value>The System.Drawing.Point that represents the upper-left
-        /// corner of the control relative to the upper-left corner of its container</value>
-        Point Location { get; set; }
-
-
-        /// <summary>
-        /// Releases all resources used by the Component.
-        /// </summary>
-        void Dispose();
-
-        /// <summary>
-        /// Occurs when the .Text property value changes
-        /// </summary>
-        event EventHandler TextChanged;
-
-    }
 
 }

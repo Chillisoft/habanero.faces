@@ -21,10 +21,11 @@ using System.ComponentModel;
 
 namespace Habanero.Faces.Base
 {
-    /// <summary>
+    //TODO brett 31 Mar 2011: Delete
+/*    /// <summary>
     /// Provides a common implementation of members for the ListBox and ComboBox classes
     /// </summary>
-    public interface IListControl:IControlHabanero
+    public interface IListControl:Control
     {
         /// <summary>
         /// Occurs when the SelectedValue property changes.
@@ -109,5 +110,5 @@ namespace Habanero.Faces.Base
         /// contained in this ComboBox
         /// </summary>
         IListControlObjectCollection Items { get; }
-    }
+    }*/
 }

@@ -21,52 +21,7 @@ using System;
 namespace Habanero.Faces.Base
 {
     
-    /// <summary>
-    /// Represents a ComboBox control
-    /// </summary>
-    public interface IComboBox : IListControl
-    {
 
-
-        /// <summary>
-        /// Gets or sets the index specifying the currently selected item
-        /// </summary>
-        new int SelectedIndex { get; set; }
-
-
-        /// <summary>
-        /// Gets or sets the width of the of the drop-down portion of a combo box
-        /// </summary>
-        int DropDownWidth { get; set; }
-
-//        /// <summary>
-//        /// Gets or sets the property to use as the actual value for the items in the ComboBox
-//        /// </summary>
-//        string ValueMember { get; set; }
-//
-//        /// <summary>
-//        /// Gets or sets the property to display for this ComboBox
-//        /// </summary>
-//        string DisplayMember { get; set; }
-
-
-
-//        /// <summary>
-//        /// Gets or sets the value of the member property specified by
-//        /// the ValueMember property
-//        /// </summary>
-//        object SelectedValue { get; set; }
-
-        /// <summary>
-        ///  Gets or sets the value of the AutoCompleteMode property
-        /// </summary>
-        AutoCompleteMode AutoCompleteMode { get; set; }
-
-        /// <summary>
-        ///  Gets or sets the value of the AutoCompleteSource property
-        /// </summary>
-        AutoCompleteSource AutoCompleteSource { get; set; }
-    }
 
     /// <summary>
     /// Holds a key-value pair that provides a single item

@@ -16,24 +16,26 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
+using System.Windows.Forms;
+
 namespace Habanero.Faces.Base
 {
     /// <summary>
     /// Contains the collection of controls that the TabPage uses
     /// </summary>
-    public interface ITabPageCollection
+    public interface TabPageCollection
     {
-//        int Add(ITabPage page);
+//        int Add(TabPage page);
 
         /// <summary>
         /// Adds a tab page to the collection
         /// </summary>
-        void Add(ITabPage page);
+        void Add(TabPage page);
 
         /// <summary>
         /// Indicates the tab page at the specified indexed location in the collection
         /// </summary>
-        ITabPage this[int index] { get; }
+        TabPage this[int index] { get; }
 
         /// <summary>
         /// Indicates the number of tab pages in the collection
@@ -45,7 +47,7 @@ namespace Habanero.Faces.Base
         /// </summary>
         /// <returns>A zero-based index value that represents the position of the specified
         /// tab page in the collection</returns>
-        int IndexOf(ITabPage page);
+        int IndexOf(TabPage page);
 
         /// <summary>
         /// Clears all the tab pages.

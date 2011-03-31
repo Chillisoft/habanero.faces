@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.Faces.Base;
 
@@ -14,22 +15,22 @@ namespace Habanero.Faces.Win
     /// whether they want to Close the Original form without saving, Save the BO and then
     /// Close or Cancel the Closing of the original form.
     /// </summary>
-    public class CloseBOEditorDialogWin : FormWin, ICloseBOEditorDialog
+    public class CloseBOEditorDialogWin : Form, ICloseBOEditorDialog
     {
-        private ILabel _label;
+        private Label _label;
 
         /// <summary>
         /// The CancelClose Button.
         /// </summary>
-        public IButton CancelCloseBtn { get; private set; }
+        public Button CancelCloseBtn { get; private set; }
         /// <summary>
         /// The Save and Close Button.
         /// </summary>
-        public IButton SaveAndCloseBtn { get; private set; }
+        public Button SaveAndCloseBtn { get; private set; }
         /// <summary>
         /// The Close without saving Button.
         /// </summary>
-        public IButton CloseWithoutSavingBtn { get; private set; }
+        public Button CloseWithoutSavingBtn { get; private set; }
 
         public CloseBOEditorDialogResult ShowDialog(IBusinessObject businessObject)
         {
@@ -97,8 +98,8 @@ namespace Habanero.Faces.Win
 
         private void SetSize()
         {
-            this.MinimumSize = new Size(400, 200);
-            this.Size = this.MinimumSize;
+/*            this.MinimumSize = new Size(400, 200);
+            this.Size = this.MinimumSize;*/
         }
 /*
         ///<summary>
@@ -124,7 +125,7 @@ namespace Habanero.Faces.Win
 //TODO brett 31 Mar 2011: CF
                         throw new NotImplementedException(); 
 
-/*            IButtonGroupControl buttonGroupControl = controlFactory.CreateButtonGroupControl();
+/*            ButtonGroupControl buttonGroupControl = controlFactory.CreateButtonGroupControl();
             CancelCloseBtn = buttonGroupControl.AddButton("CancelClose", "Cancel Close", ButtonClick);
             CloseWithoutSavingBtn = buttonGroupControl.AddButton("CloseWithoutSaving", "&Close without saving", ButtonClick);
             SaveAndCloseBtn = buttonGroupControl.AddButton("SaveAndClose","&Save & Close", ButtonClick);
@@ -137,7 +138,7 @@ namespace Habanero.Faces.Win
 
         private void ButtonClick(object sender, EventArgs eventArgs)
         {
-            var button = sender as IButton;
+            var button = sender as Button;
             if (button == null) return;
             BOEditorDialogResult = (CloseBOEditorDialogResult)Enum.Parse(typeof(CloseBOEditorDialogResult), button.Name, true);
             this.Close();

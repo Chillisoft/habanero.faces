@@ -16,6 +16,9 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
+using System;
+using System.Windows.Forms;
+
 namespace Habanero.Faces.Base
 {
     /// <summary>
@@ -29,7 +32,7 @@ namespace Habanero.Faces.Base
         /// </summary>
         /// <param name="nestedControl">The control to place above the buttons</param>
         /// <returns>Returns the created panel</returns>
-        IOKCancelPanel CreateOKCancelPanel(IControlHabanero nestedControl);
+        IOKCancelPanel CreateOKCancelPanel(Control nestedControl);
 
         /// <summary>
         /// Creates a form containing OK and Cancel buttons
@@ -37,22 +40,35 @@ namespace Habanero.Faces.Base
         /// <param name="nestedControl">The control to place above the buttons</param>
         /// <param name="formTitle">The title shown on the form</param>
         /// <returns>Returns the created form</returns>
-        IFormHabanero CreateOKCancelForm(IControlHabanero nestedControl, string formTitle);
+        Form CreateOKCancelForm(Control nestedControl, string formTitle);
     }   
 
     /// <summary>
     /// Represents a panel that contains an OK and Cancel button
     /// </summary>
-    public interface IOKCancelPanel: IPanel
+    public interface IOKCancelPanel
     {
         /// <summary>
         /// Gets the OK button
         /// </summary>
-        IButton OKButton { get; }
+        Button OKButton { get; }
 
         /// <summary>
         /// Gets the Cancel button
         /// </summary>
-        IButton CancelButton { get; }
+        Button CancelButton { get; }
+    }
+
+    public class NullOkCancelPanel :Control, IOKCancelPanel
+    {
+        public Button OKButton
+        {
+            get { return new Button();}
+        }
+
+        public Button CancelButton
+        {
+            get { return new Button();}
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace Habanero.Faces.Win
      * /// <summary>
        /// This is a control that can be placed ona a form.
        /// Provides an implementation of <see cref="IBOComboBoxSelector"/> that is specialised for showing a collection of 
-       /// Business Objects (<see cref="IBusinessObjectCollection"/>) in a <see cref="IComboBox"/> and allowing the user to select one.
+       /// Business Objects (<see cref="IBusinessObjectCollection"/>) in a <see cref="ComboBox"/> and allowing the user to select one.
        /// This Control works in conjunction with the <see cref="ComboBoxCollectionSelector"/>.
        /// </summary>
        public class ComboBoxSelectorWin : ComboBoxWin, IBOComboBoxSelector
@@ -101,7 +101,7 @@ namespace Habanero.Faces.Win
            ///<summary>
            /// Returns the Underlying ComboBoxControl that is used by this selector
            ///</summary>
-           public IComboBox ComboBox
+           public ComboBox ComboBox
            {
                get { return this; }
            }

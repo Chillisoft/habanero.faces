@@ -18,6 +18,7 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.Base.Util;
 using Habanero.BO;
@@ -50,24 +51,24 @@ namespace Habanero.Faces.Base
         /// <summary>
         /// Creates a new empty ComboBox
         /// </summary>
-        IComboBox CreateComboBox();
+        ComboBox CreateComboBox();
 
         /// <summary>
         /// Creates a ListBox control
         /// </summary>
         /// <returns></returns>
-        IListBox CreateListBox();
+        ListBox CreateListBox();
 
         /// <summary>
         /// Creates a button control
         /// </summary>
-        IButton CreateButton();
+        Button CreateButton();
 
         /// <summary>
         /// Creates a button control
         /// </summary>
         /// <param name="text">The text to appear on the button</param>
-        IButton CreateButton(string text);
+        Button CreateButton(string text);
 
         /// <summary>
         /// Creates a button control with an attached event handler to carry out
@@ -75,54 +76,54 @@ namespace Habanero.Faces.Base
         /// </summary>
         /// <param name="text">The text to appear on the button</param>
         /// <param name="clickHandler">The method that handles the Click event</param>
-        IButton CreateButton(string text, EventHandler clickHandler);
+        Button CreateButton(string text, EventHandler clickHandler);
 
         /// <summary>
         /// Creates a CheckBox control
         /// </summary>
-        ICheckBox CreateCheckBox();
+        CheckBox CreateCheckBox();
 
         /// <summary>
         /// Creates a CheckBox control with a specified initial checked state
         /// </summary>
         /// <param name="defaultValue">Whether the initial box is checked</param>
-        ICheckBox CreateCheckBox(bool defaultValue);
+        CheckBox CreateCheckBox(bool defaultValue);
 
         /// <summary>
         /// Creates a label without text
         /// </summary>
-        ILabel CreateLabel();
+        Label CreateLabel();
 
         /// <summary>
         /// Creates a label with specified text
         /// </summary>
-        ILabel CreateLabel(string labelText);
+        Label CreateLabel(string labelText);
 
         /// <summary>
         /// Creates a label
         /// </summary>
         /// <param name="labelText">The text to appear in the label</param>
         /// <param name="isBold">Whether the text appears in bold font</param>
-        ILabel CreateLabel(string labelText, bool isBold);
+        Label CreateLabel(string labelText, bool isBold);
 
 
         /// <summary>
         /// Creates a Panel control
         /// </summary>
-        IPanel CreatePanel();
+        Panel CreatePanel();
 
         /// <summary>
         /// Creates a Panel control
         /// </summary>
         /// <param name="controlFactory">The factory that this panel will use to create any controls on it</param>
-        IPanel CreatePanel(IControlFactory controlFactory);
+        Panel CreatePanel(IControlFactory controlFactory);
 
         /// <summary>
         /// Creates a Panel control
         /// </summary>
         /// <param name="name">The name of the panel</param>
         /// <param name="controlFactory">The factory that this panel will use to create any controls on it</param>
-        IPanel CreatePanel(string name, IControlFactory controlFactory);
+        Panel CreatePanel(string name, IControlFactory controlFactory);
 
 
         /// <summary>
@@ -133,35 +134,35 @@ namespace Habanero.Faces.Base
         /// <summary>
         /// Creates a TextBox control
         /// </summary>
-        ITextBox CreateTextBox();
+        TextBox CreateTextBox();
 
         /// <summary>
         /// Creates a multi line textbox, setting the scrollbars to vertical
         /// </summary>
         /// <param name="numLines">The number of lines to show in the TextBox</param>
-        ITextBox CreateTextBoxMultiLine(int numLines);
+        TextBox CreateTextBoxMultiLine(int numLines);
 
         /// <summary>
         /// Creates a new PasswordTextBox that masks the letters as the user
         /// types them
         /// </summary>
         /// <returns>Returns the new PasswordTextBox object</returns>
-        ITextBox CreatePasswordTextBox();
+        TextBox CreatePasswordTextBox();
 
         /// <summary>
         /// Creates a generic control
         /// </summary>
-        IControlHabanero CreateControl();
+        Control CreateControl();
 
         /// <summary>
         /// Creates a user control
         /// </summary>
-        IUserControlHabanero CreateUserControl();
+        UserControl CreateUserControl();
 
         /// <summary>
         /// Creates a user control with the specified name.
         /// </summary>
-        IUserControlHabanero CreateUserControl(string name);
+        UserControl CreateUserControl(string name);
 
         /// <summary>
         /// Creates a control for the given type and assembly name
@@ -170,78 +171,78 @@ namespace Habanero.Faces.Base
         /// <param name="assemblyName">The assembly name of the control type</param>
         /// <returns>Returns either the control of the specified type or
         /// the default type, which is usually TextBox.</returns>
-        IControlHabanero CreateControl(String typeName, String assemblyName);
+        Control CreateControl(String typeName, String assemblyName);
 
         /// <summary>
         /// Creates a new control of the type specified
         /// </summary>
         /// <param name="controlType">The control type, which must be a
-        /// sub-type of <see cref="IControlHabanero"/></param>
-        IControlHabanero CreateControl(Type controlType);
+        /// sub-type of <see cref="Control"/></param>
+        Control CreateControl(Type controlType);
 
         /// <summary>
         /// Creates a DateTimePicker
         /// </summary>
-        IDateTimePicker CreateDateTimePicker();
+        DateTimePicker CreateDateTimePicker();
 
         /// <summary>
         /// Creates a new DateTimePicker with a specified date
         /// </summary>
         /// <param name="defaultDate">The initial date value</param>
-        IDateTimePicker CreateDateTimePicker(DateTime defaultDate);
+        DateTimePicker CreateDateTimePicker(DateTime defaultDate);
 
         /// <summary>
         /// Creates a new DateTimePicker that is formatted to handle months
         /// and years
         /// </summary>
         /// <returns>Returns a new DateTimePicker object</returns>
-        IDateTimePicker CreateMonthPicker();
+        DateTimePicker CreateMonthPicker();
 
         ///<summary>
         /// Creates a new numeric up-down control
         ///</summary>
         ///<returns>The created NumericUpDown control</returns>
-        INumericUpDown CreateNumericUpDown();
+        NumericUpDown CreateNumericUpDown();
 
         /// <summary>
         /// Creates a new numeric up-down control that is formatted with
         /// zero decimal places for integer use
         /// </summary>
-        INumericUpDown CreateNumericUpDownInteger();
+        NumericUpDown CreateNumericUpDownInteger();
 
         /// <summary>
         /// Creates a new numeric up-down control that is formatted with
         /// two decimal places for currency use
         /// </summary>
-        INumericUpDown CreateNumericUpDownCurrency();
+        NumericUpDown CreateNumericUpDownCurrency();
 
         /// <summary>
         /// Creates a new progress bar
         /// </summary>
-        IProgressBar CreateProgressBar();
+        ProgressBar CreateProgressBar();
 
         /// <summary>
         /// Creates a new splitter which enables the user to resize 
         /// docked controls
         /// </summary>
-        ISplitter CreateSplitter();
+        Splitter CreateSplitter();
 
         /// <summary>
         /// Creates a new radio button
         /// </summary>
         /// <param name="text">The text to appear next to the radio button</param>
-        IRadioButton CreateRadioButton(string text);
+        RadioButton CreateRadioButton(string text);
 
         /// <summary>
         /// Creates a TabControl
         /// </summary>
-        ITabControl CreateTabControl();
+        TabControl CreateTabControl();
 
         /// <summary>
         /// Creates a new tab page
         /// </summary>
         /// <param name="title">The page title to appear in the tab</param>
-        ITabPage CreateTabPage(string title);
+        TabPage CreateTabPage(string title);
 
 /* //TODO brett 31 Mar 2011: CF
  /// <summary>
@@ -266,26 +267,11 @@ namespace Habanero.Faces.Base
         IWizardForm CreateWizardForm(IWizardControl wizardControl);*/
 
 
-        /// <summary>
-        /// Creates a FileChooser control
-        /// </summary>
-        IFileChooser CreateFileChooser();
-
-
-        /// <summary>
-        /// Creates an ErrorProvider
-        /// </summary>
-        IErrorProvider CreateErrorProvider();
 
         /// <summary>
         /// Creates a Form control
         /// </summary>
-        IFormHabanero CreateForm();
-
-        /// <summary>
-        /// Creates an OKCancelDialog
-        /// </summary>
-        IOKCancelDialogFactory CreateOKCancelDialogFactory();
+        Form CreateForm();
 
         /// <summary>
         /// Creates a control mapper strategy for the management of how
@@ -359,40 +345,8 @@ namespace Habanero.Faces.Base
         /// <summary>
         /// Creates a TextBox that provides filtering of characters depending on the property type.
         /// </summary>
-        IPictureBox CreatePictureBox();
+        PictureBox CreatePictureBox();
 
-        ///<summary>
-        /// Creates a <see cref="IDateTimePickerMapperStrategy"/>
-        ///</summary>
-        IDateTimePickerMapperStrategy CreateDateTimePickerMapperStrategy();
-
-        ///<summary>
-        /// Creates a <see cref="IButton"/> configured with the collapsible style
-        ///</summary>
-        ///<returns>a <see cref="IButton"/> </returns>
-        IButton CreateButtonCollapsibleStyle();
-
-        ///<summary>
-        /// Creates a <see cref="ILabel"/> configured with the collapsible style
-        ///</summary>
-        ///<returns>a <see cref="ILabel"/> </returns>
-        ILabel CreateLabelPinOffStyle();
-
-        ///<summary>
-        /// Configures the <see cref="ILabel"/> with the pinoff style
-        ///</summary>
-        void ConfigurePinOffStyleLabel(ILabel label);
-
-        ///<summary>
-        /// Configures the <see cref="ILabel"/> with the pinon style
-        ///</summary>
-        void ConfigurePinOnStyleLabel(ILabel label);
-
-        ///<summary>
-        /// Creates an <see cref="IBOComboBoxSelector"/>
-        ///</summary>
-        ///<returns></returns>
-        IBOComboBoxSelector CreateComboBoxSelector();
 
         ///<summary>
         /// Creates an <see cref="IBOListBoxSelector"/>
@@ -400,24 +354,6 @@ namespace Habanero.Faces.Base
         ///<returns></returns>
         IBOListBoxSelector CreateListBoxSelector();
 
-        ///<summary>
-        /// Creates an <see cref="IBOCollapsiblePanelSelector"/>
-        ///</summary>
-        ///<returns></returns>
-        IBOCollapsiblePanelSelector CreateCollapsiblePanelSelector();
-
-
-        /// <summary>
-        /// Creates an <see cref="ISplitContainer"/>
-        /// </summary>
-        /// <returns>returns the created split container</returns>
-        ISplitContainer CreateSplitContainer();
-
-        /// <summary>
-        /// Creates a <see cref="IMainTitleIconControl"/>
-        /// </summary>
-        /// <returns></returns>
-        IMainTitleIconControl CreateMainTitleIconControl();
 
         ///<summary>
         /// Creates a <see cref="IExtendedComboBox"/>. This is essentially
@@ -463,7 +399,7 @@ namespace Habanero.Faces.Base
         /// the enter key cause focus to move to the next control).
         /// </summary>
         /// <param name="control">The control whose events will be handled</param>
-        void AddKeyPressEventHandler(IControlHabanero control);
+        void AddKeyPressEventHandler(Control control);
     }
 
     /// <summary>
@@ -482,26 +418,13 @@ namespace Habanero.Faces.Base
         void AddKeyPressEventHandler(TextBoxMapper mapper, IBOProp boProp);
 
         ///<summary>
-        /// Add a handler to the <see cref="ITextBox"/> TextChanged Event that
+        /// Add a handler to the <see cref="TextBox"/> TextChanged Event that
         /// automatically updates the Business Object with this change.
         /// This is only applicable in Windows not for VWG (Web).
         ///</summary>
         ///<param name="mapper"></param>
         ///<param name="boProp"></param>
         void AddUpdateBoPropOnTextChangedHandler(TextBoxMapper mapper, IBOProp boProp);
-    }
-
-    /// <summary>
-    /// Provides a set of behaviour strategies that can be applied to a TextBox
-    /// depending on the environment
-    /// </summary>
-    public interface IDateTimePickerMapperStrategy
-    {
-        /// <summary>
-        /// Adds value changed event handlers.
-        /// </summary>
-        /// <param name="mapper">The DateTime mapper</param>
-        void AddUpdateBoPropOnValueChangedHandler(DateTimePickerMapper mapper);
     }
 
     /// <summary>

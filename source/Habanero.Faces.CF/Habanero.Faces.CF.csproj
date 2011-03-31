@@ -76,28 +76,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\ButtonWin.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Controls\CheckBoxStrategyWin.cs" />
     <Compile Include="CloseBOEditorDialogWin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ControlCollectionWin.cs" />
     <Compile Include="ControlFactoryWin.cs" />
-    <Compile Include="DockStyleWin.cs" />
+    <Compile Include="Mappers\ListComboBoxMapperStrategyWin.cs" />
+    <Compile Include="Mappers\NumericUpDownMapperStrategyWin.cs" />
+    <Compile Include="Mappers\TextBoxMapperStrategyWin.cs" />
     <Compile Include="Mappers\ControlMapperStrategyWin.cs" />
     <Compile Include="Controls\ComboBoxAutoCompleteModeWin.cs" />
     <Compile Include="Controls\ComboBoxAutoCompleteSourceWin.cs" />
     <Compile Include="Controls\ComboBoxDefaultMapperStrategyWin.cs" />
     <Compile Include="Controls\ComboBoxKeyPressMapperStrategyWin.cs" />
     <Compile Include="Controls\ComboBoxSelectorWin.cs" />
-    <Compile Include="Controls\ControlWin.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="FormWin.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\DialogUtilities.cs" />
     <Compile Include="WinFormsControlAdapter.cs" />
@@ -108,9 +100,6 @@
       <Project>{6EECF70C-D930-4CC2-81FE-6E05E956F336}</Project>
       <Name>Habanero.Faces.Base.CF</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DateTimePicker\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>

@@ -23,7 +23,7 @@ namespace Habanero.Faces.Base
     /// <summary>
     /// Represents the collection of items in a ComboBox
     /// </summary>
-    public interface IComboBoxObjectCollection :  IListControlObjectCollection
+    public interface ComboBoxObjectCollection :  IListControlObjectCollection
     {
    
     }

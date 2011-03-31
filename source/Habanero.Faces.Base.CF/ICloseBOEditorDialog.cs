@@ -1,3 +1,4 @@
+using System.Windows.Forms;
 using Habanero.Base;
 
 namespace Habanero.Faces.Base
@@ -33,17 +34,17 @@ namespace Habanero.Faces.Base
         /// <summary>
         /// The CancelClose Button.
         /// </summary>
-        IButton CancelCloseBtn { get; }
+        Button CancelCloseBtn { get; }
 
         /// <summary>
         /// The Save and Close Button.
         /// </summary>
-        IButton SaveAndCloseBtn { get; }
+        Button SaveAndCloseBtn { get; }
 
         /// <summary>
         /// The Close without saving Button.
         /// </summary>
-        IButton CloseWithoutSavingBtn { get; }
+        Button CloseWithoutSavingBtn { get; }
 
         /// <summary>
         /// Shows the Dialog form with the relevant options and messages for the business object.

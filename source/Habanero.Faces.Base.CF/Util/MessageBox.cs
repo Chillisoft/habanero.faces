@@ -21,6 +21,7 @@ using System;
 namespace Habanero.Faces.Base
 {
     #region Enums
+/*
 
     /// <summary>
     /// Specifies constants defining which buttons to display on a MessageBox.
@@ -142,6 +143,7 @@ namespace Habanero.Faces.Base
         /// </summary>
         ServiceNotification = 0x200000
     }
+*/
 
     #endregion Enums
 }

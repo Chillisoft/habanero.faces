@@ -18,27 +18,42 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.Windows.Forms;
+using Habanero.Base;
 using Habanero.Faces.Base;
 
 namespace Habanero.Faces.Win
 {
     /// <summary>
-    /// Provides a set of behaviour strategies that can be applied to a TextBox
+    /// Provides a set of behaviour strategies that can be applied to a NumericUpDown
     /// depending on the environment
     /// </summary>
-    internal class DateTimePickerMapperStrategyWin : IDateTimePickerMapperStrategy
+    internal class NumericUpDownMapperStrategyWin : INumericUpDownMapperStrategy
     {
-        // Assumes that one strategy is created for each control.
-        // These fields exist so that the IsValidCharacter method knows
-        //   which prop and textbox it is dealing with
+        private NumericUpDownMapper _mapper;
 
-        public void AddUpdateBoPropOnValueChangedHandler(DateTimePickerMapper mapper)
+        /// <summary>
+        /// Handles the value changed event suitably for the UI environment
+        /// </summary>
+        /// <param name="mapper">The mapper for the NumericUpDown</param>
+        public void ValueChanged(NumericUpDownMapper mapper)
         {
-            var dtp = mapper.GetControl() as DateTimePicker;
+            _mapper = mapper;
+            var numericUpDown = mapper.GetControl() as NumericUpDown;
+            if (numericUpDown == null) return;
+            numericUpDown.ValueChanged += ValueChangedHandler;
+            numericUpDown.LostFocus += ValueChangedHandler;
+        }
 
-            if (dtp != null)
+        private void ValueChangedHandler(object sender, EventArgs e)
+        {
+            try
             {
-                dtp.ValueChanged += (sender, args) => mapper.ApplyChangesToBusinessObject();
+                _mapper.ApplyChangesToBusinessObject();
+                _mapper.UpdateControlValueFromBusinessObject();
+            }
+            catch (Exception ex)
+            {
+                GlobalRegistry.UIExceptionNotifier.Notify(ex, "", "Error ");
             }
         }
     }

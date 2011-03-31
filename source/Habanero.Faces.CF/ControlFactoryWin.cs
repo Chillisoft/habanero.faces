@@ -29,11 +29,7 @@ using Habanero.BO;
 using Habanero.Faces.Base;
 using Habanero.Faces.Base;
 using Habanero.Util;
-using DateTimePickerFormat=Habanero.Faces.Base.DateTimePickerFormat;
-using DialogResult=Habanero.Faces.Base.DialogResult;
-using MessageBoxButtons=Habanero.Faces.Base.MessageBoxButtons;
 using MessageBoxDefaultButton = System.Windows.Forms.MessageBoxDefaultButton;
-using MessageBoxIcon=Habanero.Faces.Base.MessageBoxIcon;
 using ScrollBars=System.Windows.Forms.ScrollBars;
 
 namespace Habanero.Faces.Win
@@ -64,7 +60,7 @@ namespace Habanero.Faces.Win
         /// <summary>
         /// Creates a TextBox control
         /// </summary>
-        public virtual ITextBox CreateTextBox()
+        public virtual TextBox CreateTextBox()
         {
             throw new NotImplementedException("CF Not implemented");
             //return new TextBoxWin();
@@ -78,7 +74,7 @@ namespace Habanero.Faces.Win
         /// <param name="assemblyName">The assembly name of the control type</param>
         /// <returns>Returns either the control of the specified type or
         /// the default type, which is usually TextBox.</returns>
-        public virtual IControlHabanero CreateControl(string typeName, string assemblyName)
+        public virtual Control CreateControl(string typeName, string assemblyName)
         {
             Type controlType = null;
 
@@ -99,10 +95,10 @@ namespace Habanero.Faces.Win
         /// Creates a new control of the type specified
         /// </summary>
         /// <param name="controlType">The control type, which must be a
-        /// sub-type of <see cref="IControlHabanero"/></param>
-        public virtual IControlHabanero CreateControl(Type controlType)
+        /// sub-type of <see cref="Control"/></param>
+        public virtual Control CreateControl(Type controlType)
         {
-            IControlHabanero ctl;
+            Control ctl;
             if (controlType.IsSubclassOf(typeof (Control)))
             {
                 if (controlType == typeof (ComboBox)) return CreateComboBox();
@@ -112,7 +108,7 @@ namespace Habanero.Faces.Win
                 if (controlType == typeof (DateTimePicker)) return CreateDateTimePicker();
                 if (controlType == typeof (NumericUpDown)) return CreateNumericUpDownInteger();
 
-                ctl = (IControlHabanero) Activator.CreateInstance(controlType);
+                ctl = (Control) Activator.CreateInstance(controlType);
                 PropertyInfo infoFlatStyle =
                     ctl.GetType().GetProperty("FlatStyle", BindingFlags.Public | BindingFlags.Instance);
                 if (infoFlatStyle != null)
@@ -133,9 +129,9 @@ namespace Habanero.Faces.Win
         /// Creates a new DateTimePicker with a specified date
         /// </summary>
         /// <param name="defaultDate">The initial date value</param>
-        public virtual IDateTimePicker CreateDateTimePicker(DateTime defaultDate)
+        public virtual DateTimePicker CreateDateTimePicker(DateTime defaultDate)
         {
-            IDateTimePicker dateTimePickerWin = CreateDateTimePicker();
+            DateTimePicker dateTimePickerWin = CreateDateTimePicker();
             dateTimePickerWin.Value = defaultDate;
             return dateTimePickerWin;
         }
@@ -145,7 +141,7 @@ namespace Habanero.Faces.Win
         /// and years
         /// </summary>
         /// <returns>Returns a new DateTimePicker object</returns>
-        public virtual IDateTimePicker CreateMonthPicker()
+        public virtual DateTimePicker CreateMonthPicker()
         {
                             throw new NotImplementedException("CF Not implemented");
 /*            DateTimePickerWin editor = (DateTimePickerWin)CreateDateTimePicker();
@@ -158,7 +154,7 @@ namespace Habanero.Faces.Win
         /// Creates a new numeric up-down control
         ///</summary>
         ///<returns>The created NumericUpDown control</returns>
-        public virtual INumericUpDown CreateNumericUpDown()
+        public virtual NumericUpDown CreateNumericUpDown()
         {
                             throw new NotImplementedException("CF Not implemented");
             //return new NumericUpDownWin();
@@ -168,10 +164,9 @@ namespace Habanero.Faces.Win
         /// Creates a new numeric up-down control that is formatted with
         /// zero decimal places for integer use
         /// </summary>
-        public virtual INumericUpDown CreateNumericUpDownInteger()
+        public virtual NumericUpDown CreateNumericUpDownInteger()
         {
-            INumericUpDown ctl = CreateNumericUpDown();
-            ctl.DecimalPlaces = 0;
+            NumericUpDown ctl = CreateNumericUpDown();
             ctl.Maximum = Int32.MaxValue;
             ctl.Minimum = Int32.MinValue;
             return ctl;
@@ -181,10 +176,9 @@ namespace Habanero.Faces.Win
         /// Creates a new numeric up-down control that is formatted with
         /// two decimal places for currency use
         /// </summary>
-        public virtual INumericUpDown CreateNumericUpDownCurrency()
+        public virtual NumericUpDown CreateNumericUpDownCurrency()
         {
-            INumericUpDown ctl = CreateNumericUpDown();
-            ctl.DecimalPlaces = 2;
+            NumericUpDown ctl = CreateNumericUpDown();
             ctl.Maximum = Decimal.MaxValue;
             ctl.Minimum = Decimal.MinValue;
             return ctl;
@@ -193,40 +187,37 @@ namespace Habanero.Faces.Win
         /// <summary>
         /// Creates a new progress bar
         /// </summary>
-        public virtual IProgressBar CreateProgressBar()
+        public virtual ProgressBar CreateProgressBar()
         {
-            return new ProgressBarWin();
+            return new ProgressBar();
         }
 
         /// <summary>
         /// Creates a new splitter which enables the user to resize 
         /// docked controls
         /// </summary>
-        public virtual ISplitter CreateSplitter()
+        public virtual Splitter CreateSplitter()
         {
-            return new SplitterWin();
+            return new Splitter();
         }
 
         /// <summary>
         /// Creates a new tab page
         /// </summary>
         /// <param name="title">The page title to appear in the tab</param>
-        public virtual ITabPage CreateTabPage(string title)
+        public virtual TabPage CreateTabPage(string title)
         {
-            return new TabPageWin {Text = title, Name = title};
+            return new TabPage {Text = title, Name = title};
         }
 
         /// <summary>
         /// Creates a new radio button
         /// </summary>
         /// <param name="text">The text to appear next to the radio button</param>
-        public virtual IRadioButton CreateRadioButton(string text)
+        public virtual RadioButton CreateRadioButton(string text)
         {
-            RadioButtonWin rButton = new RadioButtonWin();
+            RadioButton rButton = new RadioButton();
             rButton.Text = text;
-            //TODO_REmoved when porting rButton.AutoCheck = true;
-            //TODO_REmoved when portingrButton.FlatStyle = FlatStyle.Standard;
-            rButton.Width = CreateLabel(text, false).PreferredWidth + 25;
             return rButton;
         }
 
@@ -234,18 +225,18 @@ namespace Habanero.Faces.Win
         /// <summary>
         /// Creates a TabControl
         /// </summary>
-        public virtual ITabControl CreateTabControl()
+        public virtual TabControl CreateTabControl()
         {
-            return new TabControlWin();
+            return new TabControl();
         }
 
         /// <summary>
         /// Creates a multi line textbox, setting the scrollbars to vertical
         /// </summary>
         /// <param name="numLines">The number of lines to show in the TextBox</param>
-        public virtual ITextBox CreateTextBoxMultiLine(int numLines)
+        public virtual TextBox CreateTextBoxMultiLine(int numLines)
         {
-            TextBoxWin tb = (TextBoxWin) CreateTextBox();
+            TextBox tb = (TextBox) CreateTextBox();
             tb.Multiline = true;
             tb.AcceptsReturn = true;
             tb.Height = tb.Height*numLines;
@@ -356,29 +347,7 @@ namespace Habanero.Faces.Win
         }
 */
 
-        /// <summary>
-        /// Creates a FileChooser control
-        /// </summary>
-        public virtual IFileChooser CreateFileChooser()
-        {
-            return new FileChooserWin(this);
-        }
-/*
 
-        /// <summary>
-        /// Displays a business object collection in a tab control, with one
-        /// business object per tab.  Each tab holds a business control, provided
-        /// by the developer, that refreshes to display the business object for
-        /// the current tab.
-        /// <br/>
-        /// This control is suitable for a business object collection with a limited
-        /// number of objects.
-        /// </summary>
-        public virtual IBOColTabControl CreateBOColTabControl()
-        {
-            return new BOColTabControlWin(this);
-        }
-*/
 
         /// <summary>
         /// Creates a control mapper strategy for the management of how
@@ -405,15 +374,15 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual IErrorProvider CreateErrorProvider()
         {
-            return new ErrorProviderWin();
+            return new NullErrorProvider();
         }
 
         /// <summary>
         /// Creates a Form control
         /// </summary>
-        public virtual IFormHabanero CreateForm()
+        public virtual Form CreateForm()
         {
-            return new FormWin();
+            return new Form();
         }
 
         /// <summary>
@@ -456,13 +425,6 @@ namespace Habanero.Faces.Win
             return new NumericUpDownMapperStrategyWin();
         }
 
-        /// <summary>
-        /// Creates an OKCancelDialog
-        /// </summary>
-        public virtual IOKCancelDialogFactory CreateOKCancelDialogFactory()
-        {
-            return new OKCancelDialogFactoryWin(this);
-        }
 
         ///<summary>
         /// Displays a message box with specified text, caption, buttons, and icon.
@@ -472,15 +434,15 @@ namespace Habanero.Faces.Win
         ///<param name="buttons">One of the MessageBoxButtons values that specifies which buttons to display in the message box.</param>
         ///<param name="icon">One of the MessageBoxIcon values that specifies which icon to display in the message box.</param>
         ///<returns>The message box result.</returns>
-        public virtual Base.DialogResult ShowMessageBox(string message, string title, Base.MessageBoxButtons buttons, Base.MessageBoxIcon icon)
+        public virtual DialogResult ShowMessageBox(string message, string title, MessageBoxButtons buttons, MessageBoxIcon icon)
         {
-            return (Base.DialogResult)MessageBox.Show(message, title, 
+            return (DialogResult)MessageBox.Show(message, title, 
                 (System.Windows.Forms.MessageBoxButtons)buttons, (System.Windows.Forms.MessageBoxIcon)icon, MessageBoxDefaultButton.Button1);
         }
         
         ///<summary>
         /// Displays a message box with specified text, caption, buttons, and icon.
-        /// Once the user is has responded, the provided delegate is called with an indication of the <see cref="Base.DialogResult"/>.
+        /// Once the user is has responded, the provided delegate is called with an indication of the <see cref="DialogResult"/>.
         ///</summary>
         ///<param name="message">The text to display in the message box.</param>
         ///<param name="title">The text to display in the title bar of the message box.</param>
@@ -492,7 +454,7 @@ namespace Habanero.Faces.Win
         {
             System.Windows.Forms.MessageBoxButtons messageBoxButtons = (System.Windows.Forms.MessageBoxButtons)buttons;
             System.Windows.Forms.MessageBoxIcon messageBoxIcon = (System.Windows.Forms.MessageBoxIcon)icon;
-            DialogResult dialogResult = (Base.DialogResult)MessageBox.Show(message, title, messageBoxButtons, messageBoxIcon);
+            DialogResult dialogResult = (DialogResult)MessageBox.Show(message, title, messageBoxButtons, messageBoxIcon, MessageBoxDefaultButton.Button1);
             dialogCompletionDelegate(null, dialogResult);
             return dialogResult;
         }
@@ -502,24 +464,18 @@ namespace Habanero.Faces.Win
         ///</summary>
         ///<param name="message">The text to display in the message box.</param>
         ///<returns>The message box result.</returns>
-        public virtual Base.DialogResult ShowMessageBox(string message)
+        public virtual DialogResult ShowMessageBox(string message)
         {
             Cursor.Current = Cursors.Default;
-            return (Base.DialogResult)MessageBox.Show(message);
+            return (DialogResult)MessageBox.Show(message);
         }
 
         /// <summary>
         /// Creates a new empty ComboBox
         /// </summary>
-        public virtual IComboBox CreateComboBox()
+        public virtual ComboBox CreateComboBox()
         {
-            ComboBoxWin comboBoxWin = new ComboBoxWin();
-            //Note_: This is a workaround in windows to avoid this default from breaking all the tests because if the Thread's ApartmentState is not STA then setting the AutoCompleteSource default gives an error
-            if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA)
-            {
-                comboBoxWin.AutoCompleteSource =  AutoCompleteSource.ListItems;
-                comboBoxWin.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            }
+            ComboBox comboBoxWin = new ComboBox();
             return comboBoxWin;
         }
 
@@ -527,39 +483,37 @@ namespace Habanero.Faces.Win
         /// Creates a ListBox control
         /// </summary>
         /// <returns></returns>
-        public virtual IListBox CreateListBox()
+        public virtual ListBox CreateListBox()
         {
-            return new ListBoxWin();
+            return new ListBox();
         }
 
-        /// <summary>
+/*        /// <summary>
         /// Creates a multi-selector control
         /// </summary>
         /// <typeparam name="T">The business object type being managed in the control</typeparam>
         public virtual IMultiSelector<T> CreateMultiSelector<T>()
         {
             return new MultiSelectorWin<T>(this);
-        }
+        }*/
 
         /// <summary>
         /// Creates a button control
         /// </summary>
-        public virtual IButton CreateButton()
+        public virtual Button CreateButton()
         {
-            return new ButtonWin();
+            return new Button();
         }
 
         /// <summary>
         /// Creates a button control
         /// </summary>
         /// <param name="text">The text to appear on the button</param>
-        public virtual IButton CreateButton(string text)
+        public virtual Button CreateButton(string text)
         {
-            IButton button = CreateButton();
+            Button button = CreateButton();
             button.Text = text;
             button.Name = text;
-            ((Button)button).FlatStyle = FlatStyle.Standard;
-            button.Width = CreateLabel(text, false).PreferredWidth + 20;
             return button;
         }
 
@@ -569,9 +523,9 @@ namespace Habanero.Faces.Win
         /// </summary>
         /// <param name="text">The text to appear on the button</param>
         /// <param name="clickHandler">The method that handles the Click event</param>
-        public virtual IButton CreateButton(string text, EventHandler clickHandler)
+        public virtual Button CreateButton(string text, EventHandler clickHandler)
         {
-            IButton button = CreateButton(text);
+            Button button = CreateButton(text);
             button.Click += clickHandler;
             return button;
         }
@@ -579,18 +533,18 @@ namespace Habanero.Faces.Win
         /// <summary>
         /// Creates a CheckBox control
         /// </summary>
-        public virtual ICheckBox CreateCheckBox()
+        public virtual CheckBox CreateCheckBox()
         {
-            return new CheckBoxWin();
+            return new CheckBox();
         }
 
         /// <summary>
         /// Creates a CheckBox control with a specified initial checked state
         /// </summary>
         /// <param name="defaultValue">Whether the initial box is checked</param>
-        public virtual ICheckBox CreateCheckBox(bool defaultValue)
+        public virtual CheckBox CreateCheckBox(bool defaultValue)
         {
-            ICheckBox checkBox = CreateCheckBox();
+            CheckBox checkBox = CreateCheckBox();
             checkBox.Checked = defaultValue;
             return checkBox;
         }
@@ -598,9 +552,9 @@ namespace Habanero.Faces.Win
         /// <summary>
         /// Creates a label without text
         /// </summary>
-        public virtual ILabel CreateLabel()
+        public virtual Label CreateLabel()
         {
-            ILabel label = new LabelWin();
+            Label label = new Label();
             label.TabStop = false;
             return label;
         }
@@ -608,9 +562,9 @@ namespace Habanero.Faces.Win
         /// <summary>
         /// Creates a label with specified text
         /// </summary>
-        public virtual ILabel CreateLabel(string labelText)
+        public virtual Label CreateLabel(string labelText)
         {
-            ILabel label = CreateLabel(labelText, false);
+            Label label = CreateLabel(labelText, false);
             label.Text = labelText;
             return label;
         }
@@ -620,21 +574,19 @@ namespace Habanero.Faces.Win
         /// </summary>
         /// <param name="labelText">The text to appear in the label</param>
         /// <param name="isBold">Whether the text appears in bold font</param>
-        public virtual ILabel CreateLabel(string labelText, bool isBold)
+        public virtual Label CreateLabel(string labelText, bool isBold)
         {
-            LabelWin label = (LabelWin) CreateLabel();
+            Label label = (Label) CreateLabel();
             label.Text = labelText;
-            label.FlatStyle = FlatStyle.System;
             if (isBold)
             {
-                label.Font = new Font(label.Font, FontStyle.Bold);
+                //label.Font = new Font(label.Font, 12.4, FontStyle.Bold);
             }
-            label.Width = label.PreferredWidth;
             if (isBold)
             {
                 label.Width += 10;
             }
-            label.TextAlign = ContentAlignment.MiddleLeft;
+            label.TextAlign = ContentAlignment.TopCenter;
             label.TabStop = false;
             return label;
         }
@@ -642,26 +594,26 @@ namespace Habanero.Faces.Win
         /// <summary>
         /// Creates a DateTimePicker
         /// </summary>
-        public virtual IDateTimePicker CreateDateTimePicker()
+        public virtual DateTimePicker CreateDateTimePicker()
         {
-            return new DateTimePickerWin(this);
+            return new DateTimePicker();
         }
 
         /// <summary>
         /// Creates a Panel control
         /// </summary>
-        public virtual IPanel CreatePanel()
+        public virtual Panel CreatePanel()
         {
-            return new PanelWin();
+            return new Panel();
         }
 
         /// <summary>
         /// Creates a Panel control
         /// </summary>
         /// <param name="controlFactory">The factory that this panel will use to create any controls on it</param>
-        public virtual IPanel CreatePanel(IControlFactory controlFactory)
+        public virtual Panel CreatePanel(IControlFactory controlFactory)
         {
-            return new PanelWin();
+            return new Panel();
         }
 
         /// <summary>
@@ -669,9 +621,9 @@ namespace Habanero.Faces.Win
         /// </summary>
         /// <param name="name">The name of the panel</param>
         /// <param name="controlFactory">The factory that this panel will use to create any controls on it</param>
-        public virtual IPanel CreatePanel(string name, IControlFactory controlFactory)
+        public virtual Panel CreatePanel(string name, IControlFactory controlFactory)
         {
-            IPanel panel = CreatePanel();
+            Panel panel = CreatePanel();
             panel.Name = name;
             return panel;
         }
@@ -681,9 +633,9 @@ namespace Habanero.Faces.Win
         /// types them
         /// </summary>
         /// <returns>Returns the new PasswordTextBox object</returns>
-        public virtual ITextBox CreatePasswordTextBox()
+        public virtual TextBox CreatePasswordTextBox()
         {
-            ITextBox tb = CreateTextBox();
+            TextBox tb = CreateTextBox();
             tb.PasswordChar = '*';
             return tb;
         }
@@ -693,15 +645,15 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual IToolTip CreateToolTip()
         {
-            return new ToolTipWin();
+            return new NullToolTip();
         }
 
         /// <summary>
         /// Creates a generic control
         /// </summary>
-        public virtual IControlHabanero CreateControl()
+        public virtual Control CreateControl()
         {
-            IControlHabanero control = new ControlWin();
+            Control control = new Control();
             control.Size = new Size(100, 10);
             return control;
         }
@@ -709,17 +661,17 @@ namespace Habanero.Faces.Win
         /// <summary>
         /// Creates a user control
         /// </summary>
-        public virtual IUserControlHabanero CreateUserControl()
+        public virtual UserControl CreateUserControl()
         {
-            return new UserControlWin();
+            return new UserControl();
         }
 
         /// <summary>
         /// Creates a user control with the specified name.
         /// </summary>
-        public virtual IUserControlHabanero CreateUserControl(string name)
+        public virtual UserControl CreateUserControl(string name)
         {
-            IUserControlHabanero userControlHabanero = CreateUserControl();
+            UserControl userControlHabanero = CreateUserControl();
             userControlHabanero.Name = name;
             return userControlHabanero;
         }
@@ -730,128 +682,19 @@ namespace Habanero.Faces.Win
         /// Creates a TextBox that provides filtering of characters depending on the property type.
         /// </summary>
         /// <param name="propertyType">Type property being edited.</param>
-        public virtual ITextBox CreateTextBox(Type propertyType)
+        public virtual TextBox CreateTextBox(Type propertyType)
         {
-            return new TextBoxWin();
+            return new TextBox();
         }
 
         /// <summary>
         /// Creates a TextBox that provides filtering of characters depending on the property type.
         /// </summary>
-         public virtual IPictureBox CreatePictureBox()
+         public virtual PictureBox CreatePictureBox()
         {
-            return new PictureBoxWin();
+            return new PictureBox();
         }
 
-        ///<summary>
-        /// Creates a <see cref="IDateTimePickerMapperStrategy"/>
-        ///</summary>
-        public virtual IDateTimePickerMapperStrategy CreateDateTimePickerMapperStrategy()
-        {
-            return new DateTimePickerMapperStrategyWin();
-        }
-       
-        /// <summary>
-        /// Creates a new TabPage
-        /// </summary>
-        public virtual ITabPage createTabPage(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        #region Collapsible Panel Button Creators
-
-        ///<summary>
-        /// Creates a <see cref="IButton"/> configured with the collapsible style
-        ///</summary>
-        ///<returns>a <see cref="IButton"/> </returns>
-        public virtual IButton CreateButtonCollapsibleStyle()
-        {
-            ButtonWin button = (ButtonWin)CreateButton();
-            ConfigureCollapsibleStyleButton(button);
-            return button;
-        }
-
-        private static void ConfigureCollapsibleStyleButton(IButton button)
-        {
-            ButtonWin buttonWin = ((ButtonWin)button);
-            buttonWin.BackgroundImage = CollapsiblePanelResource.headergradient;
-            buttonWin.FlatStyle = FlatStyle.Flat;
-        }
-
-        ///<summary>
-        /// Creates a <see cref="ILabel"/> configured with the collapsible style
-        ///</summary>
-        ///<returns>a <see cref="ILabel"/> </returns>
-        public virtual ILabel CreateLabelPinOffStyle()
-        {
-            LabelWin label = (LabelWin)CreateLabel();
-            ConfigurePinOffStyleLabel(label);
-            return label;
-        }
-
-        ///<summary>
-        /// Configures the <see cref="ILabel"/> with the pinoff style
-        ///</summary>
-        public virtual void ConfigurePinOffStyleLabel(ILabel label)
-        {
-            LabelWin labelWin = (LabelWin)label;
-            labelWin.BackgroundImage = CollapsiblePanelResource.pinoff_withcolour;
-            labelWin.FlatStyle = FlatStyle.Flat;
-            //labelWin.ForeColor = Color.White;
-            labelWin.BackgroundImageLayout = ImageLayout.Center;
-            labelWin.Width = 24;
-        }
-
-        ///<summary>
-        ///</summary>
-        ///<param name="label"></param>
-        public virtual void ConfigurePinOnStyleLabel(ILabel label)
-        {
-            LabelWin labelWin = (LabelWin)label;
-            labelWin.BackgroundImage = CollapsiblePanelResource.pinon_withcolour;
-            labelWin.FlatStyle = FlatStyle.Flat;
-            //labelWin.ForeColor = Color.White;
-            labelWin.BackgroundImageLayout = ImageLayout.Center;
-            labelWin.Width = 24;
-        }
-
-        ///<summary>
-        /// Craetes an <see cref="ICollapsiblePanelGroupControl"/>
-        ///</summary>
-        ///<returns></returns>
-        public virtual ICollapsiblePanelGroupControl CreateCollapsiblePanelGroupControl()
-        {
-            return new CollapsiblePanelGroupControlWin();
-        }
-
-        ///<summary>
-        /// Creates a <see cref="IGroupBoxGroupControl"/>
-        ///</summary>
-        ///<returns></returns>
-        public virtual IGroupBoxGroupControl CreateGroupBoxGroupControl()
-        {
-            return new GroupBoxGroupControlWin(this);
-        }
-
-        #endregion
-        ///<summary>
-        /// Creates an <see cref="IBOComboBoxSelector"/>
-        ///</summary>
-        ///<returns></returns>
-        public virtual IBOComboBoxSelector CreateComboBoxSelector()
-        {
-            ComboBoxSelectorWin comboBoxWin = new ComboBoxSelectorWin(this);
-            //Note_: This is a workaround in windows to avoid this default from breaking all the tests 
-            //  because if the Thread's ApartmentState is not STA then setting the AutoCompleteSource default 
-            //  gives an error
-            if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA)
-            {
-                comboBoxWin.AutoCompleteSource = AutoCompleteSource.ListItems;
-                comboBoxWin.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            }
-            return comboBoxWin;
-        }
 
         ///<summary>
         /// Creates an <see cref="IBOListBoxSelector"/>
@@ -859,35 +702,10 @@ namespace Habanero.Faces.Win
         ///<returns></returns>
         public virtual IBOListBoxSelector CreateListBoxSelector()
         {
-            return new ListBoxSelectorWin(this);
+            return new NullBOListBoxSelector();
         }
 
-        ///<summary>
-        /// Creates an <see cref="IBOCollapsiblePanelSelector"/>
-        ///</summary>
-        ///<returns></returns>
-        public virtual IBOCollapsiblePanelSelector CreateCollapsiblePanelSelector()
-        {
-            return new CollapsiblePanelSelectorWin(this);
-        }
 
-        /// <summary>
-        /// Creates an <see cref="ISplitContainer"/>
-        /// </summary>
-        /// <returns>returns the created split container</returns>
-        public virtual ISplitContainer CreateSplitContainer()
-        {
-            return new SplitContainerWin();
-        }
-
-        /// <summary>
-        /// Creates a <see cref="MainTitleIconControlWin"/>
-        /// </summary>
-        /// <returns></returns>
-        public virtual IMainTitleIconControl CreateMainTitleIconControl()
-        {
-            return new MainTitleIconControlWin(this);
-        }
 
         ///<summary>
         /// Creates a <see cref="IExtendedComboBox"/>. This is essentially
@@ -896,7 +714,7 @@ namespace Habanero.Faces.Win
         ///<returns></returns>
         public IExtendedComboBox CreateExtendedComboBox()
         {
-            return new ExtendedComboBoxWin(this);
+            return new NullExtendedComboBox();
         }
 
 

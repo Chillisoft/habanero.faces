@@ -16,17 +16,69 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
+using System;
+using System.Windows.Forms;
+using Habanero.Base;
+
 namespace Habanero.Faces.Base
 {
     /// <summary>
     /// Provides an interface that is specialised for showing a collection of 
-    /// Business Objects in a <see cref="IListBox"/> and allowing the user to select one.
+    /// Business Objects in a <see cref="ListBox"/> and allowing the user to select one.
     /// </summary>
-    public interface IBOListBoxSelector : IBOColSelectorControl, IListBox
+    public interface IBOListBoxSelector : IBOColSelectorControl
     {
         ///<summary>
-        /// Returns the Underlying <see cref="IListBox"/> that is used by this selector
+        /// Returns the Underlying <see cref="ListBox"/> that is used by this selector
         ///</summary>
-        IListBox ListBox { get; }
+        ListBox ListBox { get; }
+    }
+
+    public class NullBOListBoxSelector : IBOListBoxSelector
+    {
+        public IBusinessObjectCollection BusinessObjectCollection
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public IBusinessObject SelectedBusinessObject
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public event EventHandler<BOEventArgs> BusinessObjectSelected;
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int NoOfItems
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IBusinessObject GetBusinessObjectAtRow(int row)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AutoSelectFirstItem
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public bool ControlEnabled
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public ListBox ListBox
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

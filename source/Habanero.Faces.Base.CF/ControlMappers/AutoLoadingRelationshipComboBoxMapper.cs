@@ -18,6 +18,7 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.Collections;
+using System.Windows.Forms;
 using Habanero.BO;
 
 namespace Habanero.Faces.Base
@@ -36,7 +37,7 @@ namespace Habanero.Faces.Base
         /// <param name="relationshipName">The name of the relation that is being mapped to</param>
         /// <param name="isReadOnly">Whether the Combo box can be used to edit from or whether it is only viewable</param>
         /// <param name="controlFactory">A control factory that is used to create control mappers etc</param>
-        public AutoLoadingRelationshipComboBoxMapper(IComboBox comboBox, string relationshipName, bool isReadOnly, IControlFactory controlFactory) : base(comboBox, relationshipName, isReadOnly, controlFactory)
+        public AutoLoadingRelationshipComboBoxMapper(ComboBox comboBox, string relationshipName, bool isReadOnly, IControlFactory controlFactory) : base(comboBox, relationshipName, isReadOnly, controlFactory)
         {
             _lastCallTime = DateTime.MinValue;
         }

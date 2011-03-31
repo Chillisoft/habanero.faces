@@ -21,7 +21,7 @@ using System.ComponentModel;
 
 namespace Habanero.Faces.Base
 {
-    /// <summary>
+/*    /// <summary>
     /// Specifies identifiers to indicate the return value of a dialog box
     /// </summary>
     public enum DialogResult
@@ -58,8 +58,8 @@ namespace Habanero.Faces.Base
         /// The dialog box return value is No (usually sent from a button labeled No)
         /// </summary>
         No = 7
-    }
-
+    }*/
+/*
     ///<summary>
     /// An enumeration for deteriming how the Form will be positioned in the window.
     ///</summary>
@@ -85,7 +85,8 @@ namespace Habanero.Faces.Base
         /// The form is positioned at the Windows default location and has the dimensions specified in the form's size.
         /// </summary>
         WindowsDefaultLocation = 2
-    }
+    }*/
+/*
 
     /// <summary>
     /// Specifies how a form window is displayed
@@ -105,6 +106,7 @@ namespace Habanero.Faces.Base
         /// </summary>
         Normal = 0
     }
+*//*
 
     /// <summary>
     /// Specifies the border styles for a form.
@@ -144,13 +146,13 @@ namespace Habanero.Faces.Base
         /// in the window that appears when the user presses ALT+TAB.
         /// </summary>
         SizableToolWindow = 6
-    }
-
+    }*/
+/*
     /// <summary>
     /// Represents a window or dialog box that makes up an application's user interface
     /// </summary>
     public interface 
-        IFormHabanero : IControlHabanero
+        IFormHabanero : Control
     {
         /// <summary>
         /// Shows the form to the user
@@ -167,7 +169,7 @@ namespace Habanero.Faces.Base
         /// </summary>
         /// <param name="owner">Any object that implements System.Windows.Forms.IWin32Window and represents the top-level window that will own this form.</param>
         /// <exception cref="System.ArgumentException">The form specified in the owner parameter is the same as the form being shown.</exception>
-        void Show(IControlHabanero owner);
+        void Show(Control owner);
 
         /// <summary>
         /// Forces the form to invalidate its client area and
@@ -246,5 +248,5 @@ namespace Habanero.Faces.Base
         /// <see cref="InvalidEnumArgumentException"/>: The value specified is outside the range of valid values.
         /// </exceptions>
         FormBorderStyle FormBorderStyle { set; get; }
-    }
+    }*/
 }

@@ -17,6 +17,7 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
+using System.Windows.Forms;
 
 namespace Habanero.Faces.Base
 {
@@ -25,7 +26,7 @@ namespace Habanero.Faces.Base
     /// </summary>
     public class CheckBoxMapper : ControlMapper
     {
-        private readonly ICheckBox _checkBox;
+        private readonly CheckBox _checkBox;
         private readonly ICheckBoxMapperStrategy _strategy;
 
         /// <summary>
@@ -35,7 +36,7 @@ namespace Habanero.Faces.Base
         /// <param name="propName">A name for the property</param>
         /// <param name="isReadOnly">Whether this control is read only</param>
         /// <param name="factory">the control factory to be used when creating the controlMapperStrategy</param>
-        public CheckBoxMapper(ICheckBox cb, string propName, bool isReadOnly, IControlFactory factory)
+        public CheckBoxMapper(CheckBox cb, string propName, bool isReadOnly, IControlFactory factory)
             : base(cb, propName, isReadOnly, factory)
         {
             _checkBox = cb;

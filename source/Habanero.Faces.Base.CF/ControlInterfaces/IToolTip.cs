@@ -16,6 +16,9 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
+using System;
+using System.Windows.Forms;
+
 namespace Habanero.Faces.Base
 {
     /// <summary>
@@ -29,12 +32,24 @@ namespace Habanero.Faces.Base
         /// </summary>
         /// <param name="controlHabanero">The Control to associate the ToolTip text with</param>
         /// <param name="toolTipText">The ToolTip text to display when the pointer is on the control</param>
-        void SetToolTip(IControlHabanero controlHabanero, string toolTipText);
+        void SetToolTip(Control controlHabanero, string toolTipText);
 
         /// <summary>
         /// Retrieves the ToolTip text associated with the specified control
         /// </summary>
         /// <param name="controlHabanero">The Control for which to retrieve the ToolTip text</param>
-        string GetToolTip(IControlHabanero controlHabanero);
+        string GetToolTip(Control controlHabanero);
+    }
+
+    public class NullToolTip : IToolTip
+    {
+        public void SetToolTip(Control controlHabanero, string toolTipText)
+        {
+        }
+
+        public string GetToolTip(Control controlHabanero)
+        {
+            return "";
+        }
     }
 }

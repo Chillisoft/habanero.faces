@@ -17,20 +17,21 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System.Collections.Generic;
+using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.BO;
 
 namespace Habanero.Faces.Base
 {
     /// <summary>
-    /// Wraps/Decorates a <see cref="IComboBox"/> in order to display and capture a lookup property of the business object 
+    /// Wraps/Decorates a <see cref="ComboBox"/> in order to display and capture a lookup property of the business object 
     /// </summary>
     public abstract class ComboBoxMapper : ControlMapper
     {
         /// <summary>
-        /// The actual <see cref="IComboBox"/> control that is being mapped to the Business Object Property identified by PropertyName.
+        /// The actual <see cref="ComboBox"/> control that is being mapped to the Business Object Property identified by PropertyName.
         /// </summary>
-        protected IComboBox _comboBox;
+        protected ComboBox _comboBox;
         /// <summary>
         /// The actual <see cref="Dictionary{TKey,TValue}"/> of values that will be displayed in the combo box. This is a key value dictionary
         /// where the key contains the value that will be displayed in the ComboBox and the Value is the Unique identifier for the record.
@@ -40,8 +41,8 @@ namespace Habanero.Faces.Base
         /// </summary>
         protected Dictionary<string, string> _collection;
         /// <summary>
-        /// A boolean to enable or disable right click handling for this <see cref="IComboBox"/>. Right click handling allows the 
-        /// user to right click and from this a form to allow the editing of Values in the <see cref="IComboBox"/>. This is only applicable 
+        /// A boolean to enable or disable right click handling for this <see cref="ComboBox"/>. Right click handling allows the 
+        /// user to right click and from this a form to allow the editing of Values in the <see cref="ComboBox"/>. This is only applicable 
         /// by default to <see cref="BusinessObjectLookupList"/> or a custom <see cref="ILookupList"/> defined by the user.
         /// </summary>
         protected bool _rightClickEnabled;
@@ -59,7 +60,7 @@ namespace Habanero.Faces.Base
         /// <param name="propName">The property name</param>
 		/// <param name="isReadOnly">Whether this control is read only</param>
         /// <param name="factory">The control factory to be used to create controls or strategies e.g. <see cref="IComboBoxMapperStrategy"/></param>
-        protected ComboBoxMapper(IComboBox comboBox, string propName, bool isReadOnly, IControlFactory factory)
+        protected ComboBoxMapper(ComboBox comboBox, string propName, bool isReadOnly, IControlFactory factory)
             : base(comboBox, propName, isReadOnly, factory)
         {
             _comboBox = comboBox;

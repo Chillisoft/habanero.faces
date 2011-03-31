@@ -20,6 +20,7 @@ using System;
 using System.Collections;
 using System.Drawing;
 using System.Reflection;
+using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
 using Habanero.BO;
@@ -57,11 +58,6 @@ namespace Habanero.Faces.Base
 
         private IBOProp BOProp { get; set; }
 
-        /// <summary>
-        /// Gets the error provider for this control <see cref="IErrorProvider"/>
-        /// </summary>
-        public IErrorProvider ErrorProvider { get; private set; }
-
         ///<summary>
         /// Returns the Control Factory that this Control Mapper is set up to use
         ///</summary>
@@ -77,12 +73,18 @@ namespace Habanero.Faces.Base
         /// <summary>
         /// Returns the control being mapped
         /// </summary>
-        public virtual IControlHabanero Control { get; protected set; }
+        public virtual Control Control { get; protected set; }
 
         /// <summary>
         /// Returns the name of the property being edited in the control
         /// </summary>
         public string PropertyName { get; protected set; }
+
+        public IErrorProvider ErrorProvider
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         ///<summary>
         /// Gets and Sets the Class Def of the Business object whose property
         /// this control maps.
@@ -98,7 +100,7 @@ namespace Habanero.Faces.Base
         /// If so, it then becomes disabled.  If not,
         /// handlers are assigned to manage key presses.</param>
         /// <param name="factory"></param>
-        protected ControlMapper(IControlHabanero ctl, string propName, bool isReadOnly, IControlFactory factory)
+        protected ControlMapper(Control ctl, string propName, bool isReadOnly, IControlFactory factory)
         {
             if (ctl == null) throw new ArgumentNullException("ctl");
             if (factory == null) throw new ArgumentNullException("factory");
@@ -106,7 +108,6 @@ namespace Habanero.Faces.Base
             PropertyName = propName;
             IsReadOnly = isReadOnly;
             ControlFactory = factory;
-            ErrorProvider = ControlFactory.CreateErrorProvider();
             if (!IsReadOnly)
             {
                 AddKeyPressHandlers();
@@ -148,6 +149,17 @@ namespace Habanero.Faces.Base
                 AddCurrentBOPropHandlers();
                 this.UpdateErrorProviderErrorMessage();
             }
+        }
+
+        public void UpdateErrorProviderErrorMessage()
+        {
+
+            //TODO brett 31 Mar 2011: CF NNB Should Do something.
+        }
+
+        public string GetErrorMessage()
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -291,7 +303,7 @@ namespace Habanero.Faces.Base
             if (editable)
             {
                 Control.ForeColor = Color.Black;
-                if (Control is ICheckBox) Control.BackColor = SystemColors.Control;
+                if (Control is CheckBox) Control.BackColor = SystemColors.Control;
                 else Control.BackColor = Color.White;
             }
             else
@@ -336,7 +348,7 @@ namespace Habanero.Faces.Base
         /// be assigned, depending on the type of control.
         /// </summary>
         /// <param name="mapperTypeName">The class name of the mapper type
-        /// (e.g. ComboBoxMapper).  The current namespace of this
+        /// (e.g. IComboBoxMapper).  The current namespace of this
         /// ControlMapper class will then be prefixed to the name.</param>
         /// <param name="propertyName">The property name</param>
         /// <param name="ctl">The control to be mapped</param>
@@ -345,7 +357,7 @@ namespace Habanero.Faces.Base
         /// thrown if the mapperTypeName does not provide a type that is
         /// a subclass of the ControlMapper class.</exception>
         public static IControlMapper Create
-            (string mapperTypeName, IControlHabanero ctl, string propertyName)
+            (string mapperTypeName, Control ctl, string propertyName)
         {
             return Create(mapperTypeName, "", ctl, propertyName, false, GlobalUIRegistry.ControlFactory);
         }
@@ -361,7 +373,7 @@ namespace Habanero.Faces.Base
         /// thrown if the mapperTypeName does not provide a type that is
         /// a subclass of the ControlMapper class.</exception>
         public static IControlMapper Create
-            (IControlHabanero ctl, string propertyName)
+            (Control ctl, string propertyName)
         {
             return Create("", "", ctl, propertyName, false, GlobalUIRegistry.ControlFactory);
         }
@@ -372,7 +384,7 @@ namespace Habanero.Faces.Base
         /// be assigned, depending on the type of control.
         /// </summary>
         /// <param name="mapperTypeName">The class name of the mapper type
-        /// (e.g. ComboBoxMapper).  The current namespace of this
+        /// (e.g. IComboBoxMapper).  The current namespace of this
         /// ControlMapper class will then be prefixed to the name.</param>
         /// <param name="mapperAssembly">The assembly where the mapper is
         /// located</param>
@@ -385,18 +397,18 @@ namespace Habanero.Faces.Base
         /// a subclass of the ControlMapper class.</exception>
         /// <param name="controlFactory">The control factory</param>
         public static IControlMapper Create
-            (string mapperTypeName, string mapperAssembly, IControlHabanero ctl, 
+            (string mapperTypeName, string mapperAssembly, Control ctl, 
              string propertyName, bool isReadOnly,
              IControlFactory controlFactory)
         {
             if (string.IsNullOrEmpty(mapperTypeName)) mapperTypeName = "TextBoxMapper";
 
-            if (mapperTypeName == "TextBoxMapper" && !(ctl is ITextBox))
+            if (mapperTypeName == "TextBoxMapper" && !(ctl is TextBox))
             {
-                if (ctl is IComboBox) mapperTypeName = "LookupComboBoxMapper";
-                else if (ctl is ICheckBox) mapperTypeName = "CheckBoxMapper";
-                else if (ctl is IDateTimePicker) mapperTypeName = "DateTimePickerMapper";
-                else if (ctl is INumericUpDown) mapperTypeName = "NumericUpDownIntegerMapper";
+                if (ctl is ComboBox) mapperTypeName = "LookupComboBoxMapper";
+                else if (ctl is CheckBox) mapperTypeName = "CheckBoxMapper";
+                else if (ctl is DateTimePicker) mapperTypeName = "DateTimePickerMapper";
+                else if (ctl is NumericUpDown) mapperTypeName = "NumericUpDownIntegerMapper";
                 else if (ctl is IExtendedComboBox) mapperTypeName = "ExtendedComboBoxMapper";
                 else
                 {
@@ -433,7 +445,7 @@ namespace Habanero.Faces.Base
         /// <param name="isReadOnly">Whether the control is read-only</param>
         /// <param name="controlFactory">The control factory that is being set on the Mapper</param>
         /// <returns>Returns a new object which is a subclass of ControlMapper</returns>
-        public static IControlMapper Create(Type mapperType, IControlHabanero ctl, string propertyName, bool isReadOnly, IControlFactory controlFactory)
+        public static IControlMapper Create(Type mapperType, Control ctl, string propertyName, bool isReadOnly, IControlFactory controlFactory)
         {
             IControlMapper controlMapper;
             if (IsTypeOfIControlMapper(mapperType))
@@ -506,39 +518,15 @@ namespace Habanero.Faces.Base
                 SetError(ex.Message);
                 return;
             }
-            UpdateErrorProviderErrorMessage();
+
         }
-        /// <summary>
-        /// Sets the Error Provider Error with the appropriate value for the property e.g. if it is invalid then
-        ///  sets the error provider with the invalid reason else sets the error provider with a zero length string.
-        /// </summary>
-        public virtual void UpdateErrorProviderErrorMessage()
+
+        private void SetError(string message)
         {
-
-            if (CurrentBOProp() == null)
-            {
-                SetError("");
-                return;
-            }
-
-            SetError(CurrentBOProp().InvalidReason);
+            //TODO brett 31 Mar 2011: CF NNB Should Do something
         }
 
-        protected void SetError(string errorMessage)
-        {
-            if (ErrorProvider == null) return;
-            ErrorProvider.SetError(Control, errorMessage);
-        }
 
-        /// <summary>
-        /// Returns the Error Provider's Error message.
-        /// </summary>
-        /// <returns></returns>
-        public virtual string GetErrorMessage()
-        {
-            if (ErrorProvider == null) return "";
-            return ErrorProvider.GetError(Control);
-        }
         /// <summary>
         /// A form field can have attributes defined in the class definition.
         /// These attributes are passed to the control mapper via a hashtable
@@ -562,4 +550,11 @@ namespace Habanero.Faces.Base
         }
     }
 
+    public interface IErrorProvider
+    {
+    }
+
+    public class NullErrorProvider : IErrorProvider
+    {
+    }
 }

@@ -24,7 +24,7 @@ namespace Habanero.Faces.Base
     /// <summary>
     /// Represents the collection of items in a ListBox
     /// </summary>
-    public interface IListBoxObjectCollection : IListControlObjectCollection
+    public interface ListBoxObjectCollection : IListControlObjectCollection
     {
         /*/// <summary>
         /// Adds an item to the list of items for a ListBox

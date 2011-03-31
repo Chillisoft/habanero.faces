@@ -24,31 +24,33 @@ using Habanero.Faces.Base;
 namespace Habanero.Faces.Win
 {
     /// <summary>
-    /// Provides a set of behaviour strategies that can be applied to a CheckBox
+    /// Provides a set of behaviour strategies that can be applied to a list ComboBox
     /// depending on the environment
     /// </summary>
-    public class CheckBoxStrategyWin : ICheckBoxMapperStrategy
+    internal class ListComboBoxMapperStrategyWin : IListComboBoxMapperStrategy
     {
         /// <summary>
-        /// Adds click event handler
-        /// </summary>
-        /// <param name="mapper">The checkbox mapper</param>
-        public void AddClickEventHandler(CheckBoxMapper mapper)
+        /// Adds an ItemSelected event handler.
+        /// For Windows Forms you may want the business object to be updated immediately, however
+        /// for a web environment with low bandwidth you may choose to only update when the user saves.
+        ///</summary>
+        public void AddItemSelectedEventHandler(ListComboBoxMapper mapper)
         {
-            var checkBox = mapper.GetControl() as CheckBox;
-            if (checkBox == null) return;
-            checkBox.CheckStateChanged += delegate
+
+            var comboBoxWin = mapper.GetControl() as ComboBox;
+            if (comboBoxWin == null) return;
+            comboBoxWin.SelectedIndexChanged += delegate
             {
-                try
-                {
-                    mapper.ApplyChangesToBusinessObject();
-                    mapper.UpdateControlValueFromBusinessObject();
-                }
-                catch (Exception ex)
-                {
-                    GlobalRegistry.UIExceptionNotifier.Notify(ex, "", "Error ");
-                }
-            };
+                    try
+                    {
+                        mapper.ApplyChangesToBusinessObject();
+                        mapper.UpdateControlValueFromBusinessObject();
+                    }
+                    catch (Exception ex)
+                    {
+                        GlobalRegistry.UIExceptionNotifier.Notify(ex, "", "Error ");
+                    }
+                };
         }
     }
 }

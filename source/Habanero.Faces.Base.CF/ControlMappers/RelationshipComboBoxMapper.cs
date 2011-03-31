@@ -19,6 +19,7 @@
 using System;
 using System.Collections;
 using System.Diagnostics;
+using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
 using Habanero.BO;
@@ -41,17 +42,13 @@ namespace Habanero.Faces.Base
     // of the business object.
     // whereas this mapper is actually mapping to a relationship not to a property. 
     // 
-    public class RelationshipComboBoxMapper : IComboBoxMapper
+    public class RelationshipComboBoxMapper: IComboBoxMapper
     {
         /// <summary>
         /// Uses for logging 
         /// </summary>
         protected static readonly IHabaneroLogger _logger = GlobalRegistry.LoggerFactory.GetLogger("Habanero.Faces.Base.RelationshipComboBoxMapper");
 
-        /// <summary>
-        /// Gets the error provider for this control <see cref="IErrorProvider"/>
-        /// </summary>
-        public IErrorProvider ErrorProvider { get; private set; }
 
 //        private IBusinessObjectCollection _businessObjectCollection;
         protected IBusinessObject _businessObject;
@@ -75,7 +72,7 @@ namespace Habanero.Faces.Base
         /// <param name="isReadOnly">Whether the Combo box can be used to edit from or whether it is only viewable</param>
         /// <param name="controlFactory">A control factory that is used to create control mappers etc</param>
         public RelationshipComboBoxMapper
-            (IComboBox comboBox, string relationshipName, bool isReadOnly, IControlFactory controlFactory)
+            (ComboBox comboBox, string relationshipName, bool isReadOnly, IControlFactory controlFactory)
         {
             if (comboBox == null) throw new ArgumentNullException("comboBox");
             if (relationshipName == null) throw new ArgumentNullException("relationshipName");
@@ -97,9 +94,9 @@ namespace Habanero.Faces.Base
         }
 
         /// <summary>
-        /// The Control <see cref="IComboBox"/> that is being mapped by this Mapper.
+        /// The Control <see cref="ComboBox"/> that is being mapped by this Mapper.
         /// </summary>
-        public IComboBox Control { get; private set; }
+        public ComboBox Control { get; private set; }
 
 
         /// <summary>
@@ -138,6 +135,11 @@ namespace Habanero.Faces.Base
         public string PropertyName
         {
             get { return this.RelationshipName; }
+        }
+
+        public IErrorProvider ErrorProvider
+        {
+            get { return new NullErrorProvider(); }
         }
 
         ///<summary>
@@ -222,7 +224,7 @@ namespace Habanero.Faces.Base
         /// <summary>
         /// Returns the control being mapped
         /// </summary>
-        IControlHabanero IControlMapper.Control
+        Control IControlMapper.Control
         {
             get { return this.Control; }
         }

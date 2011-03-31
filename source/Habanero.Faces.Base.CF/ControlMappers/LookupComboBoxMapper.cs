@@ -18,6 +18,7 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using Habanero.Base.Exceptions;
 using Habanero.BO;
 
@@ -37,7 +38,7 @@ namespace Habanero.Faces.Base
 //        /// <summary>
 //        /// Returns the control being mapped
 //        /// </summary>
-//        IControlHabanero Control { get; }
+//        Control Control { get; }
 //
 //        /// <summary>
 //        /// Updates the properties on the represented business object
@@ -78,7 +79,7 @@ namespace Habanero.Faces.Base
         /// <param name="propName">The property name</param>
         /// <param name="isReadOnly">Whether this control is read only</param>
         /// <param name="factory">The control factory to be used when creating the controlMapperStrategy</param>
-        public LookupComboBoxMapper(IComboBox cbx, string propName, bool isReadOnly, IControlFactory factory)
+        public LookupComboBoxMapper(ComboBox cbx, string propName, bool isReadOnly, IControlFactory factory)
             : base(cbx, propName, isReadOnly, factory)
         {
             _comboBox = cbx;

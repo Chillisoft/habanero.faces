@@ -21,12 +21,12 @@ using System;
 namespace Habanero.Faces.Base
 {
 
-    /// <summary>Represents the method that will handle the <see cref="IControlHabanero"></see>.KeyPress event of a <see cref="IControlHabanero"></see>.</summary>
+    /// <summary>Represents the method that will handle the <see cref="Control"></see>.KeyPress event of a <see cref="Control"></see>.</summary>
     /// <filterpriority>2</filterpriority>
     public delegate void KeyPressEventHandler(object sender, KeyPressEventArgs e);
 
 
-    /// <summary>Provides data for the <see cref="IControlHabanero"></see>.KeyPress event.</summary>
+    /// <summary>Provides data for the <see cref="Control"></see>.KeyPress event.</summary>
     /// <filterpriority>2</filterpriority>
     //[Serializable()]
 	public class KeyPressEventArgs : EventArgs
@@ -39,7 +39,7 @@ namespace Habanero.Faces.Base
         }
 
 
-        /// <summary>Gets or sets a value indicating whether the <see cref="IControlHabanero"></see>.KeyPress event was handled.</summary>
+        /// <summary>Gets or sets a value indicating whether the <see cref="Control"></see>.KeyPress event was handled.</summary>
         /// <returns>true if the event is handled; otherwise, false.</returns>
         /// <filterpriority>1</filterpriority>
         public bool Handled { get; set; }
