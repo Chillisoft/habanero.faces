@@ -17,6 +17,7 @@
 //     along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 //---------------------------------------------------------------------------------
 
+using System.Windows.Forms;
 using Habanero.Faces.Base;
 
 using NUnit.Framework;
@@ -35,7 +36,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void TestConstructor()
         {
             //---------------Set up test pack-------------------
-            INumericUpDown numUpDown = GetControlFactory().CreateNumericUpDownCurrency();
+            NumericUpDown numUpDown = GetControlFactory().CreateNumericUpDownCurrency();
             //---------------Execute Test ----------------------
             NumericUpDownCurrencyMapper mapper =
                 new NumericUpDownCurrencyMapper(numUpDown, CURRENCY_PROP_NAME, false, GetControlFactory());
@@ -43,7 +44,6 @@ namespace Habanero.Faces.Test.Base.Mappers
             //---------------Test Result -----------------------
             Assert.AreSame(numUpDown, mapper.Control);
             Assert.AreSame(CURRENCY_PROP_NAME, mapper.PropertyName);
-            Assert.AreEqual(2, numUpDown.DecimalPlaces);
             Assert.AreEqual(decimal.MinValue, numUpDown.Minimum);
             Assert.AreEqual(decimal.MaxValue, numUpDown.Maximum);
 
@@ -54,7 +54,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void TestSetBusinessObject()
         {
             //---------------Set up test pack-------------------
-            INumericUpDown numUpDown = GetControlFactory().CreateNumericUpDownCurrency();
+            NumericUpDown numUpDown = GetControlFactory().CreateNumericUpDownCurrency();
             NumericUpDownCurrencyMapper mapper =
                 new NumericUpDownCurrencyMapper(numUpDown, CURRENCY_PROP_NAME, false, GetControlFactory());
             MyBO s = new MyBO();
@@ -72,7 +72,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void TestApplyChangesToBO()
         {
             //---------------Set up test pack-------------------
-            INumericUpDown numUpDown = GetControlFactory().CreateNumericUpDownCurrency();
+            NumericUpDown numUpDown = GetControlFactory().CreateNumericUpDownCurrency();
             NumericUpDownCurrencyMapper mapper =
                 new NumericUpDownCurrencyMapper(numUpDown, CURRENCY_PROP_NAME, false, GetControlFactory());
             Sample s = new Sample();

@@ -17,6 +17,7 @@
 //     along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 //---------------------------------------------------------------------------------
 
+using System.Windows.Forms;
 using Habanero.Faces.Base;
 using NUnit.Framework;
 
@@ -30,7 +31,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         protected abstract IControlFactory GetControlFactory();
 
 
-        protected ICheckBox _cb;
+        protected CheckBox _cb;
         protected CheckBoxMapper _mapper;
         protected MyBO _sampleBusinessObject;
 

@@ -16,6 +16,7 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
+using System.Windows.Forms;
 using Habanero.Faces.Base;
 using NUnit.Framework;
 
@@ -38,7 +39,7 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             //---------------Execute Test ----------------------
-            ILabel myLabel = GetControlFactory().CreateLabel();
+            Label myLabel = GetControlFactory().CreateLabel();
 
             //---------------Test Result -----------------------
             Assert.IsNotNull(myLabel);

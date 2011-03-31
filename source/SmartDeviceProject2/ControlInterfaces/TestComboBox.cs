@@ -19,11 +19,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using Habanero.Faces.Base;
 
 
 using NUnit.Framework;
-using AutoCompleteSource=Habanero.Faces.Base.AutoCompleteSource;
 
 namespace Habanero.Faces.Test.Base
 {
@@ -34,16 +34,16 @@ namespace Habanero.Faces.Test.Base
     public abstract class TestComboBox
     {
 
-        protected IComboBox CreateComboBox()
+        protected ComboBox CreateComboBox()
         {
             return GetControlFactory().CreateComboBox();
         }
 
         protected abstract IControlFactory GetControlFactory();
 
-        protected abstract string GetUnderlyingAutoCompleteSourceToString(IComboBox controlHabanero);
-
-        protected void AssertAutoCompleteSourcesSame(IComboBox comboBox)
+        protected abstract string GetUnderlyingAutoCompleteSourceToString(ComboBox controlHabanero);
+/*
+        protected void AssertAutoCompleteSourcesSame(ComboBox comboBox)
         {
             AutoCompleteSource AutoCompleteSource = comboBox.AutoCompleteSource;
             string AutoCompleteSourceToString = GetUnderlyingAutoCompleteSourceToString(comboBox);
@@ -56,7 +56,7 @@ namespace Habanero.Faces.Test.Base
         public virtual void TestConversion_AutoCompleteSource_None()
         {
             //---------------Set up test pack-------------------
-            IComboBox control = CreateComboBox();
+            ComboBox control = CreateComboBox();
             //-------------Assert Preconditions -------------
             //---------------Execute Test ----------------------
             control.AutoCompleteSource = AutoCompleteSource.None;
@@ -69,7 +69,7 @@ namespace Habanero.Faces.Test.Base
         public virtual void TestConversion_AutoCompleteSource_AllSystemSources()
         {
             //---------------Set up test pack-------------------
-            IComboBox control = CreateComboBox();
+            ComboBox control = CreateComboBox();
             //-------------Assert Preconditions -------------
             //---------------Execute Test ----------------------
             control.AutoCompleteSource = AutoCompleteSource.AllSystemSources;
@@ -82,7 +82,7 @@ namespace Habanero.Faces.Test.Base
         public virtual void TestConversion_AutoCompleteSource_AllUrl()
         {
             //---------------Set up test pack-------------------
-            IComboBox control = CreateComboBox();
+            ComboBox control = CreateComboBox();
             //-------------Assert Preconditions -------------
             //---------------Execute Test ----------------------
             control.AutoCompleteSource = AutoCompleteSource.AllUrl;
@@ -95,7 +95,7 @@ namespace Habanero.Faces.Test.Base
         public virtual void TestConversion_AutoCompleteSource_CustomSource()
         {
             //---------------Set up test pack-------------------
-            IComboBox control = CreateComboBox();
+            ComboBox control = CreateComboBox();
             //-------------Assert Preconditions -------------
             //---------------Execute Test ----------------------
             control.AutoCompleteSource = AutoCompleteSource.CustomSource;
@@ -108,7 +108,7 @@ namespace Habanero.Faces.Test.Base
         public virtual void TestConversion_AutoCompleteSource_FileSystem()
         {
             //---------------Set up test pack-------------------
-            IComboBox control = CreateComboBox();
+            ComboBox control = CreateComboBox();
             //-------------Assert Preconditions -------------
             //---------------Execute Test ----------------------
             control.AutoCompleteSource = AutoCompleteSource.FileSystem;
@@ -121,7 +121,7 @@ namespace Habanero.Faces.Test.Base
         public virtual void TestConversion_AutoCompleteSource_FileSystemDirectories()
         {
             //---------------Set up test pack-------------------
-            IComboBox control = CreateComboBox();
+            ComboBox control = CreateComboBox();
             //-------------Assert Preconditions -------------
             //---------------Execute Test ----------------------
             control.AutoCompleteSource = AutoCompleteSource.FileSystemDirectories;
@@ -134,7 +134,7 @@ namespace Habanero.Faces.Test.Base
         public virtual void TestConversion_AutoCompleteSource_HistoryList()
         {
             //---------------Set up test pack-------------------
-            IComboBox control = CreateComboBox();
+            ComboBox control = CreateComboBox();
             //-------------Assert Preconditions -------------
             //---------------Execute Test ----------------------
             control.AutoCompleteSource = AutoCompleteSource.HistoryList;
@@ -147,7 +147,7 @@ namespace Habanero.Faces.Test.Base
         public virtual void TestConversion_AutoCompleteSource_ListItems()
         {
             //---------------Set up test pack-------------------
-            IComboBox control = CreateComboBox();
+            ComboBox control = CreateComboBox();
             //-------------Assert Preconditions -------------
             //---------------Execute Test ----------------------
             control.AutoCompleteSource = AutoCompleteSource.ListItems;
@@ -160,20 +160,20 @@ namespace Habanero.Faces.Test.Base
         public virtual void TestConversion_AutoCompleteSource_RecentlyUsedList()
         {
             //---------------Set up test pack-------------------
-            IComboBox control = CreateComboBox();
+            ComboBox control = CreateComboBox();
             //-------------Assert Preconditions -------------
             //---------------Execute Test ----------------------
             control.AutoCompleteSource = AutoCompleteSource.RecentlyUsedList;
             //---------------Test Result -----------------------
             Assert.AreEqual(AutoCompleteSource.RecentlyUsedList, control.AutoCompleteSource);
             AssertAutoCompleteSourcesSame(control);
-        }
+        }*/
 
         [Test]
         public void Test_AddingItems()
         {
             //---------------Set up test pack-------------------
-            IComboBox comboBox = CreateComboBox();
+            ComboBox comboBox = CreateComboBox();
             //---------------Assert Precondition----------------
             Assert.AreEqual(0, comboBox.Items.Count);
             //---------------Execute Test ----------------------

@@ -1,4 +1,5 @@
 using System;
+using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.Faces.Base;
@@ -12,12 +13,13 @@ namespace Habanero.Faces.Test.Base
     {
         protected override void SetSelectedIndex(IBOColSelectorControl colSelector, int index)
         {
-            ((IBOListBoxSelector)colSelector).ListBox.SelectedIndex = index;
+            //((IBOListBoxSelector)colSelector).ListBox.SelectedIndex = index;
         }
 
         protected override int SelectedIndex(IBOColSelectorControl colSelector)
         {
-            return ((IBOListBoxSelector)colSelector).ListBox.SelectedIndex;
+           // return ((IBOListBoxSelector)colSelector).ListBox.SelectedIndex;
+            throw new NotImplementedException();
         }
 
         protected override int NumberOfLeadingBlankRows()
@@ -46,7 +48,7 @@ namespace Habanero.Faces.Test.Base
             IBOListBoxSelector selector = (IBOListBoxSelector) CreateSelector();
             //---------------Test Result -----------------------
             Assert.IsNotNull(selector.ListBox);
-            Assert.IsInstanceOf(typeof(IListBox), selector.ListBox);
+            Assert.IsInstanceOf(typeof(ListBox), selector.ListBox);
         }
 
         [Ignore(" Not Yet implemented")] //TODO  01 Mar 2009:

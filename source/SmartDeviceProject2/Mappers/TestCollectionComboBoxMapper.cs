@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
 using Habanero.BO;
@@ -35,7 +36,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void TestConstructor()
         {
             //---------------Set up test pack-------------------
-            IComboBox cmbox = GetControlFactory().CreateComboBox();
+            ComboBox cmbox = GetControlFactory().CreateComboBox();
             //---------------Execute Test ----------------------
             const string propName = "SampleLookupID";
             CollectionComboBoxMapper mapper = CreateCollectionComboBoxMapper(cmbox, propName);
@@ -50,7 +51,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void TestSetBOCollection()
         {
             //---------------Set up test pack-------------------
-            IComboBox cmbox = GetControlFactory().CreateComboBox();
+            ComboBox cmbox = GetControlFactory().CreateComboBox();
             const string propName = "SampleLookupID";
             CollectionComboBoxMapper mapper = CreateCollectionComboBoxMapper(cmbox, propName);
 
@@ -71,7 +72,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void Test_SetBusinessObj_ShouldSetTheSelectedItemToCorrectRelatedCar()
         {
             //---------------Set up test pack-------------------
-            IComboBox cmbox = GetControlFactory().CreateComboBox();
+            ComboBox cmbox = GetControlFactory().CreateComboBox();
             const string propName = "SampleLookupID";
             CollectionComboBoxMapper mapper = CreateCollectionComboBoxMapper(cmbox, propName);
 
@@ -92,7 +93,7 @@ namespace Habanero.Faces.Test.Base.Mappers
             Assert.AreEqual(s.SampleLookupID.ToString(), cmbox.SelectedValue.ToString(), "Combo Box Value is not set");
         }*/
 
-        private CollectionComboBoxMapper CreateCollectionComboBoxMapper(IComboBox cmbox, string propName)
+        private CollectionComboBoxMapper CreateCollectionComboBoxMapper(ComboBox cmbox, string propName)
         {
             return new CollectionComboBoxMapper(cmbox, propName, false, GetControlFactory());
         }
@@ -102,7 +103,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void Test_SetBusinessObj_WhenSpecificPropUsed_ShouldSetTheSelectedItemToCorrectRelatedCar()
         {
             //---------------Set up test pack-------------------
-            IComboBox cmbox = GetControlFactory().CreateComboBox();
+            ComboBox cmbox = GetControlFactory().CreateComboBox();
             const string propName = "SampleText";
             CollectionComboBoxMapper mapper = CreateCollectionComboBoxMapper(cmbox, propName);
             mapper.OwningBoPropertyName = "CarRegNo";
@@ -132,7 +133,7 @@ namespace Habanero.Faces.Test.Base.Mappers
             //---------------Set up test pack-------------------
             ClassDef.ClassDefs.Clear();
             Sample.CreateClassDefWithAGuidProp();
-            IComboBox cmbox = GetControlFactory().CreateComboBox();
+            ComboBox cmbox = GetControlFactory().CreateComboBox();
             const string sampleBOProp = "GuidProp";
             const string owningBoPropertyName = "CarId";
             CollectionComboBoxMapper mapper = new CollectionComboBoxMapper(cmbox, sampleBOProp, false,
@@ -163,7 +164,7 @@ namespace Habanero.Faces.Test.Base.Mappers
             ()
         {
             //---------------Set up test pack-------------------
-            IComboBox cmbox = GetControlFactory().CreateComboBox();
+            ComboBox cmbox = GetControlFactory().CreateComboBox();
             const string propName = "SampleText";
             CollectionComboBoxMapper mapper = CreateCollectionComboBoxMapper(cmbox, propName);
             mapper.OwningBoPropertyName = "CarRegNo";
@@ -235,7 +236,7 @@ namespace Habanero.Faces.Test.Base.Mappers
             ()
         {
             //---------------Set up test pack-------------------
-            IComboBox cmbox = GetControlFactory().CreateComboBox();
+            ComboBox cmbox = GetControlFactory().CreateComboBox();
             const string propName = "SampleText";
             var mapper = CreateCollectionComboBoxMapper(cmbox, propName);
             mapper.OwningBoPropertyName = "CarRegNo";
@@ -268,7 +269,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public virtual void Test_ChangeComboBoxDoesntUpdateBusinessObject()
         {
             //---------------Set up test pack-------------------
-            IComboBox cmbox = GetControlFactory().CreateComboBox();
+            ComboBox cmbox = GetControlFactory().CreateComboBox();
             const string propName = "SampleLookupID";
             CollectionComboBoxMapper mapper = CreateCollectionComboBoxMapper(cmbox, propName);
 
@@ -295,7 +296,7 @@ namespace Habanero.Faces.Test.Base.Mappers
             Test_ResetBusinessObj_WhenHasNullValueForProperty_WhenPreviousBOHadAValue_ShouldSetSelectedItemNull_BUGFIX()
         {
             //---------------Set up test pack-------------------
-            IComboBox cmbox = GetControlFactory().CreateComboBox();
+            ComboBox cmbox = GetControlFactory().CreateComboBox();
             const string propName = "SampleLookupID";
             CollectionComboBoxMapper mapper = CreateCollectionComboBoxMapper(cmbox, propName);
 
@@ -324,7 +325,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void Test_SetBusinessObject_WhenHasNullCollection_ShouldRaiseError()
         {
             //---------------Set up test pack-------------------
-            IComboBox cmbox = GetControlFactory().CreateComboBox();
+            ComboBox cmbox = GetControlFactory().CreateComboBox();
             const string propName = "SampleLookupID";
             CollectionComboBoxMapper mapper = CreateCollectionComboBoxMapper(cmbox, propName);
 
@@ -356,7 +357,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void TestSetBusinessObject_Null_DoesNotRaiseError_BUGFIX()
         {
             //---------------Set up test pack-------------------
-            IComboBox cmbox = GetControlFactory().CreateComboBox();
+            ComboBox cmbox = GetControlFactory().CreateComboBox();
             const string propName = "SampleLookupID";
             CollectionComboBoxMapper mapper = CreateCollectionComboBoxMapper(cmbox, propName);
             Car car1;
@@ -375,7 +376,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void TestSetBusinessObject_Null_NullLookupListSet_DoesNotRaiseError_BUGFIX()
         {
             //---------------Set up test pack-------------------
-            IComboBox cmbox = GetControlFactory().CreateComboBox();
+            ComboBox cmbox = GetControlFactory().CreateComboBox();
             const string propName = "SampleLookupID";
             CollectionComboBoxMapper mapper = CreateCollectionComboBoxMapper(cmbox, propName);
             //---------------Assert Precondition----------------
@@ -393,7 +394,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void TestApplyChangesToBusObj()
         {
             //---------------Set up test pack-------------------
-            IComboBox cmbox = GetControlFactory().CreateComboBox();
+            ComboBox cmbox = GetControlFactory().CreateComboBox();
             const string propName = "SampleLookupID";
             CollectionComboBoxMapper mapper = CreateCollectionComboBoxMapper(cmbox, propName);
             Car car1;
@@ -413,7 +414,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void Test_LookupList_AddItemToComboBox_SelectAdditionalItem_SetsBOPropValueToNull()
         {
             //---------------Set up test pack-------------------
-            IComboBox cmbox = GetControlFactory().CreateComboBox();
+            ComboBox cmbox = GetControlFactory().CreateComboBox();
             const string propName = "SampleLookup2ID";
             CollectionComboBoxMapper mapper = CreateCollectionComboBoxMapper(cmbox, propName);
             Car car1;
@@ -454,7 +455,7 @@ namespace Habanero.Faces.Test.Base.Mappers
             Assert.AreEqual(4, cmbox.Items.Count);
         }*/
 
-        private static object LastComboBoxItem(IComboBox cmbox)
+        private static object LastComboBoxItem(ComboBox cmbox)
         {
             return cmbox.Items[cmbox.Items.Count - 1];
         }

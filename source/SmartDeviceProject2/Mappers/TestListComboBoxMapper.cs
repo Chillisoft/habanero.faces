@@ -17,6 +17,7 @@
 //     along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 //---------------------------------------------------------------------------------
 
+using System.Windows.Forms;
 using Habanero.Faces.Base;
 
 using NUnit.Framework;
@@ -31,7 +32,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void TestConstructor()
         {
             //---------------Set up test pack-------------------
-            IComboBox cbx = GetControlFactory().CreateComboBox();
+            ComboBox cbx = GetControlFactory().CreateComboBox();
             const string propName = "propname";
             //---------------Execute Test ----------------------
             ListComboBoxMapper mapper = new ListComboBoxMapper(cbx, propName, false, GetControlFactory());
@@ -47,7 +48,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void TestSetList()
         {
             //---------------Set up test pack-------------------
-            IComboBox cbx = GetControlFactory().CreateComboBox();
+            ComboBox cbx = GetControlFactory().CreateComboBox();
             const string propName = "propname";
             ListComboBoxMapper mapper = new ListComboBoxMapper(cbx, propName, false, GetControlFactory());
 
@@ -63,7 +64,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void TestSetList_ToNull_ShouldNotRaiseError()
         {
             //---------------Set up test pack-------------------
-            IComboBox cbx = GetControlFactory().CreateComboBox();
+            ComboBox cbx = GetControlFactory().CreateComboBox();
             const string propName = "propname";
             ListComboBoxMapper mapper = new ListComboBoxMapper(cbx, propName, false, GetControlFactory());
 
@@ -76,7 +77,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void TestSetList_ToEmptyString_ShouldNotRaiseError()
         {
             //---------------Set up test pack-------------------
-            IComboBox cbx = GetControlFactory().CreateComboBox();
+            ComboBox cbx = GetControlFactory().CreateComboBox();
             const string propName = "propname";
             ListComboBoxMapper mapper = new ListComboBoxMapper(cbx, propName, false, GetControlFactory());
 
@@ -90,7 +91,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void TestSetBusinessObject()
         {
             //---------------Set up test pack-------------------
-            IComboBox cbx = GetControlFactory().CreateComboBox();
+            ComboBox cbx = GetControlFactory().CreateComboBox();
             const string propName = "SampleText";
             ListComboBoxMapper mapper = new ListComboBoxMapper(cbx, propName, false, GetControlFactory());
             mapper.SetList("One|Two|Three|Four");
@@ -108,7 +109,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void TestSetBusinessObject_Null_ShouldNotRaiseError_BUGFIX()
         {
             //---------------Set up test pack-------------------
-            IComboBox cbx = GetControlFactory().CreateComboBox();
+            ComboBox cbx = GetControlFactory().CreateComboBox();
             const string propName = "SampleText";
             ListComboBoxMapper mapper = new ListComboBoxMapper(cbx, propName, false, GetControlFactory());
             mapper.SetList("One|Two|Three|Four");
@@ -125,7 +126,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void TestSetBusinessObject_Null_NoListSet_ShouldNotRaiseError_BUGFIX()
         {
             //---------------Set up test pack-------------------
-            IComboBox cbx = GetControlFactory().CreateComboBox();
+            ComboBox cbx = GetControlFactory().CreateComboBox();
             const string propName = "SampleText";
             ListComboBoxMapper mapper = new ListComboBoxMapper(cbx, propName, false, GetControlFactory());
             //---------------Execute Test ----------------------
@@ -138,7 +139,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void TestApplyChangesToBusinessObj()
         {
             //---------------Set up test pack-------------------
-            IComboBox cbx = GetControlFactory().CreateComboBox();
+            ComboBox cbx = GetControlFactory().CreateComboBox();
             const string propName = "SampleText";
             ListComboBoxMapper mapper = new ListComboBoxMapper(cbx, propName, false, GetControlFactory());
             mapper.SetList("One|Two|Three|Four");

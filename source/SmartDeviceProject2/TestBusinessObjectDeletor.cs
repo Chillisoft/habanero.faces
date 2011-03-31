@@ -62,7 +62,7 @@ namespace Habanero.Faces.Test.Base
             Assert.IsInstanceOf(typeof(IBusinessObjectDeletor), businessObjectDeletor);
         }
 
-        [Test]
+   /*     [Test]
         public void Test_DeleteBusinessObject_Success()
         {
             //---------------Set up test pack-------------------
@@ -79,7 +79,7 @@ namespace Habanero.Faces.Test.Base
             transactionCommitter.AssertWasCalled(committer => committer.CommitTransaction());
             boToDelete.AssertWasNotCalled(o => o.CancelEdits());
         }
-
+*/
         private static ITransactionCommitter GetTransactionCommitter()
         {
             var dataAccessorInMemoryWithMocks = new DataAccessorInMemoryWithMocks();

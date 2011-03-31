@@ -17,6 +17,7 @@
 //     along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 //---------------------------------------------------------------------------------
 
+using System.Windows.Forms;
 using Habanero.Faces.Base;
 using Habanero.Test;
 using NUnit.Framework;
@@ -32,7 +33,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         protected abstract IControlFactory GetControlFactory();
 
 
-        protected ITextBox _textBox;
+        protected TextBox _textBox;
         protected TextBoxMapper _mapper;
         protected Shape _shape;
 
@@ -128,7 +129,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         //    ClassDef.ClassDefs.Clear();
         //    Shape.CreateTestMapperClassDef();
         //    Shape newShape = new Shape();
-        //    ITextBox tbShapeValue = GetControlFactory().CreateTextBox();
+        //    TextBox tbShapeValue = GetControlFactory().CreateTextBox();
         //    TextBoxMapper mapperShapeValue = new TextBoxMapper(tbShapeValue, "ShapeValue", false, GetControlFactory());
         //    newShape.SetPropertyValue("ShapeValue", "111");
         //    mapperShapeValue.BusinessObject = newShape;

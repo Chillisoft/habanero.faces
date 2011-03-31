@@ -17,6 +17,7 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
+using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.Faces.Base;
 using NUnit.Framework;
@@ -77,7 +78,7 @@ namespace Habanero.Faces.Test.Base
             const string message = "Confirmer message";
             const string title = "MessageBoxTitle";
             const DialogResult dialogResultToReturn = DialogResult.Yes;
-            MessageBoxIcon messageBoxIcon = MessageBoxIcon.Warning;
+            MessageBoxIcon messageBoxIcon = MessageBoxIcon.Question;
 
             MockRepository mockRepository = new MockRepository();
             IControlFactory controlFactory = SetupControlFactoryMockWithExpectation(mockRepository, message, title, messageBoxIcon, dialogResultToReturn);
@@ -99,7 +100,7 @@ namespace Habanero.Faces.Test.Base
             const string message = "Confirmer message";
             const string title = "MessageBoxTitle";
             const DialogResult dialogResultToReturn = DialogResult.No;
-            MessageBoxIcon messageBoxIcon = MessageBoxIcon.Warning;
+            MessageBoxIcon messageBoxIcon = MessageBoxIcon.Question;
             MockRepository mockRepository = new MockRepository();
             IControlFactory controlFactory = SetupControlFactoryMockWithExpectation(mockRepository, message, title, messageBoxIcon, dialogResultToReturn);
 
@@ -120,7 +121,7 @@ namespace Habanero.Faces.Test.Base
             const string message = "Confirmer message";
             const string title = "MessageBoxTitle";
             const DialogResult dialogResultToReturn = DialogResult.Yes;
-            MessageBoxIcon messageBoxIcon = MessageBoxIcon.Warning;
+            MessageBoxIcon messageBoxIcon = MessageBoxIcon.Question;
 
             bool delegateWasCalled = false;
             bool confirmedParamInDelegate = false;
@@ -155,7 +156,7 @@ namespace Habanero.Faces.Test.Base
             const string message = "Confirmer message";
             const string title = "MessageBoxTitle";
             const DialogResult dialogResultToReturn = DialogResult.No;
-            MessageBoxIcon messageBoxIcon = MessageBoxIcon.Warning;
+            MessageBoxIcon messageBoxIcon = MessageBoxIcon.Question;
 
             bool delegateWasCalled = false;
             bool confirmedParamInDelegate = true;

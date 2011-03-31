@@ -69,6 +69,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -83,7 +84,6 @@
     <Compile Include="Mappers\TestCollectionComboBoxMapper.cs" />
     <Compile Include="Mappers\TestControlMapper.cs" />
     <Compile Include="Mappers\TestControlMapperCollection.cs" />
-    <Compile Include="Mappers\TestDateTimePickerMapper.cs" />
     <Compile Include="Mappers\TestListComboBoxMapper.cs" />
     <Compile Include="Mappers\TestLookupComboBoxMapper.cs" />
     <Compile Include="Mappers\TestMapperBase.cs" />
@@ -92,7 +92,6 @@
     <Compile Include="Mappers\TestRelationshipComboBoxMapper.cs" />
     <Compile Include="Mappers\TestTextBoxMapper.cs" />
     <Compile Include="Selectors\TestBOColSelector.cs" />
-    <Compile Include="Selectors\TestComboBoxSelector.cs" />
     <Compile Include="Selectors\TestListBoxSelector.cs" />
     <Compile Include="Shape.cs" />
     <Compile Include="TestBaseMethods.cs" />
@@ -100,19 +99,16 @@
     <Compile Include="ControlInterfaces\TestControl.cs" />
     <Compile Include="ControlInterfaces\TestControlCollection.cs" />
     <Compile Include="ControlInterfaces\TestControlFactory.cs" />
-    <Compile Include="ControlInterfaces\TestDateTimePicker.cs" />
     <Compile Include="ControlInterfaces\TestDateTimePickerController.cs" />
     <Compile Include="ControlInterfaces\TestForm.cs" />
     <Compile Include="ControlInterfaces\TestLabel.cs" />
     <Compile Include="ControlInterfaces\TestListBox.cs" />
     <Compile Include="ControlInterfaces\TestMessageBoxConfirmer.cs" />
     <Compile Include="ControlInterfaces\TestNumericUpDown.cs" />
-    <Compile Include="ControlInterfaces\TestOKCancelDialog.cs" />
     <Compile Include="ControlInterfaces\TestPanel.cs" />
     <Compile Include="ControlInterfaces\TestPictureBox.cs" />
     <Compile Include="ControlInterfaces\TestProgressBar.cs" />
     <Compile Include="ControlInterfaces\TestRadioButton.cs" />
-    <Compile Include="ControlInterfaces\TestSplitContainer.cs" />
     <Compile Include="ControlInterfaces\TestSplitter.cs" />
     <Compile Include="ControlInterfaces\TestTextBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

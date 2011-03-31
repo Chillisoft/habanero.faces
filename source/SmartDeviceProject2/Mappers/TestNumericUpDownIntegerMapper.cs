@@ -20,6 +20,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
@@ -40,14 +41,13 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void TestConstructor()
         {
             //---------------Set up test pack-------------------
-            INumericUpDown numUpDown = GetControlFactory().CreateNumericUpDownInteger();
+            NumericUpDown numUpDown = GetControlFactory().CreateNumericUpDownInteger();
             //---------------Execute Test ----------------------
             NumericUpDownIntegerMapper mapper = new NumericUpDownIntegerMapper(numUpDown, INT_PROP_NAME, false, GetControlFactory());
 
             //---------------Test Result -----------------------
             Assert.AreSame(numUpDown, mapper.Control);
             Assert.AreSame(INT_PROP_NAME, mapper.PropertyName);
-            Assert.AreEqual(0, numUpDown.DecimalPlaces);
             Assert.AreEqual(int.MinValue, numUpDown.Minimum);
             Assert.AreEqual(int.MaxValue, numUpDown.Maximum);
 
@@ -58,7 +58,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void TestSetBusinessObject()
         {
             //---------------Set up test pack-------------------
-            INumericUpDown numUpDown = GetControlFactory().CreateNumericUpDownInteger();
+            NumericUpDown numUpDown = GetControlFactory().CreateNumericUpDownInteger();
             NumericUpDownIntegerMapper mapper = new NumericUpDownIntegerMapper(numUpDown, INT_PROP_NAME, false, GetControlFactory());
             Sample s = new Sample();
             s.SampleInt = 100;
@@ -74,7 +74,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         public void TestApplyChangesToBO()
         {
             //---------------Set up test pack-------------------
-            INumericUpDown numUpDown = GetControlFactory().CreateNumericUpDownInteger();
+            NumericUpDown numUpDown = GetControlFactory().CreateNumericUpDownInteger();
             NumericUpDownIntegerMapper mapper = new NumericUpDownIntegerMapper(numUpDown, INT_PROP_NAME, false, GetControlFactory());
             Sample s = new Sample();
             s.SampleInt = 100;

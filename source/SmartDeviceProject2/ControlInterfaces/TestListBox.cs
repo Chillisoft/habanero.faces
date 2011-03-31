@@ -16,6 +16,7 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
+using System.Windows.Forms;
 using Habanero.Faces.Base;
 
 
@@ -41,7 +42,7 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             //---------------Execute Test ----------------------
-            IListBox myListBox = GetControlFactory().CreateListBox();
+            ListBox myListBox = GetControlFactory().CreateListBox();
 
             //---------------Test Result -----------------------
             Assert.IsNotNull(myListBox);
@@ -53,7 +54,7 @@ namespace Habanero.Faces.Test.Base
         public void TestListBoxItems()
         {
             //---------------Set up test pack-------------------
-            IListBox myListBox = GetControlFactory().CreateListBox();
+            ListBox myListBox = GetControlFactory().CreateListBox();
 
             //---------------Execute Test ----------------------
             myListBox.Items.Add("testitem");

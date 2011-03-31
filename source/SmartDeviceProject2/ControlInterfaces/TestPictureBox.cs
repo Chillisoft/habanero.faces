@@ -16,6 +16,7 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
+using System.Windows.Forms;
 using Habanero.Faces.Base;
 
 
@@ -33,11 +34,11 @@ namespace Habanero.Faces.Test.Base
     {
         protected abstract IControlFactory GetControlFactory();
 
-        protected abstract string GetUnderlyingSizeModeToString(IPictureBox pictureBox);
+        protected abstract string GetUnderlyingSizeModeToString(PictureBox pictureBox);
 
-        protected IPictureBox CreatePictureBox()
+        protected PictureBox CreatePictureBox()
         {
-            IPictureBox pictureBox = GetControlFactory().CreatePictureBox();
+            PictureBox pictureBox = GetControlFactory().CreatePictureBox();
             return pictureBox;
         }
 
@@ -48,8 +49,8 @@ namespace Habanero.Faces.Test.Base
         public void Test_SizeMode()
         {
             //---------------Set up test pack-------------------
-            IPictureBox pictureBox = CreatePictureBox();
-            PictureBoxSizeMode sizeMode = PictureBoxSizeMode.AutoSize;
+            PictureBox pictureBox = CreatePictureBox();
+            PictureBoxSizeMode sizeMode = PictureBoxSizeMode.StretchImage;
             //-------------Assert Preconditions -------------
 
             //---------------Execute Test ----------------------

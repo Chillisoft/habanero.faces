@@ -18,6 +18,7 @@
 //---------------------------------------------------------------------------------
 
 using System;
+using System.Windows.Forms;
 using Habanero.Faces.Base;
 
 
@@ -42,31 +43,12 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             //---------------Execute Test ----------------------
-            IButton myButton = GetControlFactory().CreateButton();
+            Button myButton = GetControlFactory().CreateButton();
 
             //---------------Test Result -----------------------
             Assert.IsNotNull(myButton);
 
             //---------------Tear Down -------------------------   
-        }
-
-        [Test]
-        public void Test_PerformClick()
-        {
-            //---------------Set up test pack-------------------
-            IButton button = this.GetControlFactory().CreateButton();
-            bool clicked = false;
-            button.Click += delegate(object sender, EventArgs e)
-            {
-                clicked = true;
-            };
-            //AddControlToForm(button);
-            //-------------Assert Preconditions -------------
-            Assert.IsFalse(clicked);
-            //---------------Execute Test ----------------------
-            button.PerformClick();
-            //---------------Test Result -----------------------
-            Assert.IsTrue(clicked);
         }
     }
 }

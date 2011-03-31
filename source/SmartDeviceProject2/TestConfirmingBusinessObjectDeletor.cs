@@ -104,7 +104,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Test Result -----------------------
             mockRepository.VerifyAll();
         }
-
+/*
 
         [Test]
         public void Test_DeleteBusinessObject_ConfirmationDelegateUsed_ConfirmedIsTrue_ShouldDeleteBO()
@@ -119,7 +119,8 @@ namespace Habanero.Faces.Test.Base
             confirmingBusinessObjectDeletor.DeleteBusinessObject(boToDelete);
             //---------------Test Result -----------------------
             boToDelete.AssertWasCalled(o => o.MarkForDelete());
-        }
+        }*/
+/*
 
         [Test]
         public void Test_DeleteBusinessObject_ConfirmedIsFalse_ShouldNotDeleteBO()
@@ -136,6 +137,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Test Result -----------------------
             boToDelete.AssertWasNotCalled(o => o.MarkForDelete());
         }
+*/
 
         private static IConfirmer CreateMockConfirmerWithExpectation(MockRepository mockRepository, AbstractConstraint messageConstraint, bool confirmReturnValue)
         {

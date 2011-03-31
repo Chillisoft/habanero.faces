@@ -17,6 +17,7 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
+using System.Windows.Forms;
 using Habanero.Faces.Base;
 
 
@@ -26,10 +27,10 @@ namespace Habanero.Faces.Test.Base
 {
     public abstract class TestBaseMethods
     {
-        protected abstract IControlHabanero CreateControl();
+        protected abstract Control CreateControl();
         protected abstract IControlFactory GetControlFactory();
-        protected abstract string GetUnderlyingDockStyleToString(IControlHabanero controlHabanero);
-        protected void AssertDockStylesSame(IControlHabanero controlHabanero)
+        protected abstract string GetUnderlyingDockStyleToString(Control controlHabanero);
+        protected void AssertDockStylesSame(Control controlHabanero)
         {
             DockStyle dockStyle = controlHabanero.Dock;
             string dockStyleToString = GetUnderlyingDockStyleToString(controlHabanero);
@@ -40,7 +41,7 @@ namespace Habanero.Faces.Test.Base
         public virtual void TestConversion_DockStyle_None()
         {
             //---------------Set up test pack-------------------
-            IControlHabanero control = CreateControl();
+            Control control = CreateControl();
             //-------------Assert Preconditions -------------
             //---------------Execute Test ----------------------
             control.Dock = DockStyle.None;
@@ -53,7 +54,7 @@ namespace Habanero.Faces.Test.Base
         public virtual void TestConversion_DockStyle_Bottom()
         {
             //---------------Set up test pack-------------------
-            IControlHabanero control = CreateControl();
+            Control control = CreateControl();
             //-------------Assert Preconditions -------------
             //---------------Execute Test ----------------------
             control.Dock = DockStyle.Bottom;
@@ -66,7 +67,7 @@ namespace Habanero.Faces.Test.Base
         public virtual void TestConversion_DockStyle_Top()
         {
             //---------------Set up test pack-------------------
-            IControlHabanero control = CreateControl();
+            Control control = CreateControl();
             //-------------Assert Preconditions -------------
             //---------------Execute Test ----------------------
             control.Dock = DockStyle.Top;
@@ -79,7 +80,7 @@ namespace Habanero.Faces.Test.Base
         public virtual void TestConversion_DockStyle_Left()
         {
             //---------------Set up test pack-------------------
-            IControlHabanero control = CreateControl();
+            Control control = CreateControl();
             //-------------Assert Preconditions -------------
             //---------------Execute Test ----------------------
             control.Dock = DockStyle.Left;
@@ -92,7 +93,7 @@ namespace Habanero.Faces.Test.Base
         public virtual void TestConversion_DockStyle_Right()
         {
             //---------------Set up test pack-------------------
-            IControlHabanero control = CreateControl();
+            Control control = CreateControl();
             //-------------Assert Preconditions -------------
             //---------------Execute Test ----------------------
             control.Dock = DockStyle.Right;
@@ -105,7 +106,7 @@ namespace Habanero.Faces.Test.Base
         public virtual void TestConversion_DockStyle_Fill()
         {
             //---------------Set up test pack-------------------
-            IControlHabanero control = CreateControl();
+            Control control = CreateControl();
             //-------------Assert Preconditions -------------
             //---------------Execute Test ----------------------
             control.Dock = DockStyle.Fill;

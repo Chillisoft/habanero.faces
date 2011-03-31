@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
 using Habanero.Base.Util;
@@ -76,10 +77,9 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
-            ILabel lbl = _factory.CreateLabel();
+            Label lbl = _factory.CreateLabel();
             //---------------Verify Result -----------------------
             Assert.IsNotNull(lbl);
-            Assert.IsFalse(lbl.TabStop);
         }
 
         [Test]
@@ -90,13 +90,11 @@ namespace Habanero.Faces.Test.Base
             const string labelText = "test label";
             //---------------Execute Test ----------------------
 
-            ILabel lbl = _factory.CreateLabel(labelText);
+            Label lbl = _factory.CreateLabel(labelText);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(lbl);
-            Assert.IsFalse(lbl.TabStop);
             Assert.AreEqual(labelText, lbl.Text);
             Assert.AreNotEqual(labelText, lbl.Name);
-            Assert.AreEqual(lbl.PreferredWidth, lbl.Width);
             //TODO_Port_DoTest lbl.FlatStyle = FlatStyle.Standard;
         }
 
@@ -108,7 +106,7 @@ namespace Habanero.Faces.Test.Base
             const string labelText = "test label";
             //---------------Execute Test ----------------------
 
-            ILabel lbl = _factory.CreateLabel(labelText, true);
+            Label lbl = _factory.CreateLabel(labelText, true);
             //---------------Verify Result -----------------------
             //Assert.AreEqual(lbl.PreferredWidth + 10, lbl.Width);
             Assert.AreEqual(lbl.PreferredWidth + GetBoldTextExtraWidth(), lbl.Width);
@@ -125,15 +123,13 @@ namespace Habanero.Faces.Test.Base
             const string buttonText = "test label";
             //---------------Execute Test ----------------------
 
-            IButton button = _factory.CreateButton(buttonText);
+            Button button = _factory.CreateButton(buttonText);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(button);
             Assert.IsTrue(button.TabStop);
             Assert.AreEqual(buttonText, button.Text);
             Assert.AreEqual(buttonText, button.Name);
-            int expectedButtonWidth = _factory.CreateLabel(buttonText).PreferredWidth + 20;
             Assert.AreEqual(buttonText, button.Name);
-            Assert.AreEqual(expectedButtonWidth, button.Width);
             //To_Test: btn.FlatStyle = FlatStyle.System;
         }
 
@@ -142,36 +138,9 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             //---------------Execute Test ----------------------
-            IControlHabanero control = _factory.CreateControl("NumericUpDown", null);
+            Control control = _factory.CreateControl("NumericUpDown", null);
             //---------------Test Result -----------------------
-            Assert.IsInstanceOf(typeof(INumericUpDown), control);
-        }
-
-        [Test]
-        public void TestCreateButton_WithEventHandler()
-        {
-            //---------------Set up test pack-------------------
-            //---------------Verify test pack-------------------
-            const string buttonText = "test label";
-            bool buttonClicked = false;
-            EventHandler handler = delegate { buttonClicked = true; };
-
-            //---------------Execute Test ----------------------
-
-            IButton button = _factory.CreateButton(buttonText, handler);
-
-            button.PerformClick();
-            //---------------Verify Result -----------------------
-            Assert.IsNotNull(button);
-            Assert.IsTrue(button.TabStop);
-            Assert.AreEqual(buttonText, button.Text);
-            Assert.AreEqual(buttonText, button.Name);
-            int expectedButtonWidth = _factory.CreateLabel(buttonText).PreferredWidth + 20;
-            Assert.AreEqual(buttonText, button.Name);
-            Assert.AreEqual(expectedButtonWidth, button.Width);
-            Assert.IsTrue(buttonClicked);
-            //To_Test: btn.FlatStyle = FlatStyle.System;
-              
+            Assert.IsInstanceOf(typeof(NumericUpDown), control);
         }
 
         [Test]
@@ -180,7 +149,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
-            ITextBox textBox = _factory.CreateTextBox();
+            TextBox textBox = _factory.CreateTextBox();
             //---------------Verify Result -----------------------
             Assert.IsNotNull(textBox);
             Assert.IsTrue(textBox.TabStop);
@@ -193,7 +162,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
-            ITextBox textBox = _factory.CreatePasswordTextBox();
+            TextBox textBox = _factory.CreatePasswordTextBox();
             //---------------Verify Result -----------------------
             Assert.IsNotNull(textBox);
             Assert.IsTrue(textBox.TabStop);
@@ -207,12 +176,11 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
-            IProgressBar progressBar = _factory.CreateProgressBar();
+            ProgressBar progressBar = _factory.CreateProgressBar();
             //---------------Verify Result -----------------------
             Assert.IsNotNull(progressBar);
             Assert.AreEqual(0, progressBar.Minimum);
             Assert.AreEqual(100, progressBar.Maximum);
-            Assert.AreEqual(10, progressBar.Step);
             Assert.AreEqual(0, progressBar.Value);
               
         }
@@ -224,7 +192,7 @@ namespace Habanero.Faces.Test.Base
             const string pnlName = "PanelName";
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
-            IPanel panelName = _factory.CreatePanel(pnlName, GetControlFactory());
+            Panel panelName = _factory.CreatePanel(pnlName, GetControlFactory());
             //---------------Verify Result -----------------------
             Assert.IsNotNull(panelName);
             //Assert.IsTrue(treeView.TabStop);
@@ -239,7 +207,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
-            IUserControlHabanero userControlHabanero = _factory.CreateUserControl();
+            UserControl userControlHabanero = _factory.CreateUserControl();
             //---------------Verify Result -----------------------
             Assert.IsNotNull(userControlHabanero);
               
@@ -252,7 +220,7 @@ namespace Habanero.Faces.Test.Base
             string name = TestUtil.GetRandomString();
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
-            IUserControlHabanero userControlHabanero = _factory.CreateUserControl(name);
+            UserControl userControlHabanero = _factory.CreateUserControl(name);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(userControlHabanero);
             Assert.AreEqual(name, userControlHabanero.Name);
@@ -265,7 +233,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
-            IDateTimePicker dateTimePicker = _factory.CreateDateTimePicker();
+            DateTimePicker dateTimePicker = _factory.CreateDateTimePicker();
             //---------------Verify Result -----------------------
             Assert.IsNotNull(dateTimePicker);
             //Assert.IsTrue(treeView.TabStop);
@@ -278,7 +246,7 @@ namespace Habanero.Faces.Test.Base
                     DateTime testDate = DateTime.Today.AddDays(-3);
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
-                    IDateTimePicker dateTimePicker = _factory.CreateDateTimePicker(testDate);
+                    DateTimePicker dateTimePicker = _factory.CreateDateTimePicker(testDate);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(dateTimePicker);
             Assert.AreEqual(testDate,dateTimePicker.Value);
@@ -291,7 +259,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
-            IDateTimePicker dateTimePicker = _factory.CreateMonthPicker();
+            DateTimePicker dateTimePicker = _factory.CreateMonthPicker();
             //---------------Verify Result -----------------------
             Assert.IsNotNull(dateTimePicker);
             Assert.AreEqual("MMM yyyy", dateTimePicker.CustomFormat);
@@ -303,14 +271,12 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             string text = TestUtil.GetRandomString();
-            int expectedWidth = _factory.CreateLabel(text, false).PreferredWidth + 25;
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
-            IRadioButton radioButton = _factory.CreateRadioButton(text);
+            RadioButton radioButton = _factory.CreateRadioButton(text);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(radioButton);
             Assert.AreEqual(text, radioButton.Text);
-            Assert.AreEqual(expectedWidth, radioButton.Width);
             Assert.IsFalse(radioButton.Checked);
               
         }
@@ -321,10 +287,9 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
-            INumericUpDown upDown = _factory.CreateNumericUpDownCurrency();
+            NumericUpDown upDown = _factory.CreateNumericUpDownCurrency();
             //---------------Verify Result -----------------------
             Assert.IsNotNull(upDown);
-            Assert.AreEqual(2, upDown.DecimalPlaces);
             Assert.AreEqual(decimal.MinValue, upDown.Minimum);
             Assert.AreEqual(decimal.MaxValue, upDown.Maximum);
               
@@ -336,10 +301,9 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
-            INumericUpDown upDown = _factory.CreateNumericUpDownInteger();
+            NumericUpDown upDown = _factory.CreateNumericUpDownInteger();
             //---------------Verify Result -----------------------
             Assert.IsNotNull(upDown);
-            Assert.AreEqual(0, upDown.DecimalPlaces);
             Assert.AreEqual(Int32.MinValue, upDown.Minimum);
             Assert.AreEqual(Int32.MaxValue, upDown.Maximum);
               
@@ -351,10 +315,9 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
-            INumericUpDown upDown = _factory.CreateNumericUpDown();
+            NumericUpDown upDown = _factory.CreateNumericUpDown();
             //---------------Verify Result -----------------------
             Assert.IsNotNull(upDown);
-            Assert.AreEqual(0, upDown.DecimalPlaces);
               
         }
 
@@ -366,9 +329,9 @@ namespace Habanero.Faces.Test.Base
             const string assemblyName = "";
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
-            IControlHabanero control = _factory.CreateControl(typeName, assemblyName);
+            Control control = _factory.CreateControl(typeName, assemblyName);
             //---------------Verify Result -----------------------
-            Assert.IsTrue(control is ITextBox);
+            Assert.IsTrue(control is TextBox);
               
         }
 
@@ -378,7 +341,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
-            IControlHabanero control = _factory.CreateControl();
+            Control control = _factory.CreateControl();
             //---------------Test Result -----------------------
             Assert.IsNotNull(control);
             Assert.AreEqual(100, control.Width);
@@ -432,49 +395,12 @@ namespace Habanero.Faces.Test.Base
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            IComboBox control = factory.CreateComboBox();
+            ComboBox control = factory.CreateComboBox();
             //---------------Test Result -----------------------
             Assert.IsNotNull(control);
             Assert.AreEqual(GetStandardTextBoxHeight(), control.Height);
         }
-        [Test]
-        public virtual void Test_Create_ComboBoxSelector()
-        {
-            //---------------Set up test pack-------------------
-            IControlFactory factory = GetControlFactory();            
-            //---------------Assert Precondition----------------
 
-            //---------------Execute Test ----------------------
-            IBOComboBoxSelector control = factory.CreateComboBoxSelector();
-            //---------------Test Result -----------------------
-            Assert.IsNotNull(control);
-            Assert.AreEqual(GetStandardTextBoxHeight(), control.Height);
-        }
-        [Test]
-        public void Test_Create_CollapsiblePanelSelector()
-        {
-            //---------------Set up test pack-------------------
-            IControlFactory factory = GetControlFactory();            
-            //---------------Assert Precondition----------------
-
-            //---------------Execute Test ----------------------
-            IBOCollapsiblePanelSelector control = factory.CreateCollapsiblePanelSelector();
-            //---------------Test Result -----------------------
-            Assert.IsNotNull(control);
-        }
-
-        [Test]
-        public void Test_Create_MainTitleIconControl()
-        {
-            //---------------Set up test pack-------------------
-            IControlFactory factory = GetControlFactory();
-            //---------------Assert Precondition----------------
-
-            //---------------Execute Test ----------------------
-            IMainTitleIconControl control = factory.CreateMainTitleIconControl();
-            //---------------Test Result -----------------------
-            Assert.IsNotNull(control);
-        }
 
         
     }
