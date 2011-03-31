@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.Faces.Base.CF.Tests", "SmartDeviceProject2\Habanero.Faces.Base.CF.Tests.csproj", "{56AE140B-ED1B-43FF-8360-F0A7063A04F6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.Faces.Base.CF.Tests", "Habanero.Faces.Base.CF.Tests\Habanero.Faces.Base.CF.Tests.csproj", "{56AE140B-ED1B-43FF-8360-F0A7063A04F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.Faces.Base.CF", "SmartDeviceProject3\Habanero.Faces.Base.CF.csproj", "{6EECF70C-D930-4CC2-81FE-6E05E956F336}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.Faces.Base.CF", "Habanero.Faces.Base.CF\Habanero.Faces.Base.CF.csproj", "{6EECF70C-D930-4CC2-81FE-6E05E956F336}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
