@@ -232,11 +232,6 @@ namespace Habanero.Faces.Base
         /// </summary>
         event EventHandler VisibleChanged;
 
-        /// <summary>
-        /// Gets or sets the anchoring style.
-        /// </summary>
-        /// <value></value>
-        AnchorStyles Anchor { get; set; }
 
         /// <summary>
         /// Gets or sets the width of the control
@@ -364,46 +359,6 @@ namespace Habanero.Faces.Base
         /// and width of the client area of the control in pixels</value>
         Size ClientSize { get; set; }
 
-        /// <summary>
-        /// Activates the control  
-        /// </summary>
-        void Select();
-
-        ///// <summary>
-        ///// Gets a value indicating whether this instance has controls.
-        ///// </summary>
-        ///// <value>
-        ///// 	<c>true</c> if this instance has controls; otherwise, <c>false</c>.
-        ///// </value>
-        //
-        //bool HasControls { get; }
-
-        /// <summary>
-        /// Gets a value indicating whether the control contains one or more child controls
-        /// </summary>
-        /// <value>
-        /// 	<c>true</c> if this control has children; otherwise, <c>false</c>.
-        /// </value>
-        
-        bool HasChildren { get; }
-
-        /// <summary>
-        /// Gets or sets the size that is the upper limit that
-        /// GetPreferredSize(System.Drawing.Size) can specify
-        /// </summary>
-        /// <returns>An ordered pair of type System.Drawing.Size
-        /// representing the width and height of a rectangle</returns>
-        /// <filterpriority>1</filterpriority>
-        Size MaximumSize { get; set; }
-
-        /// <summary>
-        /// Gets or sets the size that is the lower limit that
-        /// GetPreferredSize(System.Drawing.Size) can specify
-        /// </summary>
-        /// <returns>An ordered pair of type System.Drawing.Size
-        /// representing the width and height of a rectangle</returns>
-        /// <filterpriority>1</filterpriority>
-        Size MinimumSize { get; set; }
 
         /// <summary>
         /// Gets or sets the font of the text displayed by the control
@@ -442,18 +397,6 @@ namespace Habanero.Faces.Base
         /// <value>The System.Drawing.Point that represents the upper-left
         /// corner of the control relative to the upper-left corner of its container</value>
         Point Location { get; set; }
-
-        ///// <summary>
-        ///// Gets or sets the border style.
-        ///// </summary>
-        ///// <value></value>
-        //ControlBorderStyle BorderStyle { get; set; }
-
-        /// <summary>
-        /// Gets or sets which control borders are docked to its parent
-        /// control and determines how a control is resized with its parent
-        /// </summary>
-        DockStyle Dock { get; set; }
 
         /// <summary>
         /// Releases all resources used by the Component.

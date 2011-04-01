@@ -195,7 +195,8 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual IProgressBar CreateProgressBar()
         {
-            return new ProgressBarWin();
+            throw new NotImplementedException("Not implemented for CF");
+            //return new ProgressBarWin();
         }
 
         /// <summary>
@@ -204,7 +205,8 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual ISplitter CreateSplitter()
         {
-            return new SplitterWin();
+            throw new NotImplementedException("Not implemented for CF");
+            //return new SplitterWin();
         }
 
         /// <summary>
@@ -213,7 +215,8 @@ namespace Habanero.Faces.Win
         /// <param name="title">The page title to appear in the tab</param>
         public virtual ITabPage CreateTabPage(string title)
         {
-            return new TabPageWin {Text = title, Name = title};
+            throw new NotImplementedException("CF Not implemented");
+           // return new TabPageWin {Text = title, Name = title};
         }
 
         /// <summary>
@@ -222,12 +225,13 @@ namespace Habanero.Faces.Win
         /// <param name="text">The text to appear next to the radio button</param>
         public virtual IRadioButton CreateRadioButton(string text)
         {
-            RadioButtonWin rButton = new RadioButtonWin();
+            throw new NotImplementedException("Not implemented for CF");
+/*            RadioButtonWin rButton = new RadioButtonWin();
             rButton.Text = text;
             //TODO_REmoved when porting rButton.AutoCheck = true;
             //TODO_REmoved when portingrButton.FlatStyle = FlatStyle.Standard;
             rButton.Width = CreateLabel(text, false).PreferredWidth + 25;
-            return rButton;
+            return rButton;*/
         }
 
 
@@ -236,7 +240,8 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual ITabControl CreateTabControl()
         {
-            return new TabControlWin();
+            throw new NotImplementedException("Not implemented for CF");
+            //return new TabControlWin();
         }
 
         /// <summary>
@@ -245,12 +250,13 @@ namespace Habanero.Faces.Win
         /// <param name="numLines">The number of lines to show in the TextBox</param>
         public virtual ITextBox CreateTextBoxMultiLine(int numLines)
         {
-            TextBoxWin tb = (TextBoxWin) CreateTextBox();
+            throw new NotImplementedException("Not implemented for CF");
+/*            TextBoxWin tb = (TextBoxWin) CreateTextBox();
             tb.Multiline = true;
             tb.AcceptsReturn = true;
             tb.Height = tb.Height*numLines;
             tb.ScrollBars = ScrollBars.Vertical;
-            return tb;
+            return tb;*/
         }
 /*
 
@@ -361,7 +367,8 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual IFileChooser CreateFileChooser()
         {
-            return new FileChooserWin(this);
+            throw new NotImplementedException("CF Not implemented");
+           // return new FileChooserWin(this);
         }
 /*
 
@@ -397,7 +404,9 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual ITextBoxMapperStrategy CreateTextBoxMapperStrategy()
         {
-            return new TextBoxMapperStrategyWin();
+//TODO brett 01 Apr 2011: CF
+            throw new NotImplementedException("Not implemented for CF");
+           // return new TextBoxMapperStrategyWin();
         }
 
         /// <summary>
@@ -405,7 +414,7 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual IErrorProvider CreateErrorProvider()
         {
-            return new ErrorProviderWin();
+            return new NullErrorProvider();
         }
 
         /// <summary>
@@ -429,7 +438,8 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual IListComboBoxMapperStrategy CreateListComboBoxMapperStrategy()
         {
-            return new ListComboBoxMapperStrategyWin();
+            throw new NotImplementedException("CF Not implemented");
+            //return new ListComboBoxMapperStrategyWin();
         }
 
         /// <summary>
@@ -453,7 +463,8 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual INumericUpDownMapperStrategy CreateNumericUpDownMapperStrategy()
         {
-            return new NumericUpDownMapperStrategyWin();
+            throw new NotImplementedException("CF Not implemented");
+           // return new NumericUpDownMapperStrategyWin();
         }
 
         /// <summary>
@@ -461,7 +472,8 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual IOKCancelDialogFactory CreateOKCancelDialogFactory()
         {
-            return new OKCancelDialogFactoryWin(this);
+            throw new NotImplementedException("CF Not implemented");
+           // return new OKCancelDialogFactoryWin(this);
         }
 
         ///<summary>
@@ -492,7 +504,7 @@ namespace Habanero.Faces.Win
         {
             System.Windows.Forms.MessageBoxButtons messageBoxButtons = (System.Windows.Forms.MessageBoxButtons)buttons;
             System.Windows.Forms.MessageBoxIcon messageBoxIcon = (System.Windows.Forms.MessageBoxIcon)icon;
-            DialogResult dialogResult = (Base.DialogResult)MessageBox.Show(message, title, messageBoxButtons, messageBoxIcon);
+            DialogResult dialogResult = (Base.DialogResult)MessageBox.Show(message, title, messageBoxButtons, messageBoxIcon, MessageBoxDefaultButton.Button1);
             dialogCompletionDelegate(null, dialogResult);
             return dialogResult;
         }
@@ -513,14 +525,15 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual IComboBox CreateComboBox()
         {
-            ComboBoxWin comboBoxWin = new ComboBoxWin();
+            throw new NotImplementedException("CF Not implemented");
+/*            ComboBoxWin comboBoxWin = new ComboBoxWin();
             //Note_: This is a workaround in windows to avoid this default from breaking all the tests because if the Thread's ApartmentState is not STA then setting the AutoCompleteSource default gives an error
             if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA)
             {
                 comboBoxWin.AutoCompleteSource =  AutoCompleteSource.ListItems;
                 comboBoxWin.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             }
-            return comboBoxWin;
+            return comboBoxWin;*/
         }
 
         /// <summary>
@@ -529,24 +542,17 @@ namespace Habanero.Faces.Win
         /// <returns></returns>
         public virtual IListBox CreateListBox()
         {
-            return new ListBoxWin();
+            throw new NotImplementedException("CF Not implemented");
+           // return new ListBoxWin();
         }
 
-        /// <summary>
-        /// Creates a multi-selector control
-        /// </summary>
-        /// <typeparam name="T">The business object type being managed in the control</typeparam>
-        public virtual IMultiSelector<T> CreateMultiSelector<T>()
-        {
-            return new MultiSelectorWin<T>(this);
-        }
 
         /// <summary>
         /// Creates a button control
         /// </summary>
         public virtual IButton CreateButton()
-        {
-            return new ButtonWin();
+        {throw new NotImplementedException("CF Not implemented");
+            //return new ButtonWin();
         }
 
         /// <summary>
@@ -558,7 +564,7 @@ namespace Habanero.Faces.Win
             IButton button = CreateButton();
             button.Text = text;
             button.Name = text;
-            ((Button)button).FlatStyle = FlatStyle.Standard;
+            //((Button)button).FlatStyle = FlatStyle.Standard;
             button.Width = CreateLabel(text, false).PreferredWidth + 20;
             return button;
         }
@@ -581,7 +587,8 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual ICheckBox CreateCheckBox()
         {
-            return new CheckBoxWin();
+            throw new NotImplementedException("CF Not implemented");
+            //return new CheckBoxWin();
         }
 
         /// <summary>
@@ -600,9 +607,10 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual ILabel CreateLabel()
         {
-            ILabel label = new LabelWin();
+            throw new NotImplementedException("CF Not implemented");
+/*            ILabel label = new LabelWin();
             label.TabStop = false;
-            return label;
+            return label;*/
         }
 
         /// <summary>
@@ -622,7 +630,8 @@ namespace Habanero.Faces.Win
         /// <param name="isBold">Whether the text appears in bold font</param>
         public virtual ILabel CreateLabel(string labelText, bool isBold)
         {
-            LabelWin label = (LabelWin) CreateLabel();
+            throw new NotImplementedException("CF Not implemented");
+/*            LabelWin label = (LabelWin) CreateLabel();
             label.Text = labelText;
             label.FlatStyle = FlatStyle.System;
             if (isBold)
@@ -636,7 +645,7 @@ namespace Habanero.Faces.Win
             }
             label.TextAlign = ContentAlignment.MiddleLeft;
             label.TabStop = false;
-            return label;
+            return label;*/
         }
 
         /// <summary>
@@ -644,15 +653,16 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual IDateTimePicker CreateDateTimePicker()
         {
-            return new DateTimePickerWin(this);
+            throw new NotImplementedException("CF Not implemented");
+           // return new DateTimePickerWin(this);
         }
 
         /// <summary>
         /// Creates a Panel control
         /// </summary>
         public virtual IPanel CreatePanel()
-        {
-            return new PanelWin();
+        {throw new NotImplementedException("CF Not implemented");
+         //   return new PanelWin();
         }
 
         /// <summary>
@@ -660,8 +670,8 @@ namespace Habanero.Faces.Win
         /// </summary>
         /// <param name="controlFactory">The factory that this panel will use to create any controls on it</param>
         public virtual IPanel CreatePanel(IControlFactory controlFactory)
-        {
-            return new PanelWin();
+        {throw new NotImplementedException("CF Not implemented");
+          //  return new PanelWin();
         }
 
         /// <summary>
@@ -692,8 +702,8 @@ namespace Habanero.Faces.Win
         /// Creates a ToolTip
         /// </summary>
         public virtual IToolTip CreateToolTip()
-        {
-            return new ToolTipWin();
+        {throw new NotImplementedException("CF Not implemented");
+         //   return new ToolTipWin();
         }
 
         /// <summary>
@@ -710,8 +720,8 @@ namespace Habanero.Faces.Win
         /// Creates a user control
         /// </summary>
         public virtual IUserControlHabanero CreateUserControl()
-        {
-            return new UserControlWin();
+        {throw new NotImplementedException("CF Not implemented");
+         //   return new UserControlWin();
         }
 
         /// <summary>
@@ -731,24 +741,24 @@ namespace Habanero.Faces.Win
         /// </summary>
         /// <param name="propertyType">Type property being edited.</param>
         public virtual ITextBox CreateTextBox(Type propertyType)
-        {
-            return new TextBoxWin();
+        {throw new NotImplementedException("CF Not implemented");
+         //   return new TextBoxWin();
         }
 
         /// <summary>
         /// Creates a TextBox that provides filtering of characters depending on the property type.
         /// </summary>
          public virtual IPictureBox CreatePictureBox()
-        {
-            return new PictureBoxWin();
+        {throw new NotImplementedException("CF Not implemented");
+            //return new PictureBoxWin();
         }
 
         ///<summary>
         /// Creates a <see cref="IDateTimePickerMapperStrategy"/>
         ///</summary>
         public virtual IDateTimePickerMapperStrategy CreateDateTimePickerMapperStrategy()
-        {
-            return new DateTimePickerMapperStrategyWin();
+        {throw new NotImplementedException("CF Not implemented");
+          //  return new DateTimePickerMapperStrategyWin();
         }
        
         /// <summary>
@@ -766,17 +776,17 @@ namespace Habanero.Faces.Win
         ///</summary>
         ///<returns>a <see cref="IButton"/> </returns>
         public virtual IButton CreateButtonCollapsibleStyle()
-        {
-            ButtonWin button = (ButtonWin)CreateButton();
+        {throw new NotImplementedException("CF Not implemented");
+/*            ButtonWin button = (ButtonWin)CreateButton();
             ConfigureCollapsibleStyleButton(button);
-            return button;
+            return button;*/
         }
 
         private static void ConfigureCollapsibleStyleButton(IButton button)
-        {
-            ButtonWin buttonWin = ((ButtonWin)button);
+        {throw new NotImplementedException("CF Not implemented");
+/*            ButtonWin buttonWin = ((ButtonWin)button);
             buttonWin.BackgroundImage = CollapsiblePanelResource.headergradient;
-            buttonWin.FlatStyle = FlatStyle.Flat;
+            buttonWin.FlatStyle = FlatStyle.Flat;*/
         }
 
         ///<summary>
@@ -784,54 +794,36 @@ namespace Habanero.Faces.Win
         ///</summary>
         ///<returns>a <see cref="ILabel"/> </returns>
         public virtual ILabel CreateLabelPinOffStyle()
-        {
-            LabelWin label = (LabelWin)CreateLabel();
+        {throw new NotImplementedException("CF Not implemented");
+/*            LabelWin label = (LabelWin)CreateLabel();
             ConfigurePinOffStyleLabel(label);
-            return label;
+            return label;*/
         }
 
         ///<summary>
         /// Configures the <see cref="ILabel"/> with the pinoff style
         ///</summary>
         public virtual void ConfigurePinOffStyleLabel(ILabel label)
-        {
-            LabelWin labelWin = (LabelWin)label;
+        {throw new NotImplementedException("CF Not implemented");
+/*            LabelWin labelWin = (LabelWin)label;
             labelWin.BackgroundImage = CollapsiblePanelResource.pinoff_withcolour;
             labelWin.FlatStyle = FlatStyle.Flat;
             //labelWin.ForeColor = Color.White;
             labelWin.BackgroundImageLayout = ImageLayout.Center;
-            labelWin.Width = 24;
+            labelWin.Width = 24;*/
         }
 
         ///<summary>
         ///</summary>
         ///<param name="label"></param>
         public virtual void ConfigurePinOnStyleLabel(ILabel label)
-        {
-            LabelWin labelWin = (LabelWin)label;
+        {throw new NotImplementedException("CF Not implemented");
+/*            LabelWin labelWin = (LabelWin)label;
             labelWin.BackgroundImage = CollapsiblePanelResource.pinon_withcolour;
             labelWin.FlatStyle = FlatStyle.Flat;
             //labelWin.ForeColor = Color.White;
             labelWin.BackgroundImageLayout = ImageLayout.Center;
-            labelWin.Width = 24;
-        }
-
-        ///<summary>
-        /// Craetes an <see cref="ICollapsiblePanelGroupControl"/>
-        ///</summary>
-        ///<returns></returns>
-        public virtual ICollapsiblePanelGroupControl CreateCollapsiblePanelGroupControl()
-        {
-            return new CollapsiblePanelGroupControlWin();
-        }
-
-        ///<summary>
-        /// Creates a <see cref="IGroupBoxGroupControl"/>
-        ///</summary>
-        ///<returns></returns>
-        public virtual IGroupBoxGroupControl CreateGroupBoxGroupControl()
-        {
-            return new GroupBoxGroupControlWin(this);
+            labelWin.Width = 24;*/
         }
 
         #endregion
@@ -840,8 +832,8 @@ namespace Habanero.Faces.Win
         ///</summary>
         ///<returns></returns>
         public virtual IBOComboBoxSelector CreateComboBoxSelector()
-        {
-            ComboBoxSelectorWin comboBoxWin = new ComboBoxSelectorWin(this);
+        {throw new NotImplementedException("CF Not implemented");
+/*            ComboBoxSelectorWin comboBoxWin = new ComboBoxSelectorWin(this);
             //Note_: This is a workaround in windows to avoid this default from breaking all the tests 
             //  because if the Thread's ApartmentState is not STA then setting the AutoCompleteSource default 
             //  gives an error
@@ -850,7 +842,7 @@ namespace Habanero.Faces.Win
                 comboBoxWin.AutoCompleteSource = AutoCompleteSource.ListItems;
                 comboBoxWin.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             }
-            return comboBoxWin;
+            return comboBoxWin;*/
         }
 
         ///<summary>
@@ -858,8 +850,8 @@ namespace Habanero.Faces.Win
         ///</summary>
         ///<returns></returns>
         public virtual IBOListBoxSelector CreateListBoxSelector()
-        {
-            return new ListBoxSelectorWin(this);
+        {throw new NotImplementedException("CF Not implemented");
+          //  return new ListBoxSelectorWin(this);
         }
 
         ///<summary>
@@ -867,8 +859,8 @@ namespace Habanero.Faces.Win
         ///</summary>
         ///<returns></returns>
         public virtual IBOCollapsiblePanelSelector CreateCollapsiblePanelSelector()
-        {
-            return new CollapsiblePanelSelectorWin(this);
+        {throw new NotImplementedException("CF Not implemented");
+         //   return new CollapsiblePanelSelectorWin(this);
         }
 
         /// <summary>
@@ -876,8 +868,8 @@ namespace Habanero.Faces.Win
         /// </summary>
         /// <returns>returns the created split container</returns>
         public virtual ISplitContainer CreateSplitContainer()
-        {
-            return new SplitContainerWin();
+        {throw new NotImplementedException("CF Not implemented");
+        //    return new SplitContainerWin();
         }
 
         /// <summary>
@@ -885,8 +877,8 @@ namespace Habanero.Faces.Win
         /// </summary>
         /// <returns></returns>
         public virtual IMainTitleIconControl CreateMainTitleIconControl()
-        {
-            return new MainTitleIconControlWin(this);
+        {throw new NotImplementedException("CF Not implemented");
+       //     return new MainTitleIconControlWin(this);
         }
 
         ///<summary>
@@ -895,12 +887,78 @@ namespace Habanero.Faces.Win
         ///</summary>
         ///<returns></returns>
         public IExtendedComboBox CreateExtendedComboBox()
-        {
-            return new ExtendedComboBoxWin(this);
+        {throw new NotImplementedException("CF Not implemented");
+         //   return new ExtendedComboBoxWin(this);
         }
 
 
 
     }
 
+    public class NullErrorProvider : IErrorProvider
+    {
+        public string GetError(IControlHabanero objControl)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ErrorIconAlignmentHabanero GetIconAlignment(IControlHabanero objControl)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetIconPadding(IControlHabanero objControl)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetError(IControlHabanero objControl, string strValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetIconAlignment(IControlHabanero objControl, ErrorIconAlignmentHabanero enmValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetIconPadding(IControlHabanero objControl, int intPadding)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateBinding()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CanExtend(object objExtendee)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int BlinkRate
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public ErrorBlinkStyleHabanero BlinkStyleHabanero
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public string DataMember
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public object DataSource
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+    }
 }

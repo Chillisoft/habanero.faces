@@ -16,42 +16,40 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
-using System.Windows.Forms;
 using Habanero.Faces.Base;
+using NUnit.Framework;
 
-namespace Habanero.Faces.Win
+namespace Habanero.Faces.Test.Base
 {
+
+
+
     /// <summary>
-    /// Represents a label
+    /// This test class tests the Label class.
     /// </summary>
-    public class LabelWin : Label, ILabel
+    public abstract class TestLabel
     {
-        /// <summary>
-        /// Gets the collection of controls contained within the control
-        /// </summary>
-        IControlCollection IControlHabanero.Controls
+        protected abstract IControlFactory GetControlFactory();
+
+
+      
+            [Test]
+        public void TestCreateLabel()
         {
-            get { return new ControlCollectionWin(base.Controls); }
+            //---------------Set up test pack-------------------
+            //---------------Execute Test ----------------------
+            ILabel myLabel = GetControlFactory().CreateLabel();
+
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(myLabel);
+
+            //---------------Tear Down -------------------------   
         }
 
-        /// <summary>
-        /// Gets or sets the anchoring style.
-        /// </summary>
-        /// <value></value>
-        Base.AnchorStyles IControlHabanero.Anchor
-        {
-            get { return (Base.AnchorStyles)base.Anchor; }
-            set { base.Anchor = (System.Windows.Forms.AnchorStyles)value; }
-        }
+   
 
-        /// <summary>
-        /// Gets or sets which control borders are docked to its parent
-        /// control and determines how a control is resized with its parent
-        /// </summary>
-        Base.DockStyle IControlHabanero.Dock
-        {
-            get { return DockStyleWin.GetDockStyle(base.Dock); }
-            set { base.Dock = DockStyleWin.GetDockStyle(value); }
-        }
+
+
+
     }
 }

@@ -216,7 +216,19 @@ namespace Habanero.Faces.Win
             }
             return null;
         }
+        internal static Control GetNextControl(this Control control, Control currentControl , bool moveForward)
+        {
+            return currentControl;
+/*            var myControl = control as Control;
+            if (myControl != null) return myControl;
 
+            var controlAdapter = control as IWinFormsControlAdapter;
+            if (controlAdapter != null)
+            {
+                return controlAdapter.WrappedControl;
+            }
+            return null;*/
+        }
         internal static Control GetControl(this IControlMapper controlMapper)
         {
             return controlMapper.Control == null ? null : controlMapper.Control.GetControl();

@@ -38,7 +38,7 @@ namespace Habanero.Faces.Win
             var checkBox = mapper.GetControl() as CheckBox;
             if (checkBox == null) return;
 
-            checkBox.CheckedChanged += delegate
+            checkBox.CheckStateChanged += delegate
             {
                 try
                 {

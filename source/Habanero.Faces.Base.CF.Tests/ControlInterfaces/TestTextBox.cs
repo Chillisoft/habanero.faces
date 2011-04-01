@@ -16,31 +16,26 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
-using System;
-using System.Drawing;
-using System.Windows.Forms;
 using Habanero.Faces.Base;
 
-namespace Habanero.Faces.Win
+
+using NUnit.Framework;
+
+namespace Habanero.Faces.Test.Base
 {
-   
 
     /// <summary>
-    /// Defines controls, which are components with visual representation
+    /// This test class tests the TextBox class.
     /// </summary>
-    public class ControlWin : Control, IControlHabanero
+    public abstract class TestTextBox
     {
-        public event EventHandler VisibleChanged;
+        protected abstract IControlFactory GetControlFactory();
 
+       
 
+               
 
-        /// <summary>
-        /// Gets the collection of controls contained within the control
-        /// </summary>  
-        IControlCollection IControlHabanero.Controls
-        {
-            get { return new ControlCollectionWin(base.Controls); }
-        }
+   
 
     }
 }

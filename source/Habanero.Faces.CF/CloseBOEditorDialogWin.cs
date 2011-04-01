@@ -5,8 +5,6 @@ using Habanero.Faces.Base;
 
 namespace Habanero.Faces.Win
 {
-
-
     /// <summary>
     /// This is a Dialog Box that is specialiased for dealing with the
     /// Closing of any form or application that is editing Business Objects.
@@ -97,8 +95,8 @@ namespace Habanero.Faces.Win
 
         private void SetSize()
         {
-            this.MinimumSize = new Size(400, 200);
-            this.Size = this.MinimumSize;
+ /*           this.MinimumSize = new Size(400, 200);
+            this.Size = this.MinimumSize;*/
         }
 /*
         ///<summary>
