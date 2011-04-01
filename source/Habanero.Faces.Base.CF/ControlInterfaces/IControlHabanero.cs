@@ -269,36 +269,24 @@ namespace Habanero.Faces.Base
         /// Gets or sets the distance, in pixels, between the top edge of the
         /// control and the top edge of its container's client area
         /// </summary>
-        
-        
-            
         int Top { get; set; }
 
         /// <summary>
         /// Gets the distance, in pixels, between the bottom edge of the
         /// control and the top edge of its container's client area
         /// </summary>
-        
-        
-            
         int Bottom { get; }
 
         /// <summary>
         /// Gets or sets the distance, in pixels, between the left edge of the
         /// control and the left edge of its container's client area
         /// </summary>
-        
-        
-            
         int Left { set; get; }
 
         /// <summary>
         /// Gets the distance, in pixels, between the right edge of the
         /// control and the left edge of its container's client area
-        /// </summary>
-        
-        
-            
+        /// </summary> 
         int Right { get; }
 
         /// <summary>
