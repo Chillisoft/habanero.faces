@@ -17,7 +17,6 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
-using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.BO;
 
@@ -27,11 +26,11 @@ namespace Habanero.Faces.Base
     /// Wraps a TextBox control in order to display and capture a property of the business object.
     /// There are some  limitations with using a TextBox for numbers.  For greater control 
     /// of user input with numbers, you should consider using a NumericUpDown 
-    /// control, failing this the appropriate <see cref="TextBoxMapperStrategy"/> can be used.
+    /// control, failing this the appropriate <see cref="ITextBoxMapperStrategy"/> can be used.
     /// </summary>
     public class TextBoxMapper : ControlMapper
     {
-        private readonly TextBox _textBox;
+        private readonly ITextBox _textBox;
         private string _oldText;
         private readonly ITextBoxMapperStrategy _textBoxMapperStrategy;
 
@@ -42,7 +41,7 @@ namespace Habanero.Faces.Base
         /// <param name="propName">The property name</param>
         /// <param name="isReadOnly">Whether this control is read only</param>
         /// <param name="factory">the control factory to be used when creating the controlMapperStrategy</param>
-        public TextBoxMapper(TextBox tb, string propName, bool isReadOnly, IControlFactory factory)
+        public TextBoxMapper(ITextBox tb, string propName, bool isReadOnly, IControlFactory factory)
             : base(tb, propName, isReadOnly, factory)
         {
             _textBox = tb;
@@ -51,7 +50,7 @@ namespace Habanero.Faces.Base
         }
 
         /// <summary>
-        /// Returns the <see cref="TextBoxMapperStrategy"/> being used by this mapper.
+        /// Returns the <see cref="ITextBoxMapperStrategy"/> being used by this mapper.
         /// </summary>
         public ITextBoxMapperStrategy TextBoxMapperStrategy
         {

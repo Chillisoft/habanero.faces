@@ -17,7 +17,6 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
-using System.Windows.Forms;
 using Habanero.Base;
 
 namespace Habanero.Faces.Base
@@ -28,9 +27,9 @@ namespace Habanero.Faces.Base
     public abstract class NumericUpDownMapper : ControlMapper
     {
         /// <summary>
-        /// Teh actual <see cref="NumericUpDown"/> control being mapped to the <see cref="IBusinessObject"/>.<see cref="IBOProp"/>
+        /// Teh actual <see cref="INumericUpDown"/> control being mapped to the <see cref="IBusinessObject"/>.<see cref="IBOProp"/>
         /// </summary>
-        protected NumericUpDown _numericUpDown;
+        protected INumericUpDown _numericUpDown;
         private readonly INumericUpDownMapperStrategy _mapperStrategy;
 
         /// <summary>
@@ -42,10 +41,10 @@ namespace Habanero.Faces.Base
         /// If so, it then becomes disabled.  If not,
         /// handlers are assigned to manage key presses, depending on the strategy assigned to this mapper.</param>
         /// <param name="factory">The control factory to be used when creating the controlMapperStrategy</param>
-        protected NumericUpDownMapper(NumericUpDown ctl, string propName, bool isReadOnly, IControlFactory factory)
+        protected NumericUpDownMapper(INumericUpDown ctl, string propName, bool isReadOnly, IControlFactory factory)
             : base(ctl, propName, isReadOnly, factory)
         {
-            _numericUpDown = (NumericUpDown)ctl;
+            _numericUpDown = (INumericUpDown)ctl;
             _mapperStrategy = factory.CreateNumericUpDownMapperStrategy();
             _mapperStrategy.ValueChanged(this);
         }

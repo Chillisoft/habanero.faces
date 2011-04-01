@@ -16,8 +16,6 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
-using System.Windows.Forms;
-
 namespace Habanero.Faces.Base
 {
     /// <summary>
@@ -26,7 +24,7 @@ namespace Habanero.Faces.Base
     /// </summary>
     public class ListComboBoxMapper : ControlMapper
     {
-        private readonly ComboBox _comboBox;
+        private readonly IComboBox _comboBox;
         private readonly IListComboBoxMapperStrategy _mapperStrategy;
 
         ///<summary>
@@ -36,10 +34,10 @@ namespace Habanero.Faces.Base
         ///<param name="propName"></param>
         ///<param name="isReadOnly"></param>
         ///<param name="factory"></param>
-        public ListComboBoxMapper(Control ctl, string propName, bool isReadOnly, IControlFactory factory)
+        public ListComboBoxMapper(IControlHabanero ctl, string propName, bool isReadOnly, IControlFactory factory)
             : base(ctl, propName, isReadOnly, factory)
         {
-            _comboBox = (ComboBox)ctl;
+            _comboBox = (IComboBox)ctl;
             _mapperStrategy = factory.CreateListComboBoxMapperStrategy();
             _mapperStrategy.AddItemSelectedEventHandler(this);
         }

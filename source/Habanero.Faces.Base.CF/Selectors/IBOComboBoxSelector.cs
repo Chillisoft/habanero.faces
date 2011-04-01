@@ -16,15 +16,13 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
-using System.Windows.Forms;
-
 namespace Habanero.Faces.Base
 {
     /// <summary>
     /// Provides an interface that is specialised for showing a collection of 
-    /// Business Objects in a <see cref="ComboBox"/> and allowing the user to select one.
+    /// Business Objects in a <see cref="IComboBox"/> and allowing the user to select one.
     /// </summary>
-    public interface IBOComboBoxSelector : IBOColSelectorControl
+    public interface IBOComboBoxSelector : IBOColSelectorControl, IComboBox
     {
 //        ///<summary>
 //        /// Returns the control factory used by this selector
@@ -35,7 +33,7 @@ namespace Habanero.Faces.Base
         /// Unfortunately due to limitations in WinForms Designer I cannot make these generic
         /// so have to have this as a different method on each interface.
         ///</summary>
-        ComboBox ComboBox { get; }
+        IComboBox ComboBox { get; }
 
         ///<summary>
         /// Gets or sets whether the current <see cref="IBOColSelectorControl.SelectedBusinessObject">SelectedBusinessObject</see> should be preserved in the selector when the 

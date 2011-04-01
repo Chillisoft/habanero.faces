@@ -17,7 +17,6 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System.Collections;
-using System.Windows.Forms;
 using Habanero.Base;
 
 namespace Habanero.Faces.Base
@@ -31,7 +30,7 @@ namespace Habanero.Faces.Base
         /// <summary>
         /// Returns the control being mapped
         /// </summary>
-        Control Control { get; }
+        IControlHabanero Control { get; }
 
         /// <summary>
         /// Returns the name of the property being edited in the control

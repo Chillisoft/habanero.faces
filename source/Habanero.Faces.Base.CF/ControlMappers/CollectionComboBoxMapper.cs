@@ -18,7 +18,6 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.Reflection;
-using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
 
@@ -36,9 +35,9 @@ namespace Habanero.Faces.Base
     public class CollectionComboBoxMapper : ControlMapper, IComboBoxMapper
     {
         /// <summary>
-        /// The actual <see cref="ComboBox"/> control that is being mapped to the Business Object Property identified by PropertyName.
+        /// The actual <see cref="IComboBox"/> control that is being mapped to the Business Object Property identified by PropertyName.
         /// </summary>
-        protected ComboBox _comboBox;
+        protected IComboBox _comboBox;
         private IComboBoxMapperStrategy _mapperStrategy;
         private readonly ComboBoxCollectionSelector _comboBoxCollectionSelector;
 
@@ -59,7 +58,7 @@ namespace Habanero.Faces.Base
         /// <param name="propName">The property name</param>
         /// <param name="isReadOnly">Whether this control is read only</param>
         /// <param name="factory">The control factory to be used when creating the controlMapperStrategy</param>
-        public CollectionComboBoxMapper(ComboBox cbx, string propName, bool isReadOnly, IControlFactory factory)
+        public CollectionComboBoxMapper(IComboBox cbx, string propName, bool isReadOnly, IControlFactory factory)
             : base(cbx, propName, isReadOnly, factory)
         {
             _comboBox = cbx;

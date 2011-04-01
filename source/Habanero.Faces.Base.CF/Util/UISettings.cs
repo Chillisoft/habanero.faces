@@ -39,7 +39,7 @@ namespace Habanero.Faces.Base
         /// to indicate whether the user has permission to right-click
         /// on the ComboBox that represents the given
         /// BusinessObject type.  This applies to all ComboBoxes in the
-        /// application that are mapped using a Habanero IComboBoxMapper,
+        /// application that are mapped using a Habanero ComboBoxMapper,
         /// but the individual XML class definition parameter settings for
         /// a field take precedence.
         /// </summary>

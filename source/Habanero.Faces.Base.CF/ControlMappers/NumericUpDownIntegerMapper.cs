@@ -17,7 +17,6 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
-using System.Windows.Forms;
 
 namespace Habanero.Faces.Base
 {
@@ -33,9 +32,10 @@ namespace Habanero.Faces.Base
         /// <param name="propName">The property name</param>
         /// <param name="isReadOnly">Whether this control is read only</param>
         /// <param name="factory">the control factory to be used when creating the controlMapperStrategy</param>
-        public NumericUpDownIntegerMapper(NumericUpDown numericUpDownControl, string propName, bool isReadOnly, IControlFactory factory)
+        public NumericUpDownIntegerMapper(INumericUpDown numericUpDownControl, string propName, bool isReadOnly, IControlFactory factory)
             : base(numericUpDownControl, propName, isReadOnly, factory)
         {
+            _numericUpDown.DecimalPlaces = 0;
             _numericUpDown.Maximum = int.MaxValue;
             _numericUpDown.Minimum = int.MinValue;
         }

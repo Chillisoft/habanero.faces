@@ -16,23 +16,21 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
-using System.Windows.Forms;
-
 namespace Habanero.Faces.Base
 {
     /// <summary>
-    /// This manager groups common logic for ComboBox objects.
+    /// This manager groups common logic for IComboBox objects.
     /// Do not use this object in working code - rather call CreateComboBox
     /// in the appropriate control factory.
     /// </summary>
     public class ComboBoxManager
     {
-        private readonly ComboBox _comboBox;
+        private readonly IComboBox _comboBox;
         /// <summary>
         /// Creates <see cref="ComboBoxManager"/>
         /// </summary>
         /// <param name="comboBox"></param>
-        public ComboBoxManager(ComboBox comboBox)
+        public ComboBoxManager(IComboBox comboBox)
         {
             _comboBox = comboBox;
 
@@ -55,7 +53,7 @@ namespace Habanero.Faces.Base
         }
 
         ///<summary>
-        /// If the <see cref="ComboBox"/> contains <see cref="ComboPair"/>s ;<br/>
+        /// If the <see cref="IComboBox"/> contains <see cref="ComboPair"/>s ;<br/>
         ///   If the <paramref name="value"/> equals a <see cref="ComboPair.Key"/> for a <see cref="ComboPair"/> then return the <see cref="ComboPair"/>;<br/>
         ///   else returns null;<br/>
         /// else return the value;<br/>
@@ -98,7 +96,7 @@ namespace Habanero.Faces.Base
         }
 
         ///<summary>
-        /// If the <see cref="ComboBox"/> contains <see cref="ComboPair"/>s <br/>
+        /// If the <see cref="IComboBox"/> contains <see cref="ComboPair"/>s <br/>
         ///   If the value is equal to the <see cref="ComboPair.Value"/> for a <see cref="ComboPair"/> then<br/>
         ///    returns the <see cref="ComboPair"/> else returns the null.<br/>
         /// Else<br/>

@@ -26,7 +26,7 @@ namespace Habanero.Faces.Base
     ///  <see cref="ICollapsiblePanelGroupControl"/>, <see cref="IBOColTabControl"/>, a <see cref="IMultiSelector{T}"/>
     ///  or an <see cref="ITreeView"/>
     ///</summary>
-    public interface IBOColSelectorControl : IBOColSelector
+    public interface IBOColSelectorControl : IBOColSelector, IControlHabanero
     {
     }
 }
