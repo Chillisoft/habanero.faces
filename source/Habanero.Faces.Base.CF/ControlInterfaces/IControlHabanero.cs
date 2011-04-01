@@ -19,6 +19,7 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Habanero.Faces.Base
 {
@@ -228,20 +229,14 @@ namespace Habanero.Faces.Base
         event EventHandler Resize;
 
         /// <summary>
-        /// Occurs when the Visible property value changes
-        /// </summary>
-        event EventHandler VisibleChanged;
-
-
-        /// <summary>
         /// Gets or sets the width of the control
         /// </summary>
         int Width { get; set; }
-
+/*
         /// <summary>
         /// Gets the collection of controls contained within the control
         /// </summary>
-        IControlCollection Controls { get; }
+        IControlCollection Controls { get; }*/
 
         /// <summary>
         /// Gets or sets a value indicating whether the control is displayed
@@ -359,6 +354,7 @@ namespace Habanero.Faces.Base
         /// and width of the client area of the control in pixels</value>
         Size ClientSize { get; set; }
 
+        Control.ControlCollection Controls { get; } 
 
         /// <summary>
         /// Gets or sets the font of the text displayed by the control

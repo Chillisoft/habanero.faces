@@ -61,6 +61,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -128,9 +129,6 @@
     <Compile Include="ControlMappers\RelationshipComboBoxMapper.cs" />
     <Compile Include="ControlMappers\TextBoxMapper.cs" />
     <Compile Include="ControlMappers\Watcher.cs" />
-    <Compile Include="DateTimePicker\DateTimePickerController.cs" />
-    <Compile Include="DateTimePicker\DateTimePickerManager.cs" />
-    <Compile Include="DateTimePicker\DateTimePickerUtil.cs" />
     <Compile Include="DefaultBODeletor.cs" />
     <Compile Include="fdafasdf.cs" />
     <Compile Include="ICanCloseBOEditorDialogue.cs" />
