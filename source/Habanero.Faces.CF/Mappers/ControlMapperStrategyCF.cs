@@ -21,13 +21,13 @@ using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.Faces.Base;
 
-namespace Habanero.Faces.Win
+namespace Habanero.Faces.CF.Mappers
 {
     /// <summary>
     /// Provides a set of behaviour strategies that can be applied to a control
     /// depending on the environment
     /// </summary>
-    public class ControlMapperStrategyWin : IControlMapperStrategy
+    public class ControlMapperStrategyCF : IControlMapperStrategy
     {
         private Control _control;
 

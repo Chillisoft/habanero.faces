@@ -20,15 +20,14 @@ using System;
 using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.Faces.Base;
-using Habanero.Util;
 
-namespace Habanero.Faces.Win
+namespace Habanero.Faces.CF
 {
     /// <summary>
     /// Provides a set of behaviour strategies that can be applied to a TextBox
     /// depending on the environment
     /// </summary>
-    internal class TextBoxMapperStrategyWin : ITextBoxMapperStrategy
+    internal class TextBoxMapperStrategyCF : ITextBoxMapperStrategy
     {
         // Assumes that one strategy is created for each control.
         // These fields exist so that the IsValidCharacter method knows
@@ -151,6 +150,34 @@ namespace Habanero.Faces.Win
                 }
             }
             return true;
+        }
+    }
+
+    //TODO brett 04 Apr 2011: This should be moved to Habanero.Base
+        /// <summary>
+    /// Provides a set of Utilities to work with types.
+    /// </summary>
+    public static class TypeUtilities
+    {
+        /// <summary>
+        /// Indicates if type is an integer type.
+        /// </summary>
+        /// <param name="type">Type to check.</param>
+        /// <returns>true if type is an integer type.</returns>
+        public static bool IsInteger(this Type type)
+        {
+            return type == typeof(int) || type == typeof(uint) || type == typeof(ushort) || type == typeof(ulong) ||
+                   type == typeof(short) || type == typeof(long) || type == typeof(byte) || type == typeof(sbyte);
+        }
+
+        /// <summary>
+        /// Indicates if type is an decimal type.
+        /// </summary>
+        /// <param name="type">Type to check.</param>
+        /// <returns>true if type is an decimal type.</returns>
+        public static bool IsDecimal(this Type type)
+        {
+            return type == typeof(decimal) || type == typeof(float) || type == typeof(double);
         }
     }
 }

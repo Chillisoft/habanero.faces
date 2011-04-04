@@ -77,10 +77,10 @@ namespace Habanero.Faces.CF
     {
         public Control WrappedControl { get; private set; }
 
-        public WinFormsControlAdapter(Control gridView)
+        public WinFormsControlAdapter(Control control)
         {
-            if (gridView == null) throw new ArgumentNullException("gridView");
-            WrappedControl = gridView;
+            if (control == null) throw new ArgumentNullException("control");
+            WrappedControl = control;
         }
 
         public bool Focus()

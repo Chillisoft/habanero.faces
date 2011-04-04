@@ -17,31 +17,24 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
-using System.Threading;
 using System.Windows.Forms;
-using Habanero.Base;
 using Habanero.Base.Exceptions;
-using Habanero.Base.Util;
-using Habanero.BO;
 using Habanero.Faces.Base;
-using Habanero.Faces.Base;
+using Habanero.Faces.CF.Mappers;
 using Habanero.Util;
-using DateTimePickerFormat=Habanero.Faces.Base.DateTimePickerFormat;
-using DialogResult=Habanero.Faces.Base.DialogResult;
-using MessageBoxButtons=Habanero.Faces.Base.MessageBoxButtons;
+using DialogResult = Habanero.Faces.Base.DialogResult;
+using MessageBoxButtons = Habanero.Faces.Base.MessageBoxButtons;
 using MessageBoxDefaultButton = System.Windows.Forms.MessageBoxDefaultButton;
-using MessageBoxIcon=Habanero.Faces.Base.MessageBoxIcon;
-using ScrollBars=System.Windows.Forms.ScrollBars;
+using MessageBoxIcon = Habanero.Faces.Base.MessageBoxIcon;
 
-namespace Habanero.Faces.Win
+namespace Habanero.Faces.CF
 {
     /// <summary>
     /// Creates controls for the System.Windows.Forms UI environment
     /// </summary>
-    public class ControlFactoryWin : IControlFactory
+    public class ControlFactoryCF : IControlFactory
     {
         //This looks like it was planned to move common functionality between Win and Giz to a 
         // manger but this has obviosly not been implemented
@@ -396,7 +389,7 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual IControlMapperStrategy CreateControlMapperStrategy()
         {
-            return new ControlMapperStrategyWin();
+            return new ControlMapperStrategyCF();
         }
 
         /// <summary>
@@ -404,9 +397,7 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual ITextBoxMapperStrategy CreateTextBoxMapperStrategy()
         {
-//TODO brett 01 Apr 2011: CF
-            throw new NotImplementedException("Not implemented for CF");
-           // return new TextBoxMapperStrategyWin();
+            return new TextBoxMapperStrategyCF();
         }
 
         /// <summary>
@@ -422,7 +413,8 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual IFormHabanero CreateForm()
         {
-            return new FormWin();
+            throw new NotImplementedException("CF Not implemented");
+            //return new FormWin();
         }
 
         /// <summary>
@@ -430,7 +422,9 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual ICheckBoxMapperStrategy CreateCheckBoxMapperStrategy()
         {
-            return new CheckBoxStrategyWin();
+
+            throw new NotImplementedException("CF Not implemented");
+            //return new CheckBoxStrategyWin();
         }
 
         /// <summary>
@@ -447,7 +441,9 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual IComboBoxMapperStrategy CreateLookupComboBoxDefaultMapperStrategy()
         {
-            return new ComboBoxDefaultMapperStrategyWin();
+
+            throw new NotImplementedException("CF Not implemented");
+            //return new ComboBoxDefaultMapperStrategyWin();
         }
 
         /// <summary>
@@ -455,7 +451,9 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual IComboBoxMapperStrategy CreateLookupKeyPressMapperStrategy()
         {
-            return new ComboBoxKeyPressMapperStrategyWin();
+
+            throw new NotImplementedException("CF Not implemented");
+            //return new ComboBoxKeyPressMapperStrategyWin();
         }
 
         /// <summary>
@@ -711,7 +709,8 @@ namespace Habanero.Faces.Win
         /// </summary>
         public virtual IControlHabanero CreateControl()
         {
-            IControlHabanero control = new ControlWin();
+            IControlHabanero control = new WinFormsControlAdapter(new Control());
+            //IControlHabanero control = new ControlWin();
             control.Size = new Size(100, 10);
             return control;
         }

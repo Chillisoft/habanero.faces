@@ -24,14 +24,13 @@ using NUnit.Framework;
 namespace Habanero.Faces.Test.Base
 {
 
-
-
     /// <summary>
     /// This class tests the DateTimePicker control.
     ///  - The issue of the control being nullable or not is tested.
     /// </summary>
     public abstract class TestDateTimePicker
     {
+        // ReSharper disable InconsistentNaming
         protected abstract void SetBaseDateTimePickerValue(IDateTimePicker dateTimePicker, DateTime value);
         protected abstract void SetBaseDateTimePickerCheckedValue(IDateTimePicker dateTimePicker, bool value);
 
@@ -410,9 +409,9 @@ namespace Habanero.Faces.Test.Base
         {
             if (dateTimePicker == null) return null;
             if (dateTimePicker.Controls.Count == 0) return null;
-            return dateTimePicker.Controls[0];
+            return dateTimePicker.Controls[0] as IControlHabanero;
         }
-
+        
         [Test]
         public void TestVisualState_NullDisplayValue()
         {

@@ -24,6 +24,7 @@ namespace Habanero.Faces.Test.Base
 {
     public abstract class TestOKCancelDialog
     {
+        // ReSharper disable InconsistentNaming
         //TODO: refactor - WIN and VWG are copied and pasted.
         protected abstract IControlFactory GetControlFactory();
 
