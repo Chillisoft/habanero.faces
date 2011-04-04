@@ -2,10 +2,11 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Habanero.Faces.Base;
+using Habanero.Faces.CF.Controls;
 using AnchorStyles = Habanero.Faces.Base.AnchorStyles;
 using DockStyle = Habanero.Faces.Base.DockStyle;
 
-namespace Habanero.Faces.Win
+namespace Habanero.Faces.CF
 {
     /// <summary>
     /// This is an interface used specificaly for adapting a any control that inherits for Control in 
@@ -87,12 +88,6 @@ namespace Habanero.Faces.Win
             return WrappedControl.Focus();
         }
 
-        public void Select()
-        {
-            throw new NotImplementedException("CF Not implemented");
-           // WrappedControl.Select();
-        }
-
         public void SuspendLayout()
         {
             WrappedControl.SuspendLayout();
@@ -113,21 +108,15 @@ namespace Habanero.Faces.Win
             WrappedControl.Dispose();
         }
 
-        public AnchorStyles Anchor
-        {
-            get { return (AnchorStyles)WrappedControl.Anchor; }
-            set { WrappedControl.Anchor = (System.Windows.Forms.AnchorStyles)value; }
-        }
-
         public int Width
         {
             get { return WrappedControl.Width; }
             set { WrappedControl.Width = value; }
         }
 
-        public IControlCollection Controls
+        public Control.ControlCollection Controls
         {
-            get { return new ControlCollectionWin(WrappedControl.Controls); }
+            get { return WrappedControl.Controls; }
         }
 
         public bool Visible
@@ -223,29 +212,6 @@ namespace Habanero.Faces.Win
             set { WrappedControl.ClientSize = value; }
         }
 
-        public bool HasChildren
-        {
-            get
-            {
-                throw new NotImplementedException("CF Not implemented");
-                //return WrappedControl.HasChildren;
-            }
-        }
-
-        public Size MaximumSize
-        {get; set;
-/*  //TODO brett 31 Mar 2011: CF          
-            get { return WrappedControl.MaximumSize; }
-            set { WrappedControl.MaximumSize = value; }*/
-        }
-
-        public Size MinimumSize
-        {
-            get; set;
-            /*    //TODO brett 31 Mar 2011: CF
-             * get { return WrappedControl.MinimumSize; }
-                        set { WrappedControl.MinimumSize = value; }*/ }
-
         public Font Font
         {
             get { return WrappedControl.Font; }
@@ -258,25 +224,10 @@ namespace Habanero.Faces.Win
             set { WrappedControl.Location = value; }
         }
 
-        public DockStyle Dock
-        {
-            get
-            {
-                throw new NotImplementedException("CF Not implemented");
-                //return DockStyleWin.GetDockStyle(WrappedControl.Dock);
-            }
-            set
-            {
-                throw new NotImplementedException("CF Not implemented");
-                //WrappedControl.Dock = DockStyleWin.GetDockStyle(value);
-            }
-        }
-
 
         public event EventHandler Click;
         public event EventHandler DoubleClick;
         public event EventHandler Resize;
-        public event EventHandler VisibleChanged;
         public event EventHandler TextChanged;
 
         public bool Equals(Control other)

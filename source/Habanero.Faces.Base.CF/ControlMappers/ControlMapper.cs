@@ -22,6 +22,7 @@ using System.Drawing;
 using System.Reflection;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
+using Habanero.Base.Util;
 using Habanero.BO;
 using Habanero.Util;
 using log4net;
@@ -462,12 +463,112 @@ namespace Habanero.Faces.Base
             return controlMapper;
         }
 
-        private static bool IsTypeOfIControlMapper(Type mapperType)
+        */
+        /// <summary>
+        /// Create a Control Mapper based on the <paramref name="mapperType"/>
+        /// </summary>
+        /// <param name="mapperType"></param>
+        /// <param name="ctl">The control to be mapped</param>
+        /// <param name="propertyName">The property name</param>
+        /// <param name="isReadOnly">Whether the control is read-only</param>
+        /// <param name="controlFactory">The control factory that is being set on the Mapper</param>
+        /// <returns>Returns a new object which is a subclass of ControlMapper</returns>
+        public static IControlMapper Create(Type mapperType, IControlHabanero ctl, string propertyName, bool isReadOnly, IControlFactory controlFactory)
         {
-            return mapperType != null 
-                   && mapperType.FindInterfaces ((type, filterCriteria) => type == typeof (IControlMapper), "").Length > 0;
-        }*/
+            IControlMapper controlMapper;
+                try
+                {
+                    controlMapper =
+                        CreateMapper(mapperType, new object[] { ctl, propertyName, isReadOnly, controlFactory });
+                }
 
+                catch (MissingMethodException)
+                {
+                    //This is to cater for older versions of custom implemented control mappers that did not have the control factory parameter
+                    controlMapper =
+                        CreateMapper(mapperType, new object[] { ctl, propertyName, isReadOnly });
+                }
+
+            return controlMapper;
+        }
+        /// <summary>
+        /// Creates a new control mapper of a specified type.  If no 'mapperTypeName'
+        /// has been specified, an appropriate mapper for standard controls will
+        /// be assigned, depending on the type of control.
+        /// </summary>
+        /// <param name="propertyName">The property name</param>
+        /// <param name="ctl">The control to be mapped</param>
+        /// <returns>Returns a new object which is a subclass of ControlMapper</returns>
+        /// <exception cref="UnknownTypeNameException">An exception is
+        /// thrown if the mapperTypeName does not provide a type that is
+        /// a subclass of the ControlMapper class.</exception>
+        public static IControlMapper Create
+            (IControlHabanero ctl, string propertyName)
+        {
+            return Create("", "", ctl, propertyName, false, GlobalUIRegistry.ControlFactory);
+        }
+        /// <summary>
+        /// Creates a new control mapper of a specified type.  If no 'mapperTypeName'
+        /// has been specified, an appropriate mapper for standard controls will
+        /// be assigned, depending on the type of control.
+        /// </summary>
+        /// <param name="mapperTypeName">The class name of the mapper type
+        /// (e.g. ComboBoxMapper).  The current namespace of this
+        /// ControlMapper class will then be prefixed to the name.</param>
+        /// <param name="mapperAssembly">The assembly where the mapper is
+        /// located</param>
+        /// <param name="ctl">The control to be mapped</param>
+        /// <param name="propertyName">The property name</param>
+        /// <param name="isReadOnly">Whether the control is read-only</param>
+        /// <returns>Returns a new object which is a subclass of ControlMapper</returns>
+        /// <exception cref="UnknownTypeNameException">An exception is
+        /// thrown if the mapperTypeName does not provide a type that is
+        /// a subclass of the ControlMapper class.</exception>
+        /// <param name="controlFactory">The control factory</param>
+        public static IControlMapper Create
+            (string mapperTypeName, string mapperAssembly, IControlHabanero ctl,
+             string propertyName, bool isReadOnly,
+             IControlFactory controlFactory)
+        {
+            if (string.IsNullOrEmpty(mapperTypeName)) mapperTypeName = "TextBoxMapper";
+
+            if (mapperTypeName == "TextBoxMapper" && !(ctl is ITextBox))
+            {
+                if (ctl is IComboBox) mapperTypeName = "LookupComboBoxMapper";
+                else if (ctl is ICheckBox) mapperTypeName = "CheckBoxMapper";
+                else if (ctl is IDateTimePicker) mapperTypeName = "DateTimePickerMapper";
+                else if (ctl is INumericUpDown) mapperTypeName = "NumericUpDownIntegerMapper";
+                else if (ctl is IExtendedComboBox) mapperTypeName = "ExtendedComboBoxMapper";
+                else
+                {
+                    throw new InvalidXmlDefinitionException
+                        (String.Format
+                             ("No suitable 'mapperType' has been provided in the class "
+                              + "definitions for the form control '{0}'.  Either add the "
+                              + "'mapperType' attribute or check that spelling and "
+                              + "capitalisation are correct.",
+                              ctl.Name));
+                }
+            }
+
+            Type mapperType;
+            if (String.IsNullOrEmpty(mapperAssembly))
+            {
+                string nspace = typeof(ControlMapper).Namespace;
+                mapperType = Type.GetType(nspace + "." + mapperTypeName);
+            }
+            else
+            {
+                mapperType = TypeLoader.LoadType(mapperAssembly, mapperTypeName);
+            }
+
+            IControlMapper controlMapper = Create(mapperType, ctl, propertyName, isReadOnly, controlFactory);
+            return controlMapper;
+        }
+        private static IControlMapper CreateMapper(Type mapperType, object [] paramargs)
+        {
+            return ReflectionUtilitiesCF.GetInstanceWithConstructorParameters(mapperType, paramargs) as IControlMapper;
+        }
         /// <summary>
         /// Returns the property value of the business object being mapped
         /// </summary>
