@@ -898,66 +898,49 @@ namespace Habanero.Faces.CF
     {
         public string GetError(IControlHabanero objControl)
         {
-            throw new NotImplementedException();
+            return string.Empty;
         }
 
         public ErrorIconAlignmentHabanero GetIconAlignment(IControlHabanero objControl)
         {
-            throw new NotImplementedException();
+            return ErrorIconAlignmentHabanero.TopLeft;
         }
 
         public int GetIconPadding(IControlHabanero objControl)
         {
-            throw new NotImplementedException();
+            return 0;
         }
 
         public void SetError(IControlHabanero objControl, string strValue)
         {
-            throw new NotImplementedException();
+
         }
 
         public void SetIconAlignment(IControlHabanero objControl, ErrorIconAlignmentHabanero enmValue)
         {
-            throw new NotImplementedException();
         }
 
         public void SetIconPadding(IControlHabanero objControl, int intPadding)
         {
-            throw new NotImplementedException();
+
         }
 
         public void UpdateBinding()
         {
-            throw new NotImplementedException();
+
         }
 
         public bool CanExtend(object objExtendee)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
-        public int BlinkRate
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
+        public int BlinkRate { get; set; }
 
-        public ErrorBlinkStyleHabanero BlinkStyleHabanero
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
+        public ErrorBlinkStyleHabanero BlinkStyleHabanero { get; set; }
 
-        public string DataMember
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
+        public string DataMember { get; set; }
 
-        public object DataSource
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
+        public object DataSource { get; set; }
     }
 }

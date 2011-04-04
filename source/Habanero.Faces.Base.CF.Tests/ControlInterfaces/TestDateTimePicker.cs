@@ -18,10 +18,10 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.Drawing;
-using Habanero.Faces.Base;
+using Habanero.Faces.Test.Base;
 using NUnit.Framework;
 
-namespace Habanero.Faces.Test.Base
+namespace Habanero.Faces.Base.CF.Tests.ControlInterfaces
 {
 
     /// <summary>
