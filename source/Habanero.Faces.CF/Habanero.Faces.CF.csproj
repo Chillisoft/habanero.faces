@@ -80,6 +80,7 @@
     <Compile Include="ControlHabaneroExtensions.cs" />
     <Compile Include="Controls\ControlCollectionCF.cs" />
     <Compile Include="Controls\WinFormsTextBoxAdapter.cs" />
+    <Compile Include="Mappers\CheckBoxStrategyCF.cs" />
     <Compile Include="Mappers\ControlMapperStrategyCF.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Mappers\TextBoxMapperStrategyCF.cs" />

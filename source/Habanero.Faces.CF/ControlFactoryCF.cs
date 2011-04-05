@@ -422,9 +422,7 @@ namespace Habanero.Faces.CF
         /// </summary>
         public virtual ICheckBoxMapperStrategy CreateCheckBoxMapperStrategy()
         {
-
-            throw new NotImplementedException("CF Not implemented");
-            //return new CheckBoxStrategyWin();
+            return new CheckBoxStrategyCF();
         }
 
         /// <summary>

@@ -10,9 +10,9 @@ namespace Habanero.Faces.CF
     /// <summary>
     /// Extension method for IControl Habanero that make it easier to work with ControlAdapters.
     /// </summary>
-    internal static class ControlHabaneroExtensions
+    public static class ControlHabaneroExtensions
     {
-        internal static Control GetControl(this IControlHabanero control)
+        public static Control GetControl(this IControlHabanero control)
         {
 
             var myControl = control as Control;
@@ -27,7 +27,7 @@ namespace Habanero.Faces.CF
         }
 
         // ReSharper restore SuspiciousTypeConversion.Global
-        internal static Control GetControl(this IControlMapper controlMapper)
+        public static Control GetControl(this IControlMapper controlMapper)
         {
             return controlMapper.Control == null ? null : controlMapper.Control.GetControl();
         }

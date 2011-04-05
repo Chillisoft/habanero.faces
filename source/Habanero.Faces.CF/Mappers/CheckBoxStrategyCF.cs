@@ -16,49 +16,40 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
+using System;
 using System.Windows.Forms;
+using Habanero.Base;
 using Habanero.Faces.Base;
 
-namespace Habanero.Faces.Win
+namespace Habanero.Faces.CF.Mappers
 {
     /// <summary>
-    /// Represents a single tab page in a TabControl
+    /// Provides a set of behaviour strategies that can be applied to a CheckBox
+    /// depending on the environment
     /// </summary>
-    public class TabPageWin : TabPage, ITabPage
+    public class CheckBoxStrategyCF : ICheckBoxMapperStrategy
     {
         /// <summary>
-        /// Constructor for <see cref="TabPageWin"/>
+        /// Adds click event handler
         /// </summary>
-        public TabPageWin()
+        /// <param name="mapper">The checkbox mapper</param>
+        public void AddClickEventHandler(CheckBoxMapper mapper)
         {
-        }
+            var checkBox = CF.ControlHabaneroExtensions.GetControl(mapper) as CheckBox;
+            if (checkBox == null) return;
 
-        /// <summary>
-        /// Gets or sets the anchoring style.
-        /// </summary>
-        /// <value></value>
-        Base.AnchorStyles IControlHabanero.Anchor
-        {
-            get { return (Base.AnchorStyles)base.Anchor; }
-            set { base.Anchor = (System.Windows.Forms.AnchorStyles)value; }
-        }
-
-        /// <summary>
-        /// Gets the collection of controls contained within the control
-        /// </summary>
-        IControlCollection IControlHabanero.Controls
-        {
-            get { return new ControlCollectionWin(base.Controls); }
-        }
-
-        /// <summary>
-        /// Gets or sets which control borders are docked to its parent
-        /// control and determines how a control is resized with its parent
-        /// </summary>
-        Base.DockStyle IControlHabanero.Dock
-        {
-            get { return DockStyleWin.GetDockStyle(base.Dock); }
-            set { base.Dock = DockStyleWin.GetDockStyle(value); }
+            checkBox.CheckStateChanged += delegate
+            {
+                try
+                {
+                    mapper.ApplyChangesToBusinessObject();
+                    mapper.UpdateControlValueFromBusinessObject();
+                }
+                catch (Exception ex)
+                {
+                    GlobalRegistry.UIExceptionNotifier.Notify(ex, "", "Error ");
+                }
+            };
         }
     }
 }
