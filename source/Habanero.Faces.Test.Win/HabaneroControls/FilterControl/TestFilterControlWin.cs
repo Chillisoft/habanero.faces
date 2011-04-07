@@ -6,6 +6,7 @@ using Habanero.Faces.Base;
 using Habanero.Faces.Win;
 using Habanero.Test;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Habanero.Faces.Test.Win.HabaneroControls
 {
@@ -61,25 +62,6 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
             //---------------Test Result -----------------------
             Assert.AreEqual("Search", ctl.FilterButton.Text);
             //---------------Tear Down -------------------------          
-        }
-
-        [Test]
-        public void TestChangeTextBoxValueAppliesFilter()
-        {
-            //---------------Set up test pack-------------------
-            IControlFactory factory = GetControlFactory();
-            IFilterControl ctl = factory.CreateFilterControl();
-            ITextBox textBox = ctl.AddStringFilterTextBox("test", "propname");
-            string text = TestUtil.GetRandomString();
-
-            bool filterFired = false;
-            ctl.Filter += delegate { filterFired = true; };
-            //---------------Assert Preconditions --------------
-            Assert.IsFalse(filterFired);
-            //---------------Execute Test ----------------------
-            textBox.Text = text;
-            //---------------Test Result -----------------------
-            Assert.IsTrue(filterFired, "The filter event should have been fired when the text was changed.");
         }
 
         [Test]
@@ -176,27 +158,6 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
             dateRangeComboBox.Text = text;
             //---------------Test Result -----------------------
             Assert.IsTrue(filterFired, "The filter event should have been fired when the text was changed.");
-        }
-
-        [Test]
-        public void TestChangeTextBoxValueDoesNotApplyFilter_InSearchMode()
-        {
-            //---------------Set up test pack-------------------
-            IControlFactory factory = GetControlFactory();
-            IFilterControl ctl = factory.CreateFilterControl();
-            ctl.FilterMode = FilterModes.Search;
-            ITextBox textBox = ctl.AddStringFilterTextBox("test", "propname");
-            string text = TestUtil.GetRandomString();
-
-            bool filterFired = false;
-            ctl.Filter += delegate { filterFired = true; };
-            //---------------Assert Preconditions --------------
-            Assert.AreEqual(FilterModes.Search, ctl.FilterMode);
-            Assert.IsFalse(filterFired);
-            //---------------Execute Test ----------------------
-            textBox.Text = text;
-            //---------------Test Result -----------------------
-            Assert.IsFalse(filterFired, "The filter event should not have been fired when the text was changed.");
         }
 
         [Test]
@@ -306,6 +267,166 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
             Assert.IsFalse(filterFired, "The filter event should not have been fired when the text was changed.");
         }
 
+				[Test]
+				public void Test_WithAddStringFilterTextBox_WhenTextBoxValueChanged_ShouldApplyFilter()
+				{
+					//---------------Set up test pack-------------------
+					IControlFactory factory = GetControlFactory();
+					IFilterControl ctl = factory.CreateFilterControl();
+					ITextBox textBox = ctl.AddStringFilterTextBox("test", "propname");
+					string text = TestUtil.GetRandomString();
+
+					bool filterFired = false;
+					ctl.Filter += delegate { filterFired = true; };
+					//---------------Assert Preconditions --------------
+					Assert.IsFalse(filterFired);
+					//---------------Execute Test ----------------------
+					textBox.Text = text;
+					//---------------Test Result -----------------------
+					Assert.IsTrue(filterFired, "The filter event should have been fired when the text was changed.");
+				}
+
+				[Test]
+				public void Test_WithAddStringFilterTextBox_WhenTextBoxValueChanged_AndInSearchMode_ShouldNotApplyFilter()
+				{
+					//---------------Set up test pack-------------------
+					IControlFactory factory = GetControlFactory();
+					IFilterControl ctl = factory.CreateFilterControl();
+					ctl.FilterMode = FilterModes.Search;
+					ITextBox textBox = ctl.AddStringFilterTextBox("test", "propname");
+					string text = TestUtil.GetRandomString();
+
+					bool filterFired = false;
+					ctl.Filter += delegate { filterFired = true; };
+					//---------------Assert Preconditions --------------
+					Assert.AreEqual(FilterModes.Search, ctl.FilterMode);
+					Assert.IsFalse(filterFired);
+					//---------------Execute Test ----------------------
+					textBox.Text = text;
+					//---------------Test Result -----------------------
+					Assert.IsFalse(filterFired, "The filter event should not have been fired when the text was changed.");
+				}
+
+				[Test]
+				public void Test_WithAddMultiplePropStringTextBox_WhenTextBoxValueChanged_ShouldApplyFilter()
+				{
+					//---------------Set up test pack-------------------
+					IControlFactory factory = GetControlFactory();
+					IFilterControl ctl = factory.CreateFilterControl();
+					ITextBox textBox = ctl.AddMultiplePropStringTextBox("test",new List<string>(){ "propname","propname2"});
+					string text = TestUtil.GetRandomString();
+
+					bool filterFired = false;
+					ctl.Filter += delegate { filterFired = true; };
+					//---------------Assert Preconditions --------------
+					Assert.IsFalse(filterFired);
+					//---------------Execute Test ----------------------
+					textBox.Text = text;
+					//---------------Test Result -----------------------
+					Assert.IsTrue(filterFired, "The filter event should have been fired when the text was changed.");
+				}
+			
+				[Test]
+				public void Test_WithAddMultiplePropStringTextBox_WhenTextBoxValueChanged_AndInSearchMode_ShouldNotApplyFilter()
+				{
+					//---------------Set up test pack-------------------
+					IControlFactory factory = GetControlFactory();
+					IFilterControl ctl = factory.CreateFilterControl();
+					ctl.FilterMode = FilterModes.Search;
+					ITextBox textBox = ctl.AddMultiplePropStringTextBox("test", new List<string>() { "propname", "propname2" });
+					string text = TestUtil.GetRandomString();
+
+					bool filterFired = false;
+					ctl.Filter += delegate { filterFired = true; };
+					//---------------Assert Preconditions --------------
+					Assert.AreEqual(FilterModes.Search, ctl.FilterMode);
+					Assert.IsFalse(filterFired);
+					//---------------Execute Test ----------------------
+					textBox.Text = text;
+					//---------------Test Result -----------------------
+					Assert.IsFalse(filterFired, "The filter event should not have been fired when the text was changed.");
+				}
+
+
+				[Test]
+				public void Test_WithAddStringFilterTextBoxFilterClause_WhenTextBoxValueChanged_ShouldApplyFilter()
+				{
+					//---------------Set up test pack-------------------
+					IControlFactory factory = GetControlFactory();
+					IFilterControl ctl = factory.CreateFilterControl();
+					ITextBox textBox = ctl.AddStringFilterTextBox("test", "propname",FilterClauseOperator.OpEquals);
+					string text = TestUtil.GetRandomString();
+
+					bool filterFired = false;
+					ctl.Filter += delegate { filterFired = true; };
+					//---------------Assert Preconditions --------------
+					Assert.IsFalse(filterFired);
+					//---------------Execute Test ----------------------
+					textBox.Text = text;
+					//---------------Test Result -----------------------
+					Assert.IsTrue(filterFired, "The filter event should have been fired when the text was changed.");
+				}
+
+				[Test]
+				public void Test_WithAddStringFilterTextBoxFilterClause_WhenTextBoxValueChanged_AndInSearchMode_ShouldNotApplyFilter()
+				{
+					//---------------Set up test pack-------------------
+					IControlFactory factory = GetControlFactory();
+					IFilterControl ctl = factory.CreateFilterControl();
+					ctl.FilterMode = FilterModes.Search;
+					ITextBox textBox = ctl.AddStringFilterTextBox("test", "propname", FilterClauseOperator.OpEquals);
+					string text = TestUtil.GetRandomString();
+
+					bool filterFired = false;
+					ctl.Filter += delegate { filterFired = true; };
+					//---------------Assert Preconditions --------------
+					Assert.AreEqual(FilterModes.Search, ctl.FilterMode);
+					Assert.IsFalse(filterFired);
+					//---------------Execute Test ----------------------
+					textBox.Text = text;
+					//---------------Test Result -----------------------
+					Assert.IsFalse(filterFired, "The filter event should not have been fired when the text was changed.");
+				}
+
+				[Test]
+				public void Test_WithAddMultiplePropStringTextBoxFilterClause_WhenTextBoxValueChanged_ShouldApplyFilter()
+				{
+					//---------------Set up test pack-------------------
+					IControlFactory factory = GetControlFactory();
+					IFilterControl ctl = factory.CreateFilterControl();
+					ITextBox textBox = ctl.AddMultiplePropStringTextBox("test", new List<string>() { "propname", "propname2" }, FilterClauseOperator.OpEquals);
+					string text = TestUtil.GetRandomString();
+
+					bool filterFired = false;
+					ctl.Filter += delegate { filterFired = true; };
+					//---------------Assert Preconditions --------------
+					Assert.IsFalse(filterFired);
+					//---------------Execute Test ----------------------
+					textBox.Text = text;
+					//---------------Test Result -----------------------
+					Assert.IsTrue(filterFired, "The filter event should have been fired when the text was changed.");
+				}
+
+				[Test]
+				public void Test_WithAddMultiplePropStringTextBoxFilterClause_WhenTextBoxValueChanged_AndInSearchMode_ShouldNotApplyFilter()
+				{
+					//---------------Set up test pack-------------------
+					IControlFactory factory = GetControlFactory();
+					IFilterControl ctl = factory.CreateFilterControl();
+					ctl.FilterMode = FilterModes.Search;
+					ITextBox textBox = ctl.AddMultiplePropStringTextBox("test", new List<string>() { "propname", "propname2" }, FilterClauseOperator.OpEquals);
+					string text = TestUtil.GetRandomString();
+
+					bool filterFired = false;
+					ctl.Filter += delegate { filterFired = true; };
+					//---------------Assert Preconditions --------------
+					Assert.AreEqual(FilterModes.Search, ctl.FilterMode);
+					Assert.IsFalse(filterFired);
+					//---------------Execute Test ----------------------
+					textBox.Text = text;
+					//---------------Test Result -----------------------
+					Assert.IsFalse(filterFired, "The filter event should not have been fired when the text was changed.");
+				}
         //
         //        [Test]
         //        public void TestAddStringFilterTextBoxTextChanged()
