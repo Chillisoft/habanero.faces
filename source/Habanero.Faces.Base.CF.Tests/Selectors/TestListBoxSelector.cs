@@ -2,8 +2,7 @@ using System;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.Faces.Base;
-
-
+using Habanero.Faces.Base.CF.Tests.Selectors;
 using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base

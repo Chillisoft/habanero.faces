@@ -22,6 +22,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using Habanero.Base.Exceptions;
 using Habanero.Faces.Base;
+using Habanero.Faces.CF.Controls;
 using Habanero.Faces.CF.Mappers;
 using Habanero.Util;
 using DialogResult = Habanero.Faces.Base.DialogResult;
@@ -41,9 +42,9 @@ namespace Habanero.Faces.CF
         //I would suggest it is remvoed Brett 24/02/2009
         //private readonly ControlFactoryManager _manager;
         //        /<summary>
-        //        / Construct <see cref="ControlFactoryWin"/>
+        //        / Construct <see cref="ControlFactoryCF"/>
         //        /</summary>
-        //        public virtual ControlFactoryWin()
+        //        public virtual ControlFactoryCF()
         //        {
         //            //_manager = new ControlFactoryManager(this);
         //        }
@@ -59,8 +60,7 @@ namespace Habanero.Faces.CF
         /// </summary>
         public virtual ITextBox CreateTextBox()
         {
-            throw new NotImplementedException("CF Not implemented");
-            //return new TextBoxWin();
+            return new WinFormsTextBoxAdapter(new TextBox());
         }
 
 

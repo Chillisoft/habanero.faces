@@ -126,7 +126,7 @@ namespace Habanero.Faces.Test.Base.Mappers
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""Sample"" assembly=""Habanero.Test"">
+				<class name=""Sample"" assembly=""Habanero.Faces.Base.CF.Tests"">
 					<property  name=""SampleID"" type=""Guid"" />
 					<property  name=""SampleText"" />
 					<property  name=""SampleText2"" compulsory=""true""/>
@@ -155,7 +155,7 @@ namespace Habanero.Faces.Test.Base.Mappers
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""Sample"" assembly=""Habanero.Test"">
+				<class name=""Sample"" assembly=""Habanero.Faces.Base.CF.Tests"">
 					<property  name=""SampleID"" type=""Guid"" />
 					<property  name=""SampleText"" />
 					<property  name=""SampleText2"" />
@@ -183,7 +183,7 @@ namespace Habanero.Faces.Test.Base.Mappers
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""Sample"" assembly=""Habanero.Test"">
+				<class name=""Sample"" assembly=""Habanero.Faces.Base.CF.Tests"">
 					<property  name=""SampleID"" type=""Guid"" />
 					<property  name=""GuidProp"" type=""Guid"" />
 					<primaryKey>
@@ -201,7 +201,7 @@ namespace Habanero.Faces.Test.Base.Mappers
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""Sample"" assembly=""Habanero.Test"">
+				<class name=""Sample"" assembly=""Habanero.Faces.Base.CF.Tests"">
 					<property  name=""SampleID"" type=""Guid"" />
 					<property  name=""SampleText"" description=""Test tooltip text""/>
 					<property  name=""SampleText2"" />
@@ -230,7 +230,7 @@ namespace Habanero.Faces.Test.Base.Mappers
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""Sample"" assembly=""Habanero.Test"">
+				<class name=""Sample"" assembly=""Habanero.Faces.Base.CF.Tests"">
 					<property  name=""SampleID"" type=""Guid"" />
 					<property  name=""SampleText"" />
 					<property  name=""SampleInt"" type=""Int32"" />

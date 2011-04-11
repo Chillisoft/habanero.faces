@@ -17,8 +17,9 @@
 //     along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 //---------------------------------------------------------------------------------
 
+using Habanero.Base;
 using Habanero.Faces.Base;
-using Habanero.Test;
+using Habanero.Faces.Base.CF.Tests;
 using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base.Mappers
@@ -39,6 +40,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         [SetUp]
         public void SetupTest()
         {
+            GlobalRegistry.LoggerFactory = new HabaneroLoggerFactoryStub();
             _textBox = GetControlFactory().CreateTextBox();
             _mapper = new TextBoxMapper(_textBox,  "ShapeName", false, GetControlFactory());
             _shape = new Shape();

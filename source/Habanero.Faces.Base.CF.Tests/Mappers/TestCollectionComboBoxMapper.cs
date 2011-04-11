@@ -5,7 +5,9 @@ using Habanero.Base.Exceptions;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
-
+using Habanero.Faces.Base.CF.Tests;
+using Habanero.Faces.Base.CF.Tests;
+using Habanero.Faces.Base.CF.Tests.Selectors;
 using NUnit.Framework;
 
 // ReSharper disable InconsistentNaming

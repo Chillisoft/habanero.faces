@@ -26,7 +26,9 @@ using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.BO.Loaders;
 using Habanero.Faces.Base;
-
+using Habanero.Faces.Base.CF.Tests;
+using Habanero.Faces.Base.CF.Tests;
+using Habanero.Faces.Base.CF.Tests.Selectors;
 using Habanero.Util;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -169,7 +171,7 @@ namespace Habanero.Faces.Test.Base.Mappers
 		protected ITextBox _txtNormal;
 		protected ITextBox _txtReadonly;
 		private ITextBox _txtReflectedProperty;
-	    //TODO brett 30 Mar 2011: CF protected Shape _shape;
+	    protected Shape _shape;
 		protected TextBoxMapper _normalMapper;
 		protected TextBoxMapper _readOnlyMapper;
 		private TextBoxMapper _reflectedPropertyMapper;
@@ -180,6 +182,7 @@ namespace Habanero.Faces.Test.Base.Mappers
 		public void SetupTestFixture()
 		{
 			BORegistry.DataAccessor = new DataAccessorInMemory();
+		    GlobalRegistry.LoggerFactory = new HabaneroLoggerFactoryStub();
 		}
 
 		[SetUp]
@@ -192,7 +195,7 @@ namespace Habanero.Faces.Test.Base.Mappers
 				(_txtReflectedProperty, "-ShapeNameGetOnly-", false, GetControlFactory());
 			_txtNormal = GetControlFactory().CreateTextBox();
 			_normalMapper = new TextBoxMapper(_txtNormal, "ShapeName", false, GetControlFactory());
-		    //TODO brett 30 Mar 2011: CF _shape = new Shape {ShapeName = "TestShapeName"};
+		    _shape = new Shape {ShapeName = "TestShapeName"};
 		}
 
 		#endregion //Setup for Tests
@@ -234,15 +237,16 @@ namespace Habanero.Faces.Test.Base.Mappers
 			Assert.AreEqual(true, controlMapper.IsReadOnly);
 			Assert.AreEqual(controlFactory, controlMapper.ControlFactory);
 		}
-/*//TODO brett 30 Mar 2011: CF
+
+
 		[Test]
 		public void Test_SetClassDef()
 		{
 			//---------------Set up test pack-------------------
-			IControlFactory controlFactory = GetControlFactory();
-			ITextBox ctl = controlFactory.CreateTextBox();
-			string propName = TestUtil.GetRandomString();
-			ControlMapperStub mapper = new ControlMapperStub(ctl, propName, true, controlFactory);
+			var controlFactory = GetControlFactory();
+			var ctl = controlFactory.CreateTextBox();
+			var propName = TestUtil.GetRandomString();
+			var mapper = new ControlMapperStub(ctl, propName, true, controlFactory);
 			//---------------Assert Precondition----------------
 
 			//---------------Execute Test ----------------------
@@ -250,7 +254,7 @@ namespace Habanero.Faces.Test.Base.Mappers
 			//---------------Test Result -----------------------
 			Assert.AreSame(_shape.ClassDef, mapper.ClassDef);
 
-		}*/
+		}
 	    #endregion //Test Mapper Creation
 
 	    #region Tests for normal mapper
@@ -259,7 +263,7 @@ namespace Habanero.Faces.Test.Base.Mappers
 	    public void TestNormalEnablesControl()
 	    {
 	        Assert.IsFalse(_txtNormal.Enabled, "A normal control should be disabled before it gets and object");
-	        //TODO brett 30 Mar 2011: CF _normalMapper.BusinessObject = _shape;
+	        _normalMapper.BusinessObject = _shape;
 	        Assert.IsTrue(_txtNormal.Enabled, "A normal control should be editable once it has an object");
 	    }
 
@@ -396,7 +400,7 @@ namespace Habanero.Faces.Test.Base.Mappers
 	    #endregion //Test Null BO
 
 	    #region TestIntRules
-
+        /* brett 11 Apr 2011: No error provider in CF
 	    [Test]
 	    public void Test_ErrorProvider_HasCorrectMessage_ForIntegerDataType_NoRule()
 	    {
@@ -512,27 +516,6 @@ namespace Habanero.Faces.Test.Base.Mappers
 	        StringAssert.Contains("The value cannot be more than 5", errorMessage);
 	    }
 
-	    [Test]
-	    public void Test_ErrorProvider_ClearsErrorMessage_AfterValidValueIsSet()
-	    {
-	        //---------------Set up test pack-------------------
-
-	        ClassDef.ClassDefs.Clear();
-	        var classDef = MyTestBO.LoadClassDefWithIntegerRule();
-	        var testBo = new MyTestBO(classDef);
-	        ControlMapperStub mapperStub = new ControlMapperStub(_txtNormal, "TestIntProp", false, GetControlFactory())
-	                                           {BusinessObject = testBo};
-	        mapperStub.TestSetPropertyValue("7");
-	        //---------------Assert Precondition----------------
-	        string errorMessage = mapperStub.ErrorProvider.GetError(_txtNormal);
-	        StringAssert.Contains("The value cannot be more than 5", errorMessage);
-	        //---------------Execute Test ----------------------
-	        mapperStub.TestSetPropertyValue("3");
-	        //---------------Test Result -----------------------
-	        errorMessage = mapperStub.ErrorProvider.GetError(_txtNormal);
-	        Assert.IsTrue(string.IsNullOrEmpty(errorMessage), errorMessage);
-	    }
-
 	    #endregion //TestIntRules
 
 	    #region TestDecimalRules
@@ -551,6 +534,7 @@ namespace Habanero.Faces.Test.Base.Mappers
 	        //---------------Test Result -----------------------
 	        StringAssert.Contains("to its specified type of 'System.Decimal'", mapperStub.ErrorProvider.GetError(_txtNormal));
 	    }
+
 
 	    [Test]
 	    public void Test_ErrorProvider_HasCorrectMessage_ForDecimalDataType()
@@ -583,75 +567,13 @@ namespace Habanero.Faces.Test.Base.Mappers
 	        string errorMessage = mapperStub.ErrorProvider.GetError(_txtNormal);
 	        Assert.IsTrue(string.IsNullOrEmpty(errorMessage));
 	    }
+*/
 
-	    [Test]
-	    public void Test_ErrorProvider_Decimal_HasCorrectMessage_LT_Min()
-	    {
-	        //---------------Set up test pack-------------------
-	        ClassDef.ClassDefs.Clear();
-	        MyBO.LoadClassDefWithDecimalRule();
-	        MyBO testBo = new MyBO();
-	        ControlMapperStub mapperStub = new ControlMapperStub(_txtNormal, "TestProp", false, GetControlFactory());
-	        mapperStub.BusinessObject = testBo;
-	        //---------------Assert Precondition----------------
-	        //---------------Execute Test ----------------------
-	        mapperStub.TestSetPropertyValue("1.05");
-	        //---------------Test Result -----------------------
-	        string errorMessage = mapperStub.ErrorProvider.GetError(_txtNormal);
-	        StringAssert.Contains("The value cannot be less than 2", errorMessage);
-	    }
 
-	    [Test]
-	    public void Test_ErrorProvider_Decimal_HasCorrectMessage_GT_Max()
-	    {
-	        //---------------Set up test pack-------------------
-
-	        ClassDef.ClassDefs.Clear();
-	        MyBO.LoadClassDefWithDecimalRule();
-	        MyBO testBo = new MyBO();
-	        ControlMapperStub mapperStub = new ControlMapperStub(_txtNormal, "TestProp", false, GetControlFactory());
-	        mapperStub.BusinessObject = testBo;
-	        //---------------Assert Precondition----------------
-	        //---------------Execute Test ----------------------
-	        mapperStub.TestSetPropertyValue("7.02");
-	        //---------------Test Result -----------------------
-	        string errorMessage = mapperStub.ErrorProvider.GetError(_txtNormal);
-	        StringAssert.Contains("The value cannot be more than 5", errorMessage);
-	    }
 
 	    #endregion //TestDecimalRules
 
 	    #region TestDateTimeRules
-
-	    [Test]
-	    public void Test_ErrorProvider_HasCorrectMessage_ForDateTimeDataType_SetToString_NoRule()
-	    {
-	        //---------------Set up test pack-------------------
-	        ClassDef.ClassDefs.Clear();
-	        MyBO.LoadClassDefWithDateTime();
-	        MyBO testBo = new MyBO();
-	        ControlMapperStub mapperStub = new ControlMapperStub(_txtNormal, "TestDateTime", false, GetControlFactory());
-	        mapperStub.BusinessObject = testBo;
-	        //---------------Execute Test ----------------------
-	        mapperStub.TestSetPropertyValue("Error");
-	        //---------------Test Result -----------------------
-	        StringAssert.Contains("It is not a type of System.DateTime", mapperStub.ErrorProvider.GetError(_txtNormal));
-	    }
-
-	    [Test]
-	    public void Test_ErrorProvider_HasCorrectMessage_ForDateTimeDataType_SetToInt_NoRule()
-	    {
-	        //---------------Set up test pack-------------------
-	        ClassDef.ClassDefs.Clear();
-	        MyBO.LoadClassDefWithDateTime();
-	        MyBO testBo = new MyBO();
-	        ControlMapperStub mapperStub = new ControlMapperStub(_txtNormal, "TestDateTime", false, GetControlFactory());
-	        mapperStub.BusinessObject = testBo;
-	        //---------------Execute Test ----------------------
-	        mapperStub.TestSetPropertyValue(5);
-	        //---------------Test Result -----------------------
-	        StringAssert.Contains("It is not a type of System.DateTime", mapperStub.ErrorProvider.GetError(_txtNormal));
-	    }
 
 	    [Test]
 	    public void TestCanSetDateTimeProp_ToNullString_NonCompulsory()
@@ -687,40 +609,6 @@ namespace Habanero.Faces.Test.Base.Mappers
 	        Assert.IsTrue(string.IsNullOrEmpty(errorMessage), "Error returned : " + errorMessage);
 	    }
 
-	    [Test]
-	    public void Test_DateTime_LT_CorrectErrorMessage()
-	    {
-	        //---------------Set up test pack-------------------
-	        ClassDef.ClassDefs.Clear();
-	        MyBO.LoadClassDefWithDateTime();
-	        MyBO testBo = new MyBO();
-	        ControlMapperStub mapperStub = new ControlMapperStub
-	            (_txtNormal, "TestDateTime2", false, GetControlFactory());
-	        mapperStub.BusinessObject = testBo;
-	        //---------------Assert Precondition----------------
-	        //---------------Execute Test ----------------------
-	        mapperStub.TestSetPropertyValue("2005/05/05");
-	        //---------------Test Result -----------------------
-	        StringAssert.Contains("The date cannot be before", mapperStub.ErrorProvider.GetError(_txtNormal));
-	    }
-
-	    [Test]
-	    public void Test_DateTime_NoErrorMessage_passesRules()
-	    {
-	        //---------------Set up test pack-------------------
-	        ClassDef.ClassDefs.Clear();
-	        MyBO.LoadClassDefWithDateTime();
-	        MyBO testBo = new MyBO();
-	        ControlMapperStub mapperStub = new ControlMapperStub
-	            (_txtNormal, "TestDateTime2", false, GetControlFactory());
-	        mapperStub.BusinessObject = testBo;
-	        //---------------Assert Precondition----------------
-	        //---------------Execute Test ----------------------
-	        mapperStub.TestSetPropertyValue("2005/06/12");
-	        //---------------Test Result -----------------------
-	        string errorMessage = mapperStub.ErrorProvider.GetError(_txtNormal);
-	        Assert.IsTrue(string.IsNullOrEmpty(errorMessage), "Error returned : " + errorMessage);
-	    }
 
 	    #endregion //TestDateTime
 
@@ -866,7 +754,7 @@ namespace Habanero.Faces.Test.Base.Mappers
 	        string errorMessage = mapperStub.ErrorProvider.GetError(_txtNormal);
 	        Assert.IsTrue(string.IsNullOrEmpty(errorMessage), "Should have no error. Error was : " + errorMessage);
 	    }
-
+        /*brett 11 Apr 2011: No error provider in CF
 	    [Test]
 	    public void TestCanSetIntProp_NullString_Compulsory()
 	    {
@@ -887,7 +775,7 @@ namespace Habanero.Faces.Test.Base.Mappers
 	            ("is a compulsory field and has no value", errorMessage,
 	             "Should have no error. Error was : " + errorMessage);
 	    }
-
+        
 	    [Test]
 	    public void TestCanSetIntProp_Null_Compulsory()
 	    {
@@ -908,7 +796,7 @@ namespace Habanero.Faces.Test.Base.Mappers
 	            ("is a compulsory field and has no value", errorMessage,
 	             "Should have no error. Error was : " + errorMessage);
 	    }
-
+        */
 	    [Test]
 	    public void TestCanSetIntProp_NullString_NotCompulsory()
 	    {

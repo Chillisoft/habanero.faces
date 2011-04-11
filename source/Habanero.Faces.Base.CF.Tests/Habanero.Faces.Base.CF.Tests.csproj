@@ -79,6 +79,9 @@
     <Compile Include="ControlInterfaces\TestButton.cs" />
     <Compile Include="ControlInterfaces\TestCheckBox.cs" />
     <Compile Include="ControlInterfaces\TestComboBox.cs" />
+    <Compile Include="Fakes\MyRelatedBo.cs" />
+    <Compile Include="Fakes\MyBO.cs" />
+    <Compile Include="Fakes\MyBOSubType.cs" />
     <Compile Include="HabaneroLoggerFactoryStub.cs" />
     <Compile Include="Mappers\TestCheckBoxMapper.cs" />
     <Compile Include="Mappers\TestCollectionComboBoxMapper.cs" />
@@ -95,7 +98,7 @@
     <Compile Include="Selectors\TestBOColSelector.cs" />
     <Compile Include="Selectors\TestComboBoxSelector.cs" />
     <Compile Include="Selectors\TestListBoxSelector.cs" />
-    <Compile Include="Shape.cs" />
+    <Compile Include="Fakes\Shape.cs" />
     <Compile Include="TestConfirmingBusinessObjectDeletor.cs" />
     <Compile Include="ControlInterfaces\TestControl.cs" />
     <Compile Include="ControlInterfaces\TestControlCollection.cs" />

@@ -27,7 +27,7 @@ namespace Habanero.Faces.CF
     /// Provides a set of behaviour strategies that can be applied to a TextBox
     /// depending on the environment
     /// </summary>
-    internal class TextBoxMapperStrategyCF : ITextBoxMapperStrategy
+    public class TextBoxMapperStrategyCF : ITextBoxMapperStrategy
     {
         // Assumes that one strategy is created for each control.
         // These fields exist so that the IsValidCharacter method knows
@@ -110,7 +110,7 @@ namespace Habanero.Faces.CF
         /// </summary>
         /// <param name="character">The character being input</param>
         /// <returns>Returns true if valid</returns>
-        internal bool IsValidCharacter(char character)
+        public bool IsValidCharacter(char character)
         {
             if (BoProp == null) return true;
             if (TextBoxControl == null) return true;

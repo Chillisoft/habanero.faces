@@ -30,7 +30,7 @@ namespace Habanero.Faces.Test.Base
         //{
         //    protected override IControlFactory GetControlFactory()
         //    {
-        //        return new ControlFactoryWin();
+        //        return new ControlFactoryCF();
         //    }
 
             

@@ -4,7 +4,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>78294fd6-6cc2-496b-970e-688c2a266b3f</ProjectGuid>
+    <ProjectGuid>{B454E0E8-BB14-46CE-A068-79A3DC228938}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Habanero.Faces.CF.Tests</RootNamespace>
@@ -15,6 +15,9 @@
     <OSVersion>5.1</OSVersion>
     <DeployDirSuffix>Habanero.Faces.CF.Tests</DeployDirSuffix>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <NativePlatformName>Windows Mobile 5.0 Pocket PC SDK</NativePlatformName>
+    <FormFactorID>
+    </FormFactorID>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,17 +45,51 @@
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Habanero.Base, Version=2.5.0.255, Culture=neutral, PublicKeyToken=1fb6a9c86f815c07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Habanero.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Habanero.BO, Version=2.5.0.255, Culture=neutral, PublicKeyToken=b7599514c88df7f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Habanero.BO.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
+    <Reference Include="nunit.framework, Version=2.5.3.9345, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Mappers\TestCheckBoxStrageyWin.cs" />
+    <Compile Include="Mappers\TestControlCollectionCF.cs" />
+    <Compile Include="Mappers\TestControlMapperWin.cs" />
+    <Compile Include="Mappers\TestTextBoxMapperWin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Habanero.Faces.Base.CF.Tests\Habanero.Faces.Base.CF.Tests.csproj">
+      <Project>{56AE140B-ED1B-43FF-8360-F0A7063A04F6}</Project>
+      <Name>Habanero.Faces.Base.CF.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Habanero.Faces.Base.CF\Habanero.Faces.Base.CF.csproj">
+      <Project>{6EECF70C-D930-4CC2-81FE-6E05E956F336}</Project>
+      <Name>Habanero.Faces.Base.CF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Habanero.Faces.CF\Habanero.Faces.CF.csproj">
+      <Project>{9FDA897E-9642-498B-8CEB-FDCE18B6C92D}</Project>
+      <Name>Habanero.Faces.CF</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>

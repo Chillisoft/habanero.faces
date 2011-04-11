@@ -22,7 +22,7 @@ using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Test.Base;
 
-namespace Habanero.Test
+namespace Habanero.Faces.Base.CF.Tests
 {
     public class Shape : BusinessObject
     {

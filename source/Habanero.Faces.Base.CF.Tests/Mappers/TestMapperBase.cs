@@ -21,6 +21,9 @@ using System;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
+using Habanero.Faces.Base.CF.Tests;
+using Habanero.Faces.Base.CF.Tests;
+using Habanero.Faces.Base.CF.Tests.Selectors;
 
 
 //using NMock;
