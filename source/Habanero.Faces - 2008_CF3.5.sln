@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.Faces.Base.CF.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.ProgrammaticBinding.CF", "..\..\..\..\Habanero.Binding\branches\v1.2_ForCF_Stargate\source\Habanero.ProgrammaticBinding.CF\Habanero.ProgrammaticBinding.CF.csproj", "{6B01839D-5C77-4699-ACF2-1AA076000F01}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.Faces.CF.Tests", "Habanero.Faces.CF.Tests\Habanero.Faces.CF.Tests.csproj", "{B454E0E8-BB14-46CE-A068-79A3DC228938}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{6B01839D-5C77-4699-ACF2-1AA076000F01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B01839D-5C77-4699-ACF2-1AA076000F01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B01839D-5C77-4699-ACF2-1AA076000F01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B454E0E8-BB14-46CE-A068-79A3DC228938}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B454E0E8-BB14-46CE-A068-79A3DC228938}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B454E0E8-BB14-46CE-A068-79A3DC228938}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B454E0E8-BB14-46CE-A068-79A3DC228938}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
