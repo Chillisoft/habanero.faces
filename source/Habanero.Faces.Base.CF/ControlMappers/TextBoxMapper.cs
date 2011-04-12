@@ -32,7 +32,7 @@ namespace Habanero.Faces.Base
     {
         private readonly ITextBox _textBox;
         private string _oldText;
-        private readonly ITextBoxMapperStrategy _textBoxMapperStrategy;
+        protected ITextBoxMapperStrategy _textBoxMapperStrategy;
 
         /// <summary>
         /// Constructor to initialise a new instance of the mapper
