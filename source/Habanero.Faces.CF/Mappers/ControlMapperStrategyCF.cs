@@ -181,7 +181,6 @@ namespace Habanero.Faces.CF.Mappers
                 var prevControl = GetPreviousControl(parentControl, currentControl);
                 if (prevControl == null)//This is the first control on the form.
                 {
-//                    return lastTabStopControl;
                     if (lastTabStopControl.TabStop) return lastTabStopControl;
                     return GetNextControlInTabOrder(parentControl, lastTabStopControl);
                 }
