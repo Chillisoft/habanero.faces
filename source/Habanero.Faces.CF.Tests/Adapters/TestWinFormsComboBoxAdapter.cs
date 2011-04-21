@@ -2,7 +2,7 @@ using System.Windows.Forms;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
-using Habanero.ProgrammaticBinding.ControlAdaptors;
+using Habanero.Faces.CF.Adapters;
 using NUnit.Framework;
 using Rhino.Mocks;
 using TestUtilities;

@@ -25,7 +25,6 @@ using Habanero.Faces.Base;
 using Habanero.Faces.CF.Adapters;
 using Habanero.Faces.CF.Controls;
 using Habanero.Faces.CF.Mappers;
-using Habanero.ProgrammaticBinding.ControlAdaptors;
 using Habanero.Util;
 using DialogResult = Habanero.Faces.Base.DialogResult;
 using MessageBoxButtons = Habanero.Faces.Base.MessageBoxButtons;

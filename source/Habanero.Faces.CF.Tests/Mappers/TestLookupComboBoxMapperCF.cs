@@ -15,6 +15,7 @@ namespace Habanero.Faces.Test.Win.Mappers
     [TestFixture]
     public class TestLookupComboBoxMapperCF : TestLookupComboBoxMapper
     {
+// ReSharper disable InconsistentNaming
         protected override IControlFactory GetControlFactory()
         {
             ControlFactoryCF factory = new ControlFactoryCF();

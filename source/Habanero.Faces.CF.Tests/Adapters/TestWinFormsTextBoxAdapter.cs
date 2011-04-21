@@ -5,8 +5,6 @@ using Habanero.Faces.Base;
 using Habanero.Faces.CF;
 using Habanero.Faces.CF.Adapters;
 using Habanero.ProgrammaticBinding;
-using Habanero.ProgrammaticBinding.ControlAdaptors;
-
 using NUnit.Framework;
 using Rhino.Mocks;
 using TestUtilities;
