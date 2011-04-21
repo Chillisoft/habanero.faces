@@ -23,7 +23,7 @@ using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
-
+using Habanero.Faces.Base.CF.Tests;
 using Habanero.Util;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -42,10 +42,17 @@ namespace Habanero.Faces.Test.Base.Mappers
         {
             _store = new DataStoreInMemory();
             BORegistry.DataAccessor = new DataAccessorInMemory(_store);
-            //TODO brett 30 Mar 2011: CF        Dictionary<string, string> collection = Sample.BOLookupCollection;
+            GlobalRegistry.LoggerFactory = new HabaneroLoggerFactoryStub();
+            var defaultClassDef = Sample.CreateDefaultClassDef();
+            ClassDef.ClassDefs.Add(defaultClassDef);
+            Dictionary<string, string> collection = Sample.BOLookupCollection;
         }
-/*//TODO brett 30 Mar 2011: CF
-
+        [SetUp]
+        public void TestSetup()
+        {
+            var defaultClassDef = Sample.CreateDefaultClassDef();
+            ClassDef.ClassDefs.Add(defaultClassDef);
+        }
         [Test]
         public virtual void TestChangeComboBoxDoesntUpdateBusinessObject()
         {
@@ -66,7 +73,6 @@ namespace Habanero.Faces.Test.Base.Mappers
             Assert.AreEqual(Sample.LookupCollection[LOOKUP_ITEM_1], s.SampleLookupID.ToString());
             //---------------Tear Down -------------------------
         }
-*/
 
         [Test]
         public void TestConstructor()
@@ -83,7 +89,7 @@ namespace Habanero.Faces.Test.Base.Mappers
 
             //---------------Tear Down -------------------------
         }
-/*//TODO brett 30 Mar 2011: CF
+
         [Test]
         public void TestSetLookupList()
         {
@@ -120,7 +126,7 @@ namespace Habanero.Faces.Test.Base.Mappers
             mapper.BusinessObject = s;
             //---------------Test Result -----------------------
             Assert.IsNotNull(cmbox.SelectedItem);
-            Assert.AreEqual(LOOKUP_ITEM_1, cmbox.SelectedItem, "Item is not set.");
+            Assert.AreEqual(LOOKUP_ITEM_1, cmbox.SelectedItem.ToString(), "Item is not set.");
             Assert.AreEqual(s.SampleLookupID.ToString(), cmbox.SelectedValue, "Value is not set");
         }
 
@@ -138,13 +144,15 @@ namespace Habanero.Faces.Test.Base.Mappers
             Sample sWithNullPropValue = new Sample();
             //---------------Assert Precondition----------------
             Assert.IsNotNull(cmbox.SelectedItem);
-            Assert.AreEqual(LOOKUP_ITEM_1, cmbox.SelectedItem, "Item is not set.");
+            Assert.AreEqual(LOOKUP_ITEM_1, cmbox.SelectedItem.ToString(), "Item is not set.");
+            /* //TODO brett 21 Apr 2011: CF Port
             Assert.AreEqual(s.SampleLookupID.ToString(), cmbox.SelectedValue, "Value is not set");
+             */
             Assert.IsTrue(string.IsNullOrEmpty(sWithNullPropValue.GetPropertyValueString("SampleLookupID")));
             //---------------Execute Test ----------------------
             mapper.BusinessObject = sWithNullPropValue;
             //---------------Test Result -----------------------
-            TestUtil.AssertStringEmpty(Convert.ToString(cmbox.SelectedItem), "cmbox.SelectedItem", "there should be no item selected");
+            Assert.IsEmpty(Convert.ToString(cmbox.SelectedItem), "cmbox.SelectedItem", "there should be no item selected");
         }
 
         [Test]
@@ -166,7 +174,8 @@ namespace Habanero.Faces.Test.Base.Mappers
             Assert.IsTrue(string.IsNullOrEmpty(Convert.ToString(cmbox.SelectedItem)));
         }
 
-        [Test]
+    /*   //TODO brett 21 Apr 2011: Port to CF
+     * [Test]
         public void TestSetBusinessObject_Null_SetBusinessObject_FillsList_BUGFIX()
         {
             //---------------Set up test pack-------------------
@@ -206,8 +215,8 @@ namespace Habanero.Faces.Test.Base.Mappers
             Assert.IsEmpty(mapper.LookupList);
         }
 
-        //TODO brett 30 Mar 2011: CF
-/*        [Test]
+
+        [Test]
         public void Test_SetLookupListNull_WhenHasItems_ShouldClearTheList()
         {
             //---------------Set up test pack-------------------
@@ -221,7 +230,7 @@ namespace Habanero.Faces.Test.Base.Mappers
             //---------------Test Result -----------------------
             Assert.IsNotNull(mapper.LookupList);
             Assert.IsEmpty(mapper.LookupList);
-        }*/
+        }
         private string GetRandomString()
         {
             return TestUtil.GetRandomString();
@@ -251,7 +260,7 @@ namespace Habanero.Faces.Test.Base.Mappers
             guidDataMapper.TryParsePropValue(collection[lookupItem], out returnValue);
             return returnValue;
         }
-/*//TODO brett 30 Mar 2011: CF
+//TODO brett 30 Mar 2011: CF
         [Test]
         public void TestApplyChangesToBusObj()
         {
@@ -269,13 +278,12 @@ namespace Habanero.Faces.Test.Base.Mappers
             //---------------Test Result -----------------------
             //            Assert.AreEqual((Guid) Sample.LookupCollection[LOOKUP_ITEM_2], s.SampleLookupID);
             Assert.AreEqual((Guid)GetGuidValue(Sample.LookupCollection, LOOKUP_ITEM_2), s.SampleLookupID);
-
-            //---------------Tear Down -------------------------
         }
 
         [Test]
         public void TestUsingPropWithLookupSource()
         {
+
             //---------------Set up test pack-------------------
             IComboBox cmbox = GetControlFactory().CreateComboBox();
             const string propName = "SampleLookup2ID";
@@ -286,6 +294,7 @@ namespace Habanero.Faces.Test.Base.Mappers
             mapper.BusinessObject = new Sample();
             cmbox.SelectedIndex = 2;
             //---------------Test Result -----------------------
+            Assert.AreEqual(2, cmbox.SelectedIndex);
             Assert.AreEqual(4, cmbox.Items.Count);
             Assert.AreSame(typeof(string), cmbox.SelectedItem.GetType());
             Assert.AreSame(typeof(string), cmbox.SelectedValue.GetType());
@@ -334,7 +343,7 @@ namespace Habanero.Faces.Test.Base.Mappers
 
             //---------------Test Result -----------------------
             Assert.AreEqual(4, cmbox.Items.Count);
-            Assert.AreEqual(LOOKUP_ITEM_2, cmbox.SelectedItem);
+            Assert.AreEqual(LOOKUP_ITEM_2, cmbox.SelectedItem.ToString());
             Assert.AreEqual(sampleToSelect.ToString(), cmbox.SelectedValue);
         }
 
@@ -355,7 +364,7 @@ namespace Habanero.Faces.Test.Base.Mappers
 
             //---------------Test Result -----------------------
             Assert.AreEqual(4, cmbox.Items.Count);
-            Assert.AreEqual(LOOKUP_ITEM_2, cmbox.SelectedItem);
+            Assert.AreEqual(LOOKUP_ITEM_2, cmbox.SelectedItem.ToString());
             Assert.AreSame(sampleToSelect, cmbox.SelectedValue);
         }
 
@@ -448,10 +457,10 @@ namespace Habanero.Faces.Test.Base.Mappers
             //---------------Tear Down -------------------------
             // This test changes the static class def, so force a reload
             ClassDef.ClassDefs.Remove(typeof(Sample));
-        }*/
+        }
     }
 
-/*//TODO brett 30 Mar 2011: CF
+//TODO brett 30 Mar 2011: CF
 
     internal class CustomAddLookupComboBoxMapperStub : LookupComboBoxMapper
     {
@@ -463,7 +472,7 @@ namespace Habanero.Faces.Test.Base.Mappers
             Sample additionalBO = new Sample { SampleText = "ExtraLookupItem" };
             col.Add(additionalBO.SampleText, additionalBO.ToString());
         }
-    }*/
+    }
 
     internal class CustomRemoveLookupComboBoxMapperStub : LookupComboBoxMapper
     {

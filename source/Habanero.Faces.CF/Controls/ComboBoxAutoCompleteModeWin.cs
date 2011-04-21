@@ -16,12 +16,12 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
-namespace Habanero.Faces.Win
+namespace Habanero.Faces.CF.Controls
 {
     public class ComboBoxAutoCompleteModeWin
     {
-/*//TODO brett 31 Mar 2011: CF
-        ///<summary>
+
+/*        ///<summary>
         /// Gets the Habanero AutoCompleteMode equivalent to the provided System.Windows.AutoCompleteMode
         ///</summary>
         ///<param name="autoCompleteMode">A System.Windows.Forms AutoCompleteMode.</param>

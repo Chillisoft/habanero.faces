@@ -2,11 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Habanero.Faces.Base;
-using Habanero.Faces.CF.Controls;
-using AnchorStyles = Habanero.Faces.Base.AnchorStyles;
-using DockStyle = Habanero.Faces.Base.DockStyle;
 
-namespace Habanero.Faces.CF
+namespace Habanero.Faces.CF.Adapters
 {
     /// <summary>
     /// This is an interface used specificaly for adapting a any control that inherits for Control in 
@@ -48,6 +45,15 @@ namespace Habanero.Faces.CF
     /// or any other such required behaviour.
     /// </summary>
     public interface IWinFormsTextBoxAdapter : ITextBox, IWinFormsControlAdapter
+    {
+    }
+    /// <summary>
+    /// This is an interface used specificaly for adapting a any control that inherits from System.Windows.Control 
+    /// so that it can be treated as an IControlHabanero and can therefore be used by Faces for Habanero.Binding,
+    /// <see cref="PanelBuilder"/>
+    /// or any other such required behaviour.
+    /// </summary>
+    public interface IWinFormsLabelAdapter : ILabel, IWinFormsControlAdapter
     {
     }
     /// <summary>

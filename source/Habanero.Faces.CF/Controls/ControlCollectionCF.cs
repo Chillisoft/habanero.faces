@@ -20,6 +20,7 @@ using System;
 using System.Collections;
 using System.Windows.Forms;
 using Habanero.Faces.Base;
+using Habanero.Faces.CF.Adapters;
 
 namespace Habanero.Faces.CF.Controls
 {

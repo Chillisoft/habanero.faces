@@ -7,6 +7,7 @@ using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
 using Habanero.Faces.Base.CF.Tests;
 using Habanero.Faces.Base.CF.Tests;
+using Habanero.Faces.Base.CF.Tests.Fakes;
 using Habanero.Faces.Base.CF.Tests.Selectors;
 using NUnit.Framework;
 
@@ -24,13 +25,17 @@ namespace Habanero.Faces.Test.Base.Mappers
         {
             _store = new DataStoreInMemory();
             BORegistry.DataAccessor = new DataAccessorInMemory(_store);
+            GlobalRegistry.LoggerFactory = new HabaneroLoggerFactoryStub();
+           
 //            Dictionary<string, string> collection = Sample.BOLookupCollection;
         }
 
         [SetUp]
         public void TestSetup()
         {
-            ClassDef.ClassDefs.Clear();
+            ClassDef.ClassDefs.Clear(); 
+            MyBO.LoadDefaultClassDef();
+            ClassDef.ClassDefs.Add( Sample.CreateDefaultClassDef());
         }
 
         [Test]
@@ -68,8 +73,8 @@ namespace Habanero.Faces.Test.Base.Mappers
             Assert.IsTrue(cmbox.Items.Contains(bo), "Second Item should be the Business Object");
         }
 
-        //TODO brett 30 Mar 2011: CF
-/*        [Test]
+
+        [Test]
         public void Test_SetBusinessObj_ShouldSetTheSelectedItemToCorrectRelatedCar()
         {
             //---------------Set up test pack-------------------
@@ -77,28 +82,32 @@ namespace Habanero.Faces.Test.Base.Mappers
             const string propName = "SampleLookupID";
             CollectionComboBoxMapper mapper = CreateCollectionComboBoxMapper(cmbox, propName);
 
-            MyBO car1;
-            MyBO car2;
+            Car car1;
+            Car car2;
             mapper.BusinessObjectCollection = GetCollectionWithTwoCars(out car1, out car2);
-            MyBO s = new MyBO { SampleLookupID = car1.CarID };
+            Sample s = new Sample { SampleLookupID = car1.CarID };
             //---------------Assert Precondition----------------
             Assert.AreEqual(2, mapper.BusinessObjectCollection.Count);
             Assert.AreEqual(3, cmbox.Items.Count);
             Assert.IsNull(cmbox.SelectedItem);
             Assert.IsNull(mapper.OwningBoPropertyName);
+            Assert.AreEqual(s.SampleLookupID, car1.CarID);
+            Assert.AreNotSame(car1, cmbox.SelectedItem, "Combo Box selected item is not set.");
             //---------------Execute Test ----------------------
             mapper.BusinessObject = s;
             //---------------Test Result -----------------------
             Assert.IsNotNull(cmbox.SelectedItem);
-            Assert.AreEqual(car1, cmbox.SelectedItem, "Combo Box selected item is not set.");
-            Assert.AreEqual(s.SampleLookupID.ToString(), cmbox.SelectedValue.ToString(), "Combo Box Value is not set");
-        }*/
+            Assert.AreSame(car1, cmbox.SelectedItem, "Combo Box selected item is not set.");
+/* //TODO brett 21 Apr 2011: CF Port
+ * Assert.IsNotNull(cmbox.SelectedValue);
+            Assert.AreEqual(s.SampleLookupID.ToString(), cmbox.SelectedValue.ToString(), "Combo Box Value is not set");*/
+        }
 
         private CollectionComboBoxMapper CreateCollectionComboBoxMapper(IComboBox cmbox, string propName)
         {
             return new CollectionComboBoxMapper(cmbox, propName, false, GetControlFactory());
         }
-/*//TODO brett 30 Mar 2011: CF
+
 
         [Test]
         public void Test_SetBusinessObj_WhenSpecificPropUsed_ShouldSetTheSelectedItemToCorrectRelatedCar()
@@ -173,12 +182,12 @@ namespace Habanero.Faces.Test.Base.Mappers
             Car car1;
             Car car2;
             mapper.BusinessObjectCollection = GetCollectionWithTwoCars(out car1, out car2);
-            string carRegNo = "MySelectedRegNo " + TestUtil.GetRandomString().Substring(0, 4);
+            var carRegNo = "MySelectedRegNo " + TestUtil.GetRandomString().Substring(0, 4);
             car1.CarRegNo = carRegNo;
             car2.CarRegNo = TestUtil.GetRandomString();
-            Sample sample = new Sample {SampleText = carRegNo};
-            BusinessObjectCollection<Car> newCol = new BusinessObjectCollection<Car>();
-            Car car3 = new Car {CarRegNo = TestUtil.GetRandomString()};
+            var sample = new Sample {SampleText = carRegNo};
+            var newCol = new BusinessObjectCollection<Car>();
+            var car3 = new Car {CarRegNo = TestUtil.GetRandomString()};
             newCol.Add(car1, car2, car3);
             mapper.BusinessObject = sample;
             //---------------Assert Precondition----------------
@@ -209,12 +218,12 @@ namespace Habanero.Faces.Test.Base.Mappers
             Car car1;
             Car car2;
             mapper.BusinessObjectCollection = GetCollectionWithTwoCars(out car1, out car2);
-            string carRegNo = "MySelectedRegNo " + TestUtil.GetRandomString().Substring(0, 4);
+            var carRegNo = "MySelectedRegNo " + TestUtil.GetRandomString().Substring(0, 4);
             car1.CarRegNo = carRegNo;
             car2.CarRegNo = TestUtil.GetRandomString();
-            Sample sample = new Sample {SampleText = carRegNo};
-            BusinessObjectCollection<Car> newCol = new BusinessObjectCollection<Car>();
-            Car car3 = new Car {CarRegNo = TestUtil.GetRandomString()};
+            var sample = new Sample {SampleText = carRegNo};
+            var newCol = new BusinessObjectCollection<Car>();
+            var car3 = new Car {CarRegNo = TestUtil.GetRandomString()};
             newCol.Add(car2, car3);
             mapper.BusinessObject = sample;
             //---------------Assert Precondition----------------
@@ -230,43 +239,6 @@ namespace Habanero.Faces.Test.Base.Mappers
         }
 
         [Test]
-        [Ignore("This needs to be determined what the correct action is here, different test result for Win/VWG")]
-        //TODO Mark 11 Jan 2010: Ignored Test - This needs to be determined what the correct action is here, different test result for Win/VWG
-        public void
-            Test_BusinessObjectCollection_WhenSet_WithNewCollection_WhenItemAlreadySelected_AndDifferentMatchInNewList_ShouldSelectNewMatch
-            ()
-        {
-            //---------------Set up test pack-------------------
-            IComboBox cmbox = GetControlFactory().CreateComboBox();
-            const string propName = "SampleText";
-            var mapper = CreateCollectionComboBoxMapper(cmbox, propName);
-            mapper.OwningBoPropertyName = "CarRegNo";
-
-            Car car1;
-            Car car2;
-            mapper.BusinessObjectCollection = GetCollectionWithTwoCars(out car1, out car2);
-            string carRegNo = "MySelectedRegNo " + TestUtil.GetRandomString().Substring(0, 4);
-            car1.CarRegNo = carRegNo;
-            car2.CarRegNo = TestUtil.GetRandomString();
-            Sample sample = new Sample {SampleText = carRegNo};
-            BusinessObjectCollection<Car> newCol = new BusinessObjectCollection<Car>();
-            Car car3 = new Car {CarRegNo = carRegNo};
-            newCol.Add(car2, car3);
-            mapper.BusinessObject = sample;
-            //---------------Assert Precondition----------------
-            Assert.AreEqual(2, mapper.BusinessObjectCollection.Count);
-            Assert.AreEqual(3, cmbox.Items.Count);
-            Assert.AreEqual(car1, cmbox.SelectedItem, "Combo Box selected item should be set.");
-            Assert.AreEqual("CarRegNo", mapper.OwningBoPropertyName);
-            //---------------Execute Test ----------------------
-            mapper.BusinessObjectCollection = newCol;
-            //---------------Test Result -----------------------
-            Assert.IsNotNull(cmbox.SelectedItem);
-            Assert.AreEqual(car3, cmbox.SelectedItem, "Combo Box selected item should now be the new match.");
-            Assert.AreSame(carRegNo, sample.SampleText);
-        }
-
-        [Test]
         public virtual void Test_ChangeComboBoxDoesntUpdateBusinessObject()
         {
             //---------------Set up test pack-------------------
@@ -277,49 +249,49 @@ namespace Habanero.Faces.Test.Base.Mappers
             Car car1;
             Car car2;
             mapper.BusinessObjectCollection = GetCollectionWithTwoCars(out car1, out car2);
-            Sample s = new Sample {SampleLookupID = car1.CarID};
+            var s = new Sample {SampleLookupID = car1.CarID};
             mapper.BusinessObject = s;
+            //---------------Assert Precondition----------------
+
+            Assert.AreEqual(car1.CarID.ToString(), s.SampleLookupID.ToString());
             //---------------Execute Test ----------------------
             cmbox.SelectedItem = car2;
             //---------------Test Result -----------------------
+            Assert.AreNotEqual(car2.ID.ToString(), s.SampleLookupID.ToString());
             Assert.AreEqual(car1.CarID.ToString(), s.SampleLookupID.ToString());
         }
 
-        protected static BusinessObjectCollection<Car> GetCollectionWithTwoCars(out Car car1, out Car car2)
-        {
-            car1 = new Car();
-            car2 = new Car();
-            return new BusinessObjectCollection<Car> {car1, car2};
-        }
 
         [Test]
         public void
             Test_ResetBusinessObj_WhenHasNullValueForProperty_WhenPreviousBOHadAValue_ShouldSetSelectedItemNull_BUGFIX()
         {
             //---------------Set up test pack-------------------
-            IComboBox cmbox = GetControlFactory().CreateComboBox();
+            var cmbox = GetControlFactory().CreateComboBox();
             const string propName = "SampleLookupID";
-            CollectionComboBoxMapper mapper = CreateCollectionComboBoxMapper(cmbox, propName);
+            var mapper = CreateCollectionComboBoxMapper(cmbox, propName);
 
             Car car1;
             Car car2;
             mapper.BusinessObjectCollection = GetCollectionWithTwoCars(out car1, out car2);
-            Sample s = new Sample {SampleLookupID = car1.CarID};
+            var s = new Sample {SampleLookupID = car1.CarID};
 
             mapper.BusinessObject = s;
-            Sample sWithNullPropValue = new Sample();
+            var sWithNullPropValue = new Sample();
             //---------------Assert Precondition----------------
             Assert.IsNotNull(cmbox.SelectedItem);
             Assert.AreEqual(car1, cmbox.SelectedItem, "Combo Box selected item is not set.");
+            Assert.IsNotNull(s.SampleLookupID);
+            /* //TODO brett 21 Apr 2011: CF Port
+            Assert.IsNotNull(cmbox.SelectedValue);
             Assert.AreEqual(s.SampleLookupID.ToString(), cmbox.SelectedValue.ToString(), "Combo Box Value is not set");
-
+            */
             Assert.IsNull(sWithNullPropValue.SampleLookupID);
             //---------------Execute Test ----------------------
             mapper.BusinessObject = sWithNullPropValue;
             //---------------Test Result -----------------------
-//            Assert.IsNull(cmbox.SelectedItem);
-            TestUtil.AssertStringEmpty(Convert.ToString(cmbox.SelectedItem), "cmbox.SelectedItem",
-                                       "there should be no item selected");
+            Assert.IsEmpty(Convert.ToString(cmbox.SelectedItem), "cmbox.SelectedItem",
+                           "there should be no item selected");
         }
 
         [Test]
@@ -348,9 +320,9 @@ namespace Habanero.Faces.Test.Base.Mappers
                 StringAssert.Contains(
                     "The BusinessObjectCollection is null in the CollectionComboBoxMapper when the BusinessObject is set ",
                     ex.Message);
-                StringAssert.Contains(
+/*                StringAssert.Contains(
                     "The BusinessObjectCollection is null in the CollectionComboBoxMapper when the BusinessObject is set ",
-                    ex.DeveloperMessage);
+                    ex.DeveloperMessage);*/
             }
         }
 
@@ -371,7 +343,7 @@ namespace Habanero.Faces.Test.Base.Mappers
             //---------------Test Result -----------------------
             Assert.IsTrue(string.IsNullOrEmpty(Convert.ToString(cmbox.SelectedItem)));
         }
-*/
+
 
         [Test]
         public void TestSetBusinessObject_Null_NullLookupListSet_DoesNotRaiseError_BUGFIX()
@@ -456,6 +428,12 @@ namespace Habanero.Faces.Test.Base.Mappers
             Assert.AreEqual(4, cmbox.Items.Count);
         }*/
 
+        protected static BusinessObjectCollection<Car> GetCollectionWithTwoCars(out Car car1, out Car car2)
+        {
+            car1 = new Car();
+            car2 = new Car();
+            return new BusinessObjectCollection<Car> { car1, car2 };
+        }
         private static object LastComboBoxItem(IComboBox cmbox)
         {
             return cmbox.Items[cmbox.Items.Count - 1];

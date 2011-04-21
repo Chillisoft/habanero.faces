@@ -7,9 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.Faces.CF", "Habane
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.Faces.Base.CF.Tests", "Habanero.Faces.Base.CF.Tests\Habanero.Faces.Base.CF.Tests.csproj", "{56AE140B-ED1B-43FF-8360-F0A7063A04F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.Faces.CF.Tests", "Habanero.Faces.CF.Tests\Habanero.Faces.CF.Tests.csproj", "{B454E0E8-BB14-46CE-A068-79A3DC228938}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.ProgrammaticBinding.CF", "..\..\..\..\Habanero.Binding\branches\v1.2_ForCF_Stargate\source\Habanero.ProgrammaticBinding.CF\Habanero.ProgrammaticBinding.CF.csproj", "{6B01839D-5C77-4699-ACF2-1AA076000F01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.Faces.CF.Tests", "Habanero.Faces.CF.Tests\Habanero.Faces.CF.Tests.csproj", "{B454E0E8-BB14-46CE-A068-79A3DC228938}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestUtilities", "TestUtilities\TestUtilities.csproj", "{27F84D98-8EE8-4D86-A6CA-D4C2C80802CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,14 +31,18 @@ Global
 		{56AE140B-ED1B-43FF-8360-F0A7063A04F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56AE140B-ED1B-43FF-8360-F0A7063A04F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56AE140B-ED1B-43FF-8360-F0A7063A04F6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6B01839D-5C77-4699-ACF2-1AA076000F01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6B01839D-5C77-4699-ACF2-1AA076000F01}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6B01839D-5C77-4699-ACF2-1AA076000F01}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6B01839D-5C77-4699-ACF2-1AA076000F01}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B454E0E8-BB14-46CE-A068-79A3DC228938}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B454E0E8-BB14-46CE-A068-79A3DC228938}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B454E0E8-BB14-46CE-A068-79A3DC228938}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B454E0E8-BB14-46CE-A068-79A3DC228938}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B01839D-5C77-4699-ACF2-1AA076000F01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B01839D-5C77-4699-ACF2-1AA076000F01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B01839D-5C77-4699-ACF2-1AA076000F01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B01839D-5C77-4699-ACF2-1AA076000F01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27F84D98-8EE8-4D86-A6CA-D4C2C80802CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27F84D98-8EE8-4D86-A6CA-D4C2C80802CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27F84D98-8EE8-4D86-A6CA-D4C2C80802CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27F84D98-8EE8-4D86-A6CA-D4C2C80802CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

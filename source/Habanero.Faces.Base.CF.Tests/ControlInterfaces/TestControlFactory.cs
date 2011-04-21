@@ -26,6 +26,7 @@ using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
 using NUnit.Framework;
 using Rhino.Mocks;
+using TestUtilities;
 
 namespace Habanero.Faces.Test.Base
 {
@@ -483,12 +484,12 @@ namespace Habanero.Faces.Test.Base
     {
         public static string GetRandomString()
         {
-            return "";
+            return RandomValueGenerator.GetRandomString();
         }
 
         public static int GetRandomInt(int min, int max)
         {
-            return 1;
+            return RandomValueGenerator.GetRandomInt(min, max);
         }
     }
 }

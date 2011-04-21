@@ -22,8 +22,10 @@ using System.Reflection;
 using System.Windows.Forms;
 using Habanero.Base.Exceptions;
 using Habanero.Faces.Base;
+using Habanero.Faces.CF.Adapters;
 using Habanero.Faces.CF.Controls;
 using Habanero.Faces.CF.Mappers;
+using Habanero.ProgrammaticBinding.ControlAdaptors;
 using Habanero.Util;
 using DialogResult = Habanero.Faces.Base.DialogResult;
 using MessageBoxButtons = Habanero.Faces.Base.MessageBoxButtons;
@@ -430,8 +432,7 @@ namespace Habanero.Faces.CF
         /// </summary>
         public virtual IListComboBoxMapperStrategy CreateListComboBoxMapperStrategy()
         {
-            throw new NotImplementedException("CF Not implemented");
-            //return new ListComboBoxMapperStrategyWin();
+            return new ListComboBoxMapperStrategyCF();
         }
 
         /// <summary>
@@ -440,8 +441,8 @@ namespace Habanero.Faces.CF
         public virtual IComboBoxMapperStrategy CreateLookupComboBoxDefaultMapperStrategy()
         {
 
-            throw new NotImplementedException("CF Not implemented");
-            //return new ComboBoxDefaultMapperStrategyWin();
+           // throw new NotImplementedException("CF Not implemented");
+            return new ComboBoxDefaultMapperStrategyCF();
         }
 
         /// <summary>
@@ -450,8 +451,7 @@ namespace Habanero.Faces.CF
         public virtual IComboBoxMapperStrategy CreateLookupKeyPressMapperStrategy()
         {
 
-            throw new NotImplementedException("CF Not implemented");
-            //return new ComboBoxKeyPressMapperStrategyWin();
+            return new ComboBoxKeyPressMapperStrategyCF();
         }
 
         /// <summary>
@@ -521,7 +521,8 @@ namespace Habanero.Faces.CF
         /// </summary>
         public virtual IComboBox CreateComboBox()
         {
-            throw new NotImplementedException("CF Not implemented");
+
+            return new WinFormsComboBoxAdapter(new ComboBox());
 /*            ComboBoxWin comboBoxWin = new ComboBoxWin();
             //Note_: This is a workaround in windows to avoid this default from breaking all the tests because if the Thread's ApartmentState is not STA then setting the AutoCompleteSource default gives an error
             if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA)
@@ -626,22 +627,20 @@ namespace Habanero.Faces.CF
         /// <param name="isBold">Whether the text appears in bold font</param>
         public virtual ILabel CreateLabel(string labelText, bool isBold)
         {
-            throw new NotImplementedException("CF Not implemented");
-/*            LabelWin label = (LabelWin) CreateLabel();
+            var label = new Label();
             label.Text = labelText;
-            label.FlatStyle = FlatStyle.System;
             if (isBold)
             {
-                label.Font = new Font(label.Font, FontStyle.Bold);
+                label.Font = new Font(label.Font.Name, label.Font.Size, FontStyle.Bold);
             }
-            label.Width = label.PreferredWidth;
+            //label.Width = label.PreferredWidth;
             if (isBold)
             {
                 label.Width += 10;
             }
-            label.TextAlign = ContentAlignment.MiddleLeft;
+            label.TextAlign = ContentAlignment.TopCenter;
             label.TabStop = false;
-            return label;*/
+            return new WinFormsLabelAdapter(label);
         }
 
         /// <summary>

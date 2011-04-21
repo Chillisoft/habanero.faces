@@ -79,10 +79,12 @@
     <Compile Include="ControlInterfaces\TestButton.cs" />
     <Compile Include="ControlInterfaces\TestCheckBox.cs" />
     <Compile Include="ControlInterfaces\TestComboBox.cs" />
+    <Compile Include="Fakes\Car.cs" />
     <Compile Include="Fakes\MyRelatedBo.cs" />
     <Compile Include="Fakes\MyBO.cs" />
     <Compile Include="Fakes\MyBOSubType.cs" />
     <Compile Include="HabaneroLoggerFactoryStub.cs" />
+    <Compile Include="Fakes\Sample.cs" />
     <Compile Include="Mappers\TestCheckBoxMapper.cs" />
     <Compile Include="Mappers\TestCollectionComboBoxMapper.cs" />
     <Compile Include="Mappers\TestControlMapper.cs" />
@@ -126,6 +128,10 @@
     <ProjectReference Include="..\Habanero.Faces.Base.CF\Habanero.Faces.Base.CF.csproj">
       <Project>{6EECF70C-D930-4CC2-81FE-6E05E956F336}</Project>
       <Name>Habanero.Faces.Base.CF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestUtilities\TestUtilities.csproj">
+      <Project>{27F84D98-8EE8-4D86-A6CA-D4C2C80802CB}</Project>
+      <Name>TestUtilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />

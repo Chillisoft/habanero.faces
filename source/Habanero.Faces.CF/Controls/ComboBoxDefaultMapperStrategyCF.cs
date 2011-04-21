@@ -20,18 +20,40 @@ using System;
 using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.Faces.Base;
-using KeyPressEventHandler = System.Windows.Forms.KeyPressEventHandler;
 
-namespace Habanero.Faces.Win
+namespace Habanero.Faces.CF.Controls
 {
     /// <summary>
     /// Provides a set of behaviour strategies that can be applied to a lookup ComboBox
-    /// depending on the environment
+    /// depending on the environment.
+    /// For Windows this provides the interaction where the Business Object is 
+    /// updates as soon as a new item is selected from the Combo Box.
     /// </summary>
-    internal class ComboBoxKeyPressMapperStrategyWin : IComboBoxMapperStrategy
+    public class ComboBoxDefaultMapperStrategyCF : IComboBoxMapperStrategy
     {
-        private const int ENTER_KEY_CHAR = 13;
         private IComboBoxMapper _mapper;
+
+        public void AddItemSelectedEventHandler(IComboBoxMapper mapper)
+        {
+            _mapper = mapper;
+            var comboBox = mapper.GetControl() as ComboBox;
+            if (comboBox == null) return;
+
+            comboBox.SelectedIndexChanged += SelectIndexChangedHandler;
+            _mapper.SelectedIndexChangedHandler = SelectIndexChangedHandler;
+        }
+
+        private void SelectIndexChangedHandler(object sender, EventArgs e)
+        {
+            try
+            {
+                _mapper.ApplyChangesToBusinessObject();
+            }
+            catch (Exception ex)
+            {
+                GlobalRegistry.UIExceptionNotifier.Notify(ex, "", "Error");
+            }
+        }
 
         /// <summary>
         /// Removes event handlers previously assigned to the ComboBox
@@ -39,13 +61,12 @@ namespace Habanero.Faces.Win
         /// <param name="mapper">The mapper for the lookup ComboBox</param>
         public void RemoveCurrentHandlers(IComboBoxMapper mapper)
         {
-
             _mapper = mapper;
-            var comboBoxWin = mapper.GetControl() as ComboBox;
-            if (comboBoxWin != null)
-            {
-                comboBoxWin.SelectedIndexChanged -= mapper.SelectedIndexChangedHandler;
-            }
+            var comboBox = mapper.GetControl() as ComboBox;
+            if (comboBox == null) return;
+
+            comboBox.SelectedIndexChanged -= SelectIndexChangedHandler;
+            _mapper.SelectedIndexChangedHandler = null;
         }
 
         /// <summary>
@@ -54,32 +75,7 @@ namespace Habanero.Faces.Win
         /// <param name="mapper">The mapper for the lookup ComboBox</param>
         public void AddHandlers(IComboBoxMapper mapper)
         {
-            _mapper = mapper;
-            var comboBoxWin = mapper.GetControl();
-            if (comboBoxWin != null)
-            {
-                comboBoxWin.KeyPress += ComboBoxWinOnKeyPressHandler();
-            }
+            AddItemSelectedEventHandler(mapper);
         }
-
-        private KeyPressEventHandler ComboBoxWinOnKeyPressHandler()
-        {
-            return delegate(object sender, System.Windows.Forms.KeyPressEventArgs e)
-                       {
-                           try
-                           {
-                               if (e.KeyChar == ENTER_KEY_CHAR)
-                               {
-                                   _mapper.ApplyChangesToBusinessObject();
-                                   _mapper.UpdateControlValueFromBusinessObject();
-                               }
-                           }
-                           catch (Exception ex)
-                           {
-                               GlobalRegistry.UIExceptionNotifier.Notify(ex, "", "Error ");
-                           }
-                       };
-        }
-
     }
 }
