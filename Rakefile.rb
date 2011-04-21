@@ -25,15 +25,13 @@ msbuild_settings = {
 }
 
 #------------------------dependency settings---------------------
-$habanero_version = 'trunk'
+$habanero_version = 'branches/v2.6-DotNet2CompactFramework'
 require 'rake-habanero.rb'
 
-$smooth_version = 'trunk'
-require 'rake-smooth.rb'
 
 #------------------------project settings------------------------
-$basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/Faces/trunk'
-$solution = "source/Habanero.Faces - 2010.sln"
+$basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/Faces/branches/V2.6-CF_Stargate'
+$solution = "source/Habanero.Faces - 2008_CF3.5.sln"
 
 #______________________________________________________________________________
 #---------------------------------TASKS----------------------------------------
@@ -41,8 +39,8 @@ $solution = "source/Habanero.Faces - 2010.sln"
 desc "Runs the build all task"
 task :default => [:build_all]
 
-desc "Rakes habanero+smooth, builds Faces"
-task :build_all => [:create_temp, :rake_habanero, :rake_smooth, :build, :delete_temp]
+desc "Rakes habanero, builds Faces"
+task :build_all => [:create_temp, :rake_habanero, :build, :delete_temp]
 
 desc "Builds Faces, including tests"
 task :build => [:clean, :updatelib, :msbuild, :test, :commitlib]
@@ -73,19 +71,15 @@ task :updatelib => :update_lib_from_svn do
 	FileUtils.cp Dir.glob('temp/bin/Habanero.DB.dll'), 'lib'
 	FileUtils.cp Dir.glob('temp/bin/Habanero.DB.pdb'), 'lib'
 	FileUtils.cp Dir.glob('temp/bin/Habanero.DB.xml'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.BO.dll'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.BO.pdb'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.DB.dll'), 'lib'	
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.DB.pdb'), 'lib'	
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.dll'), 'lib'	
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.pdb'), 'lib'	
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.Structure.dll'), 'lib'	
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.Structure.pdb'), 'lib'	
-	
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Smooth.dll'), 'lib'	
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Smooth.pdb'), 'lib'	
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Naked.dll'), 'lib'	
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Naked.pdb'), 'lib'	
+#	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.BO.dll'), 'lib'
+#	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.BO.pdb'), 'lib'
+#	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.DB.dll'), 'lib'	
+#	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.DB.pdb'), 'lib'	
+#	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.dll'), 'lib'	
+#	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.pdb'), 'lib'	
+#	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.Structure.dll'), 'lib'	
+#	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.Structure.pdb'), 'lib'
+
 end
 
 desc "Builds the solution with msbuild"
@@ -98,7 +92,7 @@ end
 desc "Runs the tests"
 nunit :test do |nunit|
 	puts cyan("Running tests")
-	nunit.assemblies 'bin\Habanero.Faces.Test.Win.dll','bin\Habanero.Faces.Test.VWG.dll','bin\Habanero.Faces.Test.Base.dll'
+	nunit.assemblies 'bin/Habanero.Faces.CF.Tests.dll', 'bin/Habanero.Faces.Base.CF.Tests.dll'
 end
 
 svn :commitlib do |s|
