@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using Habanero.Base;
+using Habanero.Base.DataMappers;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
@@ -242,7 +243,7 @@ namespace Habanero.Faces.Test.Base.Mappers
 
         protected static object GetGuidValue(IDictionary<string, string> collection, string lookupItem)
         {
-            BOPropGuidDataMapper guidDataMapper = new BOPropGuidDataMapper();
+            GuidDataMapper guidDataMapper = new GuidDataMapper();
             object returnValue;
             guidDataMapper.TryParsePropValue(collection[lookupItem], out returnValue);
             return returnValue;
