@@ -1142,21 +1142,21 @@ namespace Habanero.Faces.Test.Base.Grid
 
         protected static BusinessObjectCollection<MyBO> CreateCollectionWith_4_Objects()
         {
-            MyBO cp = new MyBO {TestProp = "b" + TestUtil.GetRandomString()};
-            MyBO cp2 = new MyBO { TestProp = "d" + TestUtil.GetRandomString() };
-            MyBO cp3 = new MyBO { TestProp = "c" + TestUtil.GetRandomString() };
-            MyBO cp4 = new MyBO { TestProp = "a" + TestUtil.GetRandomString() };
+            MyBO cp = new MyBO {TestProp = "b" + TestUtil.GetRandomString(20)};
+            MyBO cp2 = new MyBO { TestProp = "d" + TestUtil.GetRandomString(20) };
+            MyBO cp3 = new MyBO { TestProp = "c" + TestUtil.GetRandomString(20) };
+            MyBO cp4 = new MyBO { TestProp = "a" + TestUtil.GetRandomString(20) };
             return new BusinessObjectCollection<MyBO> {{cp, cp2, cp3, cp4}};
         }
         protected static BusinessObjectCollection<MyBO> CreateCollectionWith_4_SavedObjects()
         {
-            MyBO cp = new MyBO { TestProp = "b" + TestUtil.GetRandomString() };
+            MyBO cp = new MyBO { TestProp = "b" + TestUtil.GetRandomString(20) };
             cp.Save();
-            MyBO cp2 = new MyBO { TestProp = "d" + TestUtil.GetRandomString() };
+            MyBO cp2 = new MyBO { TestProp = "d" + TestUtil.GetRandomString(20) };
             cp2.Save();
-            MyBO cp3 = new MyBO { TestProp = "c" + TestUtil.GetRandomString() };
+            MyBO cp3 = new MyBO { TestProp = "c" + TestUtil.GetRandomString(20) };
             cp3.Save();
-            MyBO cp4 = new MyBO { TestProp = "a" + TestUtil.GetRandomString() };
+            MyBO cp4 = new MyBO { TestProp = "a" + TestUtil.GetRandomString(20) };
             cp4.Save();
             return new BusinessObjectCollection<MyBO> {{cp, cp2, cp3, cp4}};
         }
