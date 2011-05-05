@@ -42,6 +42,7 @@ namespace Habanero.Faces.Win
                 base.Value = value;
             };
             _manager = new DateTimePickerManager(controlFactory, this, valueGetter, valueSetter);
+        	_manager.ValueChanged += (sender, args) => base.OnValueChanged(args);
         }
 
         /// <summary>
@@ -102,8 +103,12 @@ namespace Habanero.Faces.Win
         ///<param name="eventargs">An <see cref="T:System.EventArgs" /> that contains the event data. </param>
         protected override void OnValueChanged(EventArgs eventargs)
         {
-            _manager.OnValueChanged(eventargs);
-            base.OnValueChanged(eventargs);
+			if (_manager != null)
+			{
+				//The base OnValueChanged will be called by the _manager.
+				_manager.OnValueChanged(eventargs);
+			}
+            else base.OnValueChanged(eventargs);
         }
 
         ///<summary>

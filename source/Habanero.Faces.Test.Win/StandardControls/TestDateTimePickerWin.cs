@@ -22,7 +22,13 @@ namespace Habanero.Faces.Test.Win.StandardControls
             picker.Checked = value;
         }
 
-        protected override IControlFactory GetControlFactory()
+    	protected override void SubscribeToBaseValueChangedEvent(IDateTimePicker dateTimePicker, EventHandler onValueChanged)
+    	{
+            System.Windows.Forms.DateTimePicker picker = (System.Windows.Forms.DateTimePicker)dateTimePicker;
+            picker.ValueChanged += onValueChanged;
+    	}
+
+    	protected override IControlFactory GetControlFactory()
         {
             return new ControlFactoryWin();
         }
@@ -40,6 +46,14 @@ namespace Habanero.Faces.Test.Win.StandardControls
         protected override EventArgs GetKeyDownEventArgsForOtherKey()
         {
             return new System.Windows.Forms.KeyEventArgs(System.Windows.Forms.Keys.A);
+        }
+
+		//TODO: Add To Known Issues: There is no event that responds to changing the value of the Checkbox on the control.
+        [Test]
+		[Ignore("This is a known issue. There is no event that responds to changing the value of the Checkbox on the control")]
+        public override void Test_BaseChecked_WhenSetToFalse_ShouldFireValueChangedEvent()
+        {
+        	
         }
 
         [Test, Ignore("Only for visual testing")]
