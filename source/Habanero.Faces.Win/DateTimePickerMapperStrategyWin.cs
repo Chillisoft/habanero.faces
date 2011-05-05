@@ -34,12 +34,20 @@ namespace Habanero.Faces.Win
 
         public void AddUpdateBoPropOnValueChangedHandler(DateTimePickerMapper mapper)
         {
-            var dtp = mapper.GetControl() as DateTimePicker;
-
-            if (dtp != null)
-            {
-                dtp.ValueChanged += (sender, args) => mapper.ApplyChangesToBusinessObject();
-            }
+			var control = mapper.GetControl();
+			EventHandler eventHandler = (sender, args) => mapper.ApplyChangesToBusinessObject();
+			
+			if (!ConvertAndExecuteAs<IDateTimePicker>(control, picker => picker.ValueChanged += eventHandler))
+				ConvertAndExecuteAs<DateTimePicker>(control, picker => picker.ValueChanged += eventHandler);
         }
+
+		private static bool ConvertAndExecuteAs<T>(object obj, Action<T> action) 
+			where T : class
+		{
+			var convertedValue = obj as T;
+			if (convertedValue == null) return false;
+			if (action != null) action(convertedValue);
+			return true;
+		}
     }
 }
