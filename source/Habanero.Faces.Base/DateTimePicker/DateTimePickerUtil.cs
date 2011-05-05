@@ -55,6 +55,33 @@ namespace Habanero.Faces.Base
             //propInfo.SetValue(dateTimePicker, date, new object[] { });
             dateTimePicker.Value = date;
         }
+		
+		///<summary>
+		/// Returns the current date format, expressed as a string.
+		///</summary>
+		///<param name="dateTimePicker"></param>
+		///<returns>Returns the current date format, expressed as a string.</returns>
+		public static string GetDateFormatString(IDateTimePicker dateTimePicker)
+		{
+			string format = null;
+			switch (dateTimePicker.Format)
+			{
+				case DateTimePickerFormat.Long:
+					format = "D";
+					break;
+				case DateTimePickerFormat.Short:
+					format = "d";
+					break;
+				case DateTimePickerFormat.Time:
+					format = "T";
+					break;
+				case DateTimePickerFormat.Custom:
+					format = dateTimePicker.CustomFormat;
+					break;
+			}
+			if (String.IsNullOrEmpty(format)) format = "d";
+			return format;
+		}
 
         //TODO _PORT_FOR_WIN:
         ///// <summary>
@@ -162,5 +189,6 @@ namespace Habanero.Faces.Base
         //    EventInfo valueChangedEventInfo = dateTimePicker.GetType().GetEvent("ValueChanged");
         //    valueChangedEventInfo.RemoveEventHandler(dateTimePicker, eventHandler);
         //}
+    	
     }
 }

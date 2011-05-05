@@ -17,8 +17,11 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
+using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Habanero.Faces.Base;
+using DateTimePickerFormat = System.Windows.Forms.DateTimePickerFormat;
 
 namespace Habanero.Faces.Win
 {
@@ -43,9 +46,38 @@ namespace Habanero.Faces.Win
             };
             _manager = new DateTimePickerManager(controlFactory, this, valueGetter, valueSetter);
         	_manager.ValueChanged += (sender, args) => base.OnValueChanged(args);
+			_manager.NullDisplayBoxCustomizationDelegate += NullDisplayBoxCustomization;
         }
 
-        /// <summary>
+    	private void NullDisplayBoxCustomization(ILabel label)
+    	{
+			if (Application.RenderWithVisualStyles)
+			{
+				label.Top = 3;
+				Size maxTextSize = GetMaxTextSize();
+				label.Height = maxTextSize.Height;
+				if (this.Width >= maxTextSize.Width + 30)
+				{
+					// There is a drop down with the calendar shown
+					label.Width = Width - label.Left - 35;
+				}
+				else
+				{
+					// There is a normal drop down shown
+					label.Width = Width - 20;
+				}
+			}
+    	}
+
+    	private Size GetMaxTextSize()
+    	{
+    		var format = DateTimePickerUtil.GetDateFormatString(this);
+    		var longestDate = new DateTime(2000,9,27,23,59,59); // This is a wednesday the longest day, and September the longest month
+    		var longestDateString = longestDate.ToString(format);
+    		return TextRenderer.MeasureText(longestDateString, this.Font);
+    	}
+
+    	/// <summary>
         /// Gets or sets the anchoring style.
         /// </summary>
         /// <value></value>

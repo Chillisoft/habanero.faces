@@ -25,10 +25,7 @@ using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base
 {
-
-
-
-    /// <summary>
+	/// <summary>
     /// This class tests the DateTimePicker control.
     ///  - The issue of the control being nullable or not is tested.
     /// </summary>

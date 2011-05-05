@@ -56,7 +56,7 @@ namespace Habanero.Faces.Base
 
         //State Variables
         private bool _isNull;
-        private ILabel _displayBox;
+        private ILabel _nullDisplayBox;
         //private ILabel _displayText;
 
         //private event EventHandler _valueChanged;
@@ -78,24 +78,24 @@ namespace Habanero.Faces.Base
             _dateTimePicker = dateTimePicker;
             _valueGetter = valueGetter;
             _valueSetter = valueSetter;
-            SetupDisplayBox();
+            SetupNullDisplayBox();
             ApplyBlankFormat();
         }
 
         #region Null Display Box
 
-        private void SetupDisplayBox()
+        private void SetupNullDisplayBox()
         {
             //ControlsHelper.SafeGui(_dateTimePicker, delegate()
             //{
-                _displayBox = _controlFactory.CreateLabel(); //_controlFactory.CreatePanel();
+                _nullDisplayBox = _controlFactory.CreateLabel(); //_controlFactory.CreatePanel();
                 //_displayBox.BorderStyle = BorderStyle.None;
-                _displayBox.AutoSize = false;
-                _displayBox.Location = new Point(2, 2);
-                _displayBox.Click += delegate { ChangeToValueMode(); };
-                ResizeDisplayBox();
-                _displayBox.BackColor = _dateTimePicker.BackColor;
-                _displayBox.ForeColor = _dateTimePicker.ForeColor;
+                _nullDisplayBox.AutoSize = false;
+                _nullDisplayBox.Location = new Point(2, 2);
+                _nullDisplayBox.Click += delegate { ChangeToValueMode(); };
+                ResizeNullDisplayBox();
+                _nullDisplayBox.BackColor = _dateTimePicker.BackColor;
+                _nullDisplayBox.ForeColor = _dateTimePicker.ForeColor;
                 //_displayBox.MouseUp += DateTimePicker_MouseUp;
                 //_displayBox.KeyDown += DateTimePicker_KeyDown;
                 //_displayText = _controlFactory.CreateLabel();
@@ -105,15 +105,16 @@ namespace Habanero.Faces.Base
                 //_displayText.MouseUp += DateTimePicker_MouseUp;
                 //_displayText.KeyDown += DateTimePicker_KeyDown;
                 //_displayBox.Controls.Add(_displayText);            
-                _dateTimePicker.Controls.Add(_displayBox);
-                _displayBox.Visible = false;
+                _dateTimePicker.Controls.Add(_nullDisplayBox);
+                _nullDisplayBox.Visible = false;
             //});
         }
 
-        private void ResizeDisplayBox()
+        private void ResizeNullDisplayBox()
         {
-            _displayBox.Width = _dateTimePicker.Width - 22 - 2;
-            _displayBox.Height = _dateTimePicker.Height - 7;
+            _nullDisplayBox.Width = _dateTimePicker.Width - 22 - 2;
+            _nullDisplayBox.Height = _dateTimePicker.Height - 7;
+        	if (NullDisplayBoxCustomizationDelegate != null) NullDisplayBoxCustomizationDelegate(_nullDisplayBox);
         }
 
         ///<summary>
@@ -123,17 +124,17 @@ namespace Habanero.Faces.Base
         {
             if (_dateTimePicker.Focused)
             {
-                _displayBox.BackColor = SystemColors.Highlight;
-                _displayBox.ForeColor = SystemColors.HighlightText;
+                _nullDisplayBox.BackColor = SystemColors.Highlight;
+                _nullDisplayBox.ForeColor = SystemColors.HighlightText;
             } else if (!_dateTimePicker.Enabled)
             {
-                _displayBox.BackColor = SystemColors.ButtonFace;
-                _displayBox.ForeColor = _dateTimePicker.ForeColor;
+                _nullDisplayBox.BackColor = SystemColors.ButtonFace;
+                _nullDisplayBox.ForeColor = _dateTimePicker.ForeColor;
             }
             else
             {
-                _displayBox.BackColor = _dateTimePicker.BackColor;
-                _displayBox.ForeColor = _dateTimePicker.ForeColor;
+                _nullDisplayBox.BackColor = _dateTimePicker.BackColor;
+                _nullDisplayBox.ForeColor = _dateTimePicker.ForeColor;
             }
             //_displayText.BackColor = _displayBox.BackColor;
             //_displayText.ForeColor = _displayBox.ForeColor;
@@ -151,13 +152,18 @@ namespace Habanero.Faces.Base
             get { return _dateTimePicker; }
         }
 
+		/// <summary>
+		/// The delegate that will be used to apply customizations to the Null Display Box (also called when resized).
+		/// </summary>
+    	public Action<ILabel> NullDisplayBoxCustomizationDelegate { get; set; }
+
         ///<summary>
         /// The text that will be displayed when the Value is null
         ///</summary>
         public string NullDisplayValue
         {
-            get { return _displayBox.Text; }
-            set { _displayBox.Text = value ?? ""; }
+            get { return _nullDisplayBox.Text; }
+            set { _nullDisplayBox.Text = value ?? ""; }
         }
 
         /// <summary>
@@ -245,7 +251,7 @@ namespace Habanero.Faces.Base
 
         private bool ApplyValueFormat()
         {
-            _displayBox.Visible = false;
+            _nullDisplayBox.Visible = false;
             if (!IsNull()) return false;
             if (CheckBoxVisible)
             {
@@ -260,7 +266,7 @@ namespace Habanero.Faces.Base
             if (IsNull()) return false;
             if (!CheckBoxVisible)
             {
-                _displayBox.Visible = true;
+                _nullDisplayBox.Visible = true;
             } else
             {
                 CheckBoxChecked = false;
@@ -477,7 +483,7 @@ namespace Habanero.Faces.Base
         /// <param name="eventargs"></param>
         public void OnResize(EventArgs eventargs)
         {
-            ResizeDisplayBox();
+            ResizeNullDisplayBox();
         }
 
         /// <summary>
