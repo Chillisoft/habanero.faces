@@ -136,6 +136,12 @@
     <Compile Include="TestBusinessObjectDeletor.cs" />
     <Compile Include="TestGlobalUIRegistry.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Habanero.Faces.Base.CF\Habanero.Faces.Base.CF.csproj">
+      <Project>{6EECF70C-D930-4CC2-81FE-6E05E956F336}</Project>
+      <Name>Habanero.Faces.Base.CF</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

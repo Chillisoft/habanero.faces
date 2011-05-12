@@ -5,7 +5,7 @@ using Habanero.Faces.Base;
 using Habanero.Faces.CF;
 using Habanero.Faces.CF.Adapters;
 using Habanero.Faces.CF.Mappers;
-using Habanero.Faces.Test.Base;
+using Habanero.Testability.Helpers;
 using NUnit.Framework;
 using Rhino.Mocks;
 
