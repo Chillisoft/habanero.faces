@@ -69,12 +69,6 @@
     <Compile Include="RandomValueGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Stargate.HandHeld.DomainInterfaces\Stargate.HandHeld.DomainInterfaces.csproj">
-      <Project>{6EC1D245-FE45-444E-807F-04AF296C5AAE}</Project>
-      <Name>Stargate.HandHeld.DomainInterfaces</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
@@ -90,4 +84,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>"$(SolutionDir)PostBuild.cmd" "$(SolutionDir)"  "$(TargetDir)"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
