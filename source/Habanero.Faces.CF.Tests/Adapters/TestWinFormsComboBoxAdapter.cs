@@ -3,9 +3,9 @@ using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
 using Habanero.Faces.CF.Adapters;
+using Habanero.Testability.CF;
 using NUnit.Framework;
 using Rhino.Mocks;
-using TestUtilities;
 
 // ReSharper disable InconsistentNaming
 namespace Habanero.ProgrammaticBinding.Tests.ControlAdaptors
@@ -116,7 +116,7 @@ namespace Habanero.ProgrammaticBinding.Tests.ControlAdaptors
 
         private static string GetRandomString()
         {
-            return RandomValueGenerator.GetRandomString();
+            return RandomValueGen.GetRandomString();
         }
     }
 }

@@ -53,6 +53,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Habanero.BO.dll</HintPath>
     </Reference>
+    <Reference Include="Habanero.Testability.CF, Version=9.9.9.999, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Habanero.Binding\branches\v1.2_ForCF_Stargate\lib\Habanero.Testability.CF.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="nunit.framework, Version=2.5.3.9345, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -84,24 +88,6 @@
     <Compile Include="Mappers\TestRelationshipComboBoxMapperWin.cs" />
     <Compile Include="Mappers\TestTextBoxMapperWin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Habanero.Faces.Base.CF.Tests\Habanero.Faces.Base.CF.Tests.csproj">
-      <Project>{56AE140B-ED1B-43FF-8360-F0A7063A04F6}</Project>
-      <Name>Habanero.Faces.Base.CF.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Habanero.Faces.Base.CF\Habanero.Faces.Base.CF.csproj">
-      <Project>{6EECF70C-D930-4CC2-81FE-6E05E956F336}</Project>
-      <Name>Habanero.Faces.Base.CF</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Habanero.Faces.CF\Habanero.Faces.CF.csproj">
-      <Project>{9FDA897E-9642-498B-8CEB-FDCE18B6C92D}</Project>
-      <Name>Habanero.Faces.CF</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TestUtilities\TestUtilities.csproj">
-      <Project>{27F84D98-8EE8-4D86-A6CA-D4C2C80802CB}</Project>
-      <Name>TestUtilities</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Selectors\" />

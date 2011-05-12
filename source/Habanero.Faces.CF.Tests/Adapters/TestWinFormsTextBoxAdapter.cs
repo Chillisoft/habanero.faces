@@ -5,9 +5,9 @@ using Habanero.Faces.Base;
 using Habanero.Faces.CF;
 using Habanero.Faces.CF.Adapters;
 using Habanero.ProgrammaticBinding;
+using Habanero.Testability.CF;
 using NUnit.Framework;
 using Rhino.Mocks;
-using TestUtilities;
 
 // ReSharper disable InconsistentNaming
 namespace Habanero.ProgrammaticBinding.Tests
@@ -93,7 +93,7 @@ namespace Habanero.ProgrammaticBinding.Tests
 
         private static string GetRandomString()
         {
-            return RandomValueGenerator.GetRandomString();
+            return RandomValueGen.GetRandomString();
         }
      
     }
