@@ -91,13 +91,18 @@ namespace Habanero.Faces.Base
                     _picker.CustomFormat = dateFormat;
                 }
                 //DateTimePickerUtil.SetCustomFormat(_dateTimePicker, dateFormat);
-            }
-            if (_attributes.Contains("showUpDown"))
-            {
-                bool showUpDown = Convert.ToBoolean(_attributes["showUpDown"]);
-                _picker.ShowUpDown = showUpDown;
-                //DateTimePickerUtil.SetShowUpDown(_dateTimePicker, showUpDown);
-            }
+			}
+			if (_attributes.Contains("showUpDown"))
+			{
+				bool showUpDown = Convert.ToBoolean(_attributes["showUpDown"]);
+				_picker.ShowUpDown = showUpDown;
+				//DateTimePickerUtil.SetShowUpDown(_dateTimePicker, showUpDown);
+			}
+			if (_attributes.Contains("showCheckBox"))
+			{
+				bool showCheckBox = Convert.ToBoolean(_attributes["showCheckBox"]);
+				_picker.ShowCheckBox = showCheckBox;
+			}
             base.InitialiseWithAttributes();
         }
 

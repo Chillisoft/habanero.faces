@@ -87,10 +87,7 @@ namespace Habanero.Faces.Win
         public ITextBox AddStringFilterTextBox(string labelText, string propertyName)
         {
             ICustomFilter filter = _filterControlManager.AddStringFilterTextBox(labelText, propertyName);
-            if (this.FilterMode == FilterModes.Filter )
-            {
-                filter.ValueChanged += (sender,e) => FireFilterEvent();
-            } 
+						filter.ValueChanged += (sender, e) => { if (this.FilterMode == FilterModes.Filter) FireFilterEvent(); };
             return (ITextBox) filter.Control;
         }
 
@@ -106,6 +103,7 @@ namespace Habanero.Faces.Win
                                                FilterClauseOperator filterClauseOperator)
         {
             ICustomFilter filter =  _filterControlManager.AddStringFilterTextBox(labelText, propertyName, filterClauseOperator);
+						filter.ValueChanged += (sender, e) => { if (this.FilterMode == FilterModes.Filter) FireFilterEvent(); };
             return (ITextBox)filter.Control;
         }
 
@@ -120,6 +118,7 @@ namespace Habanero.Faces.Win
         public ITextBox AddMultiplePropStringTextBox(string labelText, List<string> propertyNames)
         {
             ICustomFilter filter = _filterControlManager.AddMultiplePropStringTextBox(labelText, propertyNames);
+						filter.ValueChanged += (sender, e) => { if (this.FilterMode == FilterModes.Filter) FireFilterEvent(); };
             return (ITextBox) filter.Control;
         }
 
@@ -134,6 +133,7 @@ namespace Habanero.Faces.Win
         public ITextBox AddMultiplePropStringTextBox(string labelText, List<string> propertyNames, FilterClauseOperator filterClauseOperator)
         {
             ICustomFilter filter = _filterControlManager.AddMultiplePropStringTextBox(labelText, propertyNames,filterClauseOperator);
+						filter.ValueChanged += (sender, e) => { if (this.FilterMode == FilterModes.Filter) FireFilterEvent(); };
             return (ITextBox)filter.Control;
         }
 

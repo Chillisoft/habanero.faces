@@ -9,7 +9,13 @@ namespace Habanero.Faces.Test.VWG.StandardControls
     [TestFixture]
     public class TestDateTimePickerVWG : TestDateTimePicker
     {
-        protected override IControlFactory GetControlFactory()
+    	protected override void SubscribeToBaseValueChangedEvent(IDateTimePicker dateTimePicker, EventHandler onValueChanged)
+    	{
+			Gizmox.WebGUI.Forms.DateTimePicker picker = (Gizmox.WebGUI.Forms.DateTimePicker)dateTimePicker;
+			picker.ValueChanged += onValueChanged;
+    	}
+
+    	protected override IControlFactory GetControlFactory()
         {
             return new ControlFactoryVWG();
         }

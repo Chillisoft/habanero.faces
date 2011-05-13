@@ -744,6 +744,7 @@ namespace Habanero.Faces.Test.Win.Selectors
             Assert.IsFalse(deleteButton.Enabled);
         }
 
+
         [Test]
         public void TestSaveButtonDisabledAtConstruction_Bug_1514()
         {

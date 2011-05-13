@@ -273,27 +273,73 @@ namespace Habanero.Faces.Test.Base.Mappers
             Assert.AreEqual(dateFormat, dateTimePicker.CustomFormat);
         }
 
-        [Test]
-        public virtual void TestAttribute_ShowUpDown()
-        {
-            //---------------Set up test pack-------------------
-            Sample sampleBusinessObject = new Sample();
-            DateTime origionalDate = new DateTime(2000, 1, 2, 3, 4, 0);
-            sampleBusinessObject.SampleDate = origionalDate;
-            DateTimePickerMapper dtpMapper;
-            IDateTimePicker dateTimePicker = GetDateTimePicker(out dtpMapper);
-            dtpMapper.BusinessObject = sampleBusinessObject;
-            Hashtable attributes = new Hashtable();
-            attributes.Add("showUpDown", "true");
-            //---------------Assert Precondition----------------
-            Assert.AreEqual(origionalDate, dateTimePicker.Value);
-            Assert.IsFalse(dateTimePicker.ShowUpDown);
-            //---------------Execute Test ----------------------
-            dtpMapper.SetPropertyAttributes(attributes);
-            //---------------Test Result -----------------------
-            Assert.AreEqual(origionalDate, dateTimePicker.Value);
-            Assert.IsTrue(dateTimePicker.ShowUpDown);
-        }
+		[Test]
+		public virtual void TestAttribute_ShowUpDown()
+		{
+			//---------------Set up test pack-------------------
+			Sample sampleBusinessObject = new Sample();
+			DateTime origionalDate = new DateTime(2000, 1, 2, 3, 4, 0);
+			sampleBusinessObject.SampleDate = origionalDate;
+			DateTimePickerMapper dtpMapper;
+			IDateTimePicker dateTimePicker = GetDateTimePicker(out dtpMapper);
+			dtpMapper.BusinessObject = sampleBusinessObject;
+			Hashtable attributes = new Hashtable();
+			attributes.Add("showUpDown", "true");
+			//---------------Assert Precondition----------------
+			Assert.AreEqual(origionalDate, dateTimePicker.Value);
+			Assert.IsFalse(dateTimePicker.ShowUpDown);
+			//---------------Execute Test ----------------------
+			dtpMapper.SetPropertyAttributes(attributes);
+			//---------------Test Result -----------------------
+			Assert.AreEqual(origionalDate, dateTimePicker.Value);
+			Assert.IsTrue(dateTimePicker.ShowUpDown);
+		}
+
+		[Test]
+		public virtual void TestAttribute_ShowCheckBox_WhenSetToTrue_ShouldShowCheckBox()
+		{
+			//---------------Set up test pack-------------------
+			Sample sampleBusinessObject = new Sample();
+			DateTime origionalDate = new DateTime(2000, 1, 2, 3, 4, 0);
+			sampleBusinessObject.SampleDate = origionalDate;
+			DateTimePickerMapper dtpMapper;
+			IDateTimePicker dateTimePicker = GetDateTimePicker(out dtpMapper);
+			dateTimePicker.ShowCheckBox = false;
+			dtpMapper.BusinessObject = sampleBusinessObject;
+			Hashtable attributes = new Hashtable();
+			attributes.Add("showCheckBox", "true");
+			//---------------Assert Precondition----------------
+			Assert.AreEqual(origionalDate, dateTimePicker.Value);
+			Assert.IsFalse(dateTimePicker.ShowCheckBox);
+			//---------------Execute Test ----------------------
+			dtpMapper.SetPropertyAttributes(attributes);
+			//---------------Test Result -----------------------
+			Assert.AreEqual(origionalDate, dateTimePicker.Value);
+			Assert.IsTrue(dateTimePicker.ShowCheckBox);
+		}
+
+		[Test]
+		public virtual void TestAttribute_ShowCheckBox_WhenSetToFalse_ShouldHideCheckBox()
+		{
+			//---------------Set up test pack-------------------
+			Sample sampleBusinessObject = new Sample();
+			DateTime origionalDate = new DateTime(2000, 1, 2, 3, 4, 0);
+			sampleBusinessObject.SampleDate = origionalDate;
+			DateTimePickerMapper dtpMapper;
+			IDateTimePicker dateTimePicker = GetDateTimePicker(out dtpMapper);
+			dateTimePicker.ShowCheckBox = true;
+			dtpMapper.BusinessObject = sampleBusinessObject;
+			Hashtable attributes = new Hashtable();
+			attributes.Add("showCheckBox", "false");
+			//---------------Assert Precondition----------------
+			Assert.AreEqual(origionalDate, dateTimePicker.Value);
+			Assert.IsTrue(dateTimePicker.ShowCheckBox);
+			//---------------Execute Test ----------------------
+			dtpMapper.SetPropertyAttributes(attributes);
+			//---------------Test Result -----------------------
+			Assert.AreEqual(origionalDate, dateTimePicker.Value);
+			Assert.IsFalse(dateTimePicker.ShowCheckBox);
+		}
 
 
         protected IDateTimePicker GetDateTimePicker(out DateTimePickerMapper dtpMapper)

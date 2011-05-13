@@ -191,6 +191,7 @@
     <Compile Include="TestCollapsibleMenuItemCollection.cs" />
     <Compile Include="TestContextMenu.cs" />
     <Compile Include="TestContextMeunBuilder.cs" />
+    <Compile Include="TestDateTimePickerUtil.cs" />
     <Compile Include="TestErrorProvider.cs" />
     <Compile Include="TestExtendedComboBox.cs" />
     <Compile Include="TestExtendedTextBox.cs" />

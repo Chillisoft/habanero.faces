@@ -17,8 +17,11 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
+using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Habanero.Faces.Base;
+using DateTimePickerFormat = System.Windows.Forms.DateTimePickerFormat;
 
 namespace Habanero.Faces.Win
 {
@@ -42,9 +45,39 @@ namespace Habanero.Faces.Win
                 base.Value = value;
             };
             _manager = new DateTimePickerManager(controlFactory, this, valueGetter, valueSetter);
+        	_manager.ValueChanged += (sender, args) => base.OnValueChanged(args);
+			_manager.NullDisplayBoxCustomizationDelegate += NullDisplayBoxCustomization;
         }
 
-        /// <summary>
+    	private void NullDisplayBoxCustomization(ILabel label)
+    	{
+			if (Application.RenderWithVisualStyles)
+			{
+				label.Top = 3;
+				Size maxTextSize = GetMaxTextSize();
+				label.Height = maxTextSize.Height;
+				if (this.Width >= maxTextSize.Width + 30)
+				{
+					// There is a drop down with the calendar shown
+					label.Width = Width - label.Left - 35;
+				}
+				else
+				{
+					// There is a normal drop down shown
+					label.Width = Width - 20;
+				}
+			}
+    	}
+
+    	private Size GetMaxTextSize()
+    	{
+    		var format = DateTimePickerUtil.GetDateFormatString(this);
+    		var longestDate = new DateTime(2000,9,27,23,59,59); // This is a wednesday the longest day, and September the longest month
+    		var longestDateString = longestDate.ToString(format);
+    		return TextRenderer.MeasureText(longestDateString, this.Font);
+    	}
+
+    	/// <summary>
         /// Gets or sets the anchoring style.
         /// </summary>
         /// <value></value>
@@ -102,8 +135,12 @@ namespace Habanero.Faces.Win
         ///<param name="eventargs">An <see cref="T:System.EventArgs" /> that contains the event data. </param>
         protected override void OnValueChanged(EventArgs eventargs)
         {
-            _manager.OnValueChanged(eventargs);
-            base.OnValueChanged(eventargs);
+			if (_manager != null)
+			{
+				//The base OnValueChanged will be called by the _manager.
+				_manager.OnValueChanged(eventargs);
+			}
+            else base.OnValueChanged(eventargs);
         }
 
         ///<summary>

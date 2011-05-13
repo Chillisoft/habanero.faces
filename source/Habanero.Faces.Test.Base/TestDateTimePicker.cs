@@ -25,10 +25,7 @@ using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base
 {
-
-
-
-    /// <summary>
+	/// <summary>
     /// This class tests the DateTimePicker control.
     ///  - The issue of the control being nullable or not is tested.
     /// </summary>
@@ -36,6 +33,7 @@ namespace Habanero.Faces.Test.Base
     {
         protected abstract void SetBaseDateTimePickerValue(IDateTimePicker dateTimePicker, DateTime value);
         protected abstract void SetBaseDateTimePickerCheckedValue(IDateTimePicker dateTimePicker, bool value);
+    	protected abstract void SubscribeToBaseValueChangedEvent(IDateTimePicker dateTimePicker, EventHandler onValueChanged);
 
         protected abstract IControlFactory GetControlFactory();
 
@@ -279,7 +277,7 @@ namespace Habanero.Faces.Test.Base
         #region Test Events
 
         [Test]
-        public void TestSetValueFiresValueChangedEvent()
+        public void Test_Value_WhenSet_ShouldFireValueChangedEvent()
         {
             //---------------Set up test pack-------------------
             IDateTimePicker dateTimePicker = CreateDateTimePicker();
@@ -300,7 +298,7 @@ namespace Habanero.Faces.Test.Base
         }
 
         [Test]
-        public void TestSetBaseValue_FiresValueChangedEvent()
+        public void Test_BaseValue_WhenSet_ShouldFireValueChangedEvent()
         {
             //---------------Set up test pack-------------------
             IDateTimePicker dateTimePicker = CreateDateTimePicker();
@@ -320,9 +318,8 @@ namespace Habanero.Faces.Test.Base
             //Assert.AreEqual(1, firedTimes, "The event should have fired only once.");
         }
 
-        //TODO: Add To Known Issues: There is no event that responds to changing the value of the Checkbox on the control.
-        [Test, Ignore("This is a known issue. There is no event that responds to changing the value of the Checkbox on the control")]
-        public void TestSetBaseUnchecked_FiresValueChangedEvent()
+        [Test]
+        public virtual void Test_BaseChecked_WhenSetToFalse_ShouldFireValueChangedEvent()
         {
             //---------------Set up test pack-------------------
             IDateTimePicker dateTimePicker = CreateDateTimePicker();
@@ -344,7 +341,7 @@ namespace Habanero.Faces.Test.Base
         }
 
         [Test]
-        public void TestSetUnchecked_FiresValueChangedEvent()
+        public void Test_Checked_WhenSetToFalse_ShouldFireValueChangedEvent()
         {
             //---------------Set up test pack-------------------
             IDateTimePicker dateTimePicker = CreateDateTimePicker();
@@ -364,28 +361,49 @@ namespace Habanero.Faces.Test.Base
             Assert.AreEqual(1, firedTimes, "The event should have fired only once.");
         }
 
-        [Test]
-        public void TestSetValueFiresValueChangedEvent_SetToNull()
-        {
-            //---------------Set up test pack-------------------
-            IDateTimePicker dateTimePicker = CreateDateTimePicker();
-            DateTime sampleDate = DateTime.Now.AddDays(1);
-            dateTimePicker.Value = sampleDate;
-            bool isFired = false;
-            int firedTimes = 0;
-            dateTimePicker.ValueChanged += delegate
-            {
-                isFired = true;
-                firedTimes++;
-            };
-            //---------------Execute Test ----------------------
-            dateTimePicker.ValueOrNull = null;
-            //---------------Test Result -----------------------
-            Assert.IsTrue(isFired, "The ValueChanged event should have fired after setting the value to null.");
-            //Assert.AreEqual(1, firedTimes, "The event should have fired only once.");
-        }
+		[Test]
+		public void Test_ValueOrNull_WheSetToNull_ShouldFireValueChangedEvent()
+		{
+			//---------------Set up test pack-------------------
+			IDateTimePicker dateTimePicker = CreateDateTimePicker();
+			DateTime sampleDate = DateTime.Now.AddDays(1);
+			dateTimePicker.Value = sampleDate;
+			bool isFired = false;
+			int firedTimes = 0;
+			dateTimePicker.ValueChanged += delegate
+			{
+				isFired = true;
+				firedTimes++;
+			};
+			//---------------Execute Test ----------------------
+			dateTimePicker.ValueOrNull = null;
+			//---------------Test Result -----------------------
+			Assert.IsTrue(isFired, "The ValueChanged event should have fired after setting the value to null.");
+			//Assert.AreEqual(1, firedTimes, "The event should have fired only once.");
+		}
 
-        #endregion // Test Events
+		[Test]
+		public void Test_ValueOrNull_WheSetToNull_ShouldFireBaseValueChangedEvent()
+		{
+			//---------------Set up test pack-------------------
+			IDateTimePicker dateTimePicker = CreateDateTimePicker();
+			DateTime sampleDate = DateTime.Now.AddDays(1);
+			dateTimePicker.Value = sampleDate;
+			bool isFired = false;
+			int firedTimes = 0;
+			SubscribeToBaseValueChangedEvent(dateTimePicker, delegate
+			{
+				isFired = true;
+				firedTimes++;
+			});
+			//---------------Execute Test ----------------------
+			dateTimePicker.ValueOrNull = null;
+			//---------------Test Result -----------------------
+			Assert.IsTrue(isFired, "The ValueChanged event should have fired after setting the value to null.");
+			//Assert.AreEqual(1, firedTimes, "The event should have fired only once.");
+		}
+
+    	#endregion // Test Events
 
         #region Visual State Tests
 
