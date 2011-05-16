@@ -17,8 +17,6 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using Habanero.Faces.Base;
-
-
 using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base

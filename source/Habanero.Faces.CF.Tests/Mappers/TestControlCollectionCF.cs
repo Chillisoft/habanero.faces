@@ -1,7 +1,6 @@
 using System.Windows.Forms;
-using Habanero.Faces.CF;
-using Habanero.Faces.CF.Adapters;
-using Habanero.Faces.CF.Controls;
+using Habanero.Faces.Adapters;
+using Habanero.Faces.Controls;
 using Habanero.Faces.Test.Base;
 using Habanero.Faces.Base;
 using NUnit.Framework;

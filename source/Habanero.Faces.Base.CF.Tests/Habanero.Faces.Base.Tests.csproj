@@ -7,8 +7,8 @@
     <ProjectGuid>{56AE140B-ED1B-43FF-8360-F0A7063A04F6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Habanero.Faces.Base.CF.Tests</RootNamespace>
-    <AssemblyName>Habanero.Faces.Base.CF.Tests</AssemblyName>
+    <RootNamespace>Habanero.Faces.Base.Tests</RootNamespace>
+    <AssemblyName>Habanero.Faces.Base.Tests</AssemblyName>
     <ProjectTypeGuids>{4D628B5B-2FBC-4AA6-8C16-197242AEB884};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PlatformFamilyName>PocketPC</PlatformFamilyName>
     <PlatformID>4118C335-430C-497f-BE48-11C3316B135E</PlatformID>
@@ -137,9 +137,9 @@
     <Compile Include="TestGlobalUIRegistry.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Habanero.Faces.Base.CF\Habanero.Faces.Base.CF.csproj">
+    <ProjectReference Include="..\Habanero.Faces.Base.CF\Habanero.Faces.Base.csproj">
       <Project>{6EECF70C-D930-4CC2-81FE-6E05E956F336}</Project>
-      <Name>Habanero.Faces.Base.CF</Name>
+      <Name>Habanero.Faces.Base</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />

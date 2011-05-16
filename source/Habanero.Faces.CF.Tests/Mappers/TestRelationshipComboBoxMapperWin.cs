@@ -1,6 +1,5 @@
 using System;
 using Habanero.BO;
-using Habanero.Faces.CF;
 using Habanero.Faces.Test.Base.Mappers;
 using Habanero.Faces.Base;
 using NUnit.Framework;

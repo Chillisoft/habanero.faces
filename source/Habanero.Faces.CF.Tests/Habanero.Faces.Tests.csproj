@@ -7,8 +7,8 @@
     <ProjectGuid>{B454E0E8-BB14-46CE-A068-79A3DC228938}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Habanero.Faces.CF.Tests</RootNamespace>
-    <AssemblyName>Habanero.Faces.CF.Tests</AssemblyName>
+    <RootNamespace>Habanero.Faces.Tests</RootNamespace>
+    <AssemblyName>Habanero.Faces.Tests</AssemblyName>
     <ProjectTypeGuids>{4D628B5B-2FBC-4AA6-8C16-197242AEB884};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PlatformFamilyName>PocketPC</PlatformFamilyName>
     <PlatformID>4118C335-430C-497f-BE48-11C3316B135E</PlatformID>
@@ -94,17 +94,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Habanero.Faces.Base.CF.Tests\Habanero.Faces.Base.CF.Tests.csproj">
+    <ProjectReference Include="..\Habanero.Faces.Base.CF.Tests\Habanero.Faces.Base.Tests.csproj">
       <Project>{56AE140B-ED1B-43FF-8360-F0A7063A04F6}</Project>
-      <Name>Habanero.Faces.Base.CF.Tests</Name>
+      <Name>Habanero.Faces.Base.Tests</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Habanero.Faces.Base.CF\Habanero.Faces.Base.CF.csproj">
+    <ProjectReference Include="..\Habanero.Faces.Base.CF\Habanero.Faces.Base.csproj">
       <Project>{6EECF70C-D930-4CC2-81FE-6E05E956F336}</Project>
-      <Name>Habanero.Faces.Base.CF</Name>
+      <Name>Habanero.Faces.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Habanero.Faces.CF\Habanero.Faces.CF.csproj">
+    <ProjectReference Include="..\Habanero.Faces.CF\Habanero.Faces.csproj">
       <Project>{9FDA897E-9642-498B-8CEB-FDCE18B6C92D}</Project>
-      <Name>Habanero.Faces.CF</Name>
+      <Name>Habanero.Faces</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

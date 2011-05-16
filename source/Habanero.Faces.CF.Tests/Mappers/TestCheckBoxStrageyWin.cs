@@ -1,10 +1,9 @@
 using System;
 using System.Windows.Forms;
 using Habanero.Base;
+using Habanero.Faces.Adapters;
 using Habanero.Faces.Base;
-using Habanero.Faces.CF;
-using Habanero.Faces.CF.Adapters;
-using Habanero.Faces.CF.Mappers;
+using Habanero.Faces.Mappers;
 using Habanero.Testability.Helpers;
 using NUnit.Framework;
 using Rhino.Mocks;

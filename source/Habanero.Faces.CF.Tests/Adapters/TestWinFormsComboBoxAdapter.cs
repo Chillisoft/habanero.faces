@@ -1,14 +1,12 @@
 using System.Windows.Forms;
 using Habanero.BO;
-using Habanero.BO.ClassDefinition;
-using Habanero.Faces.Base;
-using Habanero.Faces.CF.Adapters;
+using Habanero.Faces.Adapters;
 using Habanero.Testability.CF;
 using NUnit.Framework;
 using Rhino.Mocks;
 
 // ReSharper disable InconsistentNaming
-namespace Habanero.ProgrammaticBinding.Tests.ControlAdaptors
+namespace Habanero.Faces.Tests.Adapters
 {
     [TestFixture]
     public class TestWinFormsComboBoxAdapter

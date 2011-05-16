@@ -20,7 +20,6 @@
 using Habanero.Base;
 using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
-
 using NUnit.Framework;
 using Rhino.Mocks;
 

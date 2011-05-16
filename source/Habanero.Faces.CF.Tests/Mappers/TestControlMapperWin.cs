@@ -1,4 +1,3 @@
-using Habanero.Faces.CF;
 using Habanero.Faces.Test.Base;
 using Habanero.Faces.Base;
 using Habanero.Faces.Test.Base.Mappers;

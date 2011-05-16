@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.Faces.Base.CF", "Habanero.Faces.Base.CF\Habanero.Faces.Base.CF.csproj", "{6EECF70C-D930-4CC2-81FE-6E05E956F336}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.Faces.Base", "Habanero.Faces.Base.CF\Habanero.Faces.Base.csproj", "{6EECF70C-D930-4CC2-81FE-6E05E956F336}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.Faces.CF", "Habanero.Faces.CF\Habanero.Faces.CF.csproj", "{9FDA897E-9642-498B-8CEB-FDCE18B6C92D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.Faces", "Habanero.Faces.CF\Habanero.Faces.csproj", "{9FDA897E-9642-498B-8CEB-FDCE18B6C92D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.Faces.Base.CF.Tests", "Habanero.Faces.Base.CF.Tests\Habanero.Faces.Base.CF.Tests.csproj", "{56AE140B-ED1B-43FF-8360-F0A7063A04F6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.Faces.Base.Tests", "Habanero.Faces.Base.CF.Tests\Habanero.Faces.Base.Tests.csproj", "{56AE140B-ED1B-43FF-8360-F0A7063A04F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.Faces.CF.Tests", "Habanero.Faces.CF.Tests\Habanero.Faces.CF.Tests.csproj", "{B454E0E8-BB14-46CE-A068-79A3DC228938}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.Faces.Tests", "Habanero.Faces.CF.Tests\Habanero.Faces.Tests.csproj", "{B454E0E8-BB14-46CE-A068-79A3DC228938}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

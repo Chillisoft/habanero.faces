@@ -19,8 +19,6 @@
 
 using System;
 using Habanero.Faces.Base;
-
-
 using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base

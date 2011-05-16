@@ -20,8 +20,6 @@
 using System;
 using System.Collections.Generic;
 using Habanero.Faces.Base;
-
-
 using NUnit.Framework;
 using AutoCompleteSource=Habanero.Faces.Base.AutoCompleteSource;
 
