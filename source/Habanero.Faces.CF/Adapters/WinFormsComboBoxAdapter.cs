@@ -3,7 +3,7 @@ using System.Collections;
 using System.Windows.Forms;
 using Habanero.Faces.Base;
 
-namespace Habanero.Faces.CF.Adapters
+namespace Habanero.Faces.Adapters
 {
     /// <summary>
     /// This is a ControlWraper for Any Control that Inherits from System.Windows.Forms.Control

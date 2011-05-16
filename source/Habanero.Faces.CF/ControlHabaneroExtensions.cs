@@ -1,12 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+using Habanero.Faces.Adapters;
 using Habanero.Faces.Base;
-using Habanero.Faces.CF.Adapters;
 
-namespace Habanero.Faces.CF
+namespace Habanero.Faces
 {// ReSharper disable SuspiciousTypeConversion.Global
     /// <summary>
     /// Extension method for IControl Habanero that make it easier to work with ControlAdapters.

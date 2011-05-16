@@ -22,7 +22,7 @@ using Habanero.Base;
 using Habanero.Faces.Base;
 using KeyPressEventHandler = System.Windows.Forms.KeyPressEventHandler;
 
-namespace Habanero.Faces.CF.Controls
+namespace Habanero.Faces.Controls
 {
     /// <summary>
     /// Provides a set of behaviour strategies that can be applied to a lookup ComboBox

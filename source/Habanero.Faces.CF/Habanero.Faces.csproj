@@ -7,8 +7,8 @@
     <ProjectGuid>{9FDA897E-9642-498B-8CEB-FDCE18B6C92D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Habanero.Faces.CF</RootNamespace>
-    <AssemblyName>Habanero.Faces.CF</AssemblyName>
+    <RootNamespace>Habanero.Faces</RootNamespace>
+    <AssemblyName>Habanero.Faces</AssemblyName>
     <ProjectTypeGuids>{4D628B5B-2FBC-4AA6-8C16-197242AEB884};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PlatformFamilyName>PocketPC</PlatformFamilyName>
     <PlatformID>4118C335-430C-497f-BE48-11C3316B135E</PlatformID>
@@ -95,9 +95,9 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Habanero.Faces.Base.CF\Habanero.Faces.Base.CF.csproj">
+    <ProjectReference Include="..\Habanero.Faces.Base.CF\Habanero.Faces.Base.csproj">
       <Project>{6EECF70C-D930-4CC2-81FE-6E05E956F336}</Project>
-      <Name>Habanero.Faces.Base.CF</Name>
+      <Name>Habanero.Faces.Base</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

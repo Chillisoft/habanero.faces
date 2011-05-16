@@ -21,17 +21,17 @@ using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 using Habanero.Base.Exceptions;
+using Habanero.Faces.Adapters;
 using Habanero.Faces.Base;
-using Habanero.Faces.CF.Adapters;
-using Habanero.Faces.CF.Controls;
-using Habanero.Faces.CF.Mappers;
+using Habanero.Faces.Controls;
+using Habanero.Faces.Mappers;
 using Habanero.Util;
 using DialogResult = Habanero.Faces.Base.DialogResult;
 using MessageBoxButtons = Habanero.Faces.Base.MessageBoxButtons;
 using MessageBoxDefaultButton = System.Windows.Forms.MessageBoxDefaultButton;
 using MessageBoxIcon = Habanero.Faces.Base.MessageBoxIcon;
 
-namespace Habanero.Faces.CF
+namespace Habanero.Faces
 {
     /// <summary>
     /// Creates controls for the System.Windows.Forms UI environment
@@ -479,15 +479,15 @@ namespace Habanero.Faces.CF
         ///<param name="buttons">One of the MessageBoxButtons values that specifies which buttons to display in the message box.</param>
         ///<param name="icon">One of the MessageBoxIcon values that specifies which icon to display in the message box.</param>
         ///<returns>The message box result.</returns>
-        public virtual Base.DialogResult ShowMessageBox(string message, string title, Base.MessageBoxButtons buttons, Base.MessageBoxIcon icon)
+        public virtual DialogResult ShowMessageBox(string message, string title, MessageBoxButtons buttons, MessageBoxIcon icon)
         {
-            return (Base.DialogResult)MessageBox.Show(message, title, 
+            return (DialogResult)MessageBox.Show(message, title, 
                 (System.Windows.Forms.MessageBoxButtons)buttons, (System.Windows.Forms.MessageBoxIcon)icon, MessageBoxDefaultButton.Button1);
         }
         
         ///<summary>
         /// Displays a message box with specified text, caption, buttons, and icon.
-        /// Once the user is has responded, the provided delegate is called with an indication of the <see cref="Base.DialogResult"/>.
+        /// Once the user is has responded, the provided delegate is called with an indication of the <see cref="DialogResult"/>.
         ///</summary>
         ///<param name="message">The text to display in the message box.</param>
         ///<param name="title">The text to display in the title bar of the message box.</param>
@@ -499,7 +499,7 @@ namespace Habanero.Faces.CF
         {
             System.Windows.Forms.MessageBoxButtons messageBoxButtons = (System.Windows.Forms.MessageBoxButtons)buttons;
             System.Windows.Forms.MessageBoxIcon messageBoxIcon = (System.Windows.Forms.MessageBoxIcon)icon;
-            DialogResult dialogResult = (Base.DialogResult)MessageBox.Show(message, title, messageBoxButtons, messageBoxIcon, MessageBoxDefaultButton.Button1);
+            DialogResult dialogResult = (DialogResult)MessageBox.Show(message, title, messageBoxButtons, messageBoxIcon, MessageBoxDefaultButton.Button1);
             dialogCompletionDelegate(null, dialogResult);
             return dialogResult;
         }
@@ -509,10 +509,10 @@ namespace Habanero.Faces.CF
         ///</summary>
         ///<param name="message">The text to display in the message box.</param>
         ///<returns>The message box result.</returns>
-        public virtual Base.DialogResult ShowMessageBox(string message)
+        public virtual DialogResult ShowMessageBox(string message)
         {
             Cursor.Current = Cursors.Default;
-            return (Base.DialogResult)MessageBox.Show(message);
+            return (DialogResult)MessageBox.Show(message);
         }
 
         /// <summary>

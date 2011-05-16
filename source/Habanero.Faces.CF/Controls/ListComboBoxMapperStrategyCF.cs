@@ -21,7 +21,7 @@ using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.Faces.Base;
 
-namespace Habanero.Faces.CF.Controls
+namespace Habanero.Faces.Controls
 {
     /// <summary>
     /// Provides a set of behaviour strategies that can be applied to a list ComboBox

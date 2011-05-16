@@ -21,7 +21,7 @@ using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.Faces.Base;
 
-namespace Habanero.Faces.CF.Mappers
+namespace Habanero.Faces.Mappers
 {
     /// <summary>
     /// Provides a set of behaviour strategies that can be applied to a CheckBox
@@ -35,7 +35,7 @@ namespace Habanero.Faces.CF.Mappers
         /// <param name="mapper">The checkbox mapper</param>
         public void AddClickEventHandler(CheckBoxMapper mapper)
         {
-            var checkBox = CF.ControlHabaneroExtensions.GetControl(mapper) as CheckBox;
+            var checkBox = ControlHabaneroExtensions.GetControl(mapper) as CheckBox;
             if (checkBox == null) return;
 
             checkBox.CheckStateChanged += delegate

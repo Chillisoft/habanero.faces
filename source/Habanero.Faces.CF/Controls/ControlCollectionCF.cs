@@ -19,10 +19,10 @@
 using System;
 using System.Collections;
 using System.Windows.Forms;
+using Habanero.Faces.Adapters;
 using Habanero.Faces.Base;
-using Habanero.Faces.CF.Adapters;
 
-namespace Habanero.Faces.CF.Controls
+namespace Habanero.Faces.Controls
 {
     /// <summary>
     /// Represents a collection of controls

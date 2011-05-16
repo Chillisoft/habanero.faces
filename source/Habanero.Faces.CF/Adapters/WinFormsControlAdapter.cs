@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Habanero.Faces.Base;
 
-namespace Habanero.Faces.CF.Adapters
+namespace Habanero.Faces.Adapters
 {
     /// <summary>
     /// This is an interface used specificaly for adapting a any control that inherits for Control in 

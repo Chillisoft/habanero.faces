@@ -1,7 +1,9 @@
 ﻿using System.Windows.Forms;
 using Habanero.Faces.Base;
+using HorizontalAlignment = Habanero.Faces.Base.HorizontalAlignment;
+using ScrollBars = Habanero.Faces.Base.ScrollBars;
 
-namespace Habanero.Faces.CF.Adapters
+namespace Habanero.Faces.Adapters
 {
     /// <summary>
     /// This is a ControlWraper for Any Control that Inherits from System.Windows.Forms.Control
@@ -40,15 +42,15 @@ namespace Habanero.Faces.CF.Adapters
             set { _txtBox.PasswordChar = value; }
         }
 
-        Habanero.Faces.Base.ScrollBars ITextBox.ScrollBars
+        ScrollBars ITextBox.ScrollBars
         {
-            get { return (Habanero.Faces.Base.ScrollBars)_txtBox.ScrollBars; }
+            get { return (ScrollBars)_txtBox.ScrollBars; }
             set { _txtBox.ScrollBars = (System.Windows.Forms.ScrollBars)value; }
         }
 
-        Habanero.Faces.Base.HorizontalAlignment ITextBox.TextAlign
+        HorizontalAlignment ITextBox.TextAlign
         {
-            get { return (Habanero.Faces.Base.HorizontalAlignment)_txtBox.TextAlign; }
+            get { return (HorizontalAlignment)_txtBox.TextAlign; }
             set { _txtBox.TextAlign = (System.Windows.Forms.HorizontalAlignment)value; }
         }
     }
