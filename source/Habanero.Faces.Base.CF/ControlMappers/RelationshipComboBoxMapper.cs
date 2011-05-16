@@ -18,13 +18,10 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.Collections;
-using System.Diagnostics;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
-using Habanero.Faces.Base.ControlMappers;
-using log4net;
 
 namespace Habanero.Faces.Base
 {
