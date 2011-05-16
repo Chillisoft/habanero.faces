@@ -28,6 +28,9 @@ msbuild_settings = {
 $habanero_version = 'branches/v2.6-DotNet2CompactFramework'
 require 'rake-habanero.rb'
 
+$testability_version = 'branches/v2.5-CF'
+require 'rake-testabilityCF.rb'
+
 
 #------------------------project settings------------------------
 $basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/Faces/branches/V2.6-CF_Stargate'
@@ -40,7 +43,7 @@ desc "Runs the build all task"
 task :default => [:build_all]
 
 desc "Rakes habanero, builds Faces"
-task :build_all => [:create_temp, :rake_habanero, :build, :delete_temp]
+task :build_all => [:create_temp, :rake_habanero, :rake_testability, :build, :delete_temp]
 
 desc "Builds Faces, including tests"
 task :build => [:clean, :updatelib, :msbuild, :test, :commitlib]
@@ -71,6 +74,12 @@ task :updatelib => :update_lib_from_svn do
 	FileUtils.cp Dir.glob('temp/bin/Habanero.DB.dll'), 'lib'
 	FileUtils.cp Dir.glob('temp/bin/Habanero.DB.pdb'), 'lib'
 	FileUtils.cp Dir.glob('temp/bin/Habanero.DB.xml'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.CF.dll'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.CF.pdb'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.CF.xml'), 'lib'	
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.Helpers.CF.dll'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.Helpers.CF.pdb'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.Helpers.CF.xml'), 'lib'	
 #	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.BO.dll'), 'lib'
 #	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.BO.pdb'), 'lib'
 #	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.DB.dll'), 'lib'	
