@@ -1,10 +1,8 @@
-using Habanero.Faces.Test.Base;
 using Habanero.Faces.Base;
-using Habanero.Faces.Test.Base.Mappers;
-using Habanero.Faces.Base.CF.Tests;
+using Habanero.Faces.Base.Tests.Mappers;
 using NUnit.Framework;
 
-namespace Habanero.Faces.Test.Win.Mappers
+namespace Habanero.Faces.Tests.Mappers
 {
     [TestFixture]
     public class TestControlMapperWin : TestControlMapper

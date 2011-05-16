@@ -1,15 +1,25 @@
 using System.Windows.Forms;
+using Habanero.Base;
 using Habanero.Faces.Adapters;
 using Habanero.Faces.Base;
+using Habanero.Faces.Base.Tests;
 using Habanero.Faces.Controls;
+using Habanero.Testability.Helpers;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace Habanero.Faces.Test.Win.StandardControls
+namespace Habanero.Faces.Tests.Controls
 {
     [TestFixture]
     public class TestComboBoxKeyPressMapperStrategyWin 
     {
+        
+        [TestFixtureSetUp]
+        public void FixtureSetup()
+        {
+            GlobalRegistry.LoggerFactory = new HabaneroLoggerFactoryStub();
+
+        }
         protected IControlFactory GetControlFactory()
         {
             return new ControlFactoryCF();

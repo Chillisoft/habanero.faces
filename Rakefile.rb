@@ -1,3 +1,4 @@
+#Rake for Faces
 require 'rake'
 require 'albacore'
 
@@ -74,12 +75,12 @@ task :updatelib => :update_lib_from_svn do
 	FileUtils.cp Dir.glob('temp/bin/Habanero.DB.dll'), 'lib'
 	FileUtils.cp Dir.glob('temp/bin/Habanero.DB.pdb'), 'lib'
 	FileUtils.cp Dir.glob('temp/bin/Habanero.DB.xml'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.CF.dll'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.CF.pdb'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.CF.xml'), 'lib'	
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.Helpers.CF.dll'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.Helpers.CF.pdb'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.Helpers.CF.xml'), 'lib'	
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.dll'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.pdb'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.xml'), 'lib'	
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.Helpers.dll'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.Helpers.pdb'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.Helpers.xml'), 'lib'	
 #	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.BO.dll'), 'lib'
 #	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.BO.pdb'), 'lib'
 #	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.DB.dll'), 'lib'	

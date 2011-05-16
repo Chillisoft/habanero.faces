@@ -19,12 +19,11 @@
 
 using Habanero.Base;
 using Habanero.BO.ClassDefinition;
-using Habanero.Faces.Base;
 using NUnit.Framework;
 using Rhino.Mocks;
 
 // ReSharper disable InconsistentNaming
-namespace Habanero.Faces.Test.Base.Mappers
+namespace Habanero.Faces.Base.Tests.Mappers
 {
     [TestFixture]
     public class TestControlMapperCollectionDirectoy

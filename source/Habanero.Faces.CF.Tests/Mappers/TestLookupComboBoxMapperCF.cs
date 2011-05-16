@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
-using Habanero.BO;
-using Habanero.Faces.Base.CF.Tests;
+using Habanero.Faces.Base.Tests;
+using Habanero.Faces.Base.Tests.Mappers;
 using Habanero.Faces.Controls;
-using Habanero.Faces.Test.Base.Mappers;
 using Habanero.Faces.Base;
 using Habanero.Util;
 using NUnit.Framework;
 
-namespace Habanero.Faces.Test.Win.Mappers
+namespace Habanero.Faces.Tests.Mappers
 {
     [Ignore("Not using lookups at the moment")]
     [TestFixture]

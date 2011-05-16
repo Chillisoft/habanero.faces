@@ -22,13 +22,12 @@ using System.Collections.Generic;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
-using Habanero.Faces.Base;
-using Habanero.Faces.Base.CF.Tests;
+using Habanero.Faces.Base.Tests.ControlInterfaces;
+using Habanero.Testability.Helpers;
 using Habanero.Util;
 using NUnit.Framework;
-using Rhino.Mocks;
 
-namespace Habanero.Faces.Test.Base.Mappers
+namespace Habanero.Faces.Base.Tests.Mappers
 {
     public abstract class TestLookupComboBoxMapper
     {

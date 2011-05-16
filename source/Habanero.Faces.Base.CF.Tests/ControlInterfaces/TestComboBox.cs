@@ -17,13 +17,9 @@
 //     along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 //---------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using Habanero.Faces.Base;
 using NUnit.Framework;
-using AutoCompleteSource=Habanero.Faces.Base.AutoCompleteSource;
 
-namespace Habanero.Faces.Test.Base
+namespace Habanero.Faces.Base.Tests.ControlInterfaces
 {
 
     /// <summary>

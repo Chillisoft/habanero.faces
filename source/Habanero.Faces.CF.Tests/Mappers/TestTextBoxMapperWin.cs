@@ -4,15 +4,12 @@ using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
-using Habanero.Faces.Base.CF.Tests;
-using Habanero.Faces.Base.CF.Tests;
-using Habanero.Faces.Base.CF.Tests.Selectors;
+using Habanero.Faces.Base.Tests;
+using Habanero.Faces.Base.Tests.Mappers;
 using Habanero.Faces.Mappers;
-using Habanero.Faces.Test.Base;
-using Habanero.Faces.Test.Base.Mappers;
 using NUnit.Framework;
 
-namespace Habanero.Faces.Test.Win.Mappers
+namespace Habanero.Faces.Tests.Mappers
 {
     [TestFixture]
     public class TestTextBoxMapperCF : TestTextBoxMapper

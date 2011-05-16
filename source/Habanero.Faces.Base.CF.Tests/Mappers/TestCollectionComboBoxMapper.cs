@@ -1,19 +1,15 @@
 using System;
-using System.Collections.Generic;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
-using Habanero.Faces.Base;
-using Habanero.Faces.Base.CF.Tests;
-using Habanero.Faces.Base.CF.Tests;
-using Habanero.Faces.Base.CF.Tests.Fakes;
-using Habanero.Faces.Base.CF.Tests.Selectors;
+using Habanero.Faces.Base.Tests.ControlInterfaces;
+using Habanero.Testability.Helpers;
 using NUnit.Framework;
 
 // ReSharper disable InconsistentNaming
 
-namespace Habanero.Faces.Test.Base.Mappers
+namespace Habanero.Faces.Base.Tests.Mappers
 {
     public abstract class TestCollectionComboBoxMapper
     {

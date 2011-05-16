@@ -1,13 +1,13 @@
 using System.Windows.Forms;
 using Habanero.Faces.Adapters;
+using Habanero.Faces.Base.Tests.ControlInterfaces;
 using Habanero.Faces.Controls;
-using Habanero.Faces.Test.Base;
 using Habanero.Faces.Base;
 using NUnit.Framework;
 using Rhino.Mocks;
 
 // ReSharper disable InconsistentNaming
-namespace Habanero.Faces.Test.Win
+namespace Habanero.Faces.Tests.Mappers
 {
     [TestFixture]
     public class TestControlCollectionCF : TestControlCollection

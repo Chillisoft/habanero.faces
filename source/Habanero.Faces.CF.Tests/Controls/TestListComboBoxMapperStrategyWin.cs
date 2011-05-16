@@ -8,7 +8,7 @@ using Habanero.Testability.Helpers;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace Habanero.Faces.Test.Win.StandardControls
+namespace Habanero.Faces.Tests.Controls
 {
     [TestFixture]
     public class TestListComboBoxMapperStrategyWin

@@ -17,18 +17,12 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using Habanero.Base;
 using Habanero.Base.Exceptions;
-using Habanero.Base.Util;
 using Habanero.BO.ClassDefinition;
-using Habanero.Faces.Base;
-using Habanero.Testability.CF;
+using Habanero.Testability;
 using NUnit.Framework;
-using Rhino.Mocks;
 
-namespace Habanero.Faces.Test.Base
+namespace Habanero.Faces.Base.Tests.ControlInterfaces
 {
 
     public abstract class TestControlFactory

@@ -1,4 +1,3 @@
-using System;
 using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.Faces.Adapters;
@@ -8,8 +7,7 @@ using Habanero.Testability.Helpers;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-
-namespace Habanero.Faces.Test.Win.StandardControls
+namespace Habanero.Faces.Tests.Mappers
 {
     [TestFixture]
     public class TestCheckBoxStrageyWin 

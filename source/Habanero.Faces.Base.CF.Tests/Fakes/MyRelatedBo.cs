@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.BO.Loaders;
 
-namespace Habanero.Faces.Base.CF.Tests
+namespace Habanero.Faces.Base.Tests
 {
     public class MyInheritedType : MyRelatedBo
     {
@@ -15,8 +13,8 @@ namespace Habanero.Faces.Base.CF.Tests
             MyRelatedBo.LoadSuperClassDef();
             XmlClassLoader itsLoader = CreateXmlClassLoader();
             var classDef = itsLoader.LoadClass(@"
-				  <class name=""MyInheritedType"" assembly=""Habanero.Faces.Base.CF.Tests"" table=""MyRelatedBo"">
-					<superClass class=""MyRelatedBo"" assembly=""Habanero.Faces.Base.CF.Tests"" orMapping=""SingleTableInheritance"" discriminator=""Discriminator"" />
+				  <class name=""MyInheritedType"" assembly=""Habanero.Faces.Base.Tests"" table=""MyRelatedBo"">
+					<superClass class=""MyRelatedBo"" assembly=""Habanero.Faces.Base.Tests"" orMapping=""SingleTableInheritance"" discriminator=""Discriminator"" />
 				  </class>");
             ClassDef.ClassDefs.Add(classDef);
             return classDef;
@@ -59,14 +57,14 @@ namespace Habanero.Faces.Base.CF.Tests
             itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyRelatedBo"" assembly=""Habanero.Faces.Base.CF.Tests"" table=""MyRelatedBo"">
+				<class name=""MyRelatedBo"" assembly=""Habanero.Faces.Base.Tests"" table=""MyRelatedBo"">
 					<property  name=""MyRelatedBoID"" type=""Guid""/>
 					<property  name=""MyRelatedTestProp"" />
 					<property  name=""MyBoID"" type=""Guid""/>
 					<primaryKey>
 						<prop name=""MyRelatedBoID"" />
 					</primaryKey>
-					<relationship name=""MyRelationship"" type=""single"" relatedClass=""MyBO"" relatedAssembly=""Habanero.Faces.Base.CF.Tests"">
+					<relationship name=""MyRelationship"" type=""single"" relatedClass=""MyBO"" relatedAssembly=""Habanero.Faces.Base.Tests"">
 						<relatedProperty property=""MyBoID"" relatedProperty=""MyBoID"" />
 					</relationship>
 				</class>
@@ -80,7 +78,7 @@ namespace Habanero.Faces.Base.CF.Tests
             itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyRelatedBo"" assembly=""Habanero.Faces.Base.CF.Tests"" table=""MyRelatedBo"">
+				<class name=""MyRelatedBo"" assembly=""Habanero.Faces.Base.Tests"" table=""MyRelatedBo"">
 					<property  name=""MyRelatedBoID"" type=""Guid""/>
 					<property  name=""MyRelatedTestProp"" />
 					<property  name=""MyBoID"" type=""Guid""/>
@@ -88,7 +86,7 @@ namespace Habanero.Faces.Base.CF.Tests
 					<primaryKey>
 						<prop name=""MyRelatedBoID"" />
 					</primaryKey>
-					<relationship name=""MyRelationship"" type=""single"" relatedClass=""MyBO"" relatedAssembly=""Habanero.Faces.Base.CF.Tests"">
+					<relationship name=""MyRelationship"" type=""single"" relatedClass=""MyBO"" relatedAssembly=""Habanero.Faces.Base.Tests"">
 						<relatedProperty property=""MyBoID"" relatedProperty=""MyBoID"" />
 					</relationship>
 				</class>
@@ -108,7 +106,7 @@ namespace Habanero.Faces.Base.CF.Tests
             itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyRelatedBo"" assembly=""Habanero.Faces.Base.CF.Tests"" table=""My_Related_Bo"">
+				<class name=""MyRelatedBo"" assembly=""Habanero.Faces.Base.Tests"" table=""My_Related_Bo"">
 					<property  name=""MyRelatedBoID"" type=""Guid"" databaseField=""My_Related_Bo_ID""/>
 					<property  name=""MyRelatedTestProp"" databaseField=""My_Related_Test_Prop"" />
 					<property  name=""MyRelatedTestProp2"" databaseField=""My_Related_Test_Prop2"" />
@@ -116,7 +114,7 @@ namespace Habanero.Faces.Base.CF.Tests
 					<primaryKey>
 						<prop name=""MyRelatedBoID"" />
 					</primaryKey>
-					<relationship name=""MyRelationship"" type=""single"" relatedClass=""MyBO"" relatedAssembly=""Habanero.Faces.Base.CF.Tests"">
+					<relationship name=""MyRelationship"" type=""single"" relatedClass=""MyBO"" relatedAssembly=""Habanero.Faces.Base.Tests"">
 						<relatedProperty property=""MyBoID"" relatedProperty=""MyBoID"" />
 					</relationship>
 				</class>
@@ -131,14 +129,14 @@ namespace Habanero.Faces.Base.CF.Tests
             itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyRelatedBo"" assembly=""Habanero.Faces.Base.CF.Tests"" table=""MyRelatedBo"">
+				<class name=""MyRelatedBo"" assembly=""Habanero.Faces.Base.Tests"" table=""MyRelatedBo"">
 					<property  name=""MyRelatedBoID"" type=""Guid""/>
 					<property  name=""MyRelatedTestProp"" />
 					<property  name=""MyBoID"" type=""Guid""/>
 					<primaryKey>
 						<prop name=""MyRelatedBoID"" />
 					</primaryKey>
-					<relationship name=""MyRelationshipToMyBo"" type=""single"" relatedClass=""MyBO"" relatedAssembly=""Habanero.Faces.Base.CF.Tests"" >
+					<relationship name=""MyRelationshipToMyBo"" type=""single"" relatedClass=""MyBO"" relatedAssembly=""Habanero.Faces.Base.Tests"" >
 						<relatedProperty property=""MyBoID"" relatedProperty=""MyBoID"" />
 					</relationship>
 				</class>
@@ -153,14 +151,14 @@ namespace Habanero.Faces.Base.CF.Tests
             itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyRelatedBo"" assembly=""Habanero.Faces.Base.CF.Tests"" table=""MyRelatedBo"">
+				<class name=""MyRelatedBo"" assembly=""Habanero.Faces.Base.Tests"" table=""MyRelatedBo"">
 					<property  name=""MyRelatedBoID"" type=""Guid""/>
 					<property  name=""MyRelatedTestProp"" />
 					<property  name=""MyBoID"" type=""Guid""/>
 					<primaryKey>
 						<prop name=""MyRelatedBoID"" />
 					</primaryKey>
-					<relationship name=""MyRelationshipToMyBo"" type=""single"" relatedClass=""MyBO"" relatedAssembly=""Habanero.Faces.Base.CF.Tests"" reverseRelationship=""MyRelationship"">
+					<relationship name=""MyRelationshipToMyBo"" type=""single"" relatedClass=""MyBO"" relatedAssembly=""Habanero.Faces.Base.Tests"" reverseRelationship=""MyRelationship"">
 						<relatedProperty property=""MyBoID"" relatedProperty=""MyBoID"" />
 					</relationship>
 				</class>
@@ -175,14 +173,14 @@ namespace Habanero.Faces.Base.CF.Tests
             itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyRelatedBo"" assembly=""Habanero.Faces.Base.CF.Tests"" table=""MyRelatedBo"">
+				<class name=""MyRelatedBo"" assembly=""Habanero.Faces.Base.Tests"" table=""MyRelatedBo"">
 					<property  name=""MyRelatedBoID"" type=""Guid""/>
 					<property  name=""MyRelatedTestProp"" />
 					<property  name=""MyBoID"" type=""Guid""/>
 					<primaryKey>
 						<prop name=""MyRelatedBoID"" />
 					</primaryKey>
-					<relationship name=""MyRelationshipToMyBo"" type=""multiple"" relatedClass=""MyBO"" relatedAssembly=""Habanero.Faces.Base.CF.Tests"" reverseRelationship=""MyRelationship"">
+					<relationship name=""MyRelationshipToMyBo"" type=""multiple"" relatedClass=""MyBO"" relatedAssembly=""Habanero.Faces.Base.Tests"" reverseRelationship=""MyRelationship"">
 						<relatedProperty property=""MyBoID"" relatedProperty=""MyBoID"" />
 					</relationship>
 				</class>
@@ -197,14 +195,14 @@ namespace Habanero.Faces.Base.CF.Tests
             itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyRelatedBo"" assembly=""Habanero.Faces.Base.CF.Tests"" table=""MyRelatedBo"">
+				<class name=""MyRelatedBo"" assembly=""Habanero.Faces.Base.Tests"" table=""MyRelatedBo"">
 					<property  name=""MyRelatedBoID"" type=""Guid""/>
 					<property  name=""MyRelatedTestProp"" />
 					<property  name=""MyBoID"" type=""Guid""/>
 					<primaryKey>
 						<prop name=""MyRelatedBoID"" />
 					</primaryKey>
-					<relationship name=""MyRelationshipToMyBo"" type=""single"" relatedClass=""MyBO"" relatedAssembly=""Habanero.Faces.Base.CF.Tests"">
+					<relationship name=""MyRelationshipToMyBo"" type=""single"" relatedClass=""MyBO"" relatedAssembly=""Habanero.Faces.Base.Tests"">
 						<relatedProperty property=""MyBoID"" relatedProperty=""MyBoID"" />
 					</relationship>
 					<ui>
@@ -224,8 +222,8 @@ namespace Habanero.Faces.Base.CF.Tests
             itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyRelatedBo"" assembly=""Habanero.Faces.Base.CF.Tests"">
-					<superClass class=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"" 
+				<class name=""MyRelatedBo"" assembly=""Habanero.Faces.Base.Tests"">
+					<superClass class=""MyBO"" assembly=""Habanero.Faces.Base.Tests"" 
 						orMapping=""SingleTableInheritance"" discriminator=""TestProp"" />
 					<property  name=""MyRelatedBoID"" type=""Guid""/>
 					<property  name=""MyRelatedTestProp"" />
@@ -245,14 +243,14 @@ namespace Habanero.Faces.Base.CF.Tests
             itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyRelatedBo"" assembly=""Habanero.Faces.Base.CF.Tests"" table=""MyRelatedBo"">
+				<class name=""MyRelatedBo"" assembly=""Habanero.Faces.Base.Tests"" table=""MyRelatedBo"">
 					<property  name=""MyRelatedBoID"" type=""Guid""/>
 					<property  name=""MyRelatedTestProp"" />
 					<property  name=""MyBoID"" type=""Guid""/>
 					<primaryKey>
 						<prop name=""MyRelatedBoID"" />
 					</primaryKey>
-					<relationship name=""MyRelationship"" type=""single"" relatedClass=""MyBO"" relatedAssembly=""Habanero.Faces.Base.CF.Tests"">
+					<relationship name=""MyRelationship"" type=""single"" relatedClass=""MyBO"" relatedAssembly=""Habanero.Faces.Base.Tests"">
 						<relatedProperty property=""MyBoID"" relatedProperty=""MyBoID"" />
 					</relationship>
 					<ui>

@@ -1,14 +1,12 @@
-using System;
 using Habanero.Base;
 using Habanero.BO;
-using Habanero.BO.ClassDefinition;
-using Habanero.Faces.Base;
+using Habanero.Faces.Base.Tests.ControlInterfaces;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Rhino.Mocks.Constraints;
-using Is=Rhino.Mocks.Constraints.Is;
+using Is = Rhino.Mocks.Constraints.Is;
 
-namespace Habanero.Faces.Test.Base
+namespace Habanero.Faces.Base.Tests
 {
     public class ConfirmerFake: IConfirmer
     {

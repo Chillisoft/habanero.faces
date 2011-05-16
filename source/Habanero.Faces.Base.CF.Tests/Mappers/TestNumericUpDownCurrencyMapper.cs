@@ -17,13 +17,9 @@
 //     along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 //---------------------------------------------------------------------------------
 
-using Habanero.Faces.Base;
-using Habanero.Faces.Base.CF.Tests;
-using Habanero.Faces.Base.CF.Tests;
-using Habanero.Faces.Base.CF.Tests.Selectors;
 using NUnit.Framework;
 
-namespace Habanero.Faces.Test.Base.Mappers
+namespace Habanero.Faces.Base.Tests.Mappers
 {
     public abstract class TestNumericUpDownCurrencyMapper
     {

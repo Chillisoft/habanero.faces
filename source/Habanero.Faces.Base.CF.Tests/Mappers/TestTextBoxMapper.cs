@@ -18,11 +18,10 @@
 //---------------------------------------------------------------------------------
 
 using Habanero.Base;
-using Habanero.Faces.Base;
-using Habanero.Faces.Base.CF.Tests;
+using Habanero.Testability.Helpers;
 using NUnit.Framework;
 
-namespace Habanero.Faces.Test.Base.Mappers
+namespace Habanero.Faces.Base.Tests.Mappers
 {
     /// <summary>
     /// Summary description for TestTextBoxMapper.

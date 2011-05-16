@@ -5,10 +5,9 @@ using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.BO.Loaders;
-using Habanero.Faces.Base.CF.Tests;
 using Habanero.Util;
 
-namespace Habanero.Faces.Base.CF.Tests
+namespace Habanero.Faces.Base.Tests
 {
     /// <summary>
     /// Summary description for MyBO.
@@ -115,7 +114,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID""  type=""Guid"" />
 					<primaryKey>
 						<prop name=""MyBoID"" />
@@ -137,7 +136,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID""  type=""Guid"" />
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -156,7 +155,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"" moduleName=""MyBOModule"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"" moduleName=""MyBOModule"">
 					<property  name=""MyBoID""  type=""Guid"" />
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -174,7 +173,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID""  type=""Int32"" />
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -194,7 +193,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID"" type=""Guid"" />
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -259,7 +258,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID"" type=""Guid"" />
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -323,7 +322,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID"" type=""Guid"" />
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -362,7 +361,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID"" type=""Guid"" />
 					<property  name=""TestProp"" compulsory=""true"" />
 					<property  name=""TestProp2""  />
@@ -390,7 +389,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"" table=""my_bo"" >
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"" table=""my_bo"" >
 					<property  name=""MyBoID""  type=""Guid"" databaseField=""my_bo_id"" />
 					<property  name=""TestProp"" databaseField=""test_prop"" />
 					<property  name=""TestProp2"" databaseField=""test_prop2"" />
@@ -409,7 +408,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID"" type=""Guid"" />
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -463,7 +462,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID"" type=""Guid"" />
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -517,7 +516,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID"" type=""Guid""/>
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -586,7 +585,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID""  type=""Guid"" />
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -622,7 +621,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID""  type=""Guid"" />
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -647,7 +646,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID""  type=""Guid"" />
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -673,7 +672,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID""   type=""Guid""/>
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -697,7 +696,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID""  type=""Guid"" />
 					<property  name=""TestProp"" type=""Boolean""/>
 					<primaryKey>
@@ -721,13 +720,13 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID""   type=""Guid""/>
 					<property  name=""RelatedID"" type=""Guid""/>
 					<primaryKey>
 						<prop name=""MyBoID"" />
 					</primaryKey>
-					<relationship name=""MyRelationship"" type=""single"" relatedClass=""MyRelatedBo"" relatedAssembly=""Habanero.Faces.Base.CF.Tests"">
+					<relationship name=""MyRelationship"" type=""single"" relatedClass=""MyRelatedBo"" relatedAssembly=""Habanero.Faces.Base.Tests"">
 						<relatedProperty property=""RelatedID"" relatedProperty=""MyRelatedBoID"" />
 					</relationship>
 					<ui>
@@ -747,7 +746,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID""  type=""Guid""/>
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -790,7 +789,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID""  type=""Guid""/>
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -833,7 +832,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID""  type=""Guid""/>
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -872,7 +871,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID""  type=""Guid""/>
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -908,7 +907,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID""  type=""Guid"" compulsory=""true""/>
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" type=""Guid"" >
@@ -955,7 +954,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID""  type=""Guid""/>
 					<property  name=""TestProp"" type=""Int32"" />
 					<property  name=""TestProp1"" type=""DateTime"" />
@@ -1000,7 +999,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID""  type=""Guid""/>
 					<property  name=""TestProp"" />
 					<property name=""TestProp2"" type=""Int32"" default=""1"" compulsory=""true"">
@@ -1045,7 +1044,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID""  type=""Guid""/>
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" >
@@ -1089,11 +1088,11 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID""  type=""Guid""/>
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" type=""Guid"" >
-						<businessObjectLookupList class=""ContactPersonTestBO"" assembly=""Habanero.Faces.Base.CF.Tests.BO"" "
+						<businessObjectLookupList class=""ContactPersonTestBO"" assembly=""Habanero.Faces.Base.Tests.BO"" "
                     + (String.IsNullOrEmpty(boLookupCriteria) ? "" : String.Format(@"criteria=""{0}"" ", ConvertToXmlString(boLookupCriteria, XmlNodeType.Attribute)))
                     + @"/>
 					</property>
@@ -1185,7 +1184,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID"" type=""Guid""/>
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -1221,7 +1220,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID"" type=""Guid""/>
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -1260,7 +1259,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID"" type=""Guid""/>
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -1300,11 +1299,11 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID"" type=""Guid""/>
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" >
-						<businessObjectLookupList class=""ContactPersonTestBO"" assembly=""Habanero.Faces.Base.CF.Tests.BO"" />
+						<businessObjectLookupList class=""ContactPersonTestBO"" assembly=""Habanero.Faces.Base.Tests.BO"" />
 					</property>
 					<primaryKey>
 						<prop name=""MyBoID"" />
@@ -1337,7 +1336,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID"" type=""Guid""/>
 					<property  name=""TestProp"">
 						<rule name=""TestProp"">
@@ -1361,7 +1360,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID"" type=""Guid""/>
 					<property  name=""TestProp2"" type=""Int32""/>
 					<property  name=""TestProp"" type=""Int32"">
@@ -1386,7 +1385,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID"" type=""Guid""/>
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" type=""Guid"" >
@@ -1399,10 +1398,10 @@ namespace Habanero.Faces.Base.CF.Tests
 					<primaryKey>
 						<prop name=""MyBoID"" />
 					</primaryKey>
-					<relationship name=""MyRelationship"" type=""single"" relatedClass=""MyRelatedBo"" relatedAssembly=""Habanero.Faces.Base.CF.Tests"">
+					<relationship name=""MyRelationship"" type=""single"" relatedClass=""MyRelatedBo"" relatedAssembly=""Habanero.Faces.Base.Tests"">
 						<relatedProperty property=""RelatedID"" relatedProperty=""MyRelatedBoID"" />
 					</relationship>
-					<relationship name=""MyMultipleRelationship"" type=""multiple"" relatedClass=""MyRelatedBo"" relatedAssembly=""Habanero.Faces.Base.CF.Tests"">
+					<relationship name=""MyMultipleRelationship"" type=""multiple"" relatedClass=""MyRelatedBo"" relatedAssembly=""Habanero.Faces.Base.Tests"">
 						<relatedProperty property=""MyBoID"" relatedProperty=""MyBoID"" />
 					</relationship>
 					<ui>
@@ -1435,13 +1434,13 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID"" type=""Guid""/>
 					<property  name=""TestProp"" />
 					<primaryKey>
 						<prop name=""MyBoID"" />
 					</primaryKey>
-					<relationship name=""MyRelationship"" type=""single"" relatedClass=""MyRelatedBo"" relatedAssembly=""Habanero.Faces.Base.CF.Tests"" reverseRelationship=""MyRelationshipToMyBo"">
+					<relationship name=""MyRelationship"" type=""single"" relatedClass=""MyRelatedBo"" relatedAssembly=""Habanero.Faces.Base.Tests"" reverseRelationship=""MyRelationshipToMyBo"">
 						<relatedProperty property=""RelatedID"" relatedProperty=""MyRelatedBoID"" />
 					</relationship>
 				</class>
@@ -1457,7 +1456,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID"" type=""Guid""/>
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" type=""Guid"" >
@@ -1470,10 +1469,10 @@ namespace Habanero.Faces.Base.CF.Tests
 					<primaryKey>
 						<prop name=""MyBoID"" />
 					</primaryKey>
-					<relationship name=""MyRelationship"" type=""single"" relatedClass=""MyRelatedBo"" relatedAssembly=""Habanero.Faces.Base.CF.Tests"">
+					<relationship name=""MyRelationship"" type=""single"" relatedClass=""MyRelatedBo"" relatedAssembly=""Habanero.Faces.Base.Tests"">
 						<relatedProperty property=""RelatedID"" relatedProperty=""MyRelatedBoID"" />
 					</relationship>
-					<relationship name=""MyMultipleRelationship"" type=""multiple"" relatedClass=""MyRelatedBo"" relatedAssembly=""Habanero.Faces.Base.CF.Tests"">
+					<relationship name=""MyMultipleRelationship"" type=""multiple"" relatedClass=""MyRelatedBo"" relatedAssembly=""Habanero.Faces.Base.Tests"">
 						<relatedProperty property=""MyBoID"" relatedProperty=""MyBoID"" />
 					</relationship>
 					<ui>
@@ -1506,7 +1505,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"" table=""my_bo"" >
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"" table=""my_bo"" >
 					<property  name=""MyBoID"" type=""Guid"" databaseField=""my_bo_id"" />
 					<property  name=""TestProp"" databaseField=""test_prop"" />
 					<property  name=""TestProp2"" databaseField=""test_prop2"" />
@@ -1514,7 +1513,7 @@ namespace Habanero.Faces.Base.CF.Tests
 					<primaryKey>
 						<prop name=""MyBoID"" />
 					</primaryKey>
-					<relationship name=""MyRelationship"" type=""single"" relatedClass=""MyRelatedBo"" relatedAssembly=""Habanero.Faces.Base.CF.Tests"">
+					<relationship name=""MyRelationship"" type=""single"" relatedClass=""MyRelatedBo"" relatedAssembly=""Habanero.Faces.Base.Tests"">
 						<relatedProperty property=""RelatedID"" relatedProperty=""MyRelatedBoID"" />
 					</relationship>
 				</class>
@@ -1533,13 +1532,13 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID"" type=""Guid""/>
 					<property  name=""ShapeID"" type=""Guid"" />
 					<primaryKey>
 						<prop name=""MyBoID"" />
 					</primaryKey>
-					<relationship name=""Shape"" type=""single"" relatedClass=""Shape"" relatedAssembly=""Habanero.Faces.Base.CF.Tests"">
+					<relationship name=""Shape"" type=""single"" relatedClass=""Shape"" relatedAssembly=""Habanero.Faces.Base.Tests"">
 						<relatedProperty property=""ShapeID"" relatedProperty=""ShapeID"" />
 					</relationship>
 				</class>
@@ -1562,7 +1561,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID"" type=""Guid""/>
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -1614,7 +1613,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID"" type=""Guid""/>
 					<property  name=""TestProp"" />
 					<property  name=""TestProp2"" />
@@ -1640,7 +1639,7 @@ namespace Habanero.Faces.Base.CF.Tests
             IClassDef itsClassDef =
                 itsLoader.LoadClass(
                     @"
-				<class name=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"">
+				<class name=""MyBO"" assembly=""Habanero.Faces.Base.Tests"">
 					<property  name=""MyBoID"" type=""Guid""/>
 					<property  name=""TestProp2"" type=""Decimal""/>
 					<property  name=""TestProp"" type=""Decimal"">

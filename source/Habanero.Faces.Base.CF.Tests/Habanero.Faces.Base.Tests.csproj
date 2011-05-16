@@ -57,13 +57,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Habanero.Binding\branches\v1.2_ForCF_Stargate\lib\Habanero.Smooth.dll</HintPath>
     </Reference>
-    <Reference Include="Habanero.Testability.CF, Version=9.9.9.999, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Habanero.Testability, Version=9.9.9.999, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Habanero.Testability.CF.dll</HintPath>
+      <HintPath>..\..\lib\Habanero.Testability.dll</HintPath>
     </Reference>
-    <Reference Include="Habanero.Testability.Helpers.CF, Version=9.9.9.999, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Habanero.Testability.Helpers, Version=9.9.9.999, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Habanero.Testability.Helpers.CF.dll</HintPath>
+      <HintPath>..\..\lib\Habanero.Testability.Helpers.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821">
       <SpecificVersion>False</SpecificVersion>

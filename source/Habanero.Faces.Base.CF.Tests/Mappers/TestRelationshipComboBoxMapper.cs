@@ -1,14 +1,8 @@
-using System;
 using Habanero.Base;
-using Habanero.Base.Exceptions;
 using Habanero.BO;
-using Habanero.BO.ClassDefinition;
-using Habanero.Faces.Base;
-
-using Habanero.Faces.Base;
 using NUnit.Framework;
 
-namespace Habanero.Faces.Test.Base.Mappers
+namespace Habanero.Faces.Base.Tests.Mappers
 {
     public abstract class TestRelationshipComboBoxMapper
     {

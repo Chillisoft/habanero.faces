@@ -2,7 +2,7 @@
 using Habanero.BO.ClassDefinition;
 using Habanero.BO.Loaders;
 
-namespace Habanero.Faces.Base.CF.Tests
+namespace Habanero.Faces.Base.Tests
 {
     public class MyBOSubType : MyBO
     {
@@ -13,8 +13,8 @@ namespace Habanero.Faces.Base.CF.Tests
             XmlClassLoader itsLoader = CreateXmlClassLoader();
             var classDef =
                 itsLoader.LoadClass(
-                    @"<class name=""MyBOSubType"" assembly=""Habanero.Faces.Base.CF.Tests"">
-						<superClass class=""MyBO"" assembly=""Habanero.Faces.Base.CF.Tests"" orMapping=""SingleTableInheritance"" discriminator=""MyBOType"" />
+                    @"<class name=""MyBOSubType"" assembly=""Habanero.Faces.Base.Tests"">
+						<superClass class=""MyBO"" assembly=""Habanero.Faces.Base.Tests"" orMapping=""SingleTableInheritance"" discriminator=""MyBOType"" />
 					  </class>");
             ClassDef.ClassDefs.Add(classDef);
             return classDef;

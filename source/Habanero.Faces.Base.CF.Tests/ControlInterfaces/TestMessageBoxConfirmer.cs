@@ -16,15 +16,12 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
-using System;
 using Habanero.Base;
-using Habanero.Faces.Base;
 using NUnit.Framework;
 using Rhino.Mocks;
-using Rhino.Mocks.Constraints;
 using Is = Rhino.Mocks.Constraints.Is;
 
-namespace Habanero.Faces.Test.Base
+namespace Habanero.Faces.Base.Tests.ControlInterfaces
 {
     [TestFixture]
     public class TestMessageBoxConfirmer

@@ -1,14 +1,13 @@
 using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.Faces.Adapters;
-using Habanero.Faces.Base.CF.Tests;
-using Habanero.Faces.Base.CF.Tests.Fakes;
 using Habanero.Faces.Base;
+using Habanero.Faces.Base.Tests;
+using Habanero.Faces.Base.Tests.Mappers;
 using Habanero.Faces.Controls;
-using Habanero.Faces.Test.Base.Mappers;
 using NUnit.Framework;
 
-namespace Habanero.Faces.Test.Win.Mappers
+namespace Habanero.Faces.Tests.Mappers
 {
     [TestFixture]
     public class TestCollectionComboBoxMapperCF : TestCollectionComboBoxMapper

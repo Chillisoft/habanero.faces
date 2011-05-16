@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Habanero.Base;
 using Habanero.BO;
-using Habanero.Faces.Base;
 using NUnit.Framework;
 using Rhino.Mocks;
-using Rhino.Mocks.MethodRecorders;
 
-namespace Habanero.Faces.Test.Base
+namespace Habanero.Faces.Base.Tests
 {
     public class DataAccessorInMemoryWithMocks: DataAccessorInMemory
     {

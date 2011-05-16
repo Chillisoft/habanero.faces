@@ -20,9 +20,9 @@ using System;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
-using Habanero.Faces.Test.Base;
+using Habanero.Faces.Base.Tests.ControlInterfaces;
 
-namespace Habanero.Faces.Base.CF.Tests
+namespace Habanero.Faces.Base.Tests
 {
     public class Shape : BusinessObject
     {

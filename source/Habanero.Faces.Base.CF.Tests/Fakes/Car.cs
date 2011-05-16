@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 
-namespace Habanero.Faces.Base.CF.Tests.Fakes
+namespace Habanero.Faces.Base.Tests
 {
     [Serializable]
     public class Car : BusinessObject

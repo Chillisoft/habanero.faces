@@ -1,15 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Xml;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
-using Habanero.BO.Loaders;
-using Habanero.Faces.Base.CF.Tests;
-using Habanero.Util;
 using NUnit.Framework;
 
-namespace Habanero.Faces.Base.CF.Tests.Selectors
+namespace Habanero.Faces.Base.Tests.Selectors
 {
     public abstract class TestBOColSelector
     {

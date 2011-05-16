@@ -1,9 +1,9 @@
 ﻿using System;
 using Habanero.Base;
 
-namespace Habanero.Faces.Test.Base
+namespace Habanero.Faces.Base.Tests
 {
-    public class HabaneroLoggerFactoryStub : IHabaneroLoggerFactory
+/*    public class HabaneroLoggerFactoryStub : IHabaneroLoggerFactory
     {
         private readonly HabaneroLoggerStub _habaneroLoggerStub = new HabaneroLoggerStub();
 
@@ -46,5 +46,5 @@ namespace Habanero.Faces.Test.Base
         {
             get { return "HabaneroLoggerStub (logger for testing only)"; }
         }
-    }
+    }*/
 }

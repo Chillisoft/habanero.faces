@@ -53,13 +53,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Habanero.BO.dll</HintPath>
     </Reference>
-    <Reference Include="Habanero.Testability.CF, Version=9.9.9.999, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Habanero.Testability, Version=9.9.9.999, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Habanero.Testability.CF.dll</HintPath>
+      <HintPath>..\..\lib\Habanero.Testability.dll</HintPath>
     </Reference>
-    <Reference Include="Habanero.Testability.Helpers.CF, Version=9.9.9.999, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Habanero.Testability.Helpers, Version=9.9.9.999, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Habanero.Testability.Helpers.CF.dll</HintPath>
+      <HintPath>..\..\lib\Habanero.Testability.Helpers.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="nunit.framework, Version=2.5.3.9345, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">

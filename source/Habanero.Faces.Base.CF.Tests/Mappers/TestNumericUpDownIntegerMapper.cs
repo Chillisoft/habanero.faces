@@ -17,12 +17,9 @@
 //     along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 //---------------------------------------------------------------------------------
 
-using System.Collections;
-using Habanero.Faces.Base;
-using Habanero.Faces.Base.CF.Tests;
 using NUnit.Framework;
 
-namespace Habanero.Faces.Test.Base.Mappers
+namespace Habanero.Faces.Base.Tests.Mappers
 {
     public abstract class TestNumericUpDownIntegerMapper
     {

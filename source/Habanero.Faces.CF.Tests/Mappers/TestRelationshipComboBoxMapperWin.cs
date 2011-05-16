@@ -1,11 +1,9 @@
-using System;
-using Habanero.BO;
-using Habanero.Faces.Test.Base.Mappers;
 using Habanero.Faces.Base;
+using Habanero.Faces.Base.Tests.Mappers;
 using NUnit.Framework;
 
 // ReSharper disable InconsistentNaming
-namespace Habanero.Faces.Test.Win.Mappers
+namespace Habanero.Faces.Tests.Mappers
 {
     [TestFixture]
     public class TestRelationshipComboBoxMapperWin : TestRelationshipComboBoxMapper

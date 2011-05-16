@@ -19,22 +19,18 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using Habanero.Base;
-using Habanero.Base.Exceptions;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.BO.Loaders;
-using Habanero.Faces.Base;
-using Habanero.Faces.Base.CF.Tests;
-using Habanero.Faces.Base.CF.Tests;
-using Habanero.Faces.Base.CF.Tests.Selectors;
+using Habanero.Faces.Base.Tests.ControlInterfaces;
+using Habanero.Testability.Helpers;
 using Habanero.Util;
 using NUnit.Framework;
 using Rhino.Mocks;
 
 // ReSharper disable InconsistentNaming
-namespace Habanero.Faces.Test.Base.Mappers
+namespace Habanero.Faces.Base.Tests.Mappers
 {
 	[TestFixture]
 	public class TestControlMapperDirect
