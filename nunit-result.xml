@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="F:\Systems\HabaneroCommunity\Faces\branches\V2.6-CF_Stargate\bin\Habanero.Faces.CF.Tests.dll" total="101" errors="0" failures="0" not-run="21" inconclusive="0" ignored="21" skipped="0" invalid="0" date="2011-05-16" time="12:54:42">
+  <environment nunit-version="2.5.8.10295" clr-version="2.0.50727.5420" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="F:\Systems\HabaneroCommunity\Faces\branches\V2.6-CF_Stargate" machine-name="BRETTDESKTOP" user="brett" user-domain="CHILLI" />
+  <culture-info current-culture="en-ZA" current-uiculture="en-US" />
+  <test-suite type="Test Project" name="" executed="True" result="Success" success="True" time="3.212" asserts="0">
+    <results>
+      <test-suite type="Assembly" name="F:\Systems\HabaneroCommunity\Faces\branches\V2.6-CF_Stargate\bin\Habanero.Faces.CF.Tests.dll" executed="True" result="Success" success="True" time="2.347" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="Habanero" executed="True" result="Success" success="True" time="2.332" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Faces" executed="True" result="Success" success="True" time="2.249" asserts="0">
+                <results>
+                  <test-suite type="Namespace" name="Test" executed="True" result="Success" success="True" time="2.249" asserts="0">
+                    <results>
+                      <test-suite type="Namespace" name="Win" executed="True" result="Success" success="True" time="2.249" asserts="0">
+                        <results>
+                          <test-suite type="Namespace" name="Mappers" executed="True" result="Success" success="True" time="1.474" asserts="0">
+                            <results>
+                              <test-suite type="TestFixture" name="TestCollectionComboBoxMapperCF" executed="True" result="Success" success="True" time="1.174" asserts="0">
+                                <results>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestCollectionComboBoxMapperCF.Test_ChangeComboBoxDoesntUpdateBusinessObject" executed="True" result="Success" success="True" time="0.277" asserts="0" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestCollectionComboBoxMapperCF.Test_KeyPressStrategy_DoesNotUpdateBusinessObject_When_SelectedIndexChanged" executed="True" result="Success" success="True" time="0.670" asserts="2" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestCollectionComboBoxMapperCF.Test_KeyPressStrategy_UpdatesBusinessObject_WhenEnterKeyPressed" executed="True" result="Success" success="True" time="0.008" asserts="2" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestCollectionComboBoxMapperCF.Test_WhenUseToStringSet_ShouldUseBoToString" executed="True" result="Success" success="True" time="0.012" asserts="2" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestCollectionComboBoxMapperCF.TestChangeComboBox_UpdatesBusinessObject" executed="True" result="Success" success="True" time="0.013" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestCollectionComboBoxMapperCF.TestChangePropValueUpdatesBusObj" executed="True" result="Success" success="True" time="0.009" asserts="5" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestCollectionComboBoxMapperCF.TestChangePropValueUpdatesBusObj_WithoutCallingUpdateControlValue" executed="True" result="Success" success="True" time="0.002" asserts="2" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestCollectionComboBoxMapperCF.TestCollectionComboBoxMapper.Test_BusinessObjectCollection_WhenSet_WithNewCollection_WhenItemAlreadySelected_AndAlsoInNewList_ShouldStillHaveTheSameItemSelected" executed="True" result="Success" success="True" time="0.043" asserts="7" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestCollectionComboBoxMapperCF.TestCollectionComboBoxMapper.Test_BusinessObjectCollection_WhenSet_WithNewCollection_WhenItemAlreadySelected_AndNotInNewList_ShouldHaveNothingSelected" executed="True" result="Success" success="True" time="0.003" asserts="6" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestCollectionComboBoxMapperCF.TestCollectionComboBoxMapper.Test_ResetBusinessObj_WhenHasNullValueForProperty_WhenPreviousBOHadAValue_ShouldSetSelectedItemNull_BUGFIX" executed="True" result="Success" success="True" time="0.003" asserts="5" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestCollectionComboBoxMapperCF.TestCollectionComboBoxMapper.Test_SetBusinessObj_ShouldSetTheSelectedItemToCorrectRelatedCar" executed="True" result="Success" success="True" time="0.008" asserts="8" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestCollectionComboBoxMapperCF.TestCollectionComboBoxMapper.Test_SetBusinessObj_WhenSpecificGuidPropUsed_ShouldSetTheSelectedItemToCorrectRelatedCar" executed="True" result="Success" success="True" time="0.062" asserts="7" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestCollectionComboBoxMapperCF.TestCollectionComboBoxMapper.Test_SetBusinessObj_WhenSpecificPropUsed_ShouldSetTheSelectedItemToCorrectRelatedCar" executed="True" result="Success" success="True" time="0.003" asserts="6" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestCollectionComboBoxMapperCF.TestCollectionComboBoxMapper.Test_SetBusinessObject_WhenHasNullCollection_ShouldRaiseError" executed="True" result="Success" success="True" time="0.004" asserts="3" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestCollectionComboBoxMapperCF.TestCollectionComboBoxMapper.TestConstructor" executed="True" result="Success" success="True" time="0.002" asserts="3" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestCollectionComboBoxMapperCF.TestCollectionComboBoxMapper.TestSetBOCollection" executed="True" result="Success" success="True" time="0.005" asserts="4" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestCollectionComboBoxMapperCF.TestCollectionComboBoxMapper.TestSetBusinessObject_Null_DoesNotRaiseError_BUGFIX" executed="True" result="Success" success="True" time="0.003" asserts="2" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestCollectionComboBoxMapperCF.TestCollectionComboBoxMapper.TestSetBusinessObject_Null_NullLookupListSet_DoesNotRaiseError_BUGFIX" executed="True" result="Success" success="True" time="0.002" asserts="5" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestCollectionComboBoxMapperCF.TestKeyPressEventUpdatesBusinessObject_WithoutCallingApplyChanges" executed="True" result="Success" success="True" time="0.002" asserts="2" />
+                                </results>
+                              </test-suite>
+                              <test-suite type="TestFixture" name="TestControlMapperWin" executed="True" result="Success" success="True" time="0.138" asserts="0">
+                                <results>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestControlMapperWin.TestControlMapper.Test_CanSetGuidToStringLookupValue" executed="True" result="Success" success="True" time="0.047" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestControlMapperWin.TestControlMapper.Test_Constructor" executed="True" result="Success" success="True" time="0.005" asserts="5" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestControlMapperWin.TestControlMapper.Test_Constructor_Readonly" executed="True" result="Success" success="True" time="0.004" asserts="5" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestControlMapperWin.TestControlMapper.Test_ErrorProvider_HasCorrectMessage_ForStringDataType_HasRule" executed="True" result="Success" success="True" time="0.014" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestControlMapperWin.TestControlMapper.Test_SetClassDef" executed="True" result="Success" success="True" time="0.004" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestControlMapperWin.TestControlMapper.TestCanSetDateTimeProp_ToNull_NonCompulsory" executed="True" result="Success" success="True" time="0.008" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestControlMapperWin.TestControlMapper.TestCanSetDateTimeProp_ToNullString_NonCompulsory" executed="True" result="Success" success="True" time="0.005" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestControlMapperWin.TestControlMapper.TestCanSetGuidProp_ItemInList" executed="True" result="Success" success="True" time="0.005" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestControlMapperWin.TestControlMapper.TestCanSetIntProp_ItemInList" executed="True" result="Success" success="True" time="0.007" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestControlMapperWin.TestControlMapper.TestCanSetIntProp_Null_NotCompulsory" executed="True" result="Success" success="True" time="0.004" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestControlMapperWin.TestControlMapper.TestCanSetIntProp_NullString_NotCompulsory" executed="True" result="Success" success="True" time="0.005" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestControlMapperWin.TestControlMapper.TestCanSetStringProp_ToDateTime" executed="True" result="Success" success="True" time="0.005" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestControlMapperWin.TestControlMapper.TestCanSetStringProp_ToDecimal" executed="True" result="Success" success="True" time="0.005" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestControlMapperWin.TestControlMapper.TestCanSetStringProp_ToGuid" executed="True" result="Success" success="True" time="0.006" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestControlMapperWin.TestControlMapper.TestCanSetStringProp_ToInt_NoRule" executed="True" result="Success" success="True" time="0.005" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestControlMapperWin.TestControlMapper.TestNormalEnablesControl" executed="True" result="Success" success="True" time="0.005" asserts="2" />
+                                </results>
+                              </test-suite>
+                              <test-suite type="TestFixture" name="TestLookupComboBoxMapperCF" executed="False" result="Ignored">
+                                <reason>
+                                  <message><![CDATA[Not using lookups at the moment]]></message>
+                                </reason>
+                                <results>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestLookupComboBoxMapperCF.TestChangeComboBoxDoesntUpdateBusinessObject" executed="False" result="Ignored">
+                                    <reason>
+                                      <message><![CDATA[Not using lookups at the moment]]></message>
+                                    </reason>
+                                  </test-case>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestLookupComboBoxMapperCF.TestChangeComboBoxUpdatesBusinessObject" executed="False" result="Ignored">
+                                    <reason>
+                                      <message><![CDATA[Not using lookups at the moment]]></message>
+                                    </reason>
+                                  </test-case>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestLookupComboBoxMapperCF.TestChangeComboBoxUpdatesBusinessObject_WithoutCallingApplyChanges" executed="False" result="Ignored">
+                                    <reason>
+                                      <message><![CDATA[Not using lookups at the moment]]></message>
+                                    </reason>
+                                  </test-case>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestLookupComboBoxMapperCF.TestChangePropValueUpdatesBusObj" executed="False" result="Ignored">
+                                    <reason>
+                                      <message><![CDATA[Not using lookups at the moment]]></message>
+                                    </reason>
+                                  </test-case>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestLookupComboBoxMapperCF.TestChangePropValueUpdatesBusObj_WithoutCallingUpdateControlValue" executed="False" result="Ignored">
+                                    <reason>
+                                      <message><![CDATA[Not using lookups at the moment]]></message>
+                                    </reason>
+                                  </test-case>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestLookupComboBoxMapperCF.TestLookupComboBoxMapper.Test_LookupList_AddItemToComboBox_SelectAdditionalItem_SetsBOPropValueToNull" executed="False" result="Ignored">
+                                    <reason>
+                                      <message><![CDATA[Not using lookups at the moment]]></message>
+                                    </reason>
+                                  </test-case>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestLookupComboBoxMapperCF.TestLookupComboBoxMapper.Test_ResetBusinessObj_WhenHasNullValueForProperty_WhenPreviousBOHadAValue_ShouldSetSelectedItemNull_BUGFIX" executed="False" result="Ignored">
+                                    <reason>
+                                      <message><![CDATA[Not using lookups at the moment]]></message>
+                                    </reason>
+                                  </test-case>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestLookupComboBoxMapperCF.TestLookupComboBoxMapper.Test_SetLookupListNull_ShouldNotRaiseError_ShouldSetListToNullDictionary" executed="False" result="Ignored">
+                                    <reason>
+                                      <message><![CDATA[Not using lookups at the moment]]></message>
+                                    </reason>
+                                  </test-case>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestLookupComboBoxMapperCF.TestLookupComboBoxMapper.Test_SetLookupListNull_WhenHasItems_ShouldClearTheList" executed="False" result="Ignored">
+                                    <reason>
+                                      <message><![CDATA[Not using lookups at the moment]]></message>
+                                    </reason>
+                                  </test-case>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestLookupComboBoxMapperCF.TestLookupComboBoxMapper.TestApplyChangesToBusObj" executed="False" result="Ignored">
+                                    <reason>
+                                      <message><![CDATA[Not using lookups at the moment]]></message>
+                                    </reason>
+                                  </test-case>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestLookupComboBoxMapperCF.TestLookupComboBoxMapper.TestConstructor" executed="False" result="Ignored">
+                                    <reason>
+                                      <message><![CDATA[Not using lookups at the moment]]></message>
+                                    </reason>
+                                  </test-case>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestLookupComboBoxMapperCF.TestLookupComboBoxMapper.TestCustomiseLookupList_Add" executed="False" result="Ignored">
+                                    <reason>
+                                      <message><![CDATA[Not using lookups at the moment]]></message>
+                                    </reason>
+                                  </test-case>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestLookupComboBoxMapperCF.TestLookupComboBoxMapper.TestCustomiseLookupList_Add_SelectAdded" executed="False" result="Ignored">
+                                    <reason>
+                                      <message><![CDATA[Not using lookups at the moment]]></message>
+                                    </reason>
+                                  </test-case>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestLookupComboBoxMapperCF.TestLookupComboBoxMapper.TestCustomiseLookupList_Remove" executed="False" result="Ignored">
+                                    <reason>
+                                      <message><![CDATA[Not using lookups at the moment]]></message>
+                                    </reason>
+                                  </test-case>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestLookupComboBoxMapperCF.TestLookupComboBoxMapper.TestSetBusinessObj" executed="False" result="Ignored">
+                                    <reason>
+                                      <message><![CDATA[Not using lookups at the moment]]></message>
+                                    </reason>
+                                  </test-case>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestLookupComboBoxMapperCF.TestLookupComboBoxMapper.TestSetBusinessObject_Null_DoesNotRaiseError_BUGFIX" executed="False" result="Ignored">
+                                    <reason>
+                                      <message><![CDATA[Not using lookups at the moment]]></message>
+                                    </reason>
+                                  </test-case>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestLookupComboBoxMapperCF.TestLookupComboBoxMapper.TestSetBusinessObject_Null_NullLookupListSet_DoesNotRaiseError_BUGFIX" executed="False" result="Ignored">
+                                    <reason>
+                                      <message><![CDATA[Not using lookups at the moment]]></message>
+                                    </reason>
+                                  </test-case>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestLookupComboBoxMapperCF.TestLookupComboBoxMapper.TestSetLookupList" executed="False" result="Ignored">
+                                    <reason>
+                                      <message><![CDATA[Not using lookups at the moment]]></message>
+                                    </reason>
+                                  </test-case>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestLookupComboBoxMapperCF.TestLookupComboBoxMapper.TestUsingBOLookupListString" executed="False" result="Ignored">
+                                    <reason>
+                                      <message><![CDATA[Not using lookups at the moment]]></message>
+                                    </reason>
+                                  </test-case>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestLookupComboBoxMapperCF.TestLookupComboBoxMapper.TestUsingPropWithBOLookupList" executed="False" result="Ignored">
+                                    <reason>
+                                      <message><![CDATA[Not using lookups at the moment]]></message>
+                                    </reason>
+                                  </test-case>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestLookupComboBoxMapperCF.TestLookupComboBoxMapper.TestUsingPropWithLookupSource" executed="False" result="Ignored">
+                                    <reason>
+                                      <message><![CDATA[Not using lookups at the moment]]></message>
+                                    </reason>
+                                  </test-case>
+                                </results>
+                              </test-suite>
+                              <test-suite type="TestFixture" name="TestRelationshipComboBoxMapperWin" executed="True" result="Inconclusive" success="False" time="0.001" asserts="0" />
+                              <test-suite type="TestFixture" name="TestTextBoxMapperCF" executed="True" result="Success" success="True" time="0.136" asserts="0">
+                                <results>
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.Test_CorrectTextBoxMapperStrategy" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.Test_MapperStrategy_Returns_Correct_BoProp_WhenChangingBOs" executed="True" result="Success" success="True" time="0.008" asserts="3" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.Test_TextBoxHasMapperStrategy" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestBoProp_ChangesWhen_TextBoxTextChanges" executed="True" result="Success" success="True" time="0.003" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestIsValidChar_ReturnsTrueIfBOPropNotSet" executed="True" result="Success" success="True" time="0.002" asserts="4" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestIsValidChar_ReturnsTrueIfTextBoxNotSet" executed="True" result="Success" success="True" time="0.001" asserts="4" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestIsValidChar_WithDecimal_AddsZeroForDotAtStart" executed="True" result="Success" success="True" time="0.004" asserts="4" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestIsValidChar_WithDecimal_ReturnsFalseForMultipleDots" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestIsValidChar_WithDecimal_ReturnsFalseForNegativeAfterStart" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestIsValidChar_WithDecimal_ReturnsFalseForNonNumber" executed="True" result="Success" success="True" time="0.001" asserts="4" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestIsValidChar_WithDecimal_ReturnsTrueForDotNotAtStart" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestIsValidChar_WithDecimal_ReturnsTrueForNegativeAtStart" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestIsValidChar_WithDecimal_ReturnsTrueForNumber" executed="True" result="Success" success="True" time="0.001" asserts="4" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestIsValidChar_WithInt_ReturnsFalseForNegativeAfterStart" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestIsValidChar_WithInt_ReturnsFalseForNonNumber" executed="True" result="Success" success="True" time="0.001" asserts="5" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestIsValidChar_WithInt_ReturnsTrueForNegativeAtStart" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestIsValidChar_WithInt_ReturnsTrueForNumber" executed="True" result="Success" success="True" time="0.001" asserts="4" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestIsValidChar_WithString_ReturnsTrueForNonNumericTypes" executed="True" result="Success" success="True" time="0.001" asserts="4" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestTextBoxMapper.TestBusinessObject" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestTextBoxMapper.TestConstructor" executed="True" result="Success" success="True" time="0.001" asserts="2" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestTextBoxMapper.TestDisplayingRelatedProperty" executed="True" result="Success" success="True" time="0.082" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestTextBoxMapper.TestSettingTextBoxValueUpdatesBO" executed="True" result="Success" success="True" time="0.003" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestTextBoxMapper.TestSettingTextBoxValueWhenBOIsNotSet" executed="True" result="Success" success="True" time="0.001" asserts="2" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestTextBoxMapper.TestSettingToAnotherBusinessObject" executed="True" result="Success" success="True" time="0.002" asserts="2" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestTextBoxMapper.TestValueWhenSettingBO" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Win.Mappers.TestTextBoxMapperCF.TestTextBoxMapper.TestValueWhenUpdatingBOValue" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+                                </results>
+                              </test-suite>
+                            </results>
+                          </test-suite>
+                          <test-suite type="Namespace" name="StandardControls" executed="True" result="Success" success="True" time="0.690" asserts="0">
+                            <results>
+                              <test-suite type="TestFixture" name="TestCheckBoxStrageyWin" executed="True" result="Success" success="True" time="0.559" asserts="0">
+                                <results>
+                                  <test-case name="Habanero.Faces.Test.Win.StandardControls.TestCheckBoxStrageyWin.Test_AddClickEventHandler_WhenMapperUsingControlAdapter_ShouldAddBehaviours" executed="True" result="Success" success="True" time="0.537" asserts="2" />
+                                  <test-case name="Habanero.Faces.Test.Win.StandardControls.TestCheckBoxStrageyWin.Test_AddClickEventHandler_WhenMapperUsingHabaneroControl_ShouldAddBehaviours" executed="True" result="Success" success="True" time="0.002" asserts="2" />
+                                </results>
+                              </test-suite>
+                              <test-suite type="TestFixture" name="TestComboBoxDefaultMapperStrageyWin" executed="True" result="Success" success="True" time="0.100" asserts="0">
+                                <results>
+                                  <test-case name="Habanero.Faces.Test.Win.StandardControls.TestComboBoxDefaultMapperStrageyWin.Test_AddItemSelectedEventHandler_WhenMapperUsingControlAdapter_ShouldAddBehaviours" executed="True" result="Success" success="True" time="0.092" asserts="3" />
+                                  <test-case name="Habanero.Faces.Test.Win.StandardControls.TestComboBoxDefaultMapperStrageyWin.Test_AddItemSelectedEventHandler_WhenMapperUsingHabaneroControl_ShouldAddBehaviours" executed="True" result="Success" success="True" time="0.002" asserts="2" />
+                                  <test-case name="Habanero.Faces.Test.Win.StandardControls.TestComboBoxDefaultMapperStrageyWin.Test_RemoveCurrentHandlers_WhenMapperUsingControlAdapter_ShouldAddBehaviours" executed="True" result="Success" success="True" time="0.002" asserts="3" />
+                                  <test-case name="Habanero.Faces.Test.Win.StandardControls.TestComboBoxDefaultMapperStrageyWin.Test_RemoveCurrentHandlers_WhenMapperUsingHabaneroControl_ShouldAddBehaviours" executed="True" result="Success" success="True" time="0.002" asserts="2" />
+                                </results>
+                              </test-suite>
+                              <test-suite type="TestFixture" name="TestComboBoxKeyPressMapperStrategyWin" executed="True" result="Success" success="True" time="0.010" asserts="0">
+                                <results>
+                                  <test-case name="Habanero.Faces.Test.Win.StandardControls.TestComboBoxKeyPressMapperStrategyWin.Test_AddHandlers_WhenMapperUsingControlAdapter_ShouldAddBehaviours" executed="True" result="Success" success="True" time="0.002" asserts="3" />
+                                  <test-case name="Habanero.Faces.Test.Win.StandardControls.TestComboBoxKeyPressMapperStrategyWin.Test_AddHandlers_WhenMapperUsingHabaneroControl_ShouldAddBehaviours" executed="True" result="Success" success="True" time="0.002" asserts="2" />
+                                  <test-case name="Habanero.Faces.Test.Win.StandardControls.TestComboBoxKeyPressMapperStrategyWin.Test_RemoveCurrentHandlers_WhenMapperUsingControlAdapter_ShouldAddBehaviours" executed="True" result="Success" success="True" time="0.002" asserts="3" />
+                                  <test-case name="Habanero.Faces.Test.Win.StandardControls.TestComboBoxKeyPressMapperStrategyWin.Test_RemoveCurrentHandlers_WhenMapperUsingHabaneroControl_ShouldAddBehaviours" executed="True" result="Success" success="True" time="0.002" asserts="2" />
+                                </results>
+                              </test-suite>
+                              <test-suite type="TestFixture" name="TestListComboBoxMapperStrategyWin" executed="True" result="Success" success="True" time="0.006" asserts="0">
+                                <results>
+                                  <test-case name="Habanero.Faces.Test.Win.StandardControls.TestListComboBoxMapperStrategyWin.Test_AddItemSelectedEventHandler_WhenMapperUsingControlAdapter_ShouldAddBehaviours" executed="True" result="Success" success="True" time="0.004" asserts="3" />
+                                  <test-case name="Habanero.Faces.Test.Win.StandardControls.TestListComboBoxMapperStrategyWin.Test_AddItemSelectedEventHandler_WhenMapperUsingHabaneroControl_ShouldAddBehaviours" executed="True" result="Success" success="True" time="0.002" asserts="2" />
+                                </results>
+                              </test-suite>
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="TestControlCollectionCF" executed="True" result="Success" success="True" time="0.081" asserts="0">
+                            <results>
+                              <test-case name="Habanero.Faces.Test.Win.TestControlCollectionCF.Test_Add_WhenIsAdaptedControl_ShouldUseWrappedControl" executed="True" result="Success" success="True" time="0.074" asserts="5" />
+                              <test-case name="Habanero.Faces.Test.Win.TestControlCollectionCF.Test_IndexOf_ShouldUseWrappedControl" executed="True" result="Success" success="True" time="0.001" asserts="4" />
+                              <test-case name="Habanero.Faces.Test.Win.TestControlCollectionCF.Test_this_ShouldWrapControlIfItIsNotAlreadyWrapped" executed="True" result="Success" success="True" time="0.001" asserts="5" />
+                              <test-case name="Habanero.Faces.Test.Win.TestControlCollectionCF.TestAddControl" executed="True" result="Success" success="True" time="0.003" asserts="1" />
+                            </results>
+                          </test-suite>
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+              <test-suite type="Namespace" name="ProgrammaticBinding" executed="True" result="Success" success="True" time="0.049" asserts="0">
+                <results>
+                  <test-suite type="Namespace" name="Tests" executed="True" result="Success" success="True" time="0.049" asserts="0">
+                    <results>
+                      <test-suite type="Namespace" name="ControlAdaptors" executed="True" result="Success" success="True" time="0.038" asserts="0">
+                        <results>
+                          <test-suite type="TestFixture" name="TestWinFormsComboBoxAdapter" executed="True" result="Success" success="True" time="0.036" asserts="0">
+                            <results>
+                              <test-case name="Habanero.ProgrammaticBinding.Tests.ControlAdaptors.TestWinFormsComboBoxAdapter.Test_Constuct_ShouldSetWrappedControl" executed="True" result="Success" success="True" time="0.036" asserts="1" />
+                            </results>
+                          </test-suite>
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="TestWinFormsTextBoxAdapter" executed="True" result="Success" success="True" time="0.009" asserts="0">
+                        <results>
+                          <test-case name="Habanero.ProgrammaticBinding.Tests.TestWinFormsTextBoxAdapter.Test_Equals_Control_WhenIsSame_ShouldReturnTrue" executed="True" result="Success" success="True" time="0.005" asserts="2" />
+                          <test-case name="Habanero.ProgrammaticBinding.Tests.TestWinFormsTextBoxAdapter.Test_Equals_Control_WhenNotSame_ShouldReturnTrue" executed="True" result="Success" success="True" time="0.003" asserts="2" />
+                          <test-case name="Habanero.ProgrammaticBinding.Tests.TestWinFormsTextBoxAdapter.Test_Equals_Control_WhenOtherNull_ShouldReturnFalse" executed="True" result="Success" success="True" time="0.001" asserts="2" />
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="Assembly" name="F:\Systems\HabaneroCommunity\Faces\branches\V2.6-CF_Stargate\bin\Habanero.Faces.Base.CF.Tests.dll" executed="True" result="Success" success="True" time="0.553" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="Habanero" executed="True" result="Success" success="True" time="0.544" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Faces" executed="True" result="Success" success="True" time="0.540" asserts="0">
+                <results>
+                  <test-suite type="Namespace" name="Test" executed="True" result="Success" success="True" time="0.536" asserts="0">
+                    <results>
+                      <test-suite type="Namespace" name="Base" executed="True" result="Success" success="True" time="0.535" asserts="0">
+                        <results>
+                          <test-suite type="Namespace" name="Mappers" executed="True" result="Success" success="True" time="0.420" asserts="0">
+                            <results>
+                              <test-suite type="TestFixture" name="TestControlMapperCollectionDirectoy" executed="True" result="Success" success="True" time="0.258" asserts="0">
+                                <results>
+                                  <test-case name="Habanero.Faces.Test.Base.Mappers.TestControlMapperCollectionDirectoy.Test_Add_ShouldAddControlMapper" executed="True" result="Success" success="True" time="0.175" asserts="2" />
+                                  <test-case name="Habanero.Faces.Test.Base.Mappers.TestControlMapperCollectionDirectoy.Test_Add_ShouldReturnAddedControlMapper" executed="True" result="Success" success="True" time="0.001" asserts="2" />
+                                  <test-case name="Habanero.Faces.Test.Base.Mappers.TestControlMapperCollectionDirectoy.Test_SetBusinessObject_ShouldSet" executed="True" result="Success" success="True" time="0.065" asserts="1" />
+                                  <test-case name="Habanero.Faces.Test.Base.Mappers.TestControlMapperCollectionDirectoy.Test_SetBusinessObject_ShouldSetBoOnControlMappers" executed="True" result="Success" success="True" time="0.002" asserts="2" />
+                                  <test-case name="Habanero.Faces.Test.Base.Mappers.TestControlMapperCollectionDirectoy.Test_SetControlsEnabled_WithTrue_ShouldSetEnabledTrueOnControlMappers" executed="True" result="Success" success="True" time="0.002" asserts="2" />
+                                </results>
+                              </test-suite>
+                              <test-suite type="TestFixture" name="TestControlMapperDirect" executed="True" result="Success" success="True" time="0.158" asserts="0">
+                                <results>
+                                  <test-case name="Habanero.Faces.Test.Base.Mappers.TestControlMapperDirect.Test_GetEnabled_WhenMappedControlEnabledIsFalse_ShouldRetFalse" executed="True" result="Success" success="True" time="0.149" asserts="2" />
+                                  <test-case name="Habanero.Faces.Test.Base.Mappers.TestControlMapperDirect.Test_GetEnabled_WhenMappedControlEnabledIsTrue_ShouldRetTrue" executed="True" result="Success" success="True" time="0.001" asserts="2" />
+                                  <test-case name="Habanero.Faces.Test.Base.Mappers.TestControlMapperDirect.Test_IsReadOnly_Set_ShouldSet" executed="True" result="Success" success="True" time="0.000" asserts="2" />
+                                  <test-case name="Habanero.Faces.Test.Base.Mappers.TestControlMapperDirect.Test_SetEnabled_Withfalse_ShouldSetMappedControlEnabled_ToFalse" executed="True" result="Success" success="True" time="0.001" asserts="2" />
+                                  <test-case name="Habanero.Faces.Test.Base.Mappers.TestControlMapperDirect.Test_SetEnabled_WithTrue_ShouldSetMappedControlEnabled_ToTrue" executed="True" result="Success" success="True" time="0.005" asserts="2" />
+                                </results>
+                              </test-suite>
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="TestBusinessObjectDeletor" executed="True" result="Success" success="True" time="0.033" asserts="0">
+                            <results>
+                              <test-case name="Habanero.Faces.Test.Base.TestBusinessObjectDeletor.Test_Construct" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="TestCheckBox" executed="True" result="Inconclusive" success="False" time="0.000" asserts="0" />
+                          <test-suite type="TestFixture" name="TestConfirmingBusinessObjectDeletor" executed="True" result="Success" success="True" time="0.050" asserts="0">
+                            <results>
+                              <test-case name="Habanero.Faces.Test.Base.TestConfirmingBusinessObjectDeletor.Test_Construct" executed="True" result="Success" success="True" time="0.026" asserts="2" />
+                              <test-case name="Habanero.Faces.Test.Base.TestConfirmingBusinessObjectDeletor.Test_Construct_WithCustomConfirmationMessageDelegate" executed="True" result="Success" success="True" time="0.001" asserts="3" />
+                              <test-case name="Habanero.Faces.Test.Base.TestConfirmingBusinessObjectDeletor.Test_DeleteBusinessObject_CustomConfirmationMessage" executed="True" result="Success" success="True" time="0.022" asserts="0" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="TestControl" executed="True" result="Inconclusive" success="False" time="0.000" asserts="0" />
+                          <test-suite type="TestFixture" name="TestForm" executed="True" result="Inconclusive" success="False" time="0.000" asserts="0" />
+                          <test-suite type="TestFixture" name="TestGlobalUIRegistry" executed="True" result="Success" success="True" time="0.006" asserts="0">
+                            <results>
+                              <test-case name="Habanero.Faces.Test.Base.TestGlobalUIRegistry.TestGetsAndSetsOnUISettings" executed="True" result="Success" success="True" time="0.006" asserts="4" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="TestMessageBoxConfirmer" executed="True" result="Success" success="True" time="0.016" asserts="0">
+                            <results>
+                              <test-case name="Habanero.Faces.Test.Base.TestMessageBoxConfirmer.Test_Confirm_False" executed="True" result="Success" success="True" time="0.007" asserts="1" />
+                              <test-case name="Habanero.Faces.Test.Base.TestMessageBoxConfirmer.Test_Confirm_False_WithDelegate" executed="True" result="Success" success="True" time="0.003" asserts="4" />
+                              <test-case name="Habanero.Faces.Test.Base.TestMessageBoxConfirmer.Test_Confirm_True" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                              <test-case name="Habanero.Faces.Test.Base.TestMessageBoxConfirmer.Test_Confirm_True_WithDelegate" executed="True" result="Success" success="True" time="0.001" asserts="4" />
+                              <test-case name="Habanero.Faces.Test.Base.TestMessageBoxConfirmer.Test_Constructor" executed="True" result="Success" success="True" time="0.001" asserts="4" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="TestNumericUpDown" executed="True" result="Inconclusive" success="False" time="0.000" asserts="0" />
+                          <test-suite type="TestFixture" name="TestPanel" executed="True" result="Inconclusive" success="False" time="0.000" asserts="0" />
+                          <test-suite type="TestFixture" name="TestProgressBar" executed="True" result="Inconclusive" success="False" time="0.001" asserts="0" />
+                          <test-suite type="TestFixture" name="TestRadioButton" executed="True" result="Inconclusive" success="False" time="0.000" asserts="0" />
+                          <test-suite type="TestFixture" name="TestSplitter" executed="True" result="Inconclusive" success="False" time="0.000" asserts="0" />
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
