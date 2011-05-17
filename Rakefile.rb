@@ -102,7 +102,7 @@ end
 desc "Runs the tests"
 nunit :test do |nunit|
 	puts cyan("Running tests")
-	nunit.assemblies 'bin/Habanero.Faces.CF.Tests.dll', 'bin/Habanero.Faces.Base.CF.Tests.dll'
+	nunit.assemblies 'bin/Habanero.Faces.Tests.dll', 'bin/Habanero.Faces.Base.Tests.dll'
 end
 
 svn :commitlib do |s|
