@@ -43,7 +43,12 @@ namespace Habanero.Faces.Test.Base
         {
         }
 
-        public string ContextName
+    	public bool IsLogging(LogCategory logCategory)
+    	{
+    		return false;
+    	}
+
+    	public string ContextName
         {
             get { return "HabaneroLoggerStub (logger for testing only)"; }
         }
