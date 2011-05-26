@@ -1,5 +1,6 @@
 using System.Windows.Forms;
 using Habanero.Base;
+using Habanero.Base.Logging;
 using Habanero.BO;
 using Habanero.Faces.Adapters;
 using Habanero.Faces.Base;

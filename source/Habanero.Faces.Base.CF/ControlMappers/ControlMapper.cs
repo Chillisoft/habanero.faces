@@ -21,6 +21,7 @@ using System.Collections;
 using System.Drawing;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
+using Habanero.Base.Logging;
 using Habanero.Base.Util;
 using Habanero.BO;
 using Habanero.Util;

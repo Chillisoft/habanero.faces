@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using Habanero.Base;
+using Habanero.Base.Logging;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.BO.Loaders;
@@ -178,7 +179,7 @@ namespace Habanero.Faces.Base.Tests.Mappers
 		public void SetupTestFixture()
 		{
 			BORegistry.DataAccessor = new DataAccessorInMemory();
-		    GlobalRegistry.LoggerFactory = new HabaneroLoggerFactoryStub();
+		    GlobalRegistry.LoggerFactory =  new HabaneroLoggerFactoryStub();
 		}
 
 		[SetUp]

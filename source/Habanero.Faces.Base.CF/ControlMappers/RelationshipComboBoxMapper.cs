@@ -20,6 +20,7 @@ using System;
 using System.Collections;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
+using Habanero.Base.Logging;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 
@@ -434,7 +435,7 @@ namespace Habanero.Faces.Base
             try
             {
                 _logger.Log("B4 SelectedItem InternalUpdateControlValueFromBo BO (" + this.BusinessObject + ") RelatedBO (" + _relatedBO + ") For Mapper (" + this.Control.Name + ")", LogCategory.Debug);
-                _logger.Log(GetStackTrace());
+                _logger.Log(GetStackTrace(),LogCategory.Debug);
                 Control.SelectedItem = _relatedBO;
                 if (_relatedBO == null && !String.IsNullOrEmpty(Control.Text)) Control.Text = "";
             }

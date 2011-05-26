@@ -18,6 +18,7 @@
 //---------------------------------------------------------------------------------
 
 using Habanero.Base;
+using Habanero.Base.Logging;
 using Habanero.Testability.Helpers;
 using NUnit.Framework;
 

@@ -18,6 +18,7 @@
 // ---------------------------------------------------------------------------------
 using System;
 using Habanero.Base;
+using Habanero.Base.Logging;
 
 namespace Habanero.Faces.Base
 {

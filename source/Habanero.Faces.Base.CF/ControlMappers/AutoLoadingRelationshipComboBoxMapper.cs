@@ -18,6 +18,7 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.Collections;
+using Habanero.Base.Logging;
 using Habanero.BO;
 
 namespace Habanero.Faces.Base
@@ -52,9 +53,9 @@ namespace Habanero.Faces.Base
         protected override void LoadCollectionForBusinessObject()
         {
             if (this.RelatedObjectClassDef == null) return;
-            _logger.Log("LoadCollectionForBusinessObjects B4 CacheHasNotTimedOut : Control (" + this.Control.Name + ") Rel (" + this.RelationshipName + ")");
+            _logger.Log("LoadCollectionForBusinessObjects B4 CacheHasNotTimedOut : Control (" + this.Control.Name + ") Rel (" + this.RelationshipName + ")",LogCategory.Debug);
             if (CacheHasNotTimedOut()) return;
-            _logger.Log("LoadCollectionForBusinessObjects B4 GetBOCol : Control (" + this.Control.Name +") Rel (" + this.RelationshipName + ")");
+            _logger.Log("LoadCollectionForBusinessObjects B4 GetBOCol : Control (" + this.Control.Name +") Rel (" + this.RelationshipName + ")",LogCategory.Debug);
             var collection = BORegistry.DataAccessor.BusinessObjectLoader.GetBusinessObjectCollection(
                 RelatedObjectClassDef, "");
             _lastCallTime = DateTime.Now;

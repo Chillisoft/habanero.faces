@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using Habanero.Base;
+using Habanero.Base.Logging;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base.Tests.ControlInterfaces;
