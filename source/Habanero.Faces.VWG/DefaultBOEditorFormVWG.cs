@@ -194,8 +194,10 @@ namespace Habanero.Faces.VWG
         /// </summary>
         protected virtual void CreateLayout()
         {
+            IPanel panel = _controlFactory.CreatePanel();
             BorderLayoutManager borderLayoutManager = new BorderLayoutManagerVWG(this, _controlFactory);
-            borderLayoutManager.AddControl(BoPanel, BorderLayoutManager.Position.Centre);
+            borderLayoutManager.AddControl(panel, BorderLayoutManager.Position.Centre);
+            panel.Controls.Add(BoPanel);
             borderLayoutManager.AddControl(Buttons, BorderLayoutManager.Position.South);
         }
 

@@ -831,7 +831,7 @@
         </member>
         <member name="M:Gizmox.WebGUI.Common.Tokens.TokenReader.PeekAtIndex(System.Int32)">
             <summary>
-            Gets the char from a givven index.
+            Gets the char from a given index.
             </summary>
             <param name="intIndex">The char index.</param>
             <returns></returns>
@@ -844,14 +844,14 @@
         </member>
         <member name="M:Gizmox.WebGUI.Common.Tokens.TokenReader.EnsureBuffer(System.Int32)">
             <summary>
-            Ensures a valid buffer for a givven index.
+            Ensures a valid buffer for a given index.
             </summary>
             <param name="intIndex">The index to ensure buffer for.</param>
             <returns></returns>
         </member>
         <member name="M:Gizmox.WebGUI.Common.Tokens.TokenReader.EnsureBuffer(System.Int32,System.Int32)">
             <summary>
-            Ensures a valid buffer for a givven range.
+            Ensures a valid buffer for a given range.
             </summary>
             <param name="intIndex">The range index.</param>
             <param name="intLength">The range length.</param>
@@ -859,14 +859,14 @@
         </member>
         <member name="M:Gizmox.WebGUI.Common.Tokens.TokenReader.LoadBuffer(System.Int32)">
             <summary>
-            Loads the buffer for a givven index.
+            Loads the buffer for a given index.
             </summary>
             <param name="intIndex">The index to load in the buffer.</param>
             <returns></returns>
         </member>
         <member name="M:Gizmox.WebGUI.Common.Tokens.TokenReader.LoadBuffer(System.Int32,System.Int32)">
             <summary>
-            Loads the buffer for a givven range.
+            Loads the buffer for a given range.
             </summary>
             <param name="intIndex">The index of the range.</param>
             <param name="intLength">The length of the range.</param>
@@ -911,7 +911,7 @@
         </member>
         <member name="M:Gizmox.WebGUI.Common.Tokens.TokenReader.GetBufferState(System.Int32,System.Int32)">
             <summary>
-            Gets buffer state for a givven index.
+            Gets buffer state for a given index.
             </summary>
             <param name="intIndex">The index to check relative to the buffer state.</param>
             <returns></returns>
@@ -1162,7 +1162,7 @@
         </member>
         <member name="M:Gizmox.WebGUI.Common.Tokens.TokenReader.PeekStringFromIndex(System.Int32,System.Int32)">
             <summary>
-            Peeks a string from a givven index
+            Peeks a string from a given index
             </summary>
             <param name="intIndex"></param>
             <param name="intLength"></param>
@@ -1400,7 +1400,7 @@
         </member>
         <member name="T:Gizmox.WebGUI.Common.Tokens.TokenReader.BufferIndexState">
             <summary>
-            The state of the buffer compared to a givven index
+            The state of the buffer compared to a given index
             </summary>
         </member>
         <member name="F:Gizmox.WebGUI.Common.Tokens.TokenReader.BufferIndexState.Advanced">
@@ -2113,6 +2113,7 @@
             <summary>
             Writes the content of the file to a stream.
             </summary>
+            <param name="objSkinScope">The skin scope.</param>
             <param name="objStream">The stream.</param>
             <param name="objCollector">The collector.</param>
         </member>
@@ -2120,6 +2121,7 @@
             <summary>
             Writes the content.
             </summary>
+            <param name="objSkinScope">The skin scope.</param>
             <param name="objStreamWriter">The stream writer.</param>
             <param name="objCollector">The collector.</param>
         </member>
@@ -3521,6 +3523,14 @@
             	<c>true</c> if the collector resources are diffrent when png is not supported; otherwise, <c>false</c>.
             </value>
         </member>
+        <member name="P:Gizmox.WebGUI.Forms.Skins.Resources.SkinCollector.SupportsMultilineSkinValues">
+            <summary>
+            Gets a value indicating whether [supports multiline values].
+            </summary>
+            <value>
+            	<c>true</c> if [supports multiline values]; otherwise, <c>false</c>.
+            </value>
+        </member>
         <member name="P:Gizmox.WebGUI.Forms.Skins.Resources.SkinCollector.IsLocalizable">
             <summary>
             Gets a value indicating whether the collector resources are localizable.
@@ -3811,13 +3821,14 @@
             </summary>
             <param name="objContext">The obj context.</param>
             <param name="objWriter">The obj writer.</param>
-            <param name="lngRequestID">The LNG request ID.</param>
+            <param name="lngRequestID">The request ID.</param>
         </member>
-        <member name="M:Gizmox.WebGUI.Common.Interfaces.IForm.PreRenderForm(Gizmox.WebGUI.Common.Interfaces.IContext)">
+        <member name="M:Gizmox.WebGUI.Common.Interfaces.IForm.PreRenderForm(Gizmox.WebGUI.Common.Interfaces.IContext,System.Int64)">
             <summary>
             Pre-render form.
             </summary>
             <param name="objContext">The context.</param>
+            <param name="lngRequestID">The request ID.</param>
         </member>
         <member name="M:Gizmox.WebGUI.Common.Interfaces.IForm.SetContext(Gizmox.WebGUI.Common.Interfaces.IContext)">
             <summary>
@@ -3863,6 +3874,24 @@
             Gets a value indicating whether this instance is closed.
             </summary>
             <value><c>true</c> if this instance is closed; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Gizmox.WebGUI.Common.Interfaces.IForm.IsModalActive">
+            <summary>
+            Gets a value indicating whether form modality is active.
+            </summary>
+            <value>
+            	<c>true</c> if form modality is active; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Gizmox.WebGUI.Common.Interfaces.IForm.Context">
+            <summary>
+            Gets the current context.
+            </summary>
+        </member>
+        <member name="P:Gizmox.WebGUI.Common.Interfaces.IForm.DialogResult">
+            <summary>
+            Gets the dialog result.
+            </summary>
         </member>
         <member name="P:Gizmox.WebGUI.Common.Interfaces.IForm.Forms">
             <summary>
@@ -5341,7 +5370,7 @@
         </member>
         <member name="M:Gizmox.WebGUI.Common.Tokens.JS.JSTokenReader.IsReserved(System.String)">
             <summary>
-            Indicates if a givven word is a reserved
+            Indicates if a given word is a reserved
             </summary>
             <param name="strWord"></param>
             <returns></returns>
@@ -5386,7 +5415,7 @@
         </member>
         <member name="M:Gizmox.WebGUI.Common.Tokens.JS.JSTokenReader.IsKeyword(System.String)">
             <summary>
-            Indicates if a givven word is a keyword
+            Indicates if a given word is a keyword
             </summary>
             <param name="strWord"></param>
             <returns></returns>
@@ -6657,6 +6686,12 @@
             Provides the ability to get a skin object from a container class
             </summary>
         </member>
+        <member name="P:Gizmox.WebGUI.Forms.Skins.ISkinContainer.Skin">
+            <summary>
+            Gets the skin.
+            </summary>
+            <value>The skin.</value>
+        </member>
         <member name="F:Gizmox.WebGUI.Forms.Skins.BidirectionalSkinValue`1.mobjRTLValue">
             <summary>
             
@@ -6685,6 +6720,7 @@
             Gets the translated value.
             </summary>
             <param name="objContext">The current context.</param>
+            <param name="objValueDefinition">The Skin Value Definition.</param>
             <returns></returns>
         </member>
         <member name="M:Gizmox.WebGUI.Forms.Skins.BidirectionalSkinValue`1.GetObject(Gizmox.WebGUI.Common.Interfaces.IContext)">
@@ -6818,6 +6854,7 @@
             Gets the translated value.
             </summary>
             <param name="objContext">The current context.</param>
+            <param name="objValueDefinition">The Skin Value Definition.</param>
             <returns></returns>
         </member>
         <member name="M:Gizmox.WebGUI.Forms.Skins.BidirectionalSkinProperty`1.GetObject(Gizmox.WebGUI.Common.Interfaces.IContext)">
@@ -7043,7 +7080,7 @@
         </member>
         <member name="M:Gizmox.WebGUI.Forms.Skins.SkinMultiValue.Reset(System.String)">
             <summary>
-            Resets a givven key
+            Resets a given key
             </summary>
             <param name="strKey"></param>
         </member>
@@ -7196,7 +7233,7 @@
         </member>
         <member name="M:Gizmox.WebGUI.Forms.Skins.SkinDataStore.GetResourceContent(System.Type,System.String)">
             <summary>
-            Gets the stream for a givven resource.
+            Gets the stream for a given resource.
             </summary>
             <param name="objSkinType">The skin type.</param>
             <param name="mstrResource">The resource.</param>
@@ -7553,7 +7590,7 @@
         </member>
         <member name="M:Gizmox.WebGUI.Forms.Skins.Resources.TextIndex.IsCompilerIndex(Gizmox.WebGUI.Forms.Skins.Resources.FileIndexType)">
             <summary>
-            Indicates if a givven index is a compiler index
+            Indicates if a given index is a compiler index
             </summary>
             <param name="objIndexType"></param>
             <returns></returns>
@@ -7762,6 +7799,29 @@
         <member name="T:Gizmox.WebGUI.Common.Interfaces.IEventCollection">
             <summary>
             Summary description for IEventCollection.
+            </summary>
+        </member>
+        <member name="M:Gizmox.WebGUI.Common.Interfaces.IEventCollection.Dequeue">
+            <summary>
+            Dequeues the next event.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Gizmox.WebGUI.Common.Interfaces.IEventCollection.Peek">
+            <summary>
+            Peek the next event
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Gizmox.WebGUI.Common.Interfaces.IEventCollection.Enqueue(Gizmox.WebGUI.Common.Interfaces.IEvent)">
+            <summary>
+            Add an event to the event queue
+            </summary>
+            <param name="objEvent"></param>
+        </member>
+        <member name="P:Gizmox.WebGUI.Common.Interfaces.IEventCollection.Count">
+            <summary>
+            The number of events in the queue
             </summary>
         </member>
         <member name="T:Gizmox.WebGUI.Client.Design.IClinetDesignContext">
@@ -9092,14 +9152,14 @@
         </member>
         <member name="M:Gizmox.WebGUI.Licensing.LicensingHelper.Validate(System.Type)">
             <summary>
-            Validates the license of the givven type.
+            Validates the license of the given type.
             </summary>
             <param name="objType">The type to validate it's license.</param>
             <returns></returns>
         </member>
         <member name="M:Gizmox.WebGUI.Licensing.LicensingHelper.Validate(System.Type,System.Object)">
             <summary>
-            Validates the license of the givven type.
+            Validates the license of the given type.
             </summary>
             <param name="objType">The type to validate it's license.</param>
             <param name="instance">The instance of the type to be licensed.</param>
@@ -9124,7 +9184,7 @@
         </member>
         <member name="M:Gizmox.WebGUI.Licensing.LicensingHelper.Activate(System.Type,System.String)">
             <summary>
-            Activates the type using the givven license code.
+            Activates the type using the given license code.
             </summary>
             <param name="objType">The type which it's license should be activated.</param>
             <param name="strLicenseFile">The license file return from the activation service.</param>
@@ -10896,6 +10956,15 @@
             Loads the page instance from request.
             </summary>
         </member>
+        <member name="M:Gizmox.WebGUI.Hosting.HostRequestInfo.IsAlphaNumeric(System.String)">
+            <summary>
+            Check whether strText is alpha numeric.
+            </summary>
+            <param name="strText">The text.</param>
+            <returns>
+            	<c>true</c> if [is alpha numeric] [the specified STR text]; otherwise, <c>false</c>.
+            </returns>
+        </member>
         <member name="M:Gizmox.WebGUI.Hosting.HostRequestInfo.LoadPageFromRequest">
             <summary>
             Loads the page from request.
@@ -11236,7 +11305,7 @@
         </member>
         <member name="M:Gizmox.WebGUI.Forms.Xaml.XamlDocumentNode.GetNewID(Gizmox.WebGUI.Forms.Xaml.XamlTypeNode)">
             <summary>
-            Gets an id for the givven type node
+            Gets an id for the given type node
             </summary>
             <param name="objTypeNode"></param>
             <returns></returns>
@@ -13472,6 +13541,13 @@
             <param name="objStream">The stream of the content file.</param>
             <returns></returns>
         </member>
+        <member name="M:Gizmox.WebGUI.Forms.Skins.Resources.TextContent.DumpTokens(System.IO.Stream,System.IO.Stream)">
+            <summary>
+            Dumps the tokens.
+            </summary>
+            <param name="objOutput">The output.</param>
+            <param name="objContent">The Content.</param>
+        </member>
         <member name="M:Gizmox.WebGUI.Forms.Skins.Resources.TextFileContent.#ctor(System.IO.Stream)">
             <summary>
             Initializes a new instance of the <see cref="T:Gizmox.WebGUI.Forms.Skins.Resources.TextFileContent"/> class.
@@ -13561,6 +13637,12 @@
             </summary>
             <param name="objStream">The stream.</param>
             <returns></returns>
+        </member>
+        <member name="M:Gizmox.WebGUI.Forms.Skins.Resources.XmlFileContent.LoadIndexes(System.IO.Stream)">
+            <summary>
+            Loads the indexes.
+            </summary>
+            <param name="objStream">The obj stream.</param>
         </member>
         <member name="M:Gizmox.WebGUI.Forms.Skins.Resources.XmlFileContent.LoadIndex(Gizmox.WebGUI.Common.Tokens.TokenType,System.String,System.Int32,System.Int32,System.Int32,Gizmox.WebGUI.Common.Tokens.TokenContext)">
             <summary>
@@ -13921,6 +14003,12 @@
             </summary>
             <param name="blnLogOff">if set to <c>true</c> [BLN log off].</param>
         </member>
+        <member name="M:Gizmox.WebGUI.Common.Interfaces.IContext.GetThreadingService">
+            <summary>
+            Gets the threading service.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:Gizmox.WebGUI.Common.Interfaces.IContext.HttpContext">
             <summary>
             The current request http context.
@@ -13991,6 +14079,14 @@
             Indicates wether the UI is order from right to lift.
             </summary>
         </member>
+        <member name="P:Gizmox.WebGUI.Common.Interfaces.IContext.ShouldApplyMirroring">
+            <summary>
+            Gets a value indicating whether should apply mirroring.
+            </summary>
+            <value>
+            	<c>true</c> if should apply mirroring; otherwise, <c>false</c>.
+            </value>
+        </member>
         <member name="P:Gizmox.WebGUI.Common.Interfaces.IContext.CurrentUICulture">
             <summary>
             The current context UI culture.
@@ -14040,6 +14136,24 @@
             to the current context (this will automaticly return true if
             the user is logged on to the session).
             </summary>
+        </member>
+        <member name="T:Gizmox.WebGUI.Common.Interfaces.IContextThreadingService">
+            <summary>
+            Provides support for handeling threads
+            </summary>
+        </member>
+        <member name="M:Gizmox.WebGUI.Common.Interfaces.IContextThreadingService.GetDialogResult(Gizmox.WebGUI.Common.Interfaces.IForm)">
+            <summary>
+            Gets the dialog result.
+            </summary>
+            <param name="objForm">The form.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Gizmox.WebGUI.Common.Interfaces.IContextThreadingService.ReleaseDialog(Gizmox.WebGUI.Common.Interfaces.IForm)">
+            <summary>
+            Release the dialog result thread
+            </summary>
+            <param name="objForm"></param>
         </member>
         <member name="T:Gizmox.WebGUI.Forms.CheckState">
             <summary>
@@ -15391,12 +15505,12 @@
         </member>
         <member name="F:Gizmox.WebGUI.Forms.Inheritance.NotInherited">
             <summary>
-            The resource won't be visible and ovveridable in inherited skins.
+            The resource won't be visible and overridable in inherited skins.
             </summary>
         </member>
         <member name="F:Gizmox.WebGUI.Forms.Inheritance.Inherited">
             <summary>
-            The resource will be visible and ovveridable in inherited skins.
+            The resource will be visible and overridable in inherited skins.
             </summary>
         </member>
         <member name="T:Gizmox.WebGUI.Forms.PresentationEngine">
@@ -17529,7 +17643,7 @@
         </member>
         <member name="M:Gizmox.WebGUI.Forms.Skins.ThemeData.GetResoruceCache(Gizmox.WebGUI.Forms.Skins.SkinData,Gizmox.WebGUI.Forms.Skins.SkinResourceSearchType)">
             <summary>
-            Gets the relevant resource cache for the givven skin data and search type
+            Gets the relevant resource cache for the given skin data and search type
             </summary>
             <param name="objSkinData"></param>
             <param name="enmSearchType"></param>
@@ -18371,7 +18485,12 @@
             
             </summary>
         </member>
-        <member name="M:Gizmox.WebGUI.Forms.Skins.SkinCollectorController.#ctor(Gizmox.WebGUI.Common.Interfaces.IContext,Gizmox.WebGUI.Common.Configuration.Config,Gizmox.WebGUI.Forms.Skins.Resources.GlobalScope)">
+        <member name="F:Gizmox.WebGUI.Forms.Skins.SkinCollectorController.mblnSupportsMultilineSkinValues">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Gizmox.WebGUI.Forms.Skins.SkinCollectorController.#ctor(Gizmox.WebGUI.Common.Interfaces.IContext,Gizmox.WebGUI.Common.Configuration.Config,Gizmox.WebGUI.Forms.Skins.Resources.GlobalScope,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Gizmox.WebGUI.Forms.Skins.SkinCollectorController"/> class.
             </summary>
@@ -18486,6 +18605,14 @@
             <param name="objFileIndexType">The file index to evaluate.</param>
             <param name="strContent">The index content to use.</param>
             <returns></returns>
+        </member>
+        <member name="P:Gizmox.WebGUI.Forms.Skins.SkinCollectorController.SupportsMultilineSkinValues">
+            <summary>
+            Gets or sets a value indicating whether [supports muliline values].
+            </summary>
+            <value>
+            	<c>true</c> if [supports muliline values]; otherwise, <c>false</c>.
+            </value>
         </member>
         <member name="P:Gizmox.WebGUI.Forms.Skins.SkinCollectorController.Presentation">
             <summary>
@@ -18705,6 +18832,14 @@
             </summary>
             <value>The type of the content.</value>
         </member>
+        <member name="P:Gizmox.WebGUI.Forms.Skins.Resources.StyleSheetCollector.SupportsMultilineSkinValues">
+            <summary>
+            Gets a value indicating whether [supports muliline values].
+            </summary>
+            <value>
+            	<c>true</c> if [supports muliline values]; otherwise, <c>false</c>.
+            </value>
+        </member>
         <member name="T:Gizmox.WebGUI.Common.Interfaces.IContextMenu">
             <summary>
             
@@ -18728,6 +18863,16 @@
         <member name="F:Gizmox.WebGUI.Common.Configuration.Config.mobjThemes">
             <summary>
             The theme instances
+            </summary>
+        </member>
+        <member name="F:Gizmox.WebGUI.Common.Configuration.Config.mobjIncludedScripts">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Gizmox.WebGUI.Common.Configuration.Config.mobjIncludedStyleSheets">
+            <summary>
+            
             </summary>
         </member>
         <member name="F:Gizmox.WebGUI.Common.Configuration.Config.mobjThemesSemaphore">
@@ -18838,6 +18983,11 @@
         <member name="F:Gizmox.WebGUI.Common.Configuration.Config.mblnWinFormsCompatible">
             <summary>
             Flag indicating if windows whould be used
+            </summary>
+        </member>
+        <member name="F:Gizmox.WebGUI.Common.Configuration.Config.mblnPreserveFocusElement">
+            <summary>
+            Flag indicating if preserve focus element
             </summary>
         </member>
         <member name="F:Gizmox.WebGUI.Common.Configuration.Config.mobjRegisteredComponents">
@@ -18954,19 +19104,39 @@
             <param name="strCode"></param>
             <returns></returns>
         </member>
-        <member name="M:Gizmox.WebGUI.Common.Configuration.Config.GetIncludes(System.Xml.XmlNodeList,Gizmox.WebGUI.Common.Configuration.IncludeType)">
+        <member name="M:Gizmox.WebGUI.Common.Configuration.Config.GetIncludes(Gizmox.WebGUI.Common.Configuration.IncludeType,Gizmox.WebGUI.Forms.Presentation,Gizmox.WebGUI.Forms.PresentationEngine)">
+            <summary>
+            Gets the includes.
+            </summary>
+            <param name="enmIncludeTypes">The include types.</param>
+            <param name="enmPresentation">The enm presentation.</param>
+            <param name="enmPresentationEngine">The enm presentation engine.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Gizmox.WebGUI.Common.Configuration.Config.GetIncludes(System.Xml.XmlNodeList,Gizmox.WebGUI.Common.Configuration.IncludeType,Gizmox.WebGUI.Forms.Presentation,Gizmox.WebGUI.Forms.PresentationEngine)">
             <summary>
             Gets the includes.
             </summary>
             <param name="arrIncludeNodes">The include nodes.</param>
             <param name="enmIncludeTypes">The include types.</param>
+            <param name="enmPresentations">The enm presentations.</param>
+            <param name="enmPresentationEngines">The enm presentation engines.</param>
             <returns></returns>
         </member>
-        <member name="M:Gizmox.WebGUI.Common.Configuration.Config.GetIncludes(Gizmox.WebGUI.Common.Configuration.IncludeType)">
+        <member name="M:Gizmox.WebGUI.Common.Configuration.Config.GetIncludedScripts(Gizmox.WebGUI.Forms.Presentation,Gizmox.WebGUI.Forms.PresentationEngine)">
             <summary>
-            Gets the includes.
+            Gets the included scripts.
             </summary>
-            <param name="strIncludeExtension">The include extension.</param>
+            <param name="enmPresentation">The presentation.</param>
+            <param name="enmPresentationEngine">The presentation engine.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Gizmox.WebGUI.Common.Configuration.Config.GetIncludedStyleSheets(Gizmox.WebGUI.Forms.Presentation,Gizmox.WebGUI.Forms.PresentationEngine)">
+            <summary>
+            Gets the included style sheets.
+            </summary>
+            <param name="enmPresentation">The presentation.</param>
+            <param name="enmPresentationEngine">The presentation engine.</param>
             <returns></returns>
         </member>
         <member name="M:Gizmox.WebGUI.Common.Configuration.Config.GetApplication(System.String)">
@@ -19051,13 +19221,13 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Gizmox.WebGUI.Common.Configuration.Config.GetIncludedScripts">
+        <member name="M:Gizmox.WebGUI.Common.Configuration.Config.GetIncludedScriptBlocks(Gizmox.WebGUI.Forms.Presentation,Gizmox.WebGUI.Forms.PresentationEngine)">
             <summary>
-            Gets the included scripts.
+            Gets the included script blocks.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Gizmox.WebGUI.Common.Configuration.Config.GetIncludedStyleSheets">
+        <member name="M:Gizmox.WebGUI.Common.Configuration.Config.GetIncludedStyleSheetBlocks(Gizmox.WebGUI.Forms.Presentation,Gizmox.WebGUI.Forms.PresentationEngine)">
             <summary>
             Gets the included style sheets.
             </summary>
@@ -19262,6 +19432,14 @@
             </summary>
             <value><c>true</c> if to use inline windows; otherwise, <c>false</c>.</value>
         </member>
+        <member name="P:Gizmox.WebGUI.Common.Configuration.Config.PreserveFocusElement">
+            <summary>
+            Gets a value indicating whether preserve focus element.
+            </summary>
+            <value>
+            	<c>true</c> if [preserve focus element]; otherwise, <c>false</c>.
+            </value>
+        </member>
         <member name="P:Gizmox.WebGUI.Common.Configuration.Config.ForcePageInstance">
             <summary>
             Gets a value indicating whether [force page instance].
@@ -19290,18 +19468,6 @@
             Gets or sets the applications meta data.
             </summary>
             <value>The applications meta data.</value>
-        </member>
-        <member name="P:Gizmox.WebGUI.Common.Configuration.Config.IncludedScripts">
-            <summary>
-            Gets the included scripts.
-            </summary>
-            <value>The included scripts.</value>
-        </member>
-        <member name="P:Gizmox.WebGUI.Common.Configuration.Config.IncludedStyleSheets">
-            <summary>
-            Gets the included style sheets.
-            </summary>
-            <value>The included style sheets.</value>
         </member>
         <member name="P:Gizmox.WebGUI.Common.Configuration.Config.RegisteredControls">
             <summary>
@@ -19358,6 +19524,11 @@
             
             </summary>
         </member>
+        <member name="F:Gizmox.WebGUI.Common.Configuration.ConfigHelper.mblnModalDialogEmulation">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:Gizmox.WebGUI.Common.Configuration.ConfigHelper.ThemeTypes">
             <summary>
             Gets the theme types.
@@ -19370,6 +19541,14 @@
             </summary>
             <value>
             	<c>true</c> if compression enabled; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Gizmox.WebGUI.Common.Configuration.ConfigHelper.IsModalDialogEmulationMode">
+            <summary>
+            Gets a value indicating whether modal dialog emulation mode is on.
+            </summary>
+            <value>
+            	<c>true</c> if modal dialog emulation mode is on; otherwise, <c>false</c>.
             </value>
         </member>
         <member name="P:Gizmox.WebGUI.Common.Configuration.ConfigHelper.IsCacheEnabled">
@@ -19758,7 +19937,7 @@
         </member>
         <member name="M:Gizmox.WebGUI.Forms.Skins.Resources.TemplateIndex.IsCompilerIndex(Gizmox.WebGUI.Forms.Skins.Resources.FileIndexType)">
             <summary>
-            Indicates if a givven index is a compiler index
+            Indicates if a given index is a compiler index
             </summary>
             <param name="objIndexType">The type of the index.</param>
             <returns></returns>
@@ -20675,27 +20854,31 @@
             </summary>
             <param name="objContext">The current context.</param>
         </member>
-        <member name="M:Gizmox.WebGUI.Forms.Skins.SkinTranslator.GetValue(Gizmox.WebGUI.Common.Interfaces.IContext,System.Object)">
-            <summary>
-            Translates an unkown type
-            </summary>
-            <param name="objContext">The current context.</param>
-            <param name="objValue">The obj value.</param>
-            <returns></returns>
-        </member>
         <member name="M:Gizmox.WebGUI.Forms.Skins.SkinTranslator.GetValue(Gizmox.WebGUI.Common.Interfaces.IContext,System.Object,Gizmox.WebGUI.Forms.Skins.SkinValueDefinition)">
             <summary>
             Translates an unkown type
             </summary>
             <param name="objContext">The current context.</param>
-            <param name="objValue">The obj value.</param>
+            <param name="objValue">The value.</param>
             <returns></returns>
         </member>
-        <member name="M:Gizmox.WebGUI.Forms.Skins.SkinTranslator.GetValue(System.Object,Gizmox.WebGUI.Forms.Skins.SkinValueDefinition)">
+        <member name="M:Gizmox.WebGUI.Forms.Skins.SkinTranslator.GetValue(Gizmox.WebGUI.Common.Interfaces.IContext,System.Object,Gizmox.WebGUI.Forms.Skins.SkinValueDefinition,System.Boolean)">
             <summary>
             Translates an unkown type
             </summary>
-            <param name="objValue">The obj value.</param>
+            <param name="objContext">The current context.</param>
+            <param name="objValue">The value.</param>
+            <param name="objValueDefinition">The value definition.</param>
+            <param name="blnSupportsMultilineSkinValues">if set to <c>true</c> [BLN supports muliline values].</param>
+            <returns></returns>
+        </member>
+        <member name="M:Gizmox.WebGUI.Forms.Skins.SkinTranslator.GetValue(System.Object,Gizmox.WebGUI.Forms.Skins.SkinValueDefinition,System.Boolean)">
+            <summary>
+            Translates an unkown type
+            </summary>
+            <param name="objValue">The value.</param>
+            <param name="objValueDefinition">The value definition.</param>
+            <param name="blnSupportsMultilineSkinValues">if set to <c>true</c> [BLN supports muliline values].</param>
             <returns></returns>
         </member>
         <member name="M:Gizmox.WebGUI.Forms.Skins.SkinTranslator.GetColor(Gizmox.WebGUI.Common.Interfaces.IContext,System.Drawing.Color)">
@@ -21011,7 +21194,7 @@
         </member>
         <member name="M:Gizmox.WebGUI.Forms.Skins.Skin.Reset(System.String)">
             <summary>
-            Resets a givven key
+            Resets a given key
             </summary>
             <param name="strKey"></param>
         </member>
@@ -22271,6 +22454,11 @@
         <member name="F:Gizmox.WebGUI.WGTags.FormControlBox">
             <summary>
             FormControlBox tag.
+            </summary>
+        </member>
+        <member name="F:Gizmox.WebGUI.WGTags.DataGridViewBlock">
+            <summary>
+            DataGridViewBlock tag.
             </summary>
         </member>
         <member name="T:Gizmox.WebGUI.WGAttributes">
@@ -23593,7 +23781,7 @@
             The menu item label width 
             </summary>
         </member>
-        <member name="F:Gizmox.WebGUI.WGAttributes.MenuItemShotrCutWidth">
+        <member name="F:Gizmox.WebGUI.WGAttributes.MenuItemShortCutWidth">
             <summary>
             The menu item shortcut width 
             </summary>
@@ -23711,6 +23899,31 @@
         <member name="F:Gizmox.WebGUI.WGAttributes.OffsetY">
             <summary>
             Restored OffsetY attribute.
+            </summary>
+        </member>
+        <member name="F:Gizmox.WebGUI.WGAttributes.SupportKeydownAccumulating">
+            <summary>
+             Support Keydown Accumulating
+            </summary>
+        </member>
+        <member name="F:Gizmox.WebGUI.WGAttributes.VirtualBlockSize">
+            <summary>
+             VirtualBlockSize attribute.
+            </summary>
+        </member>
+        <member name="F:Gizmox.WebGUI.WGAttributes.Direction">
+            <summary>
+            Direction attribute.
+            </summary> 
+        </member>
+        <member name="F:Gizmox.WebGUI.WGAttributes.Swipable">
+            <summary>
+            Swipable attribute.
+            </summary>
+        </member>
+        <member name="F:Gizmox.WebGUI.WGAttributes.RightToLeft">
+            <summary>
+            Right To Left attribute.
             </summary>
         </member>
         <member name="T:Gizmox.WebGUI.WGLabels">
@@ -25309,7 +25522,7 @@
         </member>
         <member name="M:Gizmox.WebGUI.Common.Resources.ResourceHandle.FromString(System.String)">
             <summary>
-            Gets a resource handle from a givven string
+            Gets a resource handle from a given string
             </summary>
             <param name="strResourceHandler">The resource handler string.</param>
             <returns></returns>
@@ -25375,6 +25588,12 @@
         </member>
         <member name="M:Gizmox.WebGUI.Common.Resources.TypeResourceHandle.ToStream">
             <summary>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Gizmox.WebGUI.Common.Resources.TypeResourceHandle.ToImage">
+            <summary>
+            Gets an image from the resource stream
             </summary>
             <returns></returns>
         </member>
@@ -26959,7 +27178,7 @@
             
             </summary>
         </member>
-        <member name="M:Gizmox.WebGUI.Common.Configuration.Include.#ctor(Gizmox.WebGUI.Common.Configuration.SourceType,Gizmox.WebGUI.Common.Configuration.IncludeType,System.String,System.Reflection.Assembly)">
+        <member name="M:Gizmox.WebGUI.Common.Configuration.Include.#ctor(Gizmox.WebGUI.Common.Configuration.SourceType,Gizmox.WebGUI.Common.Configuration.IncludeType,System.String,System.Reflection.Assembly,Gizmox.WebGUI.Forms.Presentation,Gizmox.WebGUI.Forms.PresentationEngine)">
             <summary>
             Initializes a new instance of the <see cref="T:Gizmox.WebGUI.Common.Configuration.Include"/> class.
             </summary>
@@ -26967,6 +27186,8 @@
             <param name="enmIncludeType">Type of the enm include.</param>
             <param name="strSource">The source.</param>
             <param name="objAssembly">The assembly.</param>
+            <param name="enmPresentation">The enm presentation.</param>
+            <param name="enmPresentationEngine">The enm presentation engine.</param>
         </member>
         <member name="P:Gizmox.WebGUI.Common.Configuration.Include.IncludeType">
             <summary>
@@ -26985,6 +27206,18 @@
             Gets or sets the type of the source.
             </summary>
             <value>The type of the source.</value>
+        </member>
+        <member name="P:Gizmox.WebGUI.Common.Configuration.Include.Presentation">
+            <summary>
+            Gets or sets the presentation.
+            </summary>
+            <value>The presentation.</value>
+        </member>
+        <member name="P:Gizmox.WebGUI.Common.Configuration.Include.PresentationEngine">
+            <summary>
+            Gets or sets the presentation engine.
+            </summary>
+            <value>The presentation engine.</value>
         </member>
         <member name="P:Gizmox.WebGUI.Common.Configuration.Include.Assembly">
             <summary>
@@ -27228,9 +27461,9 @@
             <param name="lngTime1">The time before get call.</param>
             <param name="lngTime2">The time after get call.</param>
         </member>
-        <member name="M:Gizmox.WebGUI.Forms.Skins.SkinFactory.GetSkinDependedTypes(System.Type)">
+        <member name="M:Gizmox.WebGUI.Forms.Skins.SkinFactory.GetSkinDependentTypes(System.Type)">
             <summary>
-            Gets the skin depended types.
+            Gets the skin Dependent types.
             </summary>
             <param name="objSkinType">The skin type.</param>
             <returns></returns>
@@ -27882,7 +28115,7 @@
         </member>
         <member name="M:Gizmox.WebGUI.Forms.Skins.Resources.StyleSheetIndex.IsCompilerIndex(Gizmox.WebGUI.Forms.Skins.Resources.FileIndexType)">
             <summary>
-            Indicates if a givven index is a compiler index
+            Indicates if a given index is a compiler index
             </summary>
             <param name="objIndexType">The type of the index.</param>
             <returns></returns>
@@ -27904,7 +28137,7 @@
         </member>
         <member name="M:Gizmox.WebGUI.Forms.Skins.Resources.ScriptIndex.IsCompilerIndex(Gizmox.WebGUI.Forms.Skins.Resources.FileIndexType)">
             <summary>
-            Indicates if a givven index is a compiler index
+            Indicates if a given index is a compiler index
             </summary>
             <param name="objIndexType">The type of the index.</param>
             <returns></returns>
@@ -29978,6 +30211,19 @@
             </summary>
             <param name="objStream">The file stream.</param>
         </member>
+        <member name="M:Gizmox.WebGUI.Forms.Skins.Resources.TemplateContent.FilterContent(System.IO.Stream)">
+            <summary>
+            Filters the content out of unwanted nodes.
+            </summary>
+            <param name="objStream">The stream.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Gizmox.WebGUI.Forms.Skins.Resources.TemplateContent.FilterContent(System.Xml.XmlElement)">
+            <summary>
+            Filters the content out of unwanted nodes.
+            </summary>
+            <param name="objXsltElement">The XSLT element.</param>
+        </member>
         <member name="M:Gizmox.WebGUI.Forms.Skins.Resources.TemplateContent.CreateTokenReader(System.IO.Stream)">
             <summary>
             Creates the token reader for this file type.
@@ -30289,7 +30535,7 @@
         </member>
         <member name="T:Gizmox.WebGUI.Forms.Skins.SkinResourceSearchType">
             <summary>
-            Defines the search method for a givven resource
+            Defines the search method for a given resource
             </summary>
         </member>
         <member name="F:Gizmox.WebGUI.Forms.Skins.SkinResourceSearchType.LocalAmbientInheritance">
@@ -30318,9 +30564,14 @@
             or other forms of seperation from following code.
             </summary>
         </member>
-        <member name="F:Gizmox.WebGUI.Forms.Skins.Resources.ScriptContent.mblnNeedsBlockOrLineCode">
+        <member name="F:Gizmox.WebGUI.Forms.Skins.Resources.ScriptContent.mblnIsWithinQuotes">
             <summary>
-            Indicates that the current position requires code block or line code.
+            Indicates that string content is within quotes.
+            </summary>
+        </member>
+        <member name="F:Gizmox.WebGUI.Forms.Skins.Resources.ScriptContent.mblnIsWithinApostrophes">
+            <summary>
+            Indicates that string content is within apostrophes.
             </summary>
         </member>
         <member name="F:Gizmox.WebGUI.Forms.Skins.Resources.ScriptContent.mstrLastKeyword">
@@ -30907,6 +31158,11 @@
         <member name="F:Gizmox.WebGUI.Forms.EventTypes.ColumnHeaderClick">
             <summary>
             Column header mouse click event.
+            </summary>
+        </member>
+        <member name="F:Gizmox.WebGUI.Forms.EventTypes.Swipe">
+            <summary>
+            Swipe event.
             </summary>
         </member>
         <member name="T:Gizmox.WebGUI.Forms.KeyCaptures">
@@ -31759,6 +32015,18 @@
             </summary>
             <value></value>
         </member>
+        <member name="P:Gizmox.WebGUI.Forms.RegisteredComponent.LastModified">
+            <summary>
+            Gets the last modified.
+            </summary>
+            <value>The last modified.</value>
+        </member>
+        <member name="P:Gizmox.WebGUI.Forms.RegisteredComponent.LastModifiedParams">
+            <summary>
+            Gets the last modified params.
+            </summary>
+            <value>The last modified params.</value>
+        </member>
         <member name="P:Gizmox.WebGUI.Forms.RegisteredComponent.Gizmox#WebGUI#Common#Interfaces#IRegisteredComponent#IsConnected">
             <summary>
             Gets a value indicating whether this instance is connected.
@@ -32050,7 +32318,7 @@
         </member>
         <member name="P:Gizmox.WebGUI.Forms.Xaml.XamlNamespaces.Item(System.String)">
             <summary>
-            Gets or sets the namespace for the givven prefix
+            Gets or sets the namespace for the given prefix
             </summary>
             <param name="strPrefix"></param>
             <returns></returns>
@@ -32677,7 +32945,7 @@
         </member>
         <member name="M:Gizmox.WebGUI.Forms.Skins.Resources.HtmlIndex.IsCompilerIndex(Gizmox.WebGUI.Forms.Skins.Resources.FileIndexType)">
             <summary>
-            Indicates if a givven index is a compiler index
+            Indicates if a given index is a compiler index
             </summary>
             <param name="objIndexType">The type of the index.</param>
             <returns></returns>
@@ -33081,14 +33349,14 @@
         </member>
         <member name="M:Gizmox.WebGUI.Forms.Xaml.XamlTypeReader.Read(System.IO.Stream,Gizmox.WebGUI.Forms.Xaml.XamlReaderSettings)">
             <summary>
-            Reads the givven xaml stream and returns a cod compile unit
+            Reads the given xaml stream and returns a cod compile unit
             </summary>
             <param name="objXamlStream">The xaml stream to read.</param>
             <returns></returns>
         </member>
         <member name="M:Gizmox.WebGUI.Forms.Xaml.XamlTypeReader.Read(Gizmox.WebGUI.Forms.Xaml.XamlDocumentNode,Gizmox.WebGUI.Forms.Xaml.XamlReaderSettings)">
             <summary>
-            Reads the givven xaml stream and returns a cod compile unit
+            Reads the given xaml stream and returns a cod compile unit
             </summary>
             <param name="objXamlStream">The xaml stream to read.</param>
             <returns></returns>
@@ -33167,7 +33435,7 @@
         </member>
         <member name="M:Gizmox.WebGUI.Forms.Xaml.XamlTypeReader.GenerateMethodCall(System.CodeDom.CodeMemberMethod,System.CodeDom.CodeExpression,System.String)">
             <summary>
-            Generate a method call on a givven target
+            Generate a method call on a given target
             </summary>
             <param name="objIntializeComponentMethod"></param>
             <param name="objTargetObject"></param>
@@ -33191,7 +33459,7 @@
         </member>
         <member name="M:Gizmox.WebGUI.Forms.Xaml.XamlTypeReader.GetValueCodeExpression(Gizmox.WebGUI.Forms.Xaml.XamlMemberNode,Gizmox.WebGUI.Forms.Xaml.XamlMemberValue)">
             <summary>
-            Gets value code expression for a givven value
+            Gets value code expression for a given value
             </summary>
             <param name="objMemberNode"></param>
             <param name="objValue"></param>
@@ -33711,73 +33979,73 @@
         </member>
         <member name="M:Gizmox.WebGUI.Forms.SerializationWriter.WriteInt32(System.Int32)">
             <summary>
-            Writes a givven integer to the optimized object graph
+            Writes a given integer to the optimized object graph
             </summary>
             <param name="intValue">The integer value to write.</param>
         </member>
         <member name="M:Gizmox.WebGUI.Forms.SerializationWriter.WriteInt64(System.Int64)">
             <summary>
-            Writes a givven long to the optimized object graph
+            Writes a given long to the optimized object graph
             </summary>
             <param name="lngValue">The long value to write.</param>
         </member>
         <member name="M:Gizmox.WebGUI.Forms.SerializationWriter.WriteLong(System.Int64)">
             <summary>
-            Writes a givven long to the optimized object graph
+            Writes a given long to the optimized object graph
             </summary>
             <param name="intValue">The long value to write.</param>
         </member>
         <member name="M:Gizmox.WebGUI.Forms.SerializationWriter.WriteBoolean(System.Boolean)">
             <summary>
-            Writes a givven boolean to the optimized object graph
+            Writes a given boolean to the optimized object graph
             </summary>
             <param name="blnValue">The boolean value to write.</param>
         </member>
         <member name="M:Gizmox.WebGUI.Forms.SerializationWriter.WriteCultureInfo(System.Globalization.CultureInfo)">
             <summary>
-            Writes a givven culture info to the optimized object graph.
+            Writes a given culture info to the optimized object graph.
             </summary>
             <param name="objCultureInfo">The culture info.</param>
         </member>
         <member name="M:Gizmox.WebGUI.Forms.SerializationWriter.WriteArray(System.Collections.ICollection)">
             <summary>
-            Writes a givven array to the optimized object graph
+            Writes a given array to the optimized object graph
             </summary>
             <param name="objCollection">The array value to write.</param>
         </member>
         <member name="M:Gizmox.WebGUI.Forms.SerializationWriter.WriteDictionary``2(System.Collections.Generic.Dictionary{``0,``1})">
             <summary>
-            Writes a givven dictionary to the optimized object graph
+            Writes a given dictionary to the optimized object graph
             </summary>
             <param name="objDictionary">The dictionary to write.</param>
         </member>
         <member name="M:Gizmox.WebGUI.Forms.SerializationWriter.WriteHashtable(System.Collections.Hashtable)">
             <summary>
-            Writes a givven hashtable to the optimized object graph
+            Writes a given hashtable to the optimized object graph
             </summary>
             <param name="objDictionary">The dictionary to write.</param>
         </member>
         <member name="M:Gizmox.WebGUI.Forms.SerializationWriter.WriteNameValueCollection(System.Collections.Specialized.NameValueCollection)">
             <summary>
-            Writes a givven hashtable to the optimized object graph
+            Writes a given hashtable to the optimized object graph
             </summary>
             <param name="objDictionary">The dictionary to write.</param>
         </member>
         <member name="M:Gizmox.WebGUI.Forms.SerializationWriter.WriteDateTime(System.DateTime)">
             <summary>
-            Writes a givven datetime to the optimized object graph
+            Writes a given datetime to the optimized object graph
             </summary>
             <param name="objValue">The datetime value to write.</param>
         </member>
         <member name="M:Gizmox.WebGUI.Forms.SerializationWriter.WriteString(System.String)">
             <summary>
-            Writes a givven string to the optimized object graph
+            Writes a given string to the optimized object graph
             </summary>
             <param name="strValue">The string value to write.</param>
         </member>
         <member name="M:Gizmox.WebGUI.Forms.SerializationWriter.WriteObject(System.Object)">
             <summary>
-            Writes a givven object to the optimized object graph
+            Writes a given object to the optimized object graph
             </summary>
             <param name="objValue">The object to write.</param>
         </member>

@@ -60,8 +60,12 @@ namespace Habanero.Faces.Base
             }
             set
             {
-                Control.SelectedItem = ContainsValue(value) ? value : null;
-                if (Control.SelectedItem == null) Control.Text = null;
+                if (value == null && Control.SelectedIndex != -1) Control.SelectedIndex = -1;
+                else
+                {
+                    Control.SelectedItem = ContainsValue(value) ? value : null;
+                    if (Control.SelectedItem == null) Control.Text = null;
+                }
             }
         }
 
@@ -209,12 +213,10 @@ namespace Habanero.Faces.Base
             var selectedBO = this.Control.SelectedItem;
             var indexOf = this.Control.Items.IndexOf(businessObject);
             if (indexOf == -1) return;
-            //var isSelectedItem = this.Control.SelectedItem == businessObject;
             var isInSelectedItemsList = this.Control.SelectedItems.Contains(businessObject);
             this.Control.Items.Remove(businessObject);
             this.Control.Items.Insert(indexOf, businessObject);
-            this.Control.SelectedItem = selectedBO;
-            //if (isSelectedItem) this.Control.SelectedItem = businessObject;
+            if (selectedBO != null && this.Control.SelectedItem != null) this.Control.SelectedItem = selectedBO; // fix issue in VWG where setting to null sets to empty string
             if (isInSelectedItemsList) this.Control.SelectedItems.Add(businessObject);
         }
 

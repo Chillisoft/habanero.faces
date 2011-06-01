@@ -75,7 +75,7 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Test Result -----------------------
             Assert.AreEqual(2, _defaultBOEditorForm.Controls.Count);
-            IControlHabanero boCtl = _defaultBOEditorForm.Controls[0];
+            IControlHabanero boCtl = _defaultBOEditorForm.PanelInfo.Panel;
             Assert.AreEqual(6, boCtl.Controls.Count);
             IControlHabanero buttonControl = _defaultBOEditorForm.Controls[1];
             Assert.IsInstanceOf(typeof(IButtonGroupControl), buttonControl);

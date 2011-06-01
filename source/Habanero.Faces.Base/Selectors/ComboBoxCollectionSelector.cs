@@ -152,9 +152,10 @@ namespace Habanero.Faces.Base
 				}
 				cbx.Items.Add(businessObject);
 			}
-			if (PreserveSelectedItem)
+            if (PreserveSelectedItem && selectedBusinessObject != null)
 			{
-				SelectedBusinessObject = (col.Contains(selectedBusinessObject) ? selectedBusinessObject : null);
+                var objectToSelect =  (col.Contains(selectedBusinessObject) ? selectedBusinessObject : null);
+                if (objectToSelect != null) SelectedBusinessObject = objectToSelect;
 			}
 			else if (col.Count > 0 && AutoSelectFirstItem && selectedBusinessObject == null) cbx.SelectedIndex = numBlankItems;
 			if (width == 0) width = 1;

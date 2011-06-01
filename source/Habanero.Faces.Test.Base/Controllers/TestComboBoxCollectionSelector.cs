@@ -211,6 +211,26 @@ namespace Habanero.Faces.Test.Base.Controllers
         }
 
         [Test]
+        public void Test_SetComboBoxCollection_PreserveSelectedItemTrue_AndSelectedItemNull_ShouldLeaveSelectedItemNull()
+        {
+            //---------------Set up test pack-------------------
+            var cmbox = GetControlFactory().CreateComboBox();
+            var controlFactory = GetControlFactory();
+            var selectorManager = new ComboBoxCollectionSelector(cmbox, controlFactory);
+            selectorManager.PreserveSelectedItem = true;
+            selectorManager.IncludeBlankItem = true;
+            MyBO.LoadDefaultClassDef();
+            //---------------Assert Precondition----------------
+            Assert.AreEqual(-1, cmbox.SelectedIndex);
+            Assert.IsNull(cmbox.SelectedItem);
+            //---------------Execute Test ----------------------
+            selectorManager.SetCollection(new BusinessObjectCollection<MyBO>());
+            //---------------Test Result -----------------------
+            Assert.AreEqual(-1, cmbox.SelectedIndex);
+            Assert.IsNull(cmbox.SelectedItem);
+        }
+
+        [Test]
         public void Test_SelectedBusinessObject()
         {
             //---------------Set up test pack-------------------

@@ -412,6 +412,14 @@
             </summary>
             <value>The Y value.</value>
         </member>
+        <member name="P:Gizmox.WebGUI.Forms.Charts.DataPoint.IsClickCritical">
+            <summary>
+            Gets a value indicating whether this instance is click critical.
+            </summary>
+            <value>
+            	<c>true</c> if this instance is click critical; otherwise, <c>false</c>.
+            </value>
+        </member>
         <member name="E:Gizmox.WebGUI.Forms.Charts.DataPoint.Click">
             <summary>
             Data Point click event

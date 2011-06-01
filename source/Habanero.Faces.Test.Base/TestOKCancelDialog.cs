@@ -141,7 +141,7 @@ namespace Habanero.Faces.Test.Base
             IControlHabanero dialogControl = okCancelDialogFactory.CreateOKCancelForm(nestedControl, "MyTestForm");
             //---------------Test Result -----------------------
             Assert.AreEqual(width, nestedControl.Width, "Width should not have changed");
-            Assert.AreEqual(height, nestedControl.Height, "Height should not have changed");
+            Assert.GreaterOrEqual(nestedControl.Height, height, "Height should not have changed, but might have changed to be a bit bigger (due to how VWG works its fill docking)");
         }
     }
 }
