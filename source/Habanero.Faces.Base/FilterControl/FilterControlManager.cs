@@ -607,7 +607,7 @@ namespace Habanero.Faces.Base
         ///</summary>
         ///<param name="filterClauseFactory"></param>
         ///<returns></returns>
-        public IFilterClause GetFilterClause(IFilterClauseFactory filterClauseFactory) {
+        public virtual IFilterClause GetFilterClause(IFilterClauseFactory filterClauseFactory) {
             DateTime date = _dateTimePicker.Value;
             date = date.Date;
             if (_filterClauseOperator == FilterClauseOperator.OpLike)
