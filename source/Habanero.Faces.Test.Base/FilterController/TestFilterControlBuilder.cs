@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
+using Habanero.Base.Logging;
 using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
 using Habanero.Test;
@@ -352,8 +353,7 @@ namespace Habanero.Faces.Test.Base.FilterController
         [Test]
         public void Test_TestToHookIntoSimpleFilterEvents()
         {
-            //---------------Set up test pack-------------------
-
+			//---------------Set up test pack-------------------
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -362,7 +362,31 @@ namespace Habanero.Faces.Test.Base.FilterController
             simpleFilterStub.ValueChanged += delegate { };
         }
 
-        private static FilterDef CreateFilterDef_1Property()
+    	[Test]
+    	public void Test_BuildCustomFilter_WhenEnumComboBoxFilter_WithEnumTypeQualifiedNameParameter_ShouldSetupComboItems()
+    	{
+			//---------------Set up test pack-------------------
+			var builder = new FilterControlBuilder(GetControlFactory());
+    		var filterPropertyDef = CreateFilterPropertyDefWithType(typeof (EnumComboBoxFilter));
+    		var assemblyQualifiedName = typeof(LogCategory).AssemblyQualifiedName;
+    		filterPropertyDef.Parameters.Add("EnumTypeQualifiedName", assemblyQualifiedName);
+    		//---------------Assert Precondition----------------
+    		//---------------Execute Test ----------------------
+    		var customFilter = builder.BuildCustomFilter(filterPropertyDef);
+    		//---------------Test Result -----------------------
+			Assert.IsInstanceOf<EnumComboBoxFilter>(customFilter);
+    		var enumComboBoxFilter = (EnumComboBoxFilter)customFilter;
+    		var comboBox = (IComboBox)enumComboBoxFilter.Control;
+			Assert.IsTrue(comboBox.Items.Contains(""));
+			Assert.IsTrue(comboBox.Items.Contains(LogCategory.Debug));
+			Assert.IsTrue(comboBox.Items.Contains(LogCategory.Info));
+			Assert.IsTrue(comboBox.Items.Contains(LogCategory.Warn));
+			Assert.IsTrue(comboBox.Items.Contains(LogCategory.Exception));
+			Assert.IsTrue(comboBox.Items.Contains(LogCategory.Fatal));
+    	}
+
+    	
+    	private static FilterDef CreateFilterDef_1Property()
         {
             return CreateFilterDef_1Property(TestUtil.GetRandomString());
         }
@@ -397,7 +421,7 @@ namespace Habanero.Faces.Test.Base.FilterController
             (string propName, string filterType, string filterTypeAssembly, FilterClauseOperator filterClauseOperator)
         {
             return new FilterPropertyDef
-                (propName, TestUtil.GetRandomString(), filterType, filterTypeAssembly, filterClauseOperator, null);
+                (propName, TestUtil.GetRandomString(), filterType, filterTypeAssembly, filterClauseOperator, new Dictionary<string, string>());
         }
 
         private static FilterDef CreateFilterDef_1PropertyWithTypeAndAssembly
@@ -406,6 +430,11 @@ namespace Habanero.Faces.Test.Base.FilterController
             return new FilterDef
                 (new List<IFilterPropertyDef> {CreateFilterPropertyDefWithType(filterType, filterTypeAssembly)});
         }
+
+		private static IFilterPropertyDef CreateFilterPropertyDefWithType(Type filterType)
+		{
+			return CreateFilterPropertyDefWithType(filterType.FullName, filterType.Assembly.FullName);
+		}
 
         private static FilterPropertyDef CreateFilterPropertyDefWithType(string filterType, string filterTypeAssembly)
         {

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Habanero.Base;
+using Habanero.Util;
 
 namespace Habanero.Faces.Base
 {
@@ -10,8 +11,8 @@ namespace Habanero.Faces.Base
     ///</summary>
     public class EnumComboBoxFilter : ICustomFilter
     {
-        private Type EnumType { get; set; }
-        private readonly IControlFactory _controlFactory;
+    	private Type _enumType;
+    	private readonly IControlFactory _controlFactory;
         private readonly string _propertyName;
         private readonly FilterClauseOperator _filterClauseOperator;
         private readonly IComboBox _comboBox;
@@ -29,8 +30,7 @@ namespace Habanero.Faces.Base
 		{
 			EnumType = enumType;
 			if (enumType == null) throw new ArgumentNullException("enumType");
-			var purchaseOrderStatusCol = Enum.GetValues(enumType);
-			Options = purchaseOrderStatusCol;
+			EnumType = enumType;
 		}
 
     	///<summary>
@@ -50,6 +50,18 @@ namespace Habanero.Faces.Base
             _comboBox.SelectedIndexChanged += (sender, e) => FireValueChanged();
             _comboBox.TextChanged += (sender,e) => FireValueChanged();
         }
+
+		private Type EnumType
+		{
+			get { return _enumType; }
+			set
+			{
+				_enumType = value;
+				var enumValues = Enum.GetValues(_enumType);
+				Options = enumValues;
+			}
+		}
+
         ///<summary>
         /// Returns a collection of Items that can be sellection from the combo box.
         ///</summary>
@@ -65,10 +77,12 @@ namespace Habanero.Faces.Base
                 }
             }
         }
+
         private void FireValueChanged()
         {
             if (ValueChanged != null) this.ValueChanged(this, new EventArgs());
         }
+
         /// <summary>
         /// Returns the underlying <see cref="IComboBox"/> conrol being controlled by the Filter Control
         /// </summary>
@@ -93,6 +107,7 @@ namespace Habanero.Faces.Base
             }
             return filterClauseFactory.CreateNullFilterClause();
         }
+
         ///<summary>
         /// Clears the <see cref="IComboBox"/>
         ///</summary>
@@ -106,13 +121,21 @@ namespace Habanero.Faces.Base
         /// Event handler that fires when the value in the Filter control changes
         /// </summary>
         public event EventHandler ValueChanged;
+
         ///<summary>
         /// The name of the property being filtered by.
         ///</summary>
         public string PropertyName { get { return _propertyName; } }
+
         ///<summary>
         /// Returns the operator <see cref="ICustomFilter.FilterClauseOperator"/> e.g.OpEquals to be used by for creating the Filter Clause.
         ///</summary>
         public FilterClauseOperator FilterClauseOperator { get { return _filterClauseOperator; } }
+
+    	public string EnumTypeQualifiedName
+    	{
+    		get { return EnumType != null ? EnumType.AssemblyQualifiedName : null; }
+			set { EnumType = Type.GetType(value, true); }
+    	}
     }
 }

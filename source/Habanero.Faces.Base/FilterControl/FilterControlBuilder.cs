@@ -66,12 +66,8 @@ namespace Habanero.Faces.Base
 			
             foreach (IFilterPropertyDef filterPropertyDef in filterDef.FilterPropertyDefs)
             {
-                Type filterType = TypeLoader.LoadType(filterPropertyDef.FilterTypeAssembly, filterPropertyDef.FilterType);
-                ICustomFilter customFilter = (ICustomFilter)Activator.CreateInstance(filterType, _controlFactory,
-                                                                                     filterPropertyDef.PropertyName,
-                                                                                     filterPropertyDef.FilterClauseOperator);
-                SetParametersOnFilter(filterPropertyDef, filterType, customFilter);
-                filterControl.AddCustomFilter(filterPropertyDef.Label, customFilter);
+            	var customFilter = BuildCustomFilter(filterPropertyDef);
+            	filterControl.AddCustomFilter(filterPropertyDef.Label, customFilter);
             }
 
         }
@@ -112,7 +108,7 @@ namespace Habanero.Faces.Base
         ///</summary>
         ///<param name="filterPropertyDef"></param>
         ///<returns></returns>
-        public ICustomFilter BuildCustomFilter(FilterPropertyDef filterPropertyDef) {
+        public ICustomFilter BuildCustomFilter(IFilterPropertyDef filterPropertyDef) {
             Type filterType = TypeLoader.LoadType(filterPropertyDef.FilterTypeAssembly, filterPropertyDef.FilterType);
             ICustomFilter customFilter = (ICustomFilter)Activator.CreateInstance(filterType, _controlFactory,
                                                                                  filterPropertyDef.PropertyName,
