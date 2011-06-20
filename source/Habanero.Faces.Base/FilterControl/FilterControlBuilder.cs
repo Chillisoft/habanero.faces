@@ -63,7 +63,7 @@ namespace Habanero.Faces.Base
             filterControl.FilterMode = filterDef.FilterMode;
 
             SetupLayoutManager(filterControl, filterDef);
-
+			
             foreach (IFilterPropertyDef filterPropertyDef in filterDef.FilterPropertyDefs)
             {
                 Type filterType = TypeLoader.LoadType(filterPropertyDef.FilterTypeAssembly, filterPropertyDef.FilterType);

@@ -16,22 +16,57 @@ namespace Habanero.Faces.Test.Base.FilterController
             Open,
             Processed
         }
-        [Test]
-        public void TestConstructor()
-        {
-            //---------------Set up test pack-------------------
-            string propertyName = TestUtil.GetRandomString();
-            const FilterClauseOperator filterClauseOperator = FilterClauseOperator.OpEquals;
-            
-            //---------------Execute Test ----------------------
-            EnumComboBoxFilter filter = new EnumComboBoxFilter(GetControlFactory(), propertyName, filterClauseOperator, typeof(PurchaseOrderStatus));
 
-            //---------------Test Result -----------------------
-            Assert.IsInstanceOf(typeof(IComboBox), filter.Control);
-            Assert.AreEqual(propertyName, filter.PropertyName);
-            Assert.AreEqual(filterClauseOperator, filter.FilterClauseOperator);
-            Assert.IsInstanceOf(typeof(DataViewNullFilterClause), filter.GetFilterClause(new DataViewFilterClauseFactory()));
-        }
+		[Test]
+		public void TestConstructor_ShouldHaveDefaultConstructor()
+		{
+			//---------------Set up test pack-------------------
+			string propertyName = TestUtil.GetRandomString();
+			const FilterClauseOperator filterClauseOperator = FilterClauseOperator.OpEquals;
+
+			//---------------Execute Test ----------------------
+			EnumComboBoxFilter filter = new EnumComboBoxFilter(GetControlFactory(), propertyName, filterClauseOperator);
+
+			//---------------Test Result -----------------------
+			Assert.IsInstanceOf(typeof(IComboBox), filter.Control);
+			Assert.AreEqual(propertyName, filter.PropertyName);
+			Assert.AreEqual(filterClauseOperator, filter.FilterClauseOperator);
+			Assert.IsInstanceOf(typeof(DataViewNullFilterClause), filter.GetFilterClause(new DataViewFilterClauseFactory()));
+		}
+
+		[Test]
+		public void TestConstructor_WhenDefaultConstructor_ShouldNotSetupComboBoxItems()
+		{
+			//---------------Set up test pack-------------------
+			string propertyName = TestUtil.GetRandomString();
+			const FilterClauseOperator filterClauseOperator = FilterClauseOperator.OpEquals;
+
+			//---------------Execute Test ----------------------
+			EnumComboBoxFilter filter = new EnumComboBoxFilter(GetControlFactory(), propertyName, filterClauseOperator);
+
+			//---------------Test Result -----------------------
+			Assert.IsInstanceOf(typeof(IComboBox), filter.Control);
+			IComboBox comboBox = (IComboBox)filter.Control;
+			Assert.AreEqual(0, comboBox.Items.Count, "Should have no Items in combo");
+		}
+
+		[Test]
+		public void TestConstructor()
+		{
+			//---------------Set up test pack-------------------
+			string propertyName = TestUtil.GetRandomString();
+			const FilterClauseOperator filterClauseOperator = FilterClauseOperator.OpEquals;
+
+			//---------------Execute Test ----------------------
+			EnumComboBoxFilter filter = new EnumComboBoxFilter(GetControlFactory(), propertyName, filterClauseOperator, typeof(PurchaseOrderStatus));
+
+			//---------------Test Result -----------------------
+			Assert.IsInstanceOf(typeof(IComboBox), filter.Control);
+			Assert.AreEqual(propertyName, filter.PropertyName);
+			Assert.AreEqual(filterClauseOperator, filter.FilterClauseOperator);
+			Assert.IsInstanceOf(typeof(DataViewNullFilterClause), filter.GetFilterClause(new DataViewFilterClauseFactory()));
+		}
+
         [Test]
         public void TestConstructor_ShouldSetUpComboBoxItems()
         {

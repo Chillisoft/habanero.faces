@@ -16,7 +16,24 @@ namespace Habanero.Faces.Base
         private readonly FilterClauseOperator _filterClauseOperator;
         private readonly IComboBox _comboBox;
 
-        ///<summary>
+		///<summary>
+		/// Constructor with controlFactory, propertyName and filterClauseOperator
+		///</summary>
+		///<param name="controlFactory"></param>
+		///<param name="propertyName"></param>
+		///<param name="filterClauseOperator"></param>
+		///<param name="enumType"></param>
+		public EnumComboBoxFilter(IControlFactory controlFactory, string propertyName
+				, FilterClauseOperator filterClauseOperator, Type enumType)
+			:this(controlFactory, propertyName, filterClauseOperator)
+		{
+			EnumType = enumType;
+			if (enumType == null) throw new ArgumentNullException("enumType");
+			var purchaseOrderStatusCol = Enum.GetValues(enumType);
+			Options = purchaseOrderStatusCol;
+		}
+
+    	///<summary>
         /// Constructor with controlFactory, propertyName and filterClauseOperator
         ///</summary>
         ///<param name="controlFactory"></param>
@@ -24,18 +41,14 @@ namespace Habanero.Faces.Base
         ///<param name="filterClauseOperator"></param>
         ///<param name="enumType"></param>
         public EnumComboBoxFilter(IControlFactory controlFactory, string propertyName
-                , FilterClauseOperator filterClauseOperator, Type enumType)
+                , FilterClauseOperator filterClauseOperator)
         {
-            EnumType = enumType;
-            if (enumType == null) throw new ArgumentNullException("enumType");
             _controlFactory = controlFactory;
             _propertyName = propertyName;
             _filterClauseOperator = filterClauseOperator;
             _comboBox = _controlFactory.CreateComboBox();
             _comboBox.SelectedIndexChanged += (sender, e) => FireValueChanged();
             _comboBox.TextChanged += (sender,e) => FireValueChanged();
-            var purchaseOrderStatusCol = Enum.GetValues(enumType);
-            Options = purchaseOrderStatusCol;
         }
         ///<summary>
         /// Returns a collection of Items that can be sellection from the combo box.
