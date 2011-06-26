@@ -37,6 +37,7 @@ namespace Habanero.Faces.Win
             _controlManager = new GroupBoxGroupControlManager(this, controlFactory);
         }
 
+
         /// <summary>
         /// Adds an <see cref="IControlHabanero"/> to this control. The <paramref name="contentControl"/> is
         ///    wrapped in the appropriate Child Control Type.
@@ -55,4 +56,5 @@ namespace Habanero.Faces.Win
             return _controlManager.AddControl(contentControl, headingText, minimumControlHeight, minimumControlWidth);
         }
     }
+
 }

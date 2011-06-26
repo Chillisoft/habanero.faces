@@ -221,6 +221,7 @@
     <Compile Include="HelpAboutBoxWin.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="IWinFormsPanelAdapter.cs" />
     <Compile Include="LabelWin.cs">
       <SubType>Component</SubType>
     </Compile>

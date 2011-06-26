@@ -818,6 +818,7 @@ namespace Habanero.Faces.Base
         void AddKeyPressEventHandler(IControlHabanero control);
     }
 
+
     /// <summary>
     /// Provides a set of behaviour strategies that can be applied to a TextBox
     /// depending on the environment
@@ -842,6 +843,7 @@ namespace Habanero.Faces.Base
         ///<param name="boProp"></param>
         void AddUpdateBoPropOnTextChangedHandler(TextBoxMapper mapper, IBOProp boProp);
     }
+
 
     /// <summary>
     /// Provides a set of behaviour strategies that can be applied to a TextBox

@@ -25,7 +25,7 @@ namespace Habanero.Faces.Win
     /// Represents a small rectangular pop-up window that displays a brief
     /// description of a control's purpose when the user rests the pointer on the control
     /// </summary>
-    internal class ToolTipWin : ToolTip, IToolTip
+    public class ToolTipWin : ToolTip, IToolTip
     {
         /// <summary>
         /// Associates ToolTip text with the specified control
@@ -34,7 +34,7 @@ namespace Habanero.Faces.Win
         /// <param name="toolTipText">The ToolTip text to display when the pointer is on the control</param>
         public void SetToolTip(IControlHabanero controlHabanero, string toolTipText)
         {
-            base.SetToolTip((Control)controlHabanero, toolTipText);
+            base.SetToolTip(controlHabanero.GetControl(), toolTipText);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Habanero.Faces.Win
         /// <param name="controlHabanero">The Control for which to retrieve the ToolTip text</param>
         public string GetToolTip(IControlHabanero controlHabanero)
         {
-            return base.GetToolTip((Control) controlHabanero);
+            return base.GetToolTip(controlHabanero.GetControl());
         }
     }
 }

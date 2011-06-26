@@ -155,9 +155,9 @@ namespace Habanero.Faces.Base
         public IPanelInfo BuildPanelForTab(UIFormTab formTab)
         {
             if (formTab == null) throw new ArgumentNullException("formTab");
-            IPanel panel = ControlFactory.CreatePanel();
-            PanelInfo panelInfo = new PanelInfo();
-            GridLayoutManager layoutManager =  SetupLayoutManager(formTab, panel);
+            var panel = ControlFactory.CreatePanel();
+            var panelInfo = new PanelInfo();
+            var layoutManager =  SetupLayoutManager(formTab, panel);
             panelInfo.LayoutManager = layoutManager;
             AddFieldsToLayoutManager(formTab, panelInfo);
             SetupInputControlColumnWidth(panelInfo, formTab);
@@ -210,11 +210,11 @@ namespace Habanero.Faces.Base
         {
             if (uiForm == null) throw new ArgumentNullException("uiForm");
             if (groupControlCreator == null) throw new ArgumentNullException("groupControlCreator");
-            PanelInfo panelInfo = new PanelInfo();
+            var panelInfo = new PanelInfo();
             // generic interface
             foreach (UIFormTab formTab in uiForm)
             {
-                IPanelInfo tabPagePanelInfo = BuildPanelForTab(formTab);
+                var tabPagePanelInfo = BuildPanelForTab(formTab);
                 panelInfo.PanelInfos.Add(tabPagePanelInfo);
                 foreach (PanelInfo.FieldInfo fieldInfo in tabPagePanelInfo.FieldInfos)
                 {
@@ -240,15 +240,15 @@ namespace Habanero.Faces.Base
             }
             else
             {
-                IGroupControl groupControl = groupControlCreator();
-                foreach (IPanelInfo childPanelInfo in panelInfo.PanelInfos)
+                var groupControl = groupControlCreator();
+                foreach (var childPanelInfo in panelInfo.PanelInfos)
                 {
-                    IUIFormTab uiFormTab = childPanelInfo.UIFormTab;
-                    IPanel childPanel = childPanelInfo.Panel;
+                    var uiFormTab = childPanelInfo.UIFormTab;
+                    var childPanel = childPanelInfo.Panel;
                     groupControl.AddControl(childPanel, uiFormTab.Name, childPanel.Height, childPanel.Width);
                 }
 
-                IPanel panel = ControlFactory.CreatePanel();
+                var panel = ControlFactory.CreatePanel();
                 groupControl.Dock = DockStyle.Fill;
                 panel.MinimumSize = groupControl.Size;
                 panel.Controls.Add(groupControl);

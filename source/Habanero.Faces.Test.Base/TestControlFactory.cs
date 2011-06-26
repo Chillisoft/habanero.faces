@@ -29,6 +29,7 @@ using Habanero.Faces.Base;
 using NUnit.Framework;
 using Rhino.Mocks;
 
+// ReSharper disable InconsistentNaming
 namespace Habanero.Faces.Test.Base
 {
 
@@ -772,7 +773,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            IGroupBoxGroupControl groupBoxGroupControl = GetControlFactory().CreateGroupBoxGroupControl();
+            var groupBoxGroupControl = GetControlFactory().CreateGroupBoxGroupControl();
             //---------------Test Result -----------------------
             Assert.IsNotNull(groupBoxGroupControl);
         }

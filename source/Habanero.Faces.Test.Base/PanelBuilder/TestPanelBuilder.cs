@@ -32,7 +32,7 @@ using Habanero.Faces.Base;
 using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base
-{
+{ // ReSharper disable InconsistentNaming
     public abstract class TestPanelBuilder
     {
         protected const int DEFAULT_CONTROLS_PER_FIELD = 3;

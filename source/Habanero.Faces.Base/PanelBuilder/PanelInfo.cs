@@ -96,7 +96,7 @@ namespace Habanero.Faces.Base
         {
             set
             {
-                foreach (FieldInfo fieldInfo in FieldInfos)
+                foreach (var fieldInfo in FieldInfos)
                 {
                     fieldInfo.InputControl.Visible = value;
                     fieldInfo.LabelControl.Visible = value;
@@ -116,7 +116,7 @@ namespace Habanero.Faces.Base
         {
             try
             {
-                for (int fieldInfoNum = 0; fieldInfoNum < FieldInfos.Count; fieldInfoNum++)
+                for (var fieldInfoNum = 0; fieldInfoNum < FieldInfos.Count; fieldInfoNum++)
                 {
                     FieldInfos[fieldInfoNum].ControlMapper.ApplyChangesToBusinessObject();
                 }
@@ -132,7 +132,7 @@ namespace Habanero.Faces.Base
         /// </summary>
         public void ClearErrorProviders()
         {
-            foreach (FieldInfo fieldInfo in FieldInfos)
+            foreach (var fieldInfo in FieldInfos)
             {
                 fieldInfo.ControlMapper.ErrorProvider.SetError(fieldInfo.InputControl, "");
             }
@@ -172,7 +172,7 @@ namespace Habanero.Faces.Base
         /// </summary>
         public void UpdateErrorProvidersErrorMessages()
         {
-            for (int fieldInfoNum = 0; fieldInfoNum < FieldInfos.Count; fieldInfoNum++)
+            for (var fieldInfoNum = 0; fieldInfoNum < FieldInfos.Count; fieldInfoNum++)
             {
                 FieldInfos[fieldInfoNum].ControlMapper.UpdateErrorProviderErrorMessage();
             }
@@ -194,7 +194,7 @@ namespace Habanero.Faces.Base
             {
                 get
                 {
-                    foreach (FieldInfo fieldInfo in _fieldInfos)
+                    foreach (var fieldInfo in _fieldInfos)
                     {
                         if (fieldInfo.PropertyName == propertyName)
                         {

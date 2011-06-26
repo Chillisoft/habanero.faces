@@ -79,12 +79,30 @@ namespace Habanero.Faces.Win
     {
     }
     /// <summary>
-    /// This is an interface used specificaly for adapting a any control that inherits from System.Windows.Control 
+    /// This is an interface used specificaly for adapting a any control that inherits from System.Windows.Forms.Control 
     /// so that it can be treated as an IControlHabanero and can therefore be used by Faces for Habanero.Binding,
     /// <see cref="PanelBuilder"/>
     /// or any other such required behaviour.
     /// </summary>
     public interface IWinFormsNumericUpDownAdapter : INumericUpDown, IWinFormsControlAdapter
+    {
+    }
+    /// <summary>
+    /// This is an interface used specificaly for adapting a any control that inherits from System.Windows.Forms.Panel 
+    /// so that it can be treated as an Habanero.Faces IPanel and can therefore be used by Habanero.Faces for Habanero.Binding,
+    /// <see cref="PanelBuilder"/>
+    /// or any other such required behaviour.
+    /// </summary>
+    public interface IWinFormsPanelAdapter : IPanel, IWinFormsControlAdapter
+    {
+    }
+    /// <summary>
+    /// This is an interface used specificaly for adapting a control that inherits from System.Windows.Forms.Label 
+    /// so that it can be treated as an Habanero.Faces ILable and can therefore be used by Habanero.Faces for Habanero.Binding,
+    /// <see cref="PanelBuilder"/>
+    /// or any other such required behaviour.
+    /// </summary>
+    public interface IWinFormsLabelAdapter : ILabel, IWinFormsControlAdapter
     {
     }
     /// <summary>
