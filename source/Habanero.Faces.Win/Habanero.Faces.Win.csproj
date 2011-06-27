@@ -342,12 +342,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Habanero.Faces.Base\Habanero.Faces.Base.csproj">
-      <Project>{18828910-F528-48F5-B56D-7C1658D0987A}</Project>
-      <Name>Habanero.Faces.Base</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="key.snk" />
   </ItemGroup>
   <ItemGroup>
@@ -384,6 +378,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Habanero.Faces.Base\Habanero.Faces.Base.csproj">
+      <Project>{18828910-F528-48F5-B56D-7C1658D0987A}</Project>
+      <Name>Habanero.Faces.Base</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
