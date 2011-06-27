@@ -75,7 +75,7 @@ namespace Habanero.Faces.Win
 
             _wizardControlManager = new WizardControlManager(this);
 
-            IPanel buttonPanel = CreateButtonPanel();
+            var buttonPanel = CreateButtonPanel();
 
             _wizardStepPanel = ControlFactory.CreatePanel();
 
@@ -115,9 +115,9 @@ namespace Habanero.Faces.Win
         /// <returns></returns>
         protected virtual IPanel CreateButtonPanel()
         {
-            IPanel buttonPanel = ControlFactory.CreatePanel();
-            Size buttonSize = GetButtonSize();
-            FlowLayoutManager layoutManager = GetLayoutManager(buttonPanel);
+            var buttonPanel = ControlFactory.CreatePanel();
+            var buttonSize = GetButtonSize();
+            var layoutManager = GetLayoutManager(buttonPanel);
 
             layoutManager.AddControl(CreateCancelButton(buttonSize));
 
