@@ -106,6 +106,15 @@ namespace Habanero.Faces.Win
     {
     }
     /// <summary>
+    /// This is an interface used specificaly for adapting a control that inherits from System.Windows.Forms.GroupBox 
+    /// so that it can be treated as an Habanero.Faces IGroupBox and can therefore be used by Habanero.Faces for Habanero.Binding,
+    /// <see cref="PanelBuilder"/>
+    /// or any other such required behaviour.
+    /// </summary>
+    public interface IWinFormsGroupBoxAdapter : IGroupBox, IWinFormsControlAdapter
+    {
+    }
+    /// <summary>
     /// This is a ControlWraper for Any Control that Inherits from System.Windows.Forms.Control
     /// It wraps this Control behind a standard interface that allows any Control in a Windows Environment 
     /// to take advantage of the Habanero ControlMappers <see cref="IControlMapper"/>
@@ -114,10 +123,14 @@ namespace Habanero.Faces.Win
     {
         public Control WrappedControl { get; private set; }
 
-        public WinFormsControlAdapter(Control gridView)
+        ///<summary>
+        ///</summary>
+        ///<param name="control"></param>
+        ///<exception cref="ArgumentNullException"></exception>
+        public WinFormsControlAdapter(Control control)
         {
-            if (gridView == null) throw new ArgumentNullException("gridView");
-            WrappedControl = gridView;
+            if (control == null) throw new ArgumentNullException("control");
+            WrappedControl = control;
         }
 
         public bool Focus()

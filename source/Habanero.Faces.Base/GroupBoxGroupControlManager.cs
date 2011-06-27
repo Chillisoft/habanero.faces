@@ -55,7 +55,7 @@ namespace Habanero.Faces.Base
         ///   This height along with any other spacing required will be used as the minimum height for the ChildControlCreated</param>
         ///  <param name="minimumControlWidth">The minimum width that the <paramref name="contentControl"/> can be</param>
         ///  <returns></returns>
-        public IControlHabanero AddControl
+        public virtual IControlHabanero AddControl
             (IControlHabanero contentControl, string headingText, int minimumControlHeight, int minimumControlWidth)
         {
             IControlFactory factory = GlobalUIRegistry.ControlFactory;
@@ -65,10 +65,10 @@ namespace Habanero.Faces.Base
                     "There is a serious error since the GlobalUIRegistry.ControlFactory  has not been set up.";
                 throw new HabaneroDeveloperException(errMessage, errMessage);
             }
-            IGroupBox groupBox = factory.CreateGroupBox(headingText);
+            var groupBox = factory.CreateGroupBox(headingText);
             groupBox.Width = minimumControlWidth + 30;
             groupBox.Height = minimumControlHeight + 30;
-            BorderLayoutManager layoutManager = factory.CreateBorderLayoutManager(groupBox);
+            var layoutManager = factory.CreateBorderLayoutManager(groupBox);
             layoutManager.BorderSize = 20;
             layoutManager.AddControl(contentControl);
 

@@ -18,6 +18,7 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.Drawing;
+using System.Linq;
 
 namespace Habanero.Faces.Base
 {
@@ -72,9 +73,8 @@ namespace Habanero.Faces.Base
             try
             {
                 this.ManagedControl.SuspendLayout();
-                foreach (IControlHabanero control in this.ManagedControl.Controls)
+                foreach (var control in this.ManagedControl.Controls.OfType<IControlHabanero>())
                 {
-
                     if (currentColumn > ColumnCount)
                     {
                         currentColumn = 1;
