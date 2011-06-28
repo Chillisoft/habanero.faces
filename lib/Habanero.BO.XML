@@ -8812,6 +8812,15 @@
             <param name="classDef">The class definition to use for preparing the <see cref="T:Habanero.Base.Criteria"/>.</param>
             <param name="criteria">The <see cref="T:Habanero.Base.Criteria"/> to prepare for use with a <see cref="T:Habanero.BO.SelectQuery"/>.</param>
         </member>
+        <member name="M:Habanero.BO.QueryBuilder.PrepareField(Habanero.Base.Source,Habanero.Base.IClassDef,Habanero.Base.QueryField)">
+            <summary>
+             Prepares 
+            </summary>
+            <param name="currentSource"></param>
+            <param name="classDef"></param>
+            <param name="field"></param>
+            <returns></returns>
+        </member>
         <member name="M:Habanero.BO.QueryBuilder.PrepareSource(Habanero.Base.IClassDef,Habanero.Base.Source@)">
             <summary>
              Uses the Class Definition to add the correct table name to the Source.
