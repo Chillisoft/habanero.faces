@@ -1368,6 +1368,15 @@
             <param name="connection">A database connection</param>
             <param name="statement">An existing sql statement</param>
         </member>
+        <member name="M:Habanero.DB.SqlStatement.AddParameter(System.String,System.Object,System.Type)">
+            <summary>
+            Adds a parameter value
+            </summary>
+            <param name="paramName">The parameter name</param>
+            <param name="paramValue">The value to assign</param>
+            <param name="paramType">The type of the parameter (only necessary if the value is null, or you wish to specify more directly the type to use when creating the parameter)</param>
+            <returns>Returns an IDbDataParameter object</returns>
+        </member>
         <member name="M:Habanero.DB.SqlStatement.AddParameter(System.String,System.Object)">
             <summary>
             Adds a parameter value
