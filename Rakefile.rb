@@ -26,14 +26,14 @@ msbuild_settings = {
 }
 
 #------------------------dependency settings---------------------
-$habanero_version = 'trunk'
+$habanero_version = 'branches/v2.6_2011-08-24'
 require 'rake-habanero.rb'
 
-$smooth_version = 'trunk'
+$smooth_version = 'branches/v1.5_2011-08-24'
 require 'rake-smooth.rb'
 
 #------------------------project settings------------------------
-$basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/Faces/trunk'
+$basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/Faces/branches/v2.6_2011-08-24'
 $solution = "source/Habanero.Faces - 2010.sln"
 
 #______________________________________________________________________________
@@ -103,6 +103,6 @@ nunit :test do |nunit|
 end
 
 svn :commitlib do |s|
-	puts cyan("Commiting lib")
-	s.parameters "ci lib -m autocheckin"
+	#puts cyan("Commiting lib")
+	#s.parameters "ci lib -m autocheckin"
 end
