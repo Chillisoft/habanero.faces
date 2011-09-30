@@ -216,7 +216,8 @@ namespace Habanero.Faces.Base
             var isInSelectedItemsList = this.Control.SelectedItems.Contains(businessObject);
             this.Control.Items.Remove(businessObject);
             this.Control.Items.Insert(indexOf, businessObject);
-            if (selectedBO != null && this.Control.SelectedItem != null) this.Control.SelectedItem = selectedBO; // fix issue in VWG where setting to null sets to empty string
+            //if (selectedBO != null && this.Control.SelectedItem != null) this.Control.SelectedItem = selectedBO; // fix issue in VWG where setting to null sets to empty string
+            if (selectedBO != null) this.Control.SelectedItem = selectedBO; // fix issue in VWG where setting to null sets to empty string
             if (isInSelectedItemsList) this.Control.SelectedItems.Add(businessObject);
         }
 
