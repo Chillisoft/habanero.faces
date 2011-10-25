@@ -1,5 +1,111 @@
 Habanero Faces Change log
 
+v2.7.0 - 17 October 2011
+This version is built against Habanero Core 2.6.0 and .NET 4.0
+
+Major changes
+#1750: Move to .NET 4.0 and VWG 6.4.0
+
+Minor changes
+#1385: ControlMappers: ControlMapperCollection should be Generic
+#1397: ListBoxSelector: Add Support for when a BusinessObject updates the values in the ListBox update
+#1398: Refactor out common code between ComboBoxCollectionSelector and ListBoxCollectionManager
+#1425: ControlMappers: put back SetCollection(col, true) on ComboBox etc control mapper
+#1476: ControlMappers: Change public EditableGridControlMapper constructor to use specific type instead of IControlHabanero)
+#1480: ControlMappers: Create ReadOnlyGridMapper for mapping children relationships to a grid selector
+#1487: ControlMappers: Make IsReadOnly getter and setter on IControlMapper
+#1563: Refactor and Transform : CloseBOEditorDialogWin
+#1603: Mappers AutoLoadingRelationshipComboBoxMapper should have ability to set caching
+#1731: Add support for showCheckBox mapper parameter for the DateTimePicker
+#1799: EnumComboBoxFilter doesn't support the standard filter constructor
+#1800: EnumComboBoxFilter should support an alternative way of specifying the Enum Type
+Removed the unused event BusinessObjectEdited from the IGridBase interface and its implementations for Win and VWG.
+Made GetBindListView virtual on GridBaseManager so as to override the creation of a DataSetProvider to get a BindingListView.
+Made GridBaseManager.GetBusinessObjectAtRow virtual
+Renamed incorrectly named IWinFormsGridAdapter to IWinFormsDataGridViewAdapter
+Made GetFilterClause virtual in DateTimePickerFilter
+Changed ControlMapper.SetError to protected so that we could create a custom mapper that controlled this differently.
+Changed ControlMapper.UpdateIsEditable to protected virtual so that we could create a custom mapper that controlled this differently.
+
+Bug Fixes
+#1332: ListComboBoxMapper: SetList throws Error if you set it to null or empty string
+#1333:ControlMappers: ControlMapperCollection should use IBusinessObject
+#1386: WinFormsControlAdapter: Add IEquatable<Control> so that can do equals comparison to the underlying control
+#1421: ControlMapperStrategyWin: If first control on a is TabStop False still returns as first control
+#1419: MutliLine TextBox E.g. Postal Address - Enter moves to next control. Should do new line
+#1466: ControlMappers: AutoLoadingComboBoxMapper Set BusinessObject loads the Related Collection from the Database multiple times.
+#1469: ControlSelectors: ListControlCollectionManager and hence ListBoxCollectionManager and ComboBoxCollectionManager
+#1508: Programmatic Binding changes: Fix Bug in ControlsCollectionWin.Add
+#1510: The Collapsible menu for Faces.Win sizes incorrectly when its container control resizes.
+#1511: Programmatic Binding changes: Fix Bug in BorderLayoutManagerWin.SetupDockOfControl
+#1514  Save NullReferenceException on the BOGridAndEditorControlWin
+#1518: BOColSelectorLinker : When there is no selected parent BO, the Child Selector needs to be disabled
+#1732: DateTimePickerWin is having rendering issues when Visual styles is enabled
+#1728: DateTimePickerMapper doesn't update the BO Value to or from null.
+#1730: DateTimePickerWin doesn't fire the base ValueChanged event when changed to or from null
+#1712: Multi Prop filter in FilterControlWin doesn't filter when changed
+#1514: Save NullReferenceException on the BOGridAndEditorControlWin
+
+
+v2.6.0 - 02 December 2010
+This version is built against Habanero Core 2.5.1 and .NET 3.5
+
+Enhancements
+#1173 - Manual Binding: Refactor Code to make it easier to do manual binding to designed forms. See the Manual Binding example project for how to use mappers in your designed forms.
+#931 - Create context menu. Methods for this were added to IControlFactory, and new classes for building context menus were added - ContextMenuBuilderWin and ContextMenuWin. These have not been implemented for VWG.
+
+Minor Changes
+#949 - Add Enable and Visible properties to IMenuItem 
+#950 - (Win) Need the ability to suppress the Double Click event on the treeview. This works around a bug in the treeview - see
+http://stackoverflow.com/questions/3290047/check-or-uncheck-all-treeviewitem-children
+
+Bug Fixes
+#976 - MenuItemCollectionWin : IEnumerable<IMenuItem>.GetEnumerator throwing cast error
+#1080 - DefaultBOEditorForm Cancel does not MarkForDelete a new BO. Now if you cancel when editing a new BO in the Default BO Editor, it will mark the edited object for deletion.
+
+v2.5.0 - 09 September 2010
+
+Major Changes
+#531 - Moved to VWG 6.4 RC0a 
+#793 - Virtualised loading in grid. Instead of pagination, the grid now supports virtualised loading, where objects are loaded as you scroll down the grid.
+
+Enhancements
+#594 - Added BOGridAndEditorControlVWG
+#595 - Added ExtendedComboBoxVWG and ExtendedTextBoxVWG
+
+Minor Changes
+#785 - BooleanComboBoxFilterControl for filtering a boolean property using a combo box with True, False and Null string
+#786 - ExtendedTextBoxMapper needs properties to get at buttons on the form it pops up
+#789 - Move Date Range classes into Habanero Core. This was done so as to move this logic from Habanero.Faces to Habanero Core since it is not UISpecific logic.
+#527 - Wizard controller - new methods CanCancel and CanFinish. Added FinishButton to Wizard Control. Added CanFinish to IWizardStep. Added CanCancel to IWizardStep. Modified WizardController so that Finish() can be called as long as it is the last step or the controller returns CanFinish() true. The CancelButton is disabled on the WizardControl if the WizardController.CanCancel = false. Fixed WizardControl where the FinishButton.Click was not checking CanMoveOn.
+#539 - Modify Wizard Form so that you can pass the wizard control in. This is required if you specialise the WizardControl.
+#673 - Add support for using the ComboBoxLinker with any selector and with the mapper controls
+#784 - Format a grid column (specified in classDef) for currency - added support for decimal types
+#796 - AddStaticStringFilterClause missing on FilterControlWin. This was added
+#613 - Generalise code between EditableGridControlVWG and EditableGridControlWin) moved to a Manager.
+
+Bug Fixes
+#788 - ExtendedTextBoxMapper not setting BusinessObject correctly
+#790 - Bugs in functionality of ExtendedTextBox and ExtendedTextBoxMapper
+#787 - Layout of BOGridAndEditorControlWin needs improvement
+#791 - Excessive compiler warnings
+#792 - Randomly failing test: TestDateRangeComboBox.TestRealNow
+#544 - Bug in ExtendedTextBox
+#523 - Clear button on FilterControl doesn't clear the text in combo-box filters (VWG)
+#794 - Hanging pop up windows in IE8 and VWG 6.4 preview. To fix this:
+ - Added a settings dictionary on IUISettings and UISettings
+ - Created settings for VWG to work around a bug with 6.4 preview in IE:
+   - PauseBeforeClosingForm : set this to true to enable a short pause before closing forms
+   - LengthOfPauseBeforeClosingForm : set this to the number of milliseconds to wait. I have found that 1000 ensures reliable results. With 500 it still sometimes locks up. 
+ If you experience this set these settings with the following code in your startup:
+	GlobalUIRegistry.UISettings["PauseBeforeClosingForm"] = true;
+    GlobalUIRegistry.UISettings["LengthOfPauseBeforeClosingForm"] = 1000;
+#795 - Should use % as the like operator when creating filter clause)
+#614 - Debug.Assert in FilterControlVWG. Removed these as A they were incorrect and B caused Resharper TestRunner to hang.
+#612 - AdditionalSearchCriteria on GridControls resulted in Hacky duplicate code. Moved duplicate code to managers and replaced hack code with using StringLiteralCustomFilter
+#615 - Bug with Changing the DataSource of a grid directly resulted in filtering not working
+#674 - ComboBoxCollectionSelector - when a custom string item is selected, the SelectedBusinessObject should return Null
+
 v2.4.0 - 10 May 2010
 
 Major Changes
