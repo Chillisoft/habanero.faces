@@ -1,6 +1,6 @@
 Habanero Faces Change log
 
-v2.7.0 - 17 October 2011
+v2.7.0 - 24 October 2011
 This version is built against Habanero Core 2.6.0 and .NET 4.0
 
 Major changes

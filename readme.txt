@@ -1,4 +1,4 @@
-Habanero Faces v2.4.0, 10 May 2010
+Habanero Faces v2.7.0, 24 October 2011
 
 This package contains the source of Habanero Faces, a UI library for use with Habanero Core that supports Windows forms and Visual WebGUI (an ajax library) development. It includes the following:
 
