@@ -6,7 +6,7 @@ Habanero.Faces.Base.dll - core functionality shared by Win and VWG
 Habanero.Faces.Win.dll - the Windows Forms library
 Habanero.Faces.VWG.dll - the Visual WebGUI library
 
-To use the Visual WebGUI library you will need to download Visual WebGUI Professional Studio (VS 2008) .NET 3.5, 6.4 beta 1 from http://www.visualwebgui.com
+To use the Visual WebGUI library you will need to download Visual WebGUI Professional Studio (VS 2010) .NET 4.0, 6.4 from http://www.visualwebgui.com
 
 
 For more information on Habanero Faces, visit:
