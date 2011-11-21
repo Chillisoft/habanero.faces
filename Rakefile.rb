@@ -34,7 +34,6 @@ msbuild_settings = {
 # require 'rake-smooth.rb'
 
 #------------------------project settings------------------------
-$basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/Faces/tags/2.7'
 $solution = "source/Habanero.Faces - 2010.sln"
 
 #______________________________________________________________________________
