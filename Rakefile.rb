@@ -33,7 +33,6 @@ $smooth_version = 'branches/v1.6'
 require 'rake-smooth.rb'
 
 #------------------------project settings------------------------
-$basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/Faces/branches/2.7'
 $solution = "source/Habanero.Faces - 2010.sln"
 
 #______________________________________________________________________________
