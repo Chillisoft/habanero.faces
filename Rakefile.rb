@@ -46,13 +46,13 @@ desc "Rakes habanero+smooth, builds Faces"
 task :build_all => [:create_temp, :rake_habanero, :rake_smooth, :build, :delete_temp]
 
 desc "Rakes habanero+smooth, builds Faces"
-task :build_all_nuget => [:create_temp, :installNugetPackages, :build, :delete_temp, :nuget]
+task :build_all_nuget => [:create_temp, :installNugetPackages, :build, :nuget, :delete_temp]
 
 desc "Builds Faces, including tests"
 task :build => [:clean, :updatelib, :msbuild, :test, :commitlib]
 
 desc "Pushes Faces to Nuget"
-task :nuget => [:publishFacesBaseNugetPackage, :publishFacesVWGNugetPackage ]
+task :nuget => [:publishFacesBaseNugetPackage, :publishFacesVWGNugetPackage, :publishFacesWinNugetPackage ]
 
 #------------------------build Faces  --------------------
 
@@ -122,14 +122,22 @@ desc "Publish the Habanero.Faces.Base nuget package"
 pushnugetpackages :publishFacesBaseNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Faces.Base.dll"
   package.Nugetid = "Habanero.Faces.Base.Trunk"
-  package.Version = "9.9.999"
+  package.Version = "2.6"
   package.Description = "Habanero.Faces.Base"
 end
 
 desc "Publish the Habanero.Faces.VWG nuget package"
 pushnugetpackages :publishFacesVWGNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Faces.VWG.dll"
-  package.Nugetid = "Habanero.Faces.VWG.Trunk"
-  package.Version = "9.9.999"
+  package.Nugetid = "Habanero.Faces.Trunk"
+  package.Version = "2.6"
   package.Description = "Habanero.Faces.VWG"
+end
+
+desc "Publish the Habanero.Faces.Win nuget package"
+pushnugetpackages :publishFacesWinNugetPackage do |package|
+  package.InputFileWithPath = "bin/Habanero.Faces.Win.dll"
+  package.Nugetid = "Habanero.Faces.Win.Trunk"
+  package.Version = "2.6"
+  package.Description = "Habanero.Faces.Win"
 end
