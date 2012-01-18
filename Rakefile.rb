@@ -48,6 +48,9 @@ task :build_all => [:create_temp, :rake_habanero, :rake_smooth, :build, :delete_
 desc "Builds Faces, including tests"
 task :build => [:clean, :updatelib, :msbuild, :test, :commitlib]
 
+desc "Pushes Faces to Nuget"
+task :nuget => [:publishFacesBaseNugetPackage, :publishFacesVWGNugetPackage ]
+
 #------------------------build Faces  --------------------
 
 desc "Cleans the bin folder"
@@ -105,4 +108,26 @@ end
 svn :commitlib do |s|
 	puts cyan("Commiting lib")
 	s.parameters "ci lib -m autocheckin"
+end
+
+
+desc "Install nuget packages"
+getnugetpackages :installNugetPackages do |ip|
+    ip.package_names = ["Habanero.Base.V2.6_2011-08-24",  "Habanero.BO.V2.6_2011-08-24"]
+end
+
+desc "Publish the Habanero.Smooth nuget package"
+pushnugetpackages :publishFacesBaseNugetPackage do |package|
+  package.InputFileWithPath = "bin/Habanero.Faces.Base.dll"
+  package.Nugetid = "Habanero.Faces.Base.Trunk"
+  package.Version = "9.9.999"
+  package.Description = "Habanero.Faces.Base"
+end
+
+desc "Publish the Habanero.Smooth nuget package"
+pushnugetpackages :publishFacesVWGNugetPackage do |package|
+  package.InputFileWithPath = "bin/Habanero.Faces.VWG.dll"
+  package.Nugetid = "Habanero.Faces.VWG.Trunk"
+  package.Version = "9.9.999"
+  package.Description = "Habanero.Faces.VWG"
 end
