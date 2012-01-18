@@ -40,14 +40,19 @@ $solution = "source/Habanero.Faces - 2010.sln"
 #---------------------------------TASKS----------------------------------------
 
 desc "Runs the build all task"
-task :default => [:build_all]
+task :default => [:build_all_nuget]
 
 desc "Rakes habanero+smooth, builds Faces"
 task :build_all => [:create_temp, :rake_habanero, :rake_smooth, :build, :delete_temp]
 
+desc "Rakes habanero+smooth, builds Faces"
+task :build_all_nuget => [:create_temp, :installNugetPackages, :build, :delete_temp, :nuget]
+
 desc "Builds Faces, including tests"
 task :build => [:clean, :updatelib, :msbuild, :test, :commitlib]
 
+desc "Pushes Faces to Nuget"
+task :nuget => [:publishFacesBaseNugetPackage, :publishFacesVWGNugetPackage ]
 #------------------------build Faces  --------------------
 
 desc "Cleans the bin folder"
@@ -105,4 +110,25 @@ end
 svn :commitlib do |s|
 	#puts cyan("Commiting lib")
 	#s.parameters "ci lib -m autocheckin"
+end
+
+desc "Install nuget packages"
+getnugetpackages :installNugetPackages do |ip|
+    ip.package_names = ["Habanero.Base.V2.6_2011-08-24",  "Habanero.BO.V2.6_2011-08-24",  "Habanero.Console.V2.6_2011-08-24",  "Habanero.DB.V2.6_2011-08-24",  "Habanero.Smooth.v1.5_2011-08-24",  "Habanero.Naked.v1.5_2011-08-24"]
+end
+
+desc "Publish the Habanero.Faces.Base nuget package"
+pushnugetpackages :publishFacesBaseNugetPackage do |package|
+  package.InputFileWithPath = "bin/Habanero.Faces.Base.dll"
+  package.Nugetid = "Habanero.Faces.Base.V2.6_2011-08-24"
+  package.Version = "2.6"
+  package.Description = "Habanero.Faces.Base"
+end
+
+desc "Publish the Habanero.Faces.VWG nuget package"
+pushnugetpackages :publishFacesVWGNugetPackage do |package|
+  package.InputFileWithPath = "bin/Habanero.Faces.VWG.dll"
+  package.Nugetid = "Habanero.Faces.VWG.V2.6_2011-08-24"
+  package.Version = "2.6"
+  package.Description = "Habanero.Faces.VWG"
 end
