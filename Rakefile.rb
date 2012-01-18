@@ -129,7 +129,7 @@ end
 desc "Publish the Habanero.Faces.VWG nuget package"
 pushnugetpackages :publishFacesVWGNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Faces.VWG.dll"
-  package.Nugetid = "Habanero.Faces.Trunk"
+  package.Nugetid = "Habanero.Faces.VWG.Trunk"
   package.Version = "9.9.999"
   package.Description = "Habanero.Faces.VWG"
 end
