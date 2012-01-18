@@ -52,7 +52,7 @@ desc "Builds Faces, including tests"
 task :build => [:clean, :updatelib, :msbuild, :test, :commitlib]
 
 desc "Pushes Faces to Nuget"
-task :nuget => [:publishFacesBaseNugetPackage, :publishFacesVWGNugetPackage ]
+task :nuget => [:publishFacesBaseNugetPackage, :publishFacesVWGNugetPackage, :publishFacesWinNugetPackage ]
 #------------------------build Faces  --------------------
 
 desc "Cleans the bin folder"
@@ -131,4 +131,12 @@ pushnugetpackages :publishFacesVWGNugetPackage do |package|
   package.Nugetid = "Habanero.Faces.VWG.V2.6_2011-08-24"
   package.Version = "2.6"
   package.Description = "Habanero.Faces.VWG"
+end
+
+desc "Publish the Habanero.Faces.Win nuget package"
+pushnugetpackages :publishFacesWinNugetPackage do |package|
+  package.InputFileWithPath = "bin/Habanero.Faces.Win.dll"
+  package.Nugetid = "Habanero.Faces.Win.V2.6_2011-08-24"
+  package.Version = "2.6"
+  package.Description = "Habanero.Faces.Win"
 end
