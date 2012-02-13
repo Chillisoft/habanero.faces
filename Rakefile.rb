@@ -1,4 +1,4 @@
-#Faces trunk
+#Faces v2.7-13_02_2012
 require 'rake'
 require 'albacore'
 
@@ -26,21 +26,20 @@ msbuild_settings = {
 }
 
 #------------------------dependency settings---------------------
-$habanero_version = 'trunk'
+$habanero_version = 'branches/v2.6'
 require 'rake-habanero.rb'
 
-$smooth_version = 'trunk'
+$smooth_version = 'branches/v1.6-13_02_2012'
 require 'rake-smooth.rb'
 
 #------------------------project settings------------------------
-$basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/Faces/trunk'
 $solution = "source/Habanero.Faces - 2010.sln"
 
 #______________________________________________________________________________
 #---------------------------------TASKS----------------------------------------
 
 desc "Runs the build all task"
-task :default => [:build_all_nuget]
+task :default => [:build_all]
 
 desc "Rakes habanero+smooth, builds Faces"
 task :build_all => [:create_temp, :rake_habanero, :rake_smooth, :build, :delete_temp]
