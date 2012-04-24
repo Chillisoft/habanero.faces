@@ -44,10 +44,14 @@ desc "Runs the build all task"
 task :default => [:build_all]
 
 desc "Rakes habanero, builds Faces"
-task :build_all => [:create_temp, :rake_habanero, :rake_testability, :build, :delete_temp]
+task :build_all => [:create_temp, :rake_habanero, :rake_testability, :build, :delete_temp, :nuget]
 
 desc "Builds Faces, including tests"
 task :build => [:clean, :updatelib, :msbuild, :test, :commitlib]
+
+desc "Pushes Habanero into the local nuget folder"
+task :nuget => [:publishFacesBaseNugetPackage, :publishFacesNugetPackage ]
+
 
 #------------------------build Faces  --------------------
 
@@ -108,4 +112,20 @@ end
 svn :commitlib do |s|
 	puts cyan("Commiting lib")
 	s.parameters "ci lib -m autocheckin"
+end
+
+desc "Publish the Habanero.Faces nuget package"
+pushnugetpackages :publishBaseNugetPackage do |package|
+  package.InputFileWithPath = "bin/Habanero.Faces.dll"
+  package.Nugetid = "Habanero.Faces.V2.6-CF_Stargate"
+  package.Version = "2.6"
+  package.Description = "Habanero.Faces"
+end
+
+desc "Publish the Habanero.Faces.Base nuget package"
+pushnugetpackages :publishBaseNugetPackage do |package|
+  package.InputFileWithPath = "bin/Habanero.Faces.Base.dll"
+  package.Nugetid = "Habanero.Faces.Base.V2.6-CF_Stargate"
+  package.Version = "2.6"
+  package.Description = "Habanero.Faces.Base"
 end
