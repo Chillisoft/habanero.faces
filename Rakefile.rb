@@ -115,7 +115,7 @@ svn :commitlib do |s|
 end
 
 desc "Publish the Habanero.Faces nuget package"
-pushnugetpackages :publishBaseNugetPackage do |package|
+pushnugetpackages :publishFacesNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Faces.dll"
   package.Nugetid = "Habanero.Faces.V2.6-CF_Stargate"
   package.Version = "2.6"
