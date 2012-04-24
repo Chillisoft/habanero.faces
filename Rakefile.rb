@@ -123,7 +123,7 @@ pushnugetpackages :publishFacesNugetPackage do |package|
 end
 
 desc "Publish the Habanero.Faces.Base nuget package"
-pushnugetpackages :publishBaseNugetPackage do |package|
+pushnugetpackages :publishFacesBaseNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Faces.Base.dll"
   package.Nugetid = "Habanero.Faces.Base.V2.6-CF_Stargate"
   package.Version = "2.6"
