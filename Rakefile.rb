@@ -125,7 +125,7 @@ end
 desc "Publish the Habanero.Faces.Base nuget package"
 pushnugetpackages :publishFacesBaseNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Faces.Base.dll"
-  package.Nugetid = "Habanero.Faces.Base.V2.6_2011-08-24"
+  package.Nugetid = "Habanero.Faces.Base.V2.7"
   package.Version = "2.6"
   package.Description = "Habanero.Faces.Base"
 end
@@ -133,7 +133,7 @@ end
 desc "Publish the Habanero.Faces.VWG nuget package"
 pushnugetpackages :publishFacesVWGNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Faces.VWG.dll"
-  package.Nugetid = "Habanero.Faces.VWG.V2.6_2011-08-24"
+  package.Nugetid = "Habanero.Faces.VWG.V2.7"
   package.Version = "2.6"
   package.Description = "Habanero.Faces.VWG"
 end
@@ -141,7 +141,7 @@ end
 desc "Publish the Habanero.Faces.Win nuget package"
 pushnugetpackages :publishFacesWinNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Faces.Win.dll"
-  package.Nugetid = "Habanero.Faces.Win.V2.6_2011-08-24"
+  package.Nugetid = "Habanero.Faces.Win.V2.7"
   package.Version = "2.6"
   package.Description = "Habanero.Faces.Win"
 end
