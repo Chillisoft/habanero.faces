@@ -42,7 +42,7 @@ desc "Runs the build all task"
 task :default => [:build_all_nuget]
 
 desc "Rakes habanero+smooth, builds Faces"
-task :build_all_nuget => [:create_temp, :installNugetPackages, :rake_habanero, :rake_smooth, :build, :delete_temp]
+task :build_all_nuget => [:create_temp, :installNugetPackages, :rake_habanero, :rake_smooth, :build, :nuget, :delete_temp]
 
 desc "Builds Faces, including tests"
 task :build => [:clean, :updatelib, :installNugetPackages, :msbuild, :test, :commitlib]
