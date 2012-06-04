@@ -264,7 +264,9 @@ namespace Habanero.Faces.Base
         {
             if (TabControl.SelectedTab == null) return;
 
-            if (_boControl == null) return;
+			// Only load the BusinessObject into the BO control on the tab if there is a single BusinessObjectControl instance being used.
+			// The related logic to this is in the AddTabPage method where the business object is pre-loaded into the bo control created for each tab.
+			if (_boControl == null) return;
             TabControl.SelectedTab.Controls.Clear();
             TabControl.SelectedTab.Controls.Add(_boControl);
             if (_boControl == null) return;
@@ -306,8 +308,10 @@ namespace Habanero.Faces.Base
                     return null;
                 }
                 int tabIndex = TabControl.TabPages.IndexOf(TabControl.SelectedTab);
-                return tabIndex == -1 ? null : _businessObjectCollection[tabIndex];
-            }
+				if (tabIndex == -1) return null;
+				if (tabIndex >= _businessObjectCollection.Count) return null;
+				return _businessObjectCollection[tabIndex];
+			}
             set
             {
                 if (value == null) return; //The control is being swapped out 
@@ -316,10 +320,6 @@ namespace Habanero.Faces.Base
                 // sensible action on a BOTabControl.
                 CheckBusinessObjectColNotNull();
                 TabControl.SelectedIndex = _businessObjectCollection.IndexOf(value);
-                if (_boControl != null)
-                {
-                    _boControl.BusinessObject = value;
-                }
             }
         }
 
@@ -387,13 +387,11 @@ namespace Habanero.Faces.Base
         /// <param name="bo">The business ojbect to represent</param>
         protected virtual void AddTabPage(ITabPage page, IBusinessObject bo)
         {
-            if (_boControl != null)
-            {
-                _boControl.BusinessObject = bo;
-                page.Controls.Add(_boControl);
-            }
-            else if (BusinessObjectControlCreator != null)
-            {
+			// Only load the BusinessObject into the BO control on each tab if the BusinessObjectControlCreator is being used.
+			// The related logic to this is in the TabChanged event where the business object is only loaded into the bo control when a
+			//  single BO Control instance is being used.
+			if (BusinessObjectControlCreator != null)
+			{
                 IBusinessObjectControl businessObjectControl = BusinessObjectControlCreator();
                 businessObjectControl.Dock = DockStyle.Fill;
                 businessObjectControl.BusinessObject = bo;
@@ -484,7 +482,8 @@ namespace Habanero.Faces.Base
         {
             if (this.BusinessObjectSelected != null)
             {
-                this.BusinessObjectSelected(this, new BOEventArgs(this.CurrentBusinessObject));
+            	var currentBusinessObject = this.CurrentBusinessObject;
+            	this.BusinessObjectSelected(this, new BOEventArgs(currentBusinessObject));
             }
         }
 

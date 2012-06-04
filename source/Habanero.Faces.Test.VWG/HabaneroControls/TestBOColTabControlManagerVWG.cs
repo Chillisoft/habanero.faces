@@ -1,4 +1,5 @@
 using System;
+using Habanero.Base;
 using Habanero.Faces.Test.Base.Controllers;
 using Habanero.Faces.Base;
 using NUnit.Framework;
@@ -21,5 +22,10 @@ namespace Habanero.Faces.Test.VWG.HabaneroControls
         {
             return typeof(BusinessObjectControlStubVWG);
         }
+
+		protected override IBusinessObjectControl GetBusinessObjectControlSpy(Action<IBusinessObject> onBusinessObjectSet)
+		{
+			return new BusinessObjectControlSpyVWG(onBusinessObjectSet);
+		}
     }
 }

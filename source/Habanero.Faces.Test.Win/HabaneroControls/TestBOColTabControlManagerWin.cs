@@ -1,4 +1,5 @@
 using System;
+using Habanero.Base;
 using Habanero.Faces.Test.Base.Controllers;
 using Habanero.Faces.Base;
 using NUnit.Framework;
@@ -22,5 +23,10 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
         {
             return new BusinessObjectControlStubWin();
         }
+
+		protected override IBusinessObjectControl GetBusinessObjectControlSpy(Action<IBusinessObject> onBusinessObjectSet)
+    	{
+			return new BusinessObjectControlSpyWin(onBusinessObjectSet);
+    	}
     }
 }

@@ -122,6 +122,9 @@
     <Compile Include="Grid\TestReadOnlyGridButtonControlWin.cs" />
     <Compile Include="Grid\TestReadOnlyGridControlWin.cs" />
     <Compile Include="Grid\TestReadOnlyGridWin.cs" />
+    <Compile Include="HabaneroControls\BusinessObjectControlSpyWin.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="HabaneroControls\BusinessObjectControlStubWin.cs">
       <SubType>UserControl</SubType>
     </Compile>

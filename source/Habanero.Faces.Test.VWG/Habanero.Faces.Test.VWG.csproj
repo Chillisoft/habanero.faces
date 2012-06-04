@@ -118,6 +118,9 @@
     <Compile Include="Grid\TestReadOnlyGridButtonControlVWG.cs" />
     <Compile Include="Grid\TestReadOnlyGridControlVWG.cs" />
     <Compile Include="Grid\TestReadOnlyGridVWG.cs" />
+    <Compile Include="HabaneroControls\BusinessObjectControlSpyVWG.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="HabaneroControls\BusinessObjectControlStubVWG.cs">
       <SubType>UserControl</SubType>
     </Compile>
