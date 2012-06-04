@@ -18,6 +18,8 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 #endregion
+
+using System.Drawing;
 using System.Windows.Forms;
 using Habanero.Faces.Base;
 using HorizontalAlignment=Habanero.Faces.Base.HorizontalAlignment;
@@ -30,6 +32,12 @@ namespace Habanero.Faces.Win
     /// </summary>
     public class TextBoxWin : TextBox, ITextBox
     {
+        public TextBoxWin()
+        {
+            this.BackColor = SystemColors.Window;
+            this.ForeColor = SystemColors.WindowText;
+        }
+
         /// <summary>
         /// Gets or sets the anchoring style.
         /// </summary>

@@ -53,7 +53,7 @@ namespace Habanero.Faces.Test.Win
             Assert.IsNotNull(button);
             Assert.AreEqual("...", button.Text);
             Assert.IsFalse(textBox.Enabled);
-            Assert.AreEqual(textBox.BackColor, Color.White);
+            Assert.AreEqual(textBox.BackColor, SystemColors.Window);
             Assert.AreEqual(extendedTextBox.Height, textBox.Height);
             Assert.Greater(button.Left, textBox.Left);
         }

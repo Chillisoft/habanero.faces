@@ -47,7 +47,8 @@ namespace Habanero.Faces.Win
             Button = factory.CreateButton("...");
             TextBox = factory.CreateTextBox();
             TextBox.Enabled = false;
-            TextBox.BackColor = Color.White;
+            TextBox.BackColor = SystemColors.Window;
+            TextBox.ForeColor = SystemColors.WindowText;
             this.Height = TextBox.Height;
             BorderLayoutManager borderLayoutManager = factory.CreateBorderLayoutManager(this);
             this.Padding = Padding.Empty;

@@ -293,14 +293,14 @@ namespace Habanero.Faces.Base
         {
             if (editable)
             {
-                Control.ForeColor = Color.Black;
+                Control.ForeColor = SystemColors.WindowText;
                 if (Control is ICheckBox) Control.BackColor = SystemColors.Control;
-                else Control.BackColor = Color.White;
+                else Control.BackColor = SystemColors.Window;
             }
             else
             {
-                Control.ForeColor = Color.Black;
-                Control.BackColor = Color.Beige;
+                Control.ForeColor = SystemColors.GrayText;
+                Control.BackColor = SystemColors.Control;
             }
         }
 

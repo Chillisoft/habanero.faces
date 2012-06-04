@@ -303,6 +303,14 @@
       <Project>{18828910-F528-48F5-B56D-7C1658D0987A}</Project>
       <Name>Habanero.Faces.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Habanero.Faces.VWG\Habanero.Faces.VWG.csproj">
+      <Project>{04E4FF45-6C20-46EB-A9AD-2B04895F6218}</Project>
+      <Name>Habanero.Faces.VWG</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Habanero.Faces.Win\Habanero.Faces.Win.csproj">
+      <Project>{E761E05B-B9CC-4EAC-B940-C19E42D3819C}</Project>
+      <Name>Habanero.Faces.Win</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
