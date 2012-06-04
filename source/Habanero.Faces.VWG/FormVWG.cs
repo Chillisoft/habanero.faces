@@ -77,7 +77,7 @@ namespace Habanero.Faces.VWG
         /// immediately redraw itself and any child controls.
         /// Does nothing in the VWG environment.
         /// </summary>
-        public void Refresh()
+        public new void Refresh()
         {
             // do nothing
         }
@@ -156,10 +156,16 @@ namespace Habanero.Faces.VWG
 
         void IFormHabanero.Close()
         {
-            if ((bool)GlobalUIRegistry.UISettings["PauseBeforeClosingForm"])
+            try
             {
-                int lengthOfSleep = (int)GlobalUIRegistry.UISettings["LengthOfPauseBeforeClosingForm"];
-                Thread.Sleep(lengthOfSleep);    
+                if ((bool)GlobalUIRegistry.UISettings["PauseBeforeClosingForm"])
+                {
+                    int lengthOfSleep = (int)GlobalUIRegistry.UISettings["LengthOfPauseBeforeClosingForm"];
+                    Thread.Sleep(lengthOfSleep);    
+                }
+            }
+            catch (Exception)
+            {
             }
             
             Close();
