@@ -20,6 +20,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Web.UI.WebControls;
 
 namespace Habanero.Faces.Base
 {
@@ -131,7 +132,8 @@ namespace Habanero.Faces.Base
                 int lastVisible = 0;
                 int currentRowHeight = 0;
                 int currentLine = 0;
-                IList controlsInRow = new ArrayList();
+                var controlsInRow = new System.Collections.Generic.List<IControlHabanero>();
+                var controlRows = new List<List<IControlHabanero>>();
                 for (int controlNumber = 0; controlNumber < this._controls.Count; controlNumber++)
                 {
                     IControlHabanero ctl = GetControl(controlNumber);
@@ -153,6 +155,10 @@ namespace Habanero.Faces.Base
                                 ShiftControlsRightForCentering(rowStart, controlNumber - 1);
                             }
                             MoveCurrentPosToStartOfNextRow(currentRowHeight);
+                            var thisRow = new List<IControlHabanero>();
+                            foreach (var thisRowCtl in controlsInRow)
+                                thisRow.Add(thisRowCtl);
+                            controlRows.Add(thisRow);
                             currentRowHeight = InitialiseNewRow(controlNumber, out rowStart, controlsInRow);
                         }
                         controlsInRow.Add(ctl);
@@ -172,11 +178,32 @@ namespace Habanero.Faces.Base
                         }
                     }
                 }
+                controlRows.Add(controlsInRow);
                 if (_alignment == Alignments.Right && rowStart == 0)
                 {
                     SetUpTabIndexForAlignmentRight(rowStart, controlsInRow);
                 }
-            } finally
+                var totalRowsHeight = this.GapSize;
+                foreach (var row in controlRows)
+                {
+                    var maxHeight = 0;
+                    foreach (var ctl in row)
+                    {
+                        if (ctl.Height > maxHeight)
+                            maxHeight = ctl.Height;
+                    }
+                    foreach (var ctl in row)
+                    {
+                        var padTop = (int)Math.Ceiling(((decimal)maxHeight - (decimal)ctl.Height) / 2);
+                        ctl.Top += padTop;
+                    }
+                    totalRowsHeight += maxHeight + this.GapSize;
+                }
+                //this.ManagedControl.SuspendLayout();
+                this.ManagedControl.Height = totalRowsHeight;
+                //this.ManagedControl.ResumeLayout(true);
+            } 
+            finally
             {
                 busyRefreshing = false;
             }

@@ -712,6 +712,7 @@ namespace Habanero.Faces.Win
         public virtual IComboBox CreateComboBox()
         {
             ComboBoxWin comboBoxWin = new ComboBoxWin();
+            comboBoxWin.DropDownStyle = ComboBoxStyle.DropDownList;
             //Note_: This is a workaround in windows to avoid this default from breaking all the tests because if the Thread's ApartmentState is not STA then setting the AutoCompleteSource default gives an error
             if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA)
             {
@@ -809,7 +810,7 @@ namespace Habanero.Faces.Win
         public virtual ILabel CreateLabel(string labelText)
         {
             ILabel label = CreateLabel(labelText, false);
-            label.Text = labelText;
+            //label.Text = labelText;
             return label;
         }
 
@@ -821,19 +822,21 @@ namespace Habanero.Faces.Win
         public virtual ILabel CreateLabel(string labelText, bool isBold)
         {
             LabelWin label = (LabelWin) CreateLabel();
-            label.Text = labelText;
             label.FlatStyle = FlatStyle.System;
             if (isBold)
             {
                 label.Font = new Font(label.Font, FontStyle.Bold);
             }
             label.Width = label.PreferredWidth;
+            /*
             if (isBold)
             {
                 label.Width += 10;
             }
+             * */
             label.TextAlign = ContentAlignment.MiddleLeft;
             label.TabStop = false;
+            label.Text = labelText;
             return label;
         }
 

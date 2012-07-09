@@ -24,6 +24,7 @@ using Habanero.Base;
 using Habanero.Base.Exceptions;
 using Habanero.Base.Logging;
 using Habanero.BO;
+using Habanero.Faces.Base.ControlMappers;
 using Habanero.Util;
 using log4net;
 
@@ -291,14 +292,14 @@ namespace Habanero.Faces.Base
         {
             if (editable)
             {
-                Control.ForeColor = Color.Black;
+                Control.ForeColor = SystemColors.WindowText;
                 if (Control is ICheckBox) Control.BackColor = SystemColors.Control;
-                else Control.BackColor = Color.White;
+                else Control.BackColor = SystemColors.Window;
             }
             else
             {
-                Control.ForeColor = Color.Black;
-                Control.BackColor = Color.Beige;
+                Control.ForeColor = SystemColors.GrayText;
+                Control.BackColor = SystemColors.Control;
             }
         }
 
@@ -399,13 +400,14 @@ namespace Habanero.Faces.Base
                 else if (ctl is IDateTimePicker) mapperTypeName = "DateTimePickerMapper";
                 else if (ctl is INumericUpDown) mapperTypeName = "NumericUpDownIntegerMapper";
                 else if (ctl is IExtendedComboBox) mapperTypeName = "ExtendedComboBoxMapper";
+                else if (ctl is IExtendedTextBox) mapperTypeName = "ExtendedTextBox";
                 else
                 {
                     throw new InvalidXmlDefinitionException
                         (String.Format
                              ("No suitable 'mapperType' has been provided in the class "
                               + "definitions for the form control '{0}'.  Either add the "
-                              + "'mapperType' attribute or check that spelling and " 
+                              + "'mapperType' attribute or check that spelling and "
                               + "capitalisation are correct.",
                               ctl.Name));
                 }

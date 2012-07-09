@@ -43,7 +43,7 @@ namespace Habanero.Faces.Base
         /// <summary>
         /// The default gap size is the gap between the various controls placed on the parent control
         /// </summary>
-        public const int DefaultGapSize = 2;
+        public const int DefaultGapSize = 5;
 
         /// <summary>
         /// Constructor to initialise a new layout manager

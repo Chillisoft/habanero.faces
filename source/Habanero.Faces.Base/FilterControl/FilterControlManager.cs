@@ -117,12 +117,13 @@ namespace Habanero.Faces.Base
         {
             if (label == null) throw new ArgumentNullException("label");
             if (entryControl == null) throw new ArgumentNullException("entryControl");
-            _layoutManager.AddControl(label);
+            var reversed = (entryControl is ICheckBox);
+            _layoutManager.AddControl(reversed ? entryControl : label);
             if (_layoutManager is FlowLayoutManager)
             {
                 ((FlowLayoutManager)_layoutManager).AddGlue();                
             }
-            _layoutManager.AddControl(entryControl);
+            _layoutManager.AddControl(reversed ? label : entryControl);
         }
 
         /// <summary>
@@ -204,7 +205,15 @@ namespace Habanero.Faces.Base
             ILabel label = _controlFactory.CreateLabel(labelText);
             IControlHabanero control = customFilter.Control;
             if(control != null) AddControlToLayoutManager(label, control);
-           _filterControls.Add(customFilter);
+            _filterControls.Add(customFilter);
+            var chk = control as ICheckBox;
+            if (chk != null)
+            {
+                label.Click += (sender, e) =>
+                    {
+                        chk.Checked = !chk.Checked;
+                    };
+            }
         }
 
         /// <summary>
@@ -509,6 +518,7 @@ namespace Habanero.Faces.Base
             _propertyName = propertyName;
             _filterClauseOperator = filterClauseOperator;
             _checkBox = _controlFactory.CreateCheckBox();
+            _checkBox.Width = 10;
             _checkBox.Text = "";
             _checkBox.CheckedChanged += (sender, e) => FireValueChanged();
         }

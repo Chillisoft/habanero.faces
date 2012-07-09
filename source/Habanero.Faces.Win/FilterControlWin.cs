@@ -19,6 +19,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.Base.Util;
 using Habanero.Faces.Base;
@@ -62,18 +64,24 @@ namespace Habanero.Faces.Win
             _filterButtonPanel.Visible = false;
             CreateFilterButtons(_filterButtonPanel);
 
-            layoutManager.AddControl(_filterButtonPanel, BorderLayoutManager.Position.West);
-
             _controlPanel = controlFactory.CreatePanel();
             _controlPanel.Width = Width;
 
             layoutManager.AddControl(_controlPanel, BorderLayoutManager.Position.Centre);
+            layoutManager.AddControl(_filterButtonPanel, BorderLayoutManager.Position.East);
+
 
             Height = 50;
+            this._controlPanel.Resize += (sender, e) =>
+                {
+                    this.Height = this._controlPanel.Height + layoutManager.BorderSize;
+                    if ((this.FilterGroupBox.Height - layoutManager.BorderSize) < this.Height)
+                    {
+                        this.FilterGroupBox.Height = this.Height;
+                    }
+                };
             _filterControlManager = new FilterControlManager(controlFactory,
                                                              new FlowLayoutManager(_controlPanel, controlFactory));
-
-
         }
 
         /// <summary>
@@ -161,6 +169,7 @@ namespace Habanero.Faces.Win
             ICustomFilter filter =
                 _filterControlManager.AddStringFilterComboBox(labelText, propertyName, options, strictMatch);
             filter.ValueChanged += (sender, e) => { if (this.FilterMode == FilterModes.Filter) FireFilterEvent(); };
+            var cmb = filter.Control as ComboBox;
             //comboBox.TextChanged += delegate { if (this.FilterMode == FilterModes.Filter) FireFilterEvent(); };
             //comboBox.SelectedIndexChanged += delegate { if (this.FilterMode == FilterModes.Filter) FireFilterEvent(); };
             return (IComboBox) filter.Control;
@@ -214,7 +223,6 @@ namespace Habanero.Faces.Win
         public ICheckBox AddBooleanFilterCheckBox(string labelText, string propertyName, bool defaultValue)
         {
             ICustomFilter filter = _filterControlManager.AddBooleanFilterCheckBox(labelText, propertyName, defaultValue);
-
             filter.ValueChanged += delegate { if (this.FilterMode == FilterModes.Filter) FireFilterEvent(); };
             return (ICheckBox)filter.Control;
         }

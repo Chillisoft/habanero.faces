@@ -17,6 +17,8 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
@@ -91,7 +93,6 @@ namespace Habanero.Faces.Win
         {
             if (controlFactory == null) throw new ArgumentNullException("controlFactory");
             if (iboEditorControl == null) throw new ArgumentNullException("iboEditorControl");
-
             _controlFactory = controlFactory;
             _iboEditorControl = iboEditorControl;
 
@@ -100,21 +101,78 @@ namespace Habanero.Faces.Win
             SetupButtonGroupControl();
             UpdateControlEnabledState();
 
-            var manager = new GridLayoutManager(panel, _controlFactory);
-            manager.SetGridSize(2,1);
-            manager.FixAllRowsBasedOnContents();
-            manager.AddControl(_iboEditorControl);
-            manager.AddControl(_buttonGroupControl);
-
-            BorderLayoutManager layoutManager = _controlFactory.CreateBorderLayoutManager(this);
-            layoutManager.AddControl(_readOnlyGridControl, BorderLayoutManager.Position.West);
-            layoutManager.AddControl(panel, BorderLayoutManager.Position.Centre);
-            //layoutManager.AddControl(_selectButtonGroupControl, BorderLayoutManager.Position.South);
+            this.RemoveObjectIDColumn();
+            var grid = new GridLayoutManager(this, _controlFactory);
+            var filterLabel = _controlFactory.CreateLabel("Filter:");
+            var filterTextBox = _controlFactory.CreateTextBox();
+            filterTextBox.TextChanged += (sender, e) => { DoFilter(filterTextBox); };
+            grid.SetGridSize(3, 4);
+            grid.FixRow(2, _buttonGroupControl.Height);
+            grid.FixRow(0, filterTextBox.Height + 5);
+            grid.FixColumn(0, filterLabel.Width);
+            grid.FixColumn(3, 250);
+            grid.AddControl(filterLabel);
+            grid.AddControl(filterTextBox);
+            grid.AddControl(_controlFactory.CreateLabel(), 1, 2);
+            grid.AddControl(_readOnlyGridControl, 1, 3);
+            grid.AddControl(_iboEditorControl);
+            grid.AddControl(_buttonGroupControl, 1, 4);
             
             _readOnlyGridControl.BusinessObjectSelected +=
                 ((sender, e) => FireBusinessObjectSelected(e.BusinessObject));
 
             _readOnlyGridControl.Grid.SelectionChanged += GridSelectionChanged;
+        }
+
+        private void DoFilter(ITextBox filterTextBox)
+        {
+            var dataGrid = _readOnlyGridControl.Grid as DataGridView;
+            if (dataGrid == null)
+                return;
+            dataGrid.CurrentCell = null;
+            var filter = filterTextBox.Text.Trim();
+            var parts = filter.Split(new char[] { ' ' });
+            foreach (DataGridViewRow r in dataGrid.Rows)
+            {
+                if (filter == String.Empty)
+                {
+                    r.Visible = true;
+                    continue;
+                }
+                var visible = false;
+                foreach (DataGridViewCell c in r.Cells)
+                {
+                    foreach (var part in parts)
+                    {
+                        if (c.Value.ToString().ToLower().Contains(part))
+                        {
+                            visible = true;
+                            break;
+                        }
+                    }
+                    if (visible)
+                        break;
+                }
+                r.Visible = visible;
+            }
+        }
+
+        private void RemoveObjectIDColumn()
+        {
+            var gridView = this._readOnlyGridControl.Grid as DataGridView;
+            if (gridView != null)
+            {
+                var toRemove = new List<DataGridViewColumn>();
+                foreach (DataGridViewColumn col in gridView.Columns)
+                {
+                    if (col.Name == "HABANERO_OBJECTID")
+                    {
+                        toRemove.Add(col);
+                    }
+                }
+                foreach (var col in toRemove)
+                    gridView.Columns.Remove(col);
+            }
         }
 
         private void SetupButtonGroupControl()

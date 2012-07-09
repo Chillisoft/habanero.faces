@@ -77,7 +77,14 @@ namespace Habanero.Faces.Base
         protected virtual IBOGridAndEditorControl GetIBOGridAndEditorControl()
         {
             if (PopupForm == null) return null;
-            return (IBOGridAndEditorControl) PopupForm.Controls[0];
+            foreach (var ctl in PopupForm.Controls)
+            {
+                var ret = ctl as IBOGridAndEditorControl;
+                if (ret != null)
+                    return ret;
+            }
+            return null;
+            //return (IBOGridAndEditorControl) PopupForm.Controls[0];
         }
 
         ///<summary>

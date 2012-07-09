@@ -16,6 +16,9 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
+
+using System;
+using System.Drawing;
 using System.Windows.Forms;
 using Habanero.Faces.Base;
 
@@ -52,6 +55,19 @@ namespace Habanero.Faces.Win
         {
             get { return DockStyleWin.GetDockStyle(base.Dock); }
             set { base.Dock = DockStyleWin.GetDockStyle(value); }
+        }
+
+        public LabelWin()
+        {
+            this.TextChanged += (sender, e) =>
+                {
+                    using (var gfx = CreateGraphics())
+                    {
+                        var size = gfx.MeasureString(this.Text, this.Font);
+                        this.Width = (int)Math.Ceiling(size.Width);
+                        this.Height = (int)Math.Ceiling(size.Height);
+                    }
+                };
         }
     }
 }

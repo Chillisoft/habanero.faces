@@ -7,6 +7,7 @@ using Habanero.Faces.Win;
 using Habanero.Test;
 using NUnit.Framework;
 using System.Collections.Generic;
+using AnchorStyles = System.Windows.Forms.AnchorStyles;
 
 namespace Habanero.Faces.Test.Win.HabaneroControls
 {
@@ -427,6 +428,42 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
 					//---------------Test Result -----------------------
 					Assert.IsFalse(filterFired, "The filter event should not have been fired when the text was changed.");
 				}
+
+        [Test]
+        [Ignore("Visual test")]
+        public void TestVisually()
+        {
+            //---------------Set up test pack-------------------
+            var factory = GetControlFactory();
+            var grid = new ReadOnlyGridControlWin(factory);
+            var ctl = grid.FilterControl;
+            ctl.FilterMode = FilterModes.Search;
+            ctl.AddStringFilterTextBox("String filter:", "string");
+            var items = new List<string>();
+            items.Add("item 1");
+            items.Add("item 2");
+            items.Add("item 3");
+            ctl.AddStringFilterComboBox("List filter:", "combo", items, true);
+            ctl.AddBooleanFilterCheckBox("Boolean filter", "bool", false);
+            
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+
+            //---------------Test Result -----------------------
+            var frm = new Form();
+            frm.Width = 800;
+            frm.Height = 600;
+            grid.Width = frm.Width;
+            grid.Height = frm.Height;
+            grid.Top = 0;
+            grid.Left = 0;
+            grid.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
+            frm.Controls.Add(grid);
+            Application.EnableVisualStyles();
+            Application.Run(frm);
+
+        }
         //
         //        [Test]
         //        public void TestAddStringFilterTextBoxTextChanged()

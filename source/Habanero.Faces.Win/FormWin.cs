@@ -18,6 +18,7 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 using Habanero.Faces.Base;
 
@@ -28,6 +29,29 @@ namespace Habanero.Faces.Win
     /// </summary>
     public class FormWin : Form, IFormHabanero
     {
+        public FormWin()
+            :base()
+        {
+            this.ControlAdded += (sender, e) =>
+                {
+                    var btn = e.Control as Button;
+                    if (btn == null) return;
+                    switch (btn.Text.ToLower())
+                    {
+                        case "ok":
+                            this.AcceptButton = btn;
+                            break;
+                        case "cancel":
+                            this.CancelButton = btn;
+                            break;
+                    }
+                };
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+        }
         /// <summary>
         /// Gets the collection of controls contained within the control
         /// </summary>
