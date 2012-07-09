@@ -53,5 +53,17 @@ namespace Habanero.Faces.Base
         /// is false by default.
         /// </summary>
         bool ShowDefaultDeleteButton { get; set; }
+
+        /// <summary>
+        /// Removes the current handlers for an operation -- useful to clear 
+        /// out handlers before replacing with your own
+        /// </summary>
+        /// <param name="operation">one of "add", "edit", or "delete"</param>
+        void RemoveHandlers(string operation);
+
+        /// <summary>
+        /// Convenience function to call RemoveHandlers for all handler types
+        /// </summary>
+        void RemoveAllHandlers();
     }
 }
