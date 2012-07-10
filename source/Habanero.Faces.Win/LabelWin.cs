@@ -59,15 +59,31 @@ namespace Habanero.Faces.Win
 
         public LabelWin()
         {
+            this.FontChanged += (sender, e) =>
+                {
+                    this.Width = this.PreferredWidth;
+                    this.Height = this.PreferredHeight;
+                };
+            this.TextChanged += (sender, e) =>
+                {
+                    this.Width = this.PreferredWidth;
+                    this.Height = this.PreferredHeight;
+                };
+            /*
             this.TextChanged += (sender, e) =>
                 {
                     using (var gfx = CreateGraphics())
                     {
                         var size = gfx.MeasureString(this.Text, this.Font);
-                        this.Width = (int)Math.Ceiling(size.Width);
+                        this.PreferredWidth = (int)Math.Ceiling(size.Width);
+                        if (this.Width < this.PreferredWidth)
+                            this.Width = this.PreferredWidth;
                         this.Height = (int)Math.Ceiling(size.Height);
+                        if (this.Height < this.PreferredHeight)
+                            this.Height = this.PreferredHeight;
                     }
                 };
+            */
         }
     }
 }

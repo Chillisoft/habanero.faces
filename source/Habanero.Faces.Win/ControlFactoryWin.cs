@@ -712,7 +712,6 @@ namespace Habanero.Faces.Win
         public virtual IComboBox CreateComboBox()
         {
             ComboBoxWin comboBoxWin = new ComboBoxWin();
-            comboBoxWin.DropDownStyle = ComboBoxStyle.DropDownList;
             //Note_: This is a workaround in windows to avoid this default from breaking all the tests because if the Thread's ApartmentState is not STA then setting the AutoCompleteSource default gives an error
             if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA)
             {

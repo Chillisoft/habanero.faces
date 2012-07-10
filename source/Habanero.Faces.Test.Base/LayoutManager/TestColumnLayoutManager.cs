@@ -30,8 +30,8 @@ namespace Habanero.Faces.Test.Base
 
     public abstract class TestColumnLayoutManager
     {
-        private const int GAP_SIZE = 2;
-        private const int BORDER_SIZE = 5;
+        private const int GAP_SIZE = LayoutManager.DefaultGapSize; // 2;
+        private const int BORDER_SIZE = LayoutManager.DefaultBorderSize; //5;
 
         protected abstract IControlFactory GetControlFactory();
 

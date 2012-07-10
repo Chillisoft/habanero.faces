@@ -1,3 +1,4 @@
+using System.Drawing;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.BO.Loaders;
@@ -114,7 +115,7 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             IFormHabanero formHabanero = GetControlFactory().CreateForm();
-            formHabanero.Width = RandomValueGen.GetRandomInt(250, 300);
+            formHabanero.MinimumSize = new Size(RandomValueGen.GetRandomInt(250, 300), 100);
             IMainMenuHabanero mainMenu = CreateControl();
             int menuWidth = RandomValueGen.GetRandomInt(100, 200);
             //---------------Assert Precondition----------------
@@ -131,7 +132,7 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             IFormHabanero formHabanero = GetControlFactory().CreateForm();
-            formHabanero.Width = RandomValueGen.GetRandomInt(250, 300);
+            formHabanero.MinimumSize = new Size(RandomValueGen.GetRandomInt(250, 300), 100);
             IMainMenuHabanero mainMenu = CreateControl();
             int menuWidth = RandomValueGen.GetRandomInt(100, 200);
             mainMenu.DockInForm(formHabanero, menuWidth);

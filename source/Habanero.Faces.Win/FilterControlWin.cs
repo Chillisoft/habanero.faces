@@ -170,6 +170,7 @@ namespace Habanero.Faces.Win
                 _filterControlManager.AddStringFilterComboBox(labelText, propertyName, options, strictMatch);
             filter.ValueChanged += (sender, e) => { if (this.FilterMode == FilterModes.Filter) FireFilterEvent(); };
             var cmb = filter.Control as ComboBox;
+            cmb.DropDownStyle = ComboBoxStyle.DropDownList;
             //comboBox.TextChanged += delegate { if (this.FilterMode == FilterModes.Filter) FireFilterEvent(); };
             //comboBox.SelectedIndexChanged += delegate { if (this.FilterMode == FilterModes.Filter) FireFilterEvent(); };
             return (IComboBox) filter.Control;

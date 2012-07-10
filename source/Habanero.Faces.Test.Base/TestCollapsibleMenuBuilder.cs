@@ -102,13 +102,13 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             HabaneroMenu habaneroMenu = new HabaneroMenu("Main");
-            string subMenuName = TestUtil.GetRandomString();
+            string subMenuName = "sub_" + TestUtil.GetRandomString();
             HabaneroMenu submenu = habaneroMenu.AddSubMenu(subMenuName);
-            string menuItemName = TestUtil.GetRandomString();
+            string menuItemName = "menu_" + TestUtil.GetRandomString();
             submenu.AddMenuItem(menuItemName);
             HabaneroMenu submenu2 = habaneroMenu.AddSubMenu(TestUtil.GetRandomString());
-            submenu2.AddMenuItem(TestUtil.GetRandomString());
-            submenu2.AddMenuItem(TestUtil.GetRandomString());
+            submenu2.AddMenuItem("subsub_" + TestUtil.GetRandomString());
+            submenu2.AddMenuItem("subsub_" + TestUtil.GetRandomString());
 
             IMenuBuilder menuBuilder = CreateMenuBuilder();
             //---------------Assert Preconditions---------------

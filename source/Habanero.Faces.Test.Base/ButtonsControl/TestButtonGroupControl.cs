@@ -59,11 +59,11 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             //---------------Execute Test ----------------------
-            IControlHabanero buttons = GetControlFactory().CreateButtonGroupControl();
+            var buttons = GetControlFactory().CreateButtonGroupControl();
             ////---------------Test Result -----------------------
             Assert.IsNotNull(buttons);
             Assert.IsTrue(buttons is IButtonGroupControl);
-            IButton btn = GetControlFactory().CreateButton();
+            var btn = buttons.AddButton("Test");
             Assert.AreEqual(10 + btn.Height, buttons.Height);
         }
 

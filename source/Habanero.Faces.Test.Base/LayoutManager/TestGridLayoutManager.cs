@@ -16,6 +16,8 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
+
+using System;
 using System.Collections;
 using System.Drawing;
 using Habanero.Base.Exceptions;
@@ -342,7 +344,7 @@ namespace Habanero.Faces.Test.Base
             ILabel myLongLabel = GetControlFactory().CreateLabel("This is a long label", false);
             //--------------------- verify setup -----------------------
             Assert.AreEqual(myLabel.PreferredWidth, myLabel.Width);
-            Assert.AreEqual(myLongLabel.PreferredWidth, myLongLabel.Width);
+            Assert.That(myLongLabel.PreferredWidth, Is.LessThanOrEqualTo(myLongLabel.Width));
 
             //--------------------- Execute Tests-----------------------
             _manager.AddControl(myLabel);
@@ -480,7 +482,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Test Result -----------------------
 
             Assert.AreEqual(LayoutManager.DefaultBorderSize, control1.Top);
-            Assert.AreEqual(managedControl.Height - LayoutManager.DefaultBorderSize, control1.Bottom);
+            Assert.That(Math.Abs(managedControl.Height - LayoutManager.DefaultBorderSize - control1.Bottom), Is.LessThanOrEqualTo(1));
             Assert.AreEqual((managedControl.Width - LayoutManager.DefaultGapSize) / 2, control1.Right);
 
             Assert.AreEqual(control1.Top, control2.Top);

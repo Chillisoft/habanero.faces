@@ -48,6 +48,7 @@ namespace Habanero.Faces.Win
         public IButton AddButton(string buttonName)
         {
             IButton button = _buttonGroupControlManager.AddButton(buttonName);
+            this.Height = _buttonGroupControlManager.Height;
             Controls.Add((Control)button);
             ButtonSizePolicy.RecalcButtonSizes(_buttonGroupControlManager.LayoutManager.ManagedControl.Controls);
             return button;

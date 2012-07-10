@@ -211,7 +211,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Test Result -----------------------
             IGroupBox groupBox = (IGroupBox)panel.Controls[0];
             Assert.IsInstanceOf(typeof(ITextBox), groupBox.Controls[0]);
-            Assert.AreEqual(3 * GetControlFactory().CreateTextBox().Height + 4, groupBox.Height);
+            Assert.AreEqual(3 * GetControlFactory().CreateTextBox().Height + (2 * LayoutManager.DefaultGapSize), groupBox.Height);
             ITextBox textBox = (ITextBox)groupBox.Controls[0];
             Assert.IsTrue(textBox.Multiline);
         }
@@ -769,7 +769,7 @@ namespace Habanero.Faces.Test.Base
             ITextBox control = (ITextBox) panel.Controls[1];
             Assert.IsTrue(control.Multiline);
             Assert.IsTrue(control.AcceptsReturn);
-            Assert.AreEqual(64, control.Height);
+            Assert.AreEqual(60 + (LayoutManager.DefaultGapSize * 2), control.Height);
             Assert.AreEqual(ScrollBars.Vertical, control.ScrollBars);
         }
 

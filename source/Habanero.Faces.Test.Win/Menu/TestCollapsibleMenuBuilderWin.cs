@@ -134,7 +134,7 @@ namespace Habanero.Faces.Test.Win.Menu
             IMenuBuilder menuBuilder = CreateMenuBuilder();
             IControlHabanero form = habaneroMenu.Form;
             IMainMenuHabanero menu = menuBuilder.BuildMainMenu(habaneroMenu);
-            form.Size = new Size(460, 900);
+            form.MinimumSize = new Size(460, 900);
             //-------------Assert Preconditions -------------
             Assert.IsFalse(IsMenuDocked(menu, form));
             //---------------Execute Test ----------------------
@@ -142,8 +142,8 @@ namespace Habanero.Faces.Test.Win.Menu
             //---------------Test Result -----------------------
             IControlHabanero control = form.Controls[0];
             Assert.IsInstanceOf(typeof(ISplitContainer), control);
-            System.Windows.Forms.SplitContainer splitContainerVWG = (System.Windows.Forms.SplitContainer)control;
-            System.Windows.Forms.SplitterPanel panel1 = splitContainerVWG.Panel1;
+            System.Windows.Forms.SplitContainer splitContainer= (System.Windows.Forms.SplitContainer)control;
+            System.Windows.Forms.SplitterPanel panel1 = splitContainer.Panel1;
             Assert.AreEqual(250, panel1.Width);
             Assert.AreEqual(1, panel1.Controls.Count);
             IControlHabanero menuControl = (IControlHabanero)panel1.Controls[0];
@@ -151,7 +151,7 @@ namespace Habanero.Faces.Test.Win.Menu
             panel1.Size = new Size(121, 333);
             Assert.AreEqual(panel1.Width, menuControl.Width);
 
-            System.Windows.Forms.SplitterPanel panel2 = splitContainerVWG.Panel2;
+            System.Windows.Forms.SplitterPanel panel2 = splitContainer.Panel2;
             Assert.AreEqual(1, panel2.Controls.Count);
             IControlHabanero editorControl = (IControlHabanero)panel2.Controls[0];
             Assert.IsInstanceOf(typeof(IMainEditorPanel), editorControl);

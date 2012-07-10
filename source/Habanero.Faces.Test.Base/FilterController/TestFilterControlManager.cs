@@ -359,7 +359,7 @@ namespace Habanero.Faces.Test.Base.FilterController
 
             //---------------Test Result -----------------------
             Assert.AreEqual(2, filterControl.FilterPanel.Controls.Count);
-            Assert.AreSame(cb, filterControl.FilterPanel.Controls[1]);
+            Assert.AreSame(cb, filterControl.FilterPanel.Controls[0]);
         }
 
         [Test]

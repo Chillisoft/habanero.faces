@@ -21,9 +21,12 @@ using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Console;
+using Habanero.Faces.Win;
 using Habanero.Test.Structure;
 using Habanero.Faces.Base;
 using NUnit.Framework;
+using DialogResult = Habanero.Faces.Base.DialogResult;
+using FormStartPosition = Habanero.Faces.Base.FormStartPosition;
 
 namespace Habanero.Faces.Test.Base
 {
@@ -47,9 +50,6 @@ namespace Habanero.Faces.Test.Base
         {
             form.Show();
         }
-
-
-   
 
         [TestFixtureSetUp]
         public void SetupFixture()

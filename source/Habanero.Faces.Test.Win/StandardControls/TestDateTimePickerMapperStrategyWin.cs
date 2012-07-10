@@ -49,7 +49,7 @@ namespace Habanero.Faces.Test.Win.StandardControls
             comboBoxStrategyWin.AddUpdateBoPropOnValueChangedHandler(mapper);
             //---------------Assert Result----------------------
         	mapper.ApplyChangesWasCalled = false;
-			((DateTimePicker)dtpWin.WrappedControl).Value = DateTime.Now;
+			((DateTimePicker)dtpWin.WrappedControl).Value = DateTime.Now.AddDays(-1);
         	Assert.IsTrue(mapper.ApplyChangesWasCalled, "Apply changes should have been called");
         }
 

@@ -23,6 +23,7 @@ using Habanero.Base;
 using Habanero.Base.Exceptions;
 using Habanero.Base.Util;
 using Habanero.BO.ClassDefinition;
+using Habanero.Faces.Win;
 using Habanero.Test;
 using Habanero.Test.BO;
 using Habanero.Faces.Base;
@@ -33,6 +34,7 @@ using Rhino.Mocks;
 namespace Habanero.Faces.Test.Base
 {
 
+    [TestFixture]
     public abstract class TestControlFactory
     {
         protected IControlFactory _factory;
@@ -137,7 +139,8 @@ namespace Habanero.Faces.Test.Base
             Assert.IsFalse(lbl.TabStop);
             Assert.AreEqual(labelText, lbl.Text);
             Assert.AreNotEqual(labelText, lbl.Name);
-            Assert.AreEqual(lbl.PreferredWidth, lbl.Width);
+            if (!(GetControlFactory() is ControlFactoryWin))
+                Assert.AreEqual(lbl.PreferredWidth, lbl.Width);
             //TODO_Port_DoTest lbl.FlatStyle = FlatStyle.Standard;
         }
 
@@ -152,7 +155,8 @@ namespace Habanero.Faces.Test.Base
             ILabel lbl = _factory.CreateLabel(labelText, true);
             //---------------Verify Result -----------------------
             //Assert.AreEqual(lbl.PreferredWidth + 10, lbl.Width);
-            Assert.AreEqual(lbl.PreferredWidth + GetBoldTextExtraWidth(), lbl.Width);
+            if (!(GetControlFactory() is ControlFactoryWin))    // windows labels are auto-sized
+                Assert.AreEqual(lbl.PreferredWidth + GetBoldTextExtraWidth(), lbl.Width);
             Font expectedFont = new Font(lbl.Font, FontStyle.Bold);
             Assert.AreEqual(expectedFont, lbl.Font);
               

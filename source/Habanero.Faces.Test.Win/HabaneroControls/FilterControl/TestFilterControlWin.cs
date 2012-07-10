@@ -73,7 +73,7 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
             IFilterControl ctl = factory.CreateFilterControl();
             string[] optionList = { "one", "two" };
             IComboBox comboBox = ctl.AddStringFilterComboBox("test", "propname", optionList, true);
-            string text = TestUtil.GetRandomString();
+            string text = optionList[optionList.Length - 1];
 
             bool filterFired = false;
             ctl.Filter += delegate { filterFired = true; };

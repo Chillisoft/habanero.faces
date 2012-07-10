@@ -344,7 +344,7 @@ namespace Habanero.Faces.Base
         /// <returns>Returns the average row height</returns>
         private int CalcRowHeight()
         {
-            return (ManagedControl.Height - GetFixedHeightIncludingGaps())/GetNumVariableRows();
+            return (int)(Math.Round((decimal)(ManagedControl.Height - GetFixedHeightIncludingGaps())/(decimal)GetNumVariableRows()));
         }
 
         /// <summary>

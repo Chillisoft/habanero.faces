@@ -17,6 +17,7 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
+using System.Drawing;
 using Habanero.Base;
 
 namespace Habanero.Faces.Base
@@ -32,6 +33,7 @@ namespace Habanero.Faces.Base
         private readonly FlowLayoutManager _layoutManager;
         private readonly IButtonGroupControl _buttonGroupControl;
         
+        public int Height { get { return this._buttonGroupControl.Height; } }
         ///<summary>
         /// Constructor for the <see cref="ButtonGroupControlManager"/>
         ///</summary>
@@ -45,6 +47,7 @@ namespace Habanero.Faces.Base
             _controlFactory = controlFactory;
             IButton sampleBtn = _controlFactory.CreateButton();
             _buttonGroupControl.Height = sampleBtn.Height + 10;
+            _buttonGroupControl.MinimumSize = new Size(sampleBtn.Width, sampleBtn.Height + 10);
         }
         
         ///<summary>

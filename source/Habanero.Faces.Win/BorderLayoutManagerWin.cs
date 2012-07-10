@@ -87,6 +87,8 @@ namespace Habanero.Faces.Win
             _controls[(int)pos] = control;
             _splitters[(int)pos] = includeSplitter;
             this.ManagedControl.Controls.Clear();
+            //this.ManagedControl.Width = 100;
+            //this.ManagedControl.Height = 100;
             for (int i = 0; i < _controls.Length; i++)
             {
                 IControlHabanero habaneroControl = _controls[i];

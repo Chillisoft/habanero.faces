@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.Faces.Base.ControlMappers;
@@ -96,6 +97,7 @@ namespace Habanero.Faces.Base
             Type classType;
             IClassDef lookupTypeClassDef = GetLookupTypeClassDef(out classType);
             CreatePopupForm();
+            var originalSize = new Size(PopupForm.Size.Width, PopupForm.Size.Height);
             
             SetupSelectButtonGroupControl();
             
@@ -108,6 +110,8 @@ namespace Habanero.Faces.Base
             manager.AddControl(iboGridAndEditorControl, BorderLayoutManager.Position.Centre);
             manager.AddControl(SelectButtonGroupControl, BorderLayoutManager.Position.South);
             iboGridAndEditorControl.Dock = DockStyle.Fill;
+
+            PopupForm.Size = originalSize;
         }
 
         private void CreatePopupForm()
@@ -115,6 +119,7 @@ namespace Habanero.Faces.Base
             PopupForm = ControlFactory.CreateForm();
             PopupForm.Height = 600;
             PopupForm.Width = 800;
+            PopupForm.MinimumSize = new Size(400, 300);
         } 
 
         private void SetupSelectButtonGroupControl()

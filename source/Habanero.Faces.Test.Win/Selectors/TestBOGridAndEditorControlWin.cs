@@ -18,6 +18,7 @@
 //---------------------------------------------------------------------------------
 
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
@@ -309,9 +310,28 @@ namespace Habanero.Faces.Test.Win.Selectors
             BOGridAndEditorControlWin control =
                 new BOGridAndEditorControlWin(GetControlFactory(), iboEditorControl, classDef, "default");
             //---------------Test Result -----------------------
-            Assert.AreEqual(2, control.Controls.Count);
-            Assert.IsInstanceOf<IPanel>(control.Controls[0]);
-            Assert.IsInstanceOf<IReadOnlyGridControl>(control.Controls[1]);
+            Assert.AreEqual(9, control.Controls.Count); // this is a bit of a pointless test, really
+            var hasGrid = false;
+            var hasboEditor = false;
+            var hasUserButtons = false;
+            foreach (var ctl in control.Controls)
+            {
+                if (ctl is ReadOnlyGridControlWin)
+                {
+                    hasGrid = true;
+                    continue;
+                }
+                if (ctl is BOEditorControlWin)
+                {
+                    hasboEditor = true;
+                    continue;
+                }
+                if (ctl is ButtonGroupControlWin)
+                    hasUserButtons = true;
+            }
+            Assert.IsTrue(hasGrid, "control missing grid");
+            Assert.IsTrue(hasboEditor, "control missing BO editor");
+            Assert.IsTrue(hasUserButtons, "control missing user buttons");
         }
 
         /// <summary>
@@ -409,9 +429,21 @@ namespace Habanero.Faces.Test.Win.Selectors
             BOGridAndEditorControlWin control =
                 new BOGridAndEditorControlWin(GetControlFactory(), iboEditorControl, classDef, "default");
             //---------------Test Result -----------------------
-            Assert.AreEqual(2, control.Controls.Count);
-            Assert.IsInstanceOf<IPanel>(control.Controls[0]);
-            Assert.IsInstanceOf<IReadOnlyGridControl>(control.Controls[1]);
+            foreach (var ctl in iboEditorControl.Controls)
+            {
+                var btns = ctl as ButtonGroupControlWin;
+                if (btns != null)
+                {
+                    foreach (var bctl in btns.Controls)
+                    {
+                        var button = bctl as Button;
+                        if (button != null)
+                        {
+                            Assert.IsFalse(button.Enabled, "button should be disabled: no bo selected");
+                        }
+                    }
+                }
+            }
         }
 
         [Test]
@@ -423,13 +455,26 @@ namespace Habanero.Faces.Test.Win.Selectors
             BOGridAndEditorControlWin control =
                 new BOGridAndEditorControlWin(GetControlFactory(), iboEditorControl, classDef, "default");
             //---------------Assert Precondition----------------
-            Assert.IsInstanceOf<IPanel>(control.Controls[0]);
             //---------------Execute Test ----------------------
-            IPanel panel = (IPanel) control.Controls[0];
             //---------------Test Result -----------------------
-            Assert.AreEqual(2, panel.Controls.Count);
-            Assert.IsInstanceOf<IBOEditorControl>(panel.Controls[0]);
-            Assert.IsInstanceOf<IButtonGroupControl>(panel.Controls[1]);
+            var hasEditor = false;
+            var hasButtonGroup = false;
+            foreach (var ctl in control.Controls)
+            {
+                if (ctl is IBOEditorControl)
+                {
+                    hasEditor = true;
+                    continue;
+                }
+                if (ctl is IButtonGroupControl)
+                {
+                    hasButtonGroup = true;
+                }
+            }
+            Assert.IsTrue(hasEditor, "missing editor control");
+            Assert.IsTrue(hasButtonGroup, "missing buttons");
+            //Assert.IsInstanceOf<IBOEditorControl>(panel.Controls[0]);
+            //Assert.IsInstanceOf<IButtonGroupControl>(panel.Controls[1]);
         }
 
         public static int GetGridWidthToFitColumns(IGridBase grid)
