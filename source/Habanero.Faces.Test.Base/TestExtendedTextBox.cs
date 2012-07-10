@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Habanero.Faces.Base;
 using Habanero.Faces.Base.ControlMappers;
+using Habanero.Faces.Win;
 using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base
@@ -33,7 +34,10 @@ namespace Habanero.Faces.Test.Base
             Assert.IsNotNull(button);
             Assert.AreEqual("...", button.Text);
             Assert.IsFalse(textBox.Enabled);
-            Assert.AreEqual(Color.White, textBox.BackColor);
+            if (controlFactory is ControlFactoryWin)
+                Assert.AreEqual(SystemColors.Window, textBox.BackColor);
+            else
+                Assert.AreEqual(Color.White, textBox.BackColor);
             Assert.AreEqual(extendedTextBox.Height, textBox.Height);
             Assert.Greater(button.Left, textBox.Left);
         }

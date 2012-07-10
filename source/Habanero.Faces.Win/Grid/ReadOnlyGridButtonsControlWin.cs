@@ -53,7 +53,10 @@ namespace Habanero.Faces.Win
             : base(controlFactory)
         {
             _manager = new ReadOnlyGridButtonsControlManager(this);
-            _manager.CreateDeleteButton(delegate { if (DeleteClicked != null) DeleteClicked(this, new EventArgs()); });
+            _manager.CreateDeleteButton(delegate { 
+                if (DeleteClicked != null) 
+                    DeleteClicked(this, new EventArgs()); 
+            });
             _manager.CreateEditButton(delegate { if (EditClicked != null) EditClicked(this, new EventArgs()); });
             _manager.CreateAddButton(delegate { if (AddClicked != null) AddClicked(this, new EventArgs()); });
         }
@@ -66,6 +69,31 @@ namespace Habanero.Faces.Win
         {
             get { return _manager.DeleteButton.Visible; }
             set { _manager.DeleteButton.Visible = value; }
+        }
+
+        public void RemoveAllHandlers()
+        {
+            foreach (var handler in new string[] { "add", "edit", "delete" })
+                this.RemoveHandlers(handler);
+        }
+
+        public void RemoveHandlers(string operation)
+        {
+            switch (operation.ToLower())
+            {
+                case "add":
+                    foreach (var handler in this.AddClicked.GetInvocationList())
+                        this.AddClicked -= (EventHandler)handler;
+                    break;
+                case "edit":
+                    foreach (var handler in this.EditClicked.GetInvocationList())
+                        this.EditClicked -= (EventHandler)handler;
+                    break;
+                case "delete":
+                    foreach (var handler in this.DeleteClicked.GetInvocationList())
+                        this.DeleteClicked -= (EventHandler)handler;
+                    break;
+            }
         }
     }
 }

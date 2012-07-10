@@ -60,5 +60,30 @@ namespace Habanero.Faces.VWG
             get { return _manager.DeleteButton.Visible; }
             set { _manager.DeleteButton.Visible = value; }
         }
+
+        public void RemoveAllHandlers()
+        {
+            foreach (var handler in new string[] { "add", "edit", "delete" })
+                this.RemoveHandlers(handler);
+        }
+
+        public void RemoveHandlers(string operation)
+        {
+            switch (operation.ToLower())
+            {
+                case "add":
+                    foreach (var handler in this.AddClicked.GetInvocationList())
+                        this.AddClicked -= (EventHandler)handler;
+                    break;
+                case "edit":
+                    foreach (var handler in this.EditClicked.GetInvocationList())
+                        this.EditClicked -= (EventHandler)handler;
+                    break;
+                case "delete":
+                    foreach (var handler in this.DeleteClicked.GetInvocationList())
+                        this.DeleteClicked -= (EventHandler)handler;
+                    break;
+            }
+        }
     }
 }

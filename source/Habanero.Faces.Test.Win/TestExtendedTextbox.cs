@@ -116,42 +116,5 @@ namespace Habanero.Faces.Test.Win
         }*/
 
 //        #endregion //testSelectItem Control
-        [Test]
-        [Ignore("Visual test")]
-        public void Test_Visual()
-        {
-            //---------------Set up test pack-------------------
-            BORegistry.DataAccessor = new DataAccessorInMemory();
-            ClassDef.ClassDefs.Add(typeof(SubBO).MapClasses());
-            var sub1 = new SubBO() { Name = "sub_" + RandomValueGen.GetRandomString(), Description = RandomValueGen.GetRandomString(), Created = DateTime.Now };
-            var sub2 = new SubBO() { Name = "sub_" + RandomValueGen.GetRandomString(), Description = RandomValueGen.GetRandomString(), Created = DateTime.Now };
-            var sub3 = new SubBO() { Name = "sub_" + RandomValueGen.GetRandomString(), Description = RandomValueGen.GetRandomString(), Created = DateTime.Now };
-            var sub4 = new SubBO() { Name = "sub_" + RandomValueGen.GetRandomString(), Description = RandomValueGen.GetRandomString(), Created = DateTime.Now };
-            sub1.Save();
-            sub2.Save();
-            sub3.Save();
-            sub4.Save();
-
-            var bo = new BaseBO() { Sub = sub1 };
-            bo.Save();
-            var classDef = bo.ClassDef;
-            var propDef = classDef.GetPropDef("SubID");
-            classDef.UIDefCol.Add(new UIDef("default", new UIForm(), new UIGrid()));
-            propDef.LookupList = new BusinessObjectLookupList(typeof(SubBO));
-
-            Application.EnableVisualStyles();
-            var factory = GetControlFactory();
-            var frm = new Form();
-            var etxt = new ExtendedTextBoxWin(factory);
-            var mapper = new ExtendedTextBoxMapper(etxt, "SubID", false, factory);
-            mapper.BusinessObject = bo;
-            frm.Controls.Add(etxt);
-            //---------------Assert Precondition----------------
-
-            //---------------Execute Test ----------------------
-
-            //---------------Test Result -----------------------
-            Application.Run(frm);
-        }
     }
 }
