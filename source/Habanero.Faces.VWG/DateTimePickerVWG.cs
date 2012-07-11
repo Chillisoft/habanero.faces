@@ -45,9 +45,20 @@ namespace Habanero.Faces.VWG
             //Note: by default the Checkbox is shown because the VWG DateTimePicker does not support representing the null state visually without it.
             this.ShowCheckBox = true;
             _manager.ChangeToNullMode();
+            this.SetGlobalDefaultFormat();
         }
 
 #pragma warning restore 1911
+        private void SetGlobalDefaultFormat()
+        {
+            if ((GlobalUIRegistry.DateDisplaySettings != null) &&
+                (GlobalUIRegistry.DateDisplaySettings.DateTimePickerDefaultFormat != null))
+            {
+                this.Format = Gizmox.WebGUI.Forms.DateTimePickerFormat.Custom;
+                this.CustomFormat = GlobalUIRegistry.DateDisplaySettings.DateTimePickerDefaultFormat;
+            }
+        }
+
         /// <summary>
         /// Gets or sets the anchoring style.
         /// </summary>

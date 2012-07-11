@@ -35,5 +35,11 @@ namespace Habanero.Faces.Base
         /// on the user's machine.
         /// </summary>
         public string GridDateFormat { get; set; }
+
+        /// <summary>
+        /// Gets and sets the default format to use for DateTimePicker controls; set to null to use
+        /// the control default
+        /// </summary>
+        public string DateTimePickerDefaultFormat { get; set; }
     }
 }

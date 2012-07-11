@@ -62,8 +62,14 @@ namespace Habanero.Faces.Test.Base
             GlobalUIRegistry.DateDisplaySettings = new DateDisplaySettings();
             Assert.IsNull(GlobalUIRegistry.DateDisplaySettings.GridDateFormat);
 
-            GlobalUIRegistry.DateDisplaySettings.GridDateFormat = "ddMMyy";
-            Assert.AreEqual("ddMMyy", GlobalUIRegistry.DateDisplaySettings.GridDateFormat);
+            var fmt = "ddMMyy";
+            GlobalUIRegistry.DateDisplaySettings.GridDateFormat = fmt;
+            Assert.AreEqual(fmt, GlobalUIRegistry.DateDisplaySettings.GridDateFormat);
+
+            fmt ="dd MMM yyyy";
+            GlobalUIRegistry.DateDisplaySettings.DateTimePickerDefaultFormat = fmt;
+            Assert.AreEqual(fmt, GlobalUIRegistry.DateDisplaySettings.DateTimePickerDefaultFormat);
         }
+
     }
 }

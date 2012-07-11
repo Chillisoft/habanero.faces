@@ -168,8 +168,11 @@ namespace Habanero.Faces.VWG
         {
             DateTimePickerVWG dtp = new DateTimePickerVWG(this);
             dtp.Height = TEXTBOX_HEIGHT;
-            dtp.Format = (Gizmox.WebGUI.Forms.DateTimePickerFormat) DateTimePickerFormat.Custom;
-            dtp.CustomFormat = "dd MMM yyyy";
+            if (String.IsNullOrEmpty(dtp.CustomFormat))
+            {
+                dtp.Format = (Gizmox.WebGUI.Forms.DateTimePickerFormat)DateTimePickerFormat.Custom;
+                dtp.CustomFormat = "dd MMM yyyy";
+            }
             dtp.Value = DateTime.Now;
             return dtp;
         }

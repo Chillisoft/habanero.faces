@@ -47,9 +47,21 @@ namespace Habanero.Faces.Win
             _manager = new DateTimePickerManager(controlFactory, this, valueGetter, valueSetter);
         	_manager.ValueChanged += (sender, args) => base.OnValueChanged(args);
 			_manager.NullDisplayBoxCustomizationDelegate += NullDisplayBoxCustomization;
+            this.SetGlobalDefaultFormat();
         }
 
-    	private void NullDisplayBoxCustomization(ILabel label)
+        private void SetGlobalDefaultFormat()
+        {
+            if ((GlobalUIRegistry.DateDisplaySettings != null) &&
+                (GlobalUIRegistry.DateDisplaySettings.DateTimePickerDefaultFormat != null))
+            {
+                this.Format = DateTimePickerFormat.Custom;
+                ;
+                this.CustomFormat = GlobalUIRegistry.DateDisplaySettings.DateTimePickerDefaultFormat;
+            }
+        }
+
+        private void NullDisplayBoxCustomization(ILabel label)
     	{
 			if (Application.RenderWithVisualStyles)
 			{

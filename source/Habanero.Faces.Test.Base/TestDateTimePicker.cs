@@ -170,6 +170,18 @@ namespace Habanero.Faces.Test.Base
             Assert.AreEqual(expectedDateTime, dateTimePicker.ValueOrNull.Value);
         }
 
+	    [Test]
+	    public void TestUsesGlobalUIRegistryDefaultDateTimePickerFormat()
+	    {
+	        //---------------Set up test pack-------------------
+            GlobalUIRegistry.DateDisplaySettings = new DateDisplaySettings() { DateTimePickerDefaultFormat = "yyyy/mm/dd" };
+	        //---------------Assert Precondition----------------
+
+	        //---------------Execute Test ----------------------
+            IDateTimePicker picker = CreateDateTimePicker();
+	        //---------------Test Result -----------------------
+            Assert.AreEqual(picker.CustomFormat, GlobalUIRegistry.DateDisplaySettings.DateTimePickerDefaultFormat);
+	    }
         
         #region Checkbox Tests
 
