@@ -19,6 +19,7 @@
 using System;
 using System.ComponentModel;
 using Habanero.Base;
+using Habanero.Faces.Base.Async;
 
 namespace Habanero.Faces.Base
 {
@@ -31,7 +32,7 @@ namespace Habanero.Faces.Base
     /// This control is suitable for a business object collection with a limited
     /// number of objects.
     /// </summary>
-    public interface IBOColTabControl: IBOColSelectorControl
+    public interface IBOColTabControl: IBOColSelectorControl, ISupportAsyncLoadingObject, ISupportAsyncLoadingCollection
     {
         /// <summary>
         /// Sets the boControl that will be displayed on each tab page.  This must be called

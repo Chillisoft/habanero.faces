@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using Habanero.Base;
 using Habanero.BO;
+using Habanero.Faces.Base.Async;
 
 namespace Habanero.Faces.Base
 {
@@ -12,17 +13,8 @@ namespace Habanero.Faces.Base
     ///  <see cref="ICollapsiblePanelGroupControl"/>, <see cref="IBOColTabControl"/>, a <see cref="IMultiSelector{T}"/>
     ///  or an <see cref="ITreeView"/>
     /// </summary>
-    public interface IBOColSelector
+    public interface IBOColSelector: IHasBusinessObjectCollection
     {
-        /// <summary>
-        /// Gets and Sets the business object collection displayed in the grid.  This
-        /// collection must be pre-loaded using the collection's Load() command or from the
-        /// <see cref="IBusinessObjectLoader"/>.
-        /// The default UI definition will be used, that is a 'ui' element 
-        /// without a 'name' attribute.
-        /// </summary>
-        [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        IBusinessObjectCollection BusinessObjectCollection { get; set; }
 
         /// <summary>
         /// Gets and sets the currently selected business object in the grid

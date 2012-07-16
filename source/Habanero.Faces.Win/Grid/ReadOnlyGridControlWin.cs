@@ -18,6 +18,7 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.ComponentModel;
+using System.Threading;
 using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.BO;
@@ -28,8 +29,24 @@ using Habanero.Faces.Win.Async;
 
 namespace Habanero.Faces.Win
 {
-    public class ReadOnlyGridControlWin : PanelWin, IReadOnlyGridControl, ISupportInitialize, ISupportAsyncLoadingCollection
+    public class ReadOnlyGridControlWin : PanelWin, IReadOnlyGridControl, ISupportInitialize
     {
+        public void ExecuteOnUIThread(Delegate method)
+        {
+            for (var i = 0; i < 30; i++)
+            {
+                try
+                {
+                    this.BeginInvoke(method);
+                    return;
+                }
+                catch (Exception)
+                {
+                    Thread.Sleep(100);
+                }
+            }
+        }
+
         public EventHandler AsyncOperationComplete { get; set; }
         public EventHandler AsyncOperationStarted { get; set; }
         private bool _inAsyncOperation;
@@ -321,21 +338,22 @@ namespace Habanero.Faces.Win
         }
 
 
-        public void PopulateAsync<T>(string criteria, string order) where T: class, IBusinessObject, new()
+        public void PopulateCollectionAsync<T>(string criteria, string order) where T: class, IBusinessObject, new()
         {
-            this.PopulateAsync<T>(CriteriaParser.CreateCriteria(criteria), OrderCriteria.FromString(order));
+            this.PopulateCollectionAsync<T>(CriteriaParser.CreateCriteria(criteria), OrderCriteria.FromString(order));
         }
 
-        public void PopulateAsync<T>(Criteria criteria, IOrderCriteria order) where T: class, IBusinessObject, new()
+        public void PopulateCollectionAsync<T>(Criteria criteria, IOrderCriteria order) where T: class, IBusinessObject, new()
         {
             lock (this)
             {
                 if (this._inAsyncOperation)
                     throw new MultipleAsyncOperationException("Application error: the application must not submit mutliple asynchronous requests to a grid control");
             }
-            var worker = new AsyncLoaderCollection<T>()
+            var worker = new AsyncLoaderCollectionWin<T>()
             {
                 Criteria = criteria,
+                Order = order,
                 DisplayObject = this,
                 AsyncOperationComplete = this.AsyncOperationComplete,
                 AsyncOperationStarted = this.AsyncOperationStarted
@@ -343,9 +361,9 @@ namespace Habanero.Faces.Win
             worker.FetchAsync();
         }
 
-        public void PopulateAsync<T>(DataRetrieverCollectionDelegate dataRetrieverCallback) where T : class, IBusinessObject, new()
+        public void PopulateCollectionAsync<T>(DataRetrieverCollectionDelegate dataRetrieverCallback) where T : class, IBusinessObject, new()
         {
-            var worker = new AsyncLoaderCollection<T>()
+            var worker = new AsyncLoaderCollectionWin<T>()
             {
                 DataRetriever = dataRetrieverCallback,
                 AsyncOperationComplete = this.AsyncOperationComplete,

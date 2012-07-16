@@ -17,9 +17,11 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
+using System.Runtime.Remoting.Messaging;
 using Habanero.BO;
 using Habanero.Base;
 using Habanero.Faces.Base;
+using Habanero.Faces.Base.Async;
 
 namespace Habanero.Faces.VWG
 {
@@ -34,6 +36,8 @@ namespace Habanero.Faces.VWG
     /// </summary>
     public class BOColTabControlVWG : UserControlVWG, IBOColTabControl
     {
+        public EventHandler AsyncOperationComplete { get; set; }
+        public EventHandler AsyncOperationStarted { get; set; }
         private readonly IControlFactory _controlFactory;
         private readonly ITabControl _tabControl;
         private readonly BOColTabControlManager _boColTabControlManager;
@@ -149,6 +153,21 @@ namespace Habanero.Faces.VWG
             set { BOColTabControlManager.CurrentBusinessObject = value; }
         }
 
+        public void PopulateObjectAsync<T>(DataRetrieverObjectDelegate dataRetrieverCallback) where T : class, IBusinessObject, new()
+        {
+            this.CurrentBusinessObject = dataRetrieverCallback();
+        }
+
+        public void PopulateObjectAsync<T>(Criteria criteria) where T : class, IBusinessObject, new()
+        {
+            this.CurrentBusinessObject = Broker.GetBusinessObject<T>(criteria);
+        }
+
+        public void PopulateObjectAsync<T>(string criteria) where T : class, IBusinessObject, new()
+        {
+            this.PopulateObjectAsync<T>(CriteriaParser.CreateCriteria(criteria));
+        }
+
         /// <summary>
         /// Gets and Sets the Business Object Control Creator. This is a delegate for creating a
         ///  Business Object Control. This can be used as an alternate to setting the control
@@ -171,6 +190,8 @@ namespace Habanero.Faces.VWG
         {
             this.Populate<T>(CriteriaParser.CreateCriteria(criteria));
         }
+
+        //public void Populate<T>(
 
         /// <summary>
         /// Returns the manager that provides logic common to all
@@ -240,5 +261,38 @@ namespace Habanero.Faces.VWG
 
         #endregion
 
+        public void ExecuteOnUIThread(Delegate method)
+        {
+            method.DynamicInvoke();
+        }
+
+        public void PopulateCollectionAsync<T>(DataRetrieverCollectionDelegate dataRetrieverCallback) where T : class, IBusinessObject, new()
+        {
+            this.RunAsyncOperationStartedHandler();
+            this.BusinessObjectCollection = dataRetrieverCallback();
+            this.RunAsyncOperationCompleteHandler();
+        }
+
+        private void RunAsyncOperationStartedHandler()
+        {
+            if (this.AsyncOperationStarted != null)
+                this.AsyncOperationStarted(this, new EventArgs());
+        }
+
+        private void RunAsyncOperationCompleteHandler()
+        {
+            if (this.AsyncOperationComplete != null)
+                this.AsyncOperationComplete(this, new EventArgs());
+        }
+
+        public void PopulateCollectionAsync<T>(Criteria criteria, IOrderCriteria order = null) where T : class, IBusinessObject, new()
+        {
+            this.BusinessObjectCollection = Broker.GetBusinessObjectCollection<T>(criteria, order);
+        }
+
+        public void PopulateCollectionAsync<T>(string criteria, string order = null) where T : class, IBusinessObject, new()
+        {
+            this.PopulateCollectionAsync<T>(CriteriaParser.CreateCriteria(criteria), OrderCriteria.FromString(order));
+        }
     }
 }

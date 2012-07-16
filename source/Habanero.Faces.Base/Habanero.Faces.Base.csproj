@@ -102,6 +102,7 @@
     <Compile Include="Async\IAsyncLoaderBase.cs" />
     <Compile Include="Async\IAsyncLoaderCollection.cs" />
     <Compile Include="Async\IAsyncLoaderObject.cs" />
+    <Compile Include="Async\IHasBusinessObjectCollection.cs" />
     <Compile Include="Async\ISupportAsyncLoadingBase.cs" />
     <Compile Include="Async\ISupportAsyncLoadingCollection.cs" />
     <Compile Include="Async\ISupportAsyncLoadingObject.cs" />

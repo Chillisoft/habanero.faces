@@ -17,6 +17,7 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
+using System.Threading;
 using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.Faces.Base;
@@ -34,8 +35,24 @@ namespace Habanero.Faces.Win
     /// This control is suitable for a business object collection with a limited
     /// number of objects.
     /// </summary>
-    public class BOColTabControlWin : UserControlWin, IBOColTabControl, ISupportAsyncLoadingObject
+    public class BOColTabControlWin : UserControlWin, IBOColTabControl
     {
+        public void ExecuteOnUIThread(Delegate method)
+        {
+            for (var i = 0; i < 30; i++)
+            {
+                try
+                {
+                    this.BeginInvoke(method);
+                    return;
+                }
+                catch (Exception)
+                {
+                    Thread.Sleep(100);
+                }
+            }
+        }
+
         public EventHandler AsyncOperationComplete { get; set; }
         public EventHandler AsyncOperationStarted { get; set; }
         
@@ -182,9 +199,9 @@ namespace Habanero.Faces.Win
             set { this.BOColTabControlManager.BusinessObjectControlCreator = value; }
         }
 
-        public void PopulateAsync<T>(Criteria criteria, IOrderCriteria order) where T : class, IBusinessObject, new()
+        public void PopulateObjectAsync<T>(Criteria criteria) where T : class, IBusinessObject, new()
         {
-            var worker = new AsyncLoaderObject<T>()
+            var worker = new AsyncLoaderObjectWin<T>()
             {
                 DisplayObject = this,
                 AsyncOperationComplete = this.AsyncOperationComplete,
@@ -194,14 +211,14 @@ namespace Habanero.Faces.Win
             worker.FetchAsync();
         }
 
-        public void PopulateAsync<T>(string criteria, string order) where T : class, IBusinessObject, new()
+        public void PopulateObjectAsync<T>(string criteria) where T : class, IBusinessObject, new()
         {
-            this.PopulateAsync<T>(CriteriaParser.CreateCriteria(criteria), OrderCriteria.FromString(order));
+            this.PopulateObjectAsync<T>(CriteriaParser.CreateCriteria(criteria));
         }
 
-        public void PopulateAsync<T>(DataRetrieverObjectDelegate retrieverCallback) where T: class, IBusinessObject, new()
+        public void PopulateObjectAsync<T>(DataRetrieverObjectDelegate retrieverCallback) where T: class, IBusinessObject, new()
         {
-            var worker = new AsyncLoaderObject<T>()
+            var worker = new AsyncLoaderObjectWin<T>()
             {
                 DisplayObject = this,
                 AsyncOperationComplete = this.AsyncOperationComplete,
@@ -281,5 +298,34 @@ namespace Habanero.Faces.Win
 
         #endregion
 
+        public void PopulateCollectionAsync<T>(DataRetrieverCollectionDelegate dataRetrieverCallback) where T : class, IBusinessObject, new()
+        {
+            var worker = new AsyncLoaderCollectionWin<T>()
+            {
+                AsyncOperationComplete = this.AsyncOperationComplete,
+                AsyncOperationStarted =  this.AsyncOperationStarted,
+                DataRetriever = dataRetrieverCallback,
+                DisplayObject = this
+            };
+            worker.FetchAsync();
+        }
+
+        public void PopulateCollectionAsync<T>(Criteria criteria, IOrderCriteria order = null) where T : class, IBusinessObject, new()
+        {
+            var worker = new AsyncLoaderCollectionWin<T>()
+            {
+                AsyncOperationComplete =  this.AsyncOperationComplete,
+                AsyncOperationStarted = this.AsyncOperationStarted,
+                DisplayObject = this,
+                Criteria = criteria,
+                Order = order
+            };
+            worker.FetchAsync();
+        }
+
+        public void PopulateCollectionAsync<T>(string criteria, string order = null) where T : class, IBusinessObject, new()
+        {
+            this.PopulateCollectionAsync<T>(CriteriaParser.CreateCriteria(criteria), OrderCriteria.FromString(order));
+        }
     }
 }

@@ -46,6 +46,8 @@ namespace Habanero.Faces.VWG
     [MetadataTag("P")]
     public class ReadOnlyGridControlVWG : PanelVWG, IReadOnlyGridControl, ISupportInitialize
     {
+        public EventHandler AsyncOperationComplete { get; set; }
+        public EventHandler AsyncOperationStarted { get; set; }
         private readonly IReadOnlyGridButtonsControl _buttons;
         private readonly IControlFactory _controlFactory;
         private readonly ReadOnlyGridVWG _grid;
@@ -347,19 +349,35 @@ namespace Habanero.Faces.VWG
             set { }
         }
 
-        public void Populate<T>(Criteria criteria, IOrderCriteria order) where T : class, IBusinessObject, new()
+        public void PopulateCollectionAsync<T>(Criteria criteria, IOrderCriteria order) where T : class, IBusinessObject, new()
         {
+            this.RunAsyncOperationStarted();
             this.BusinessObjectCollection = Broker.GetBusinessObjectCollection<T>(criteria, order);
+            this.RunAsyncOperationComplete();
         }
 
-        public void Populate<T>(string criteria, string order) where T : class, IBusinessObject, new()
+        private void RunAsyncOperationStarted()
         {
-            this.Populate<T>(CriteriaParser.CreateCriteria(criteria), OrderCriteria.FromString(order));
+            if (this.AsyncOperationStarted != null)
+                this.AsyncOperationStarted(this, new EventArgs());
         }
 
-        public void Populate<T>(DataRetrieverCollectionDelegate dataRetrieverCallback) where T : class, IBusinessObject, new()
+        private void RunAsyncOperationComplete()
         {
+            if (this.AsyncOperationComplete != null)
+                this.AsyncOperationComplete(this, new EventArgs());
+        }
+
+        public void PopulateCollectionAsync<T>(string criteria, string order) where T : class, IBusinessObject, new()
+        {
+            this.PopulateCollectionAsync<T>(CriteriaParser.CreateCriteria(criteria), OrderCriteria.FromString(order));
+        }
+
+        public void PopulateCollectionAsync<T>(DataRetrieverCollectionDelegate dataRetrieverCallback) where T : class, IBusinessObject, new()
+        {
+            this.RunAsyncOperationStarted();
             this.BusinessObjectCollection = dataRetrieverCallback();
+            this.RunAsyncOperationComplete();
         }
 
         ///<summary>
@@ -629,5 +647,11 @@ namespace Habanero.Faces.VWG
         }
 
         #endregion
+
+        public void ExecuteOnUIThread(Delegate method)
+        {
+            method.DynamicInvoke();
+        }
+
     }
 }

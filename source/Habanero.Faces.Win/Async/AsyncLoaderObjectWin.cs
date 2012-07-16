@@ -2,11 +2,10 @@
 using System.Windows.Forms;
 using Habanero.BO;
 using Habanero.Base;
-using Habanero.Faces.Base.Async;
 
-namespace Habanero.Faces.Win.Async
+namespace Habanero.Faces.Base.Async
 {
-    public class AsyncLoaderObject<T> : AsyncLoaderBase<T> where T : class, IBusinessObject, new()
+    public class AsyncLoaderObjectWin<T> : AsyncLoaderBase<T> where T : class, IBusinessObject, new()
     {
         public DataRetrieverObjectDelegate DataRetriever { get; set; }
         public ISupportAsyncLoadingObject DisplayObject { get; set; }
@@ -17,7 +16,7 @@ namespace Habanero.Faces.Win.Async
                 bo = Broker.GetBusinessObject<T>(this.Criteria);
             else
                 bo = this.DataRetriever();
-            this.DisplayObject.BeginInvoke((MethodInvoker)delegate
+            this.DisplayObject.ExecuteOnUIThread((MethodInvoker)delegate
               {
                   this.DisplayObject.CurrentBusinessObject = bo;
                   this.OnAsyncOperationsCompleted();
