@@ -74,7 +74,8 @@ namespace Habanero.Faces.VWG
                     cpMenuItem.ContentControl = this.ControlFactory.CreatePanel();
                     _columnLayoutManager = new ColumnLayoutManager(cpMenuItem.ContentControl, this.ControlFactory);
                         // this.ControlFactory.CreateBorderLayoutManager(cpMenuItem);
-                    _columnLayoutManager.GapSize = 0;
+                    _columnLayoutManager.HorizontalGapSize = 0;
+                    _columnLayoutManager.VerticalGapSize = 0;
                     _columnLayoutManager.BorderSize = 0;
                 }
                 _columnLayoutManager.AddControl((CollapsibleMenuItemVWG) menuItem);

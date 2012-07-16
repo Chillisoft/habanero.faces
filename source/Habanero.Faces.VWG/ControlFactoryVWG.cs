@@ -111,7 +111,9 @@ namespace Habanero.Faces.VWG
         /// </summary>
         public virtual IButton CreateButton()
         {
-            return new ButtonVWG();
+            var btn = new ButtonVWG();
+            ObserveGlobalUIHints(btn);
+            return btn;
         }
 
         /// <summary>
@@ -126,6 +128,17 @@ namespace Habanero.Faces.VWG
             ((Button) btn).FlatStyle = FlatStyle.Standard;
             btn.Width = CreateLabel(text, false).PreferredWidth + 20;
             return btn;
+        }
+
+        private static void ObserveGlobalUIHints(IButton btn)
+        {
+            if (GlobalUIRegistry.UIStyleHints == null)
+                return;
+            var hints = GlobalUIRegistry.UIStyleHints.ButtonHints;
+            btn.MinimumSize = new Size(hints.MinimumWidth, hints.MinimumHeight);
+            btn.MaximumSize = new Size(hints.MaximumWidth, hints.MaximumHeight);
+            if (btn.Font.Size < hints.MinimumFontSize)
+                btn.Font = new Font(btn.Font.FontFamily, hints.MinimumFontSize);
         }
 
         /// <summary>

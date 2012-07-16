@@ -23,6 +23,7 @@ using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
+using Habanero.Faces.Base.Async;
 using DialogResult = Gizmox.WebGUI.Forms.DialogResult;
 using MessageBoxButtons = Gizmox.WebGUI.Forms.MessageBoxButtons;
 
@@ -344,6 +345,21 @@ namespace Habanero.Faces.VWG
         {
             get { return false; }
             set { }
+        }
+
+        public void Populate<T>(Criteria criteria, IOrderCriteria order) where T : class, IBusinessObject, new()
+        {
+            this.BusinessObjectCollection = Broker.GetBusinessObjectCollection<T>(criteria, order);
+        }
+
+        public void Populate<T>(string criteria, string order) where T : class, IBusinessObject, new()
+        {
+            this.Populate<T>(CriteriaParser.CreateCriteria(criteria), OrderCriteria.FromString(order));
+        }
+
+        public void Populate<T>(DataRetrieverCollectionDelegate dataRetrieverCallback) where T : class, IBusinessObject, new()
+        {
+            this.BusinessObjectCollection = dataRetrieverCallback();
         }
 
         ///<summary>

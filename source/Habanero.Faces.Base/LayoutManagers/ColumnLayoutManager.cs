@@ -64,7 +64,9 @@ namespace Habanero.Faces.Base
         /// </summary>
         protected override void RefreshControlPositions()
         {
-            int totalWhiteSpace = BorderSize * 2 + (ColumnCount - 1) * GapSize;
+            if (this.ManagedControl == null)
+                return;
+            int totalWhiteSpace = BorderSize * 2 + (ColumnCount - 1) * HorizontalGapSize;
             int columnWidth = (ManagedControl.Width - totalWhiteSpace) / ColumnCount;
             int currentColumn = 1;
             int currentLeft = BorderSize;
@@ -79,7 +81,7 @@ namespace Habanero.Faces.Base
                     {
                         currentColumn = 1;
                         currentLeft = BorderSize;
-                        currentTop += maxControlHeight + GapSize;
+                        currentTop += maxControlHeight + VerticalGapSize;
                         maxControlHeight = 0;
                     }
                     if (control.Height > maxControlHeight)
@@ -88,7 +90,7 @@ namespace Habanero.Faces.Base
                     }
                     control.Location = new Point(currentLeft, currentTop);
                     control.Width = columnWidth;
-                    currentLeft += columnWidth + GapSize;
+                    currentLeft += columnWidth + HorizontalGapSize;
                     currentColumn++;
                 }
             }

@@ -16,6 +16,8 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
+
+using System.Drawing;
 using System.Windows.Forms;
 using Habanero.Faces.Base;
 
@@ -53,6 +55,26 @@ namespace Habanero.Faces.Win
         {
             get { return DockStyleWin.GetDockStyle(base.Dock); }
             set { base.Dock = DockStyleWin.GetDockStyle(value); }
+        }
+
+        public ButtonWin()
+            :base()
+        {
+            this.ObserveGlobalUIHints();
+        }
+
+        private void ObserveGlobalUIHints()
+        {
+            if (GlobalUIRegistry.UIStyleHints != null)
+            {
+                var hints = GlobalUIRegistry.UIStyleHints.ButtonHints;
+                this.MinimumSize = new Size(hints.MinimumWidth, hints.MinimumHeight);
+                this.MaximumSize = new Size(hints.MaximumWidth, hints.MaximumHeight);
+                if (hints.DefaultFontFamily != null)
+                    this.Font = new Font(hints.DefaultFontFamily, this.Font.Size);
+                if (this.Font.Size < hints.MinimumFontSize)
+                    this.Font = new Font(this.Font.FontFamily, hints.MinimumFontSize);
+            }
         }
     }
 }

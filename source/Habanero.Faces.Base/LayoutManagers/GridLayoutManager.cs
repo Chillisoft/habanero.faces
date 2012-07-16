@@ -261,6 +261,7 @@ namespace Habanero.Faces.Base
         /// </summary>
         protected override void RefreshControlPositions()
         {
+            if (ManagedControl == null) return;
             try
             {
                 ManagedControl.SuspendLayout();
@@ -275,7 +276,7 @@ namespace Habanero.Faces.Base
                     if ((i > 0) && (currentCol == 0))
                     {
                         _currentPos.X = BorderSize;
-                        _currentPos.Y += this._controls[i - 1].Height + GapSize;
+                        _currentPos.Y += this._controls[i - 1].Height + VerticalGapSize;
                     }
                     int width = 0;
                     ControlInfo ctlInfo = (ControlInfo) _controlInfoTable[ctl];
@@ -292,7 +293,7 @@ namespace Habanero.Faces.Base
                             width += CalcColumnWidth();
                         }
                     }
-                    width += (this.GapSize*(ctlInfo.ColumnSpan - 1));
+                    width += (this.HorizontalGapSize*(ctlInfo.ColumnSpan - 1));
 
                     int height = 0;
 
@@ -308,7 +309,7 @@ namespace Habanero.Faces.Base
                         }
                     }
 
-                    height += (GapSize*(ctlInfo.RowSpan - 1));
+                    height += (VerticalGapSize * (ctlInfo.RowSpan - 1));
                     //height += GapSize;
 
                     //ctl.Left = _currentPos.X;
@@ -326,7 +327,7 @@ namespace Habanero.Faces.Base
                     }
                     else
                     {
-                        posIncrement = ctl.Width + GapSize;
+                        posIncrement = ctl.Width + HorizontalGapSize;
                         lastColSpan = ctlInfo.ColumnSpan;
                     }
                     _currentPos.X += posIncrement;
@@ -426,7 +427,7 @@ namespace Habanero.Faces.Base
         /// <returns>Returns the total width</returns>
         public int GetFixedWidthIncludingGaps()
         {
-            return GetFixedWidth() + (2 * BorderSize) + ((ColumnCount - 1) * GapSize);
+            return GetFixedWidth() + (2 * BorderSize) + ((ColumnCount - 1) * HorizontalGapSize);
         }
         
         /// <summary>
@@ -436,7 +437,7 @@ namespace Habanero.Faces.Base
         /// <returns>Returns the total height</returns>
         public int GetFixedHeightIncludingGaps()
         {
-            return GetFixedAmount(_rowHeights) + (2*BorderSize) + ((RowCount - 1)*GapSize);
+            return GetFixedAmount(_rowHeights) + (2*BorderSize) + ((RowCount - 1)*VerticalGapSize);
         }
 
         /// <summary>

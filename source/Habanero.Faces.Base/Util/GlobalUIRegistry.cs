@@ -16,6 +16,9 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
+
+using Habanero.Faces.Base.UIHints;
+
 namespace Habanero.Faces.Base
 {
     /// <summary>
@@ -37,6 +40,11 @@ namespace Habanero.Faces.Base
         /// Gets and sets the store of date display settings
         /// </summary>
         public static CurrencyDisplaySettings CurrencyDisplaySettings { get; set; }
+
+        /// <summary>
+        /// Gets and sets the store of global ui hints
+        /// </summary>
+        public static UIStyleHints UIStyleHints { get; set; }
 
         /// <summary>
         /// Gets and sets the control factory to use in the application

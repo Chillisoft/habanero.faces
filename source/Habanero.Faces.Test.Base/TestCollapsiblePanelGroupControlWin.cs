@@ -181,7 +181,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Execute Test ----------------------
             int totalExpandedHeight = control.TotalExpandedHeight;
             //---------------Test Result -----------------------
-            Assert.AreEqual(layoutManager.BorderSize + cp1.ExpandedHeight + layoutManager.GapSize, totalExpandedHeight);
+            Assert.AreEqual(layoutManager.BorderSize + cp1.ExpandedHeight + layoutManager.VerticalGapSize, totalExpandedHeight);
         }
 
         [Test]
@@ -196,7 +196,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Assert Precondition----------------
             Assert.AreEqual(2, control.PanelsList.Count);
             ColumnLayoutManager layoutManager = control.ColumnLayoutManager;
-            int expectedTotalHeight = layoutManager.BorderSize + cp1.ExpandedHeight + layoutManager.GapSize + cp2.ExpandedHeight + layoutManager.GapSize;
+            int expectedTotalHeight = layoutManager.BorderSize + cp1.ExpandedHeight + layoutManager.VerticalGapSize + cp2.ExpandedHeight + layoutManager.HorizontalGapSize;
             //---------------Execute Test ----------------------
             int actualTotalHeight = control.TotalExpandedHeight;
             //---------------Test Result -----------------------
@@ -234,7 +234,7 @@ namespace Habanero.Faces.Test.Base
             ICollapsiblePanel cp2 = control.AddControl(content2, "", 53);
             //---------------Test Result -----------------------
             ColumnLayoutManager layoutManager = control.ColumnLayoutManager;
-            int expectedCP2_Top = cp1.Height + layoutManager.BorderSize + layoutManager.GapSize;
+            int expectedCP2_Top = cp1.Height + layoutManager.BorderSize + layoutManager.VerticalGapSize;
             Assert.AreEqual(expectedCP2_Top, cp2.Top);
         }
 
@@ -250,12 +250,12 @@ namespace Habanero.Faces.Test.Base
             //---------------Assert Precondition----------------
             Assert.AreEqual(2, control.PanelsList.Count);
             ColumnLayoutManager layoutManager = control.ColumnLayoutManager;
-            int expected_Start_CP2_Top = cp1.CollapseButton.Height + layoutManager.BorderSize + layoutManager.GapSize;
+            int expected_Start_CP2_Top = cp1.CollapseButton.Height + layoutManager.BorderSize + layoutManager.VerticalGapSize;
             Assert.AreEqual(expected_Start_CP2_Top, cp2.Top);
             //---------------Execute Test ----------------------
             cp1.CollapseButton.PerformClick();
             //---------------Test Result -----------------------
-            int expected_Finish_CP2_Top = cp1.ExpandedHeight + layoutManager.BorderSize + layoutManager.GapSize;
+            int expected_Finish_CP2_Top = cp1.ExpandedHeight + layoutManager.BorderSize + layoutManager.VerticalGapSize;
             Assert.AreEqual(expected_Finish_CP2_Top, cp2.Top);
         }
 

@@ -17,6 +17,7 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
+using System.Drawing;
 using Gizmox.WebGUI.Forms;
 using Habanero.Faces.Base;
 
@@ -46,6 +47,22 @@ namespace Habanero.Faces.VWG
             this.ShowCheckBox = true;
             _manager.ChangeToNullMode();
             this.SetGlobalDefaultFormat();
+            this.ObserveGlobalUIHints();
+        }
+
+        private void ObserveGlobalUIHints()
+        {
+            if (GlobalUIRegistry.UIStyleHints != null)
+            {
+                var hints = GlobalUIRegistry.UIStyleHints.DateTimePickerHints;
+                this.MinimumSize = new Size(hints.MinimumWidth, hints.MinimumHeight);
+                if ((hints.MaximumHeight > hints.MinimumHeight) && (hints.MaximumWidth > hints.MinimumWidth))
+                    this.MaximumSize = new Size(hints.MaximumWidth, hints.MaximumHeight);
+                if (hints.DefaultFontFamily != null)
+                    this.Font = new Font(hints.DefaultFontFamily, this.Font.Size);
+                if (hints.MinimumFontSize > this.Font.Size)
+                    this.Font = new Font(this.Font.FontFamily, hints.MinimumFontSize);
+            }
         }
 
 #pragma warning restore 1911

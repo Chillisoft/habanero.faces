@@ -89,7 +89,7 @@ namespace Habanero.Faces.Base
             ColumnLayoutManager columnLayoutManager = new ColumnLayoutManager(panel, _controlFactory);
             columnLayoutManager.AddControl(label);
             columnLayoutManager.AddControl(_comboBox);
-            panel.Height = _comboBox.Height + label.Height + columnLayoutManager.BorderSize + columnLayoutManager.GapSize;
+            panel.Height = _comboBox.Height + label.Height + columnLayoutManager.BorderSize + columnLayoutManager.VerticalGapSize;
             int preferredWidth = label.PreferredWidth + 20;
             int preferredWidthFromCombo = GetLongestComboText() + 40;
             if (preferredWidthFromCombo > preferredWidth) 

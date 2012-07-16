@@ -123,6 +123,7 @@ namespace Habanero.Faces.Base
         /// </summary>
         protected override void RefreshControlPositions()
         {
+            if (this.ManagedControl == null) return;
             if (busyRefreshing) return;
             try
             {
@@ -163,7 +164,7 @@ namespace Habanero.Faces.Base
                         }
                         controlsInRow.Add(ctl);
                         SetControlPosition(ctl);
-                        _currentPos.X += ctl.Width + GapSize;
+                        _currentPos.X += ctl.Width + HorizontalGapSize;
                         if (ctl.Height > currentRowHeight)
                         {
                             currentRowHeight = ctl.Height;
@@ -183,7 +184,7 @@ namespace Habanero.Faces.Base
                 {
                     SetUpTabIndexForAlignmentRight(rowStart, controlsInRow);
                 }
-                var totalRowsHeight = this.GapSize;
+                var totalRowsHeight = this.VerticalGapSize;
                 foreach (var row in controlRows)
                 {
                     var maxHeight = 0;
@@ -197,7 +198,7 @@ namespace Habanero.Faces.Base
                         var padTop = (int)Math.Ceiling(((decimal)maxHeight - (decimal)ctl.Height) / 2);
                         ctl.Top += padTop;
                     }
-                    totalRowsHeight += maxHeight + this.GapSize;
+                    totalRowsHeight += maxHeight + this.VerticalGapSize;
                 }
                 //this.ManagedControl.SuspendLayout();
                 this.ManagedControl.Height = totalRowsHeight;
@@ -241,7 +242,7 @@ namespace Habanero.Faces.Base
 
         private bool BothControlsFitOnALine(int i)
         {
-            return GetPreviousControl(i).Width + GetControl(i).Width + BorderSize + BorderSize + GapSize <
+            return GetPreviousControl(i).Width + GetControl(i).Width + BorderSize + BorderSize + HorizontalGapSize <
                    this.ManagedControl.Width;
         }
 
@@ -283,7 +284,7 @@ namespace Habanero.Faces.Base
         private void MoveCurrentPosToStartOfNextRow(int currentRowHeight)
         {
             _currentPos.X = BorderSize;
-            _currentPos.Y += currentRowHeight + GapSize;
+            _currentPos.Y += currentRowHeight + VerticalGapSize;
         }
 
         /// <summary>

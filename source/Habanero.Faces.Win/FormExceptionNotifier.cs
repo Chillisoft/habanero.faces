@@ -212,8 +212,8 @@ namespace Habanero.Faces.Win
                 messageLabel.TextAlign = ContentAlignment.BottomLeft;
                 messageLabel.BackColor = Color.Red;
                 messageLabel.ForeColor = Color.White;
-                messageLabel.Font = new Font(messageLabel.Font.FontFamily, 10);
-                messageLabel.Height = 18;
+                //messageLabel.Font = new Font(messageLabel.Font.FontFamily, 10);
+                //messageLabel.Height = 18;
                 return messageLabel;
             }
 
@@ -227,7 +227,7 @@ namespace Habanero.Faces.Win
                 messageTextBox.Multiline = true;
                 //messageTextBox.ScrollBars = ScrollBars.Both;
                 //messageTextBox.ReadOnly = true;
-                messageTextBox.Font = new Font(messageTextBox.Font.FontFamily, 10);
+                //messageTextBox.Font = new Font(messageTextBox.Font.FontFamily, 10);
                 return messageTextBox;
             }
 

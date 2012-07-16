@@ -18,6 +18,7 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.Collections;
+using System.Drawing;
 using Gizmox.WebGUI.Forms;
 using Habanero.Base;
 using Habanero.Faces.Base;
@@ -39,6 +40,24 @@ namespace Habanero.Faces.VWG
         {
             _manager = new ComboBoxManager(this);
             _objectCollection = new ComboBoxObjectCollectionVWG(base.Items);
+            this.ObserveGlobalUIHints();
+        }
+
+        private void ObserveGlobalUIHints()
+        {
+            if (GlobalUIRegistry.UIStyleHints != null)
+            {
+                var hints = GlobalUIRegistry.UIStyleHints.ComboBoxHints;
+                this.MinimumSize = new Size(hints.MinimumWidth, hints.MinimumHeight);
+                if ((hints.MaximumHeight > hints.MinimumHeight) && (hints.MaximumWidth > hints.MinimumWidth))
+                    this.MaximumSize = new Size(hints.MaximumWidth, hints.MaximumHeight);
+                if (hints.DefaultFontFamily != null)
+                    this.Font = new Font(hints.DefaultFontFamily, this.Font.Size);
+                if (hints.MinimumFontSize > this.Font.Size)
+                    this.Font = new Font(this.Font.FontFamily, hints.MinimumFontSize);
+                if (!hints.AllowTextEditing)
+                    this.DropDownStyle = ComboBoxStyle.DropDownList;
+            }
         }
 
         /// <summary>

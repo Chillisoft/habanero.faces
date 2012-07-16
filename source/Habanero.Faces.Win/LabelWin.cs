@@ -69,21 +69,22 @@ namespace Habanero.Faces.Win
                     this.Width = this.PreferredWidth;
                     this.Height = this.PreferredHeight;
                 };
-            /*
-            this.TextChanged += (sender, e) =>
-                {
-                    using (var gfx = CreateGraphics())
-                    {
-                        var size = gfx.MeasureString(this.Text, this.Font);
-                        this.PreferredWidth = (int)Math.Ceiling(size.Width);
-                        if (this.Width < this.PreferredWidth)
-                            this.Width = this.PreferredWidth;
-                        this.Height = (int)Math.Ceiling(size.Height);
-                        if (this.Height < this.PreferredHeight)
-                            this.Height = this.PreferredHeight;
-                    }
-                };
-            */
+            this.ObserveGlobalUIHints();
+        }
+
+        private void ObserveGlobalUIHints()
+        {
+            if (GlobalUIRegistry.UIStyleHints != null)
+            {
+                var hints = GlobalUIRegistry.UIStyleHints.LabelHints;
+                this.MinimumSize = new Size(hints.MinimumWidth, hints.MinimumHeight);
+                if ((hints.MaximumHeight > hints.MinimumHeight) && (hints.MaximumWidth > hints.MinimumWidth))
+                    this.MaximumSize = new Size(hints.MaximumWidth, hints.MaximumHeight);
+                if (hints.DefaultFontFamily != null)
+                    this.Font = new Font(hints.DefaultFontFamily, this.Font.Size);
+                if (hints.MinimumFontSize > this.Font.Size)
+                    this.Font = new Font(this.Font.FontFamily, hints.MinimumFontSize);
+            }
         }
     }
 }

@@ -547,13 +547,13 @@ namespace Habanero.Faces.Base
                 int gridCol = formColCount * CONTROLS_PER_COLUMN;
                 int labelColumnWidth = layoutManager.GetFixedColumnWidth(gridCol + LABEL_CONTROL_COLUMN_NO);
                 int errorProviderColumnWidth = layoutManager.GetFixedColumnWidth(gridCol + ERROR_PROVIDER_COLUMN_NO);
-                int totalGap = (CONTROLS_PER_COLUMN - 1) * layoutManager.GapSize;
+                int totalGap = (CONTROLS_PER_COLUMN - 1) * layoutManager.HorizontalGapSize;
                 if (formTab.Count == 1)
                     totalGap += 2 * layoutManager.BorderSize; // add extra border for single column
                 else if (formColCount == formTab.Count - 1)
-                    totalGap += layoutManager.BorderSize + layoutManager.GapSize; // last column in multi-column
+                    totalGap += layoutManager.BorderSize + layoutManager.HorizontalGapSize; // last column in multi-column
                 else if (formColCount > 0 && formTab.Count > 0)
-                    totalGap += layoutManager.GapSize; //2 More gaps for internal column in multi-column
+                    totalGap += layoutManager.HorizontalGapSize; //2 More gaps for internal column in multi-column
                 else if (formColCount == 0 && formTab.Count > 0) totalGap += layoutManager.BorderSize;
 
                 layoutManager.FixColumn

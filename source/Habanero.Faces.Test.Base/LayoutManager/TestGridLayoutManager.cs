@@ -50,7 +50,8 @@ namespace Habanero.Faces.Test.Base
             _ctl.Height = 72;
             _manager = new GridLayoutManager(_ctl, GetControlFactory());
             _manager.SetGridSize(2, 3);
-            _manager.GapSize = 2;
+            _manager.HorizontalGapSize = 2;
+            _manager.VerticalGapSize = 2;
         }
 
         [Test]
@@ -250,7 +251,8 @@ namespace Habanero.Faces.Test.Base
             SetupControlAndGridLayout();
             IControlHabanero ctl1 = GetControlFactory().CreateControl();
             //---------------Execute Test ----------------------
-            _manager.GapSize = 3;
+            _manager.HorizontalGapSize = 3;
+            _manager.VerticalGapSize = 3;
             _manager.AddControl(ctl1);
             //---------------Test Result -----------------------
             Assert.AreEqual(19, ctl1.Width, "Gap size should affect size of controls.");
@@ -264,7 +266,8 @@ namespace Habanero.Faces.Test.Base
             IControlHabanero ctl1 = GetControlFactory().CreateControl();
             //---------------Execute Test ----------------------
             _manager.AddControl(ctl1);
-            _manager.GapSize = 3;
+            _manager.HorizontalGapSize = 3;
+            _manager.VerticalGapSize = 3;
             //---------------Test Result -----------------------
             Assert.AreEqual(19, ctl1.Width, "Setting Gap size should refresh controls.");
         }

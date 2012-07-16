@@ -26,6 +26,7 @@ namespace Habanero.Faces.VWG
         public ExtendedTextBoxVWG(IControlFactory factory)
         {
             Button = factory.CreateButton("...");
+            Button.MinimumSize = new Size(0, 0);
             TextBox = factory.CreateTextBox();
             TextBox.Enabled = false;
             this.Height = TextBox.Height;

@@ -98,6 +98,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Async\AsyncLoaderBase.cs" />
+    <Compile Include="Async\IAsyncLoaderBase.cs" />
+    <Compile Include="Async\IAsyncLoaderCollection.cs" />
+    <Compile Include="Async\IAsyncLoaderObject.cs" />
+    <Compile Include="Async\ISupportAsyncLoadingBase.cs" />
+    <Compile Include="Async\ISupportAsyncLoadingCollection.cs" />
+    <Compile Include="Async\ISupportAsyncLoadingObject.cs" />
     <Compile Include="BOColTabControlManager.cs" />
     <Compile Include="BOSelectorAndBOEditorManager.cs" />
     <Compile Include="ButtonSizePolicyUserDefined.cs" />
@@ -233,6 +240,11 @@
     <Compile Include="Selectors\ListControlCollectionManager.cs" />
     <Compile Include="StaticDataEditorManager.cs" />
     <Compile Include="TreeViewController.cs" />
+    <Compile Include="UIHints\ComboBoxHints.cs" />
+    <Compile Include="UIHints\ControlHints.cs" />
+    <Compile Include="UIHints\DateTimePickerHints.cs" />
+    <Compile Include="UIHints\LayoutHints.cs" />
+    <Compile Include="UIHints\UIHints.cs" />
     <Compile Include="Util\CustomValidationEventArgs.cs" />
     <Compile Include="Util\GlobalUIRegistry.cs" />
     <Compile Include="Grid\IDataGridView.cs" />

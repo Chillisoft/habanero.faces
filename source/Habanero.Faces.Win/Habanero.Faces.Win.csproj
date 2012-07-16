@@ -100,6 +100,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Async\AsyncLoaderObject.cs" />
     <Compile Include="BOEditorControlWin.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -160,6 +161,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DockStyleWin.cs" />
+    <Compile Include="Async\AsyncLoaderCollection.cs" />
     <Compile Include="Grid\BOGridAndEditorControlWin.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -211,6 +213,7 @@
     <Compile Include="Grid\EditableGridButtonsControlWin.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Async\MultipleAsyncOperationException.cs" />
     <Compile Include="GroupBoxGroupControlWin.cs">
       <SubType>Component</SubType>
     </Compile>

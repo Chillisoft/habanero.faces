@@ -19,6 +19,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using Habanero.Faces.Base;
 
@@ -38,7 +39,25 @@ namespace Habanero.Faces.Win
         public ComboBoxWin()
         {
             _manager = new ComboBoxManager(this);
+            this.ObserveGlobalUIHints();
           //  _objectCollection = new ComboBoxObjectCollectionWin(base.Items);
+        }
+
+        private void ObserveGlobalUIHints()
+        {
+            if (GlobalUIRegistry.UIStyleHints != null)
+            {
+                var hints = GlobalUIRegistry.UIStyleHints.ComboBoxHints;
+                this.MinimumSize = new Size(hints.MinimumWidth, hints.MinimumHeight);
+                if ((hints.MaximumHeight > hints.MinimumHeight) && (hints.MaximumWidth > hints.MinimumWidth))
+                    this.MaximumSize = new Size(hints.MaximumWidth, hints.MaximumHeight);
+                if (hints.DefaultFontFamily != null)
+                    this.Font = new Font(hints.DefaultFontFamily, this.Font.Size);
+                if (hints.MinimumFontSize > this.Font.Size)
+                    this.Font = new Font(this.Font.FontFamily, hints.MinimumFontSize);
+                if (!hints.AllowTextEditing)
+                    this.DropDownStyle = ComboBoxStyle.DropDownList;
+            }
         }
 
         /// <summary>

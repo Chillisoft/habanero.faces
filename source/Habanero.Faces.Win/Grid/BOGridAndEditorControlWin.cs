@@ -45,7 +45,9 @@ namespace Habanero.Faces.Win
         private IButton _saveButton;
         private IBusinessObject _lastSelectedBusinessObject;
         private IBusinessObject _newBO;
-
+        private Timer _filterTimer;
+        private ITextBox _filterTextBox;
+        private string _lastFilterText;
         /// <summary>
         /// Event that is raised when a business objects is selected.
         /// </summary>
@@ -65,6 +67,10 @@ namespace Habanero.Faces.Win
             _classDef = classDef;
             BOEditorControlWin boEditorControlWin = new BOEditorControlWin(controlFactory, classDef, uiDefName);
             SetupGridAndBOEditorControlWin(controlFactory, boEditorControlWin, classDef, uiDefName);
+            this._filterTimer = new Timer() { Enabled = true, Interval = 500 };
+            this._filterTimer.Tick += (sender, e) => { this.DoFilter(); };
+            this._lastFilterText = String.Empty;
+            this._filterTextBox.Text = String.Empty;
         }
 
         ///<summary>
@@ -104,15 +110,14 @@ namespace Habanero.Faces.Win
             this.RemoveObjectIDColumn();
             var grid = new GridLayoutManager(this, _controlFactory);
             var filterLabel = _controlFactory.CreateLabel("Filter:");
-            var filterTextBox = _controlFactory.CreateTextBox();
-            filterTextBox.TextChanged += (sender, e) => { DoFilter(filterTextBox); };
+            this._filterTextBox = _controlFactory.CreateTextBox();
             grid.SetGridSize(3, 4);
             grid.FixRow(2, _buttonGroupControl.Height);
-            grid.FixRow(0, filterTextBox.Height + 5);
+            grid.FixRow(0, this._filterTextBox.Height + 5);
             grid.FixColumn(0, filterLabel.Width);
-            grid.FixColumn(3, 250);
+            grid.FixColumn(3, 300);
             grid.AddControl(filterLabel);
-            grid.AddControl(filterTextBox);
+            grid.AddControl(this._filterTextBox);
             grid.AddControl(_controlFactory.CreateLabel(), 1, 2);
             grid.AddControl(_readOnlyGridControl, 1, 3);
             grid.AddControl(_iboEditorControl);
@@ -124,14 +129,18 @@ namespace Habanero.Faces.Win
             _readOnlyGridControl.Grid.SelectionChanged += GridSelectionChanged;
         }
 
-        private void DoFilter(ITextBox filterTextBox)
+        private void DoFilter()
         {
             var dataGrid = _readOnlyGridControl.Grid as DataGridView;
             if (dataGrid == null)
                 return;
             dataGrid.CurrentCell = null;
-            var filter = filterTextBox.Text.Trim();
+            var filter = this._filterTextBox.Text.Trim().ToLower();
+            if (filter == this._lastFilterText)
+                return;
+            this._lastFilterText = filter;
             var parts = filter.Split(new char[] { ' ' });
+            DataGridViewRow firstVisibleRow = null;
             foreach (DataGridViewRow r in dataGrid.Rows)
             {
                 if (filter == String.Empty)
@@ -139,22 +148,28 @@ namespace Habanero.Faces.Win
                     r.Visible = true;
                     continue;
                 }
-                var visible = false;
+                var hits = 0;
                 foreach (DataGridViewCell c in r.Cells)
                 {
+                    var hit = false;
                     foreach (var part in parts)
                     {
                         if (c.Value.ToString().ToLower().Contains(part))
                         {
-                            visible = true;
+                            hits++;
+                            hit = true;
                             break;
                         }
                     }
-                    if (visible)
+                    if (hit)
                         break;
                 }
-                r.Visible = visible;
+                r.Visible = (hits == parts.Length);
+                if (firstVisibleRow == null)
+                    firstVisibleRow = r;
             }
+            if (firstVisibleRow != null)
+                firstVisibleRow.Selected = true;
         }
 
         private void RemoveObjectIDColumn()

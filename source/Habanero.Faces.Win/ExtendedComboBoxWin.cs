@@ -16,6 +16,8 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
+
+using System.Drawing;
 using Habanero.Faces.Base;
 
 namespace Habanero.Faces.Win
@@ -43,6 +45,7 @@ namespace Habanero.Faces.Win
             IUserControlHabanero userControlHabanero = this;
             _comboBox = _controlFactory.CreateComboBox();
             _button = _controlFactory.CreateButton("...");
+            _button.MinimumSize = new Size(0, 0);
             BorderLayoutManager borderLayoutManager = controlFactory.CreateBorderLayoutManager(userControlHabanero);
             borderLayoutManager.AddControl(_comboBox, BorderLayoutManager.Position.Centre);
             borderLayoutManager.AddControl(_button, BorderLayoutManager.Position.East);

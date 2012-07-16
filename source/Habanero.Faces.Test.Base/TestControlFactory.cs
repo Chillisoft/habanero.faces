@@ -23,10 +23,12 @@ using Habanero.Base;
 using Habanero.Base.Exceptions;
 using Habanero.Base.Util;
 using Habanero.BO.ClassDefinition;
+using Habanero.Faces.Base.UIHints;
 using Habanero.Faces.Win;
 using Habanero.Test;
 using Habanero.Test.BO;
 using Habanero.Faces.Base;
+using Habanero.Test.Structure;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -42,6 +44,7 @@ namespace Habanero.Faces.Test.Base
         [SetUp]
         public void TestSetup()
         {
+            GlobalUIRegistry.UIStyleHints = null;
             _factory = GetControlFactory();
             ClassDef.ClassDefs.Clear();
             
@@ -180,6 +183,325 @@ namespace Habanero.Faces.Test.Base
             Assert.AreEqual(buttonText, button.Name);
             Assert.AreEqual(expectedButtonWidth, button.Width);
             //To_Test: btn.FlatStyle = FlatStyle.System;
+        }
+
+        [Test]
+        public void TestCreateButton_ObservesGlobalUIMinHints()
+        {
+            //---------------Set up test pack-------------------
+            GlobalUIRegistry.UIStyleHints = new UIStyleHints();
+            var defaultButton = GetControlFactory().CreateButton();
+            var hints = GlobalUIRegistry.UIStyleHints.ButtonHints;
+            hints.MinimumHeight = defaultButton.Height + RandomValueGen.GetRandomInt(10, 20);
+            hints.MinimumWidth = defaultButton.Width + RandomValueGen.GetRandomInt(10, 20);
+            hints.MinimumFontSize = defaultButton.Font.Size + 2;
+            var newButton = GetControlFactory().CreateButton();
+            
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+
+            //---------------Test Result -----------------------
+            Assert.That(newButton.Width, Is.GreaterThanOrEqualTo(hints.MinimumWidth), "UI width hint not observed");
+            Assert.That(newButton.Height, Is.GreaterThanOrEqualTo(hints.MinimumHeight), "UI width hint not observed");
+            Assert.That(newButton.Font.Size, Is.GreaterThanOrEqualTo(hints.MinimumFontSize), "UI font size hint not observed");
+        }
+
+        [Test]
+        public void TestCreateButton_ObservesGlobalUIMaxHints()
+        {
+            //---------------Set up test pack-------------------
+            GlobalUIRegistry.UIStyleHints = new UIStyleHints();
+            var hints = GlobalUIRegistry.UIStyleHints.ButtonHints;
+            hints.MaximumHeight = RandomValueGen.GetRandomInt(30, 40);
+            hints.MaximumWidth = RandomValueGen.GetRandomInt(60, 100);
+            var btn = GetControlFactory().CreateButton();
+            btn.Width = hints.MaximumWidth + RandomValueGen.GetRandomInt(10, 20);
+            btn.Height = hints.MaximumHeight + RandomValueGen.GetRandomInt(10, 20);
+            
+            //---------------Execute Test ----------------------
+
+            //---------------Test Result -----------------------
+            Assert.That(btn.Width, Is.LessThanOrEqualTo(hints.MaximumWidth), "UI width hint not observed");
+            Assert.That(btn.Height, Is.LessThanOrEqualTo(hints.MaximumHeight), "UI height hint not observed");
+        }
+
+        [Test]
+        public void Test_ConstructLayoutManager_ObservesUIHints()
+        {
+            //---------------Set up test pack-------------------
+            var defaultHorizontalGap = RandomValueGen.GetRandomInt(10, 20);
+            var defaultVerticalGap = RandomValueGen.GetRandomInt(10, 20);
+            var defaultBorderSize = RandomValueGen.GetRandomInt(10, 20);
+            GlobalUIRegistry.UIStyleHints = new UIStyleHints() 
+            { 
+                LayoutHints = new LayoutHints() 
+                { 
+                    DefaultHorizontalGap = defaultHorizontalGap,
+                    DefaultVerticalGap = defaultVerticalGap,
+                    DefaultBorderSize = defaultBorderSize
+                }
+            };
+            var ctl = GetControlFactory().CreateControl();
+            var manager = new GridLayoutManager(ctl, GetControlFactory());
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+
+            //---------------Test Result -----------------------
+            Assert.AreEqual(manager.HorizontalGapSize, defaultHorizontalGap, "default horizontal gap ui hint not observed");
+            Assert.AreEqual(manager.VerticalGapSize, defaultVerticalGap, "default vertical gap ui hint not observed");
+            Assert.AreEqual(manager.BorderSize, defaultBorderSize, "default border size ui hint not observed");
+        }
+
+        [Test]
+        public void Test_DatePicker_ObservesMinUIHints()
+        {
+            //---------------Set up test pack-------------------
+            var defaultcontrol = GetControlFactory().CreateDateTimePicker();
+            GlobalUIRegistry.UIStyleHints = new UIStyleHints();
+            var hints = GlobalUIRegistry.UIStyleHints.DateTimePickerHints;
+            hints.MinimumHeight = defaultcontrol.Height + RandomValueGen.GetRandomInt(10, 20);
+            hints.MinimumWidth = defaultcontrol.Width + RandomValueGen.GetRandomInt(10, 20);
+            var newcontrol = GetControlFactory().CreateDateTimePicker();
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+
+            //---------------Test Result -----------------------
+            Assert.That(newcontrol.Width, Is.GreaterThanOrEqualTo(hints.MinimumWidth), "UI width hint not observed");
+            Assert.That(newcontrol.Height, Is.GreaterThanOrEqualTo(hints.MinimumHeight), "UI width hint not observed");
+            Assert.That(newcontrol.Font.Size, Is.GreaterThanOrEqualTo(hints.MinimumFontSize), "UI font size hint not observed");
+        }
+
+        [Test]
+        public void Test_DatePicker_ObservesMaxUIHints()
+        {
+            //---------------Set up test pack-------------------
+            var defaultcontrol = GetControlFactory().CreateDateTimePicker();
+            GlobalUIRegistry.UIStyleHints = new UIStyleHints();
+            var hints = GlobalUIRegistry.UIStyleHints.DateTimePickerHints;
+            hints.MaximumHeight = defaultcontrol.Height + RandomValueGen.GetRandomInt(10, 20);
+            hints.MaximumWidth = defaultcontrol.Width + RandomValueGen.GetRandomInt(10, 20);
+            var newcontrol = GetControlFactory().CreateDateTimePicker();
+            newcontrol.Width = hints.MaximumWidth + 10;
+            newcontrol.Height = hints.MaximumHeight + 10;
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+
+            //---------------Test Result -----------------------
+            Assert.That(newcontrol.Width, Is.LessThanOrEqualTo(hints.MaximumWidth), "UI width hint not observed");
+            Assert.That(newcontrol.Height, Is.LessThanOrEqualTo(hints.MaximumHeight), "UI width hint not observed");
+        }
+
+        [Test]
+        public void Test_Label_ObservesMinUIHints()
+        {
+            //---------------Set up test pack-------------------
+            var defaultcontrol = GetControlFactory().CreateLabel();
+            GlobalUIRegistry.UIStyleHints = new UIStyleHints();
+            var hints = GlobalUIRegistry.UIStyleHints.LabelHints;
+            hints.MinimumHeight = defaultcontrol.Height + RandomValueGen.GetRandomInt(10, 20);
+            hints.MinimumWidth = defaultcontrol.Width + RandomValueGen.GetRandomInt(10, 20);
+            var newcontrol = GetControlFactory().CreateLabel();
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+
+            //---------------Test Result -----------------------
+            Assert.That(newcontrol.Width, Is.GreaterThanOrEqualTo(hints.MinimumWidth), "UI width hint not observed");
+            Assert.That(newcontrol.Height, Is.GreaterThanOrEqualTo(hints.MinimumHeight), "UI width hint not observed");
+            Assert.That(newcontrol.Font.Size, Is.GreaterThanOrEqualTo(hints.MinimumFontSize), "UI font size hint not observed");
+        }
+
+        [Test]
+        public void Test_Label_ObservesMaxUIHints()
+        {
+            //---------------Set up test pack-------------------
+            var defaultcontrol = GetControlFactory().CreateLabel();
+            GlobalUIRegistry.UIStyleHints = new UIStyleHints();
+            var hints = GlobalUIRegistry.UIStyleHints.LabelHints;
+            hints.MaximumHeight = defaultcontrol.Height + RandomValueGen.GetRandomInt(10, 20);
+            hints.MaximumWidth = defaultcontrol.Width + RandomValueGen.GetRandomInt(10, 20);
+            var newcontrol = GetControlFactory().CreateLabel();
+            newcontrol.Width = hints.MaximumWidth + 10;
+            newcontrol.Height = hints.MaximumHeight + 10;
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+
+            //---------------Test Result -----------------------
+            Assert.That(newcontrol.Width, Is.LessThanOrEqualTo(hints.MaximumWidth), "UI width hint not observed");
+            Assert.That(newcontrol.Height, Is.LessThanOrEqualTo(hints.MaximumHeight), "UI width hint not observed");
+        }
+
+        [Test]
+        public void Test_CheckBox_ObservesMinUIHints()
+        {
+            //---------------Set up test pack-------------------
+            var defaultcontrol = GetControlFactory().CreateCheckBox();
+            GlobalUIRegistry.UIStyleHints = new UIStyleHints();
+            var hints = GlobalUIRegistry.UIStyleHints.CheckBoxHints;
+            hints.MinimumHeight = defaultcontrol.Height + RandomValueGen.GetRandomInt(10, 20);
+            hints.MinimumWidth = defaultcontrol.Width + RandomValueGen.GetRandomInt(10, 20);
+            var newcontrol = GetControlFactory().CreateCheckBox();
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+
+            //---------------Test Result -----------------------
+            Assert.That(newcontrol.Width, Is.GreaterThanOrEqualTo(hints.MinimumWidth), "UI width hint not observed");
+            Assert.That(newcontrol.Height, Is.GreaterThanOrEqualTo(hints.MinimumHeight), "UI width hint not observed");
+            Assert.That(newcontrol.Font.Size, Is.GreaterThanOrEqualTo(hints.MinimumFontSize), "UI font size hint not observed");
+        }
+
+        [Test]
+        public void Test_CheckBox_ObservesMaxUIHints()
+        {
+            //---------------Set up test pack-------------------
+            var defaultcontrol = GetControlFactory().CreateCheckBox();
+            GlobalUIRegistry.UIStyleHints = new UIStyleHints();
+            var hints = GlobalUIRegistry.UIStyleHints.CheckBoxHints;
+            hints.MaximumHeight = defaultcontrol.Height + RandomValueGen.GetRandomInt(10, 20);
+            hints.MaximumWidth = defaultcontrol.Width + RandomValueGen.GetRandomInt(10, 20);
+            var newcontrol = GetControlFactory().CreateCheckBox();
+            newcontrol.Width = hints.MaximumWidth + 10;
+            newcontrol.Height = hints.MaximumHeight + 10;
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+
+            //---------------Test Result -----------------------
+            Assert.That(newcontrol.Width, Is.LessThanOrEqualTo(hints.MaximumWidth), "UI width hint not observed");
+            Assert.That(newcontrol.Height, Is.LessThanOrEqualTo(hints.MaximumHeight), "UI width hint not observed");
+        }
+
+        [Test]
+        public void Test_TextBox_ObservesMinUIHints()
+        {
+            //---------------Set up test pack-------------------
+            var defaultcontrol = GetControlFactory().CreateTextBox();
+            GlobalUIRegistry.UIStyleHints = new UIStyleHints();
+            var hints = GlobalUIRegistry.UIStyleHints.TextBoxHints;
+            hints.MinimumHeight = defaultcontrol.Height + RandomValueGen.GetRandomInt(10, 20);
+            hints.MinimumWidth = defaultcontrol.Width + RandomValueGen.GetRandomInt(10, 20);
+            var newcontrol = GetControlFactory().CreateTextBox();
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+
+            //---------------Test Result -----------------------
+            Assert.That(newcontrol.Width, Is.GreaterThanOrEqualTo(hints.MinimumWidth), "UI width hint not observed");
+            Assert.That(newcontrol.Height, Is.GreaterThanOrEqualTo(hints.MinimumHeight), "UI width hint not observed");
+            Assert.That(newcontrol.Font.Size, Is.GreaterThanOrEqualTo(hints.MinimumFontSize), "UI font size hint not observed");
+        }
+
+        [Test]
+        public void Test_TextBox_ObservesMaxUIHints()
+        {
+            //---------------Set up test pack-------------------
+            var defaultcontrol = GetControlFactory().CreateTextBox();
+            GlobalUIRegistry.UIStyleHints = new UIStyleHints();
+            var hints = GlobalUIRegistry.UIStyleHints.TextBoxHints;
+            hints.MaximumHeight = defaultcontrol.Height + RandomValueGen.GetRandomInt(10, 20);
+            hints.MaximumWidth = defaultcontrol.Width + RandomValueGen.GetRandomInt(10, 20);
+            var newcontrol = GetControlFactory().CreateTextBox();
+            newcontrol.Width = hints.MaximumWidth + 10;
+            newcontrol.Height = hints.MaximumHeight + 10;
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+
+            //---------------Test Result -----------------------
+            Assert.That(newcontrol.Width, Is.LessThanOrEqualTo(hints.MaximumWidth), "UI width hint not observed");
+            Assert.That(newcontrol.Height, Is.LessThanOrEqualTo(hints.MaximumHeight), "UI width hint not observed");
+        }
+
+        [Test]
+        public void Test_ComboBox_ObservesMinUIHints()
+        {
+            //---------------Set up test pack-------------------
+            var defaultcontrol = GetControlFactory().CreateComboBox();
+            GlobalUIRegistry.UIStyleHints = new UIStyleHints();
+            var hints = GlobalUIRegistry.UIStyleHints.ComboBoxHints;
+            hints.MinimumHeight = defaultcontrol.Height + RandomValueGen.GetRandomInt(10, 20);
+            hints.MinimumWidth = defaultcontrol.Width + RandomValueGen.GetRandomInt(10, 20);
+            hints.AllowTextEditing = false;
+            var newcontrol = GetControlFactory().CreateComboBox();
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+
+            //---------------Test Result -----------------------
+            Assert.That(newcontrol.Width, Is.GreaterThanOrEqualTo(hints.MinimumWidth), "UI width hint not observed");
+            // combobox height constraints are set by the containing text, apparently
+            Assert.That(newcontrol.Font.Size, Is.GreaterThanOrEqualTo(hints.MinimumFontSize), "UI font size hint not observed");
+            var cmbwin = newcontrol as Habanero.Faces.Win.ComboBoxWin;
+            if (cmbwin != null)
+            {
+                Assert.AreEqual(cmbwin.DropDownStyle, System.Windows.Forms.ComboBoxStyle.DropDownList, "allow text edit hint ignored");
+            }
+            var cmbvwg = newcontrol as Habanero.Faces.VWG.ComboBoxVWG;
+            if (cmbvwg != null)
+            {
+                Assert.AreEqual(cmbvwg.DropDownStyle, Gizmox.WebGUI.Forms.ComboBoxStyle.DropDownList, "allow text edit hint ignored");
+            }
+        }
+
+        [Test]
+        public void Test_ComboBox_ObservesMaxUIHints()
+        {
+            //---------------Set up test pack-------------------
+            var defaultcontrol = GetControlFactory().CreateLabel();
+            GlobalUIRegistry.UIStyleHints = new UIStyleHints();
+            var hints = GlobalUIRegistry.UIStyleHints.LabelHints;
+            hints.MaximumHeight = defaultcontrol.Height + RandomValueGen.GetRandomInt(10, 20);
+            hints.MaximumWidth = defaultcontrol.Width + RandomValueGen.GetRandomInt(10, 20);
+            var newcontrol = GetControlFactory().CreateLabel();
+            newcontrol.Width = hints.MaximumWidth + 10;
+            newcontrol.Height = hints.MaximumHeight + 10;
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+
+            //---------------Test Result -----------------------
+            Assert.That(newcontrol.Width, Is.LessThanOrEqualTo(hints.MaximumWidth), "UI width hint not observed");
+            Assert.That(newcontrol.Height, Is.LessThanOrEqualTo(hints.MaximumHeight), "UI width hint not observed");
+        }
+
+        [Test]
+        public void Test_SetAllControlHints_SetsAllControlHints()
+        {
+            //---------------Set up test pack-------------------
+            var template = new ControlHints()
+            {
+                MaximumHeight = RandomValueGen.GetRandomInt(100, 150),
+                MinimumHeight = RandomValueGen.GetRandomInt(50, 100),
+                MinimumWidth = RandomValueGen.GetRandomInt(50, 100),
+                MaximumWidth = RandomValueGen.GetRandomInt(100, 150),
+                DefaultFontFamily = new FontFamily("Wingdings"),
+                MinimumFontSize = (float)RandomValueGen.GetRandomDecimal(10, 20)
+            };
+            GlobalUIRegistry.UIStyleHints = new UIStyleHints();
+            GlobalUIRegistry.UIStyleHints.SetAllControlHints(template);
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+
+            //---------------Test Result -----------------------
+            var test = new ControlHints[] {
+                GlobalUIRegistry.UIStyleHints.ButtonHints,
+                GlobalUIRegistry.UIStyleHints.LabelHints,
+                GlobalUIRegistry.UIStyleHints.TextBoxHints,
+                GlobalUIRegistry.UIStyleHints.DateTimePickerHints,
+                GlobalUIRegistry.UIStyleHints.ComboBoxHints,
+                GlobalUIRegistry.UIStyleHints.CheckBoxHints
+            };
+            foreach (var t in test)
+            {
+                Assert.That(t.Equals(template));
+            }
         }
 
         [Test]

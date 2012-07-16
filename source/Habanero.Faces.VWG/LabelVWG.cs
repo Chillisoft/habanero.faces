@@ -16,6 +16,8 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
+
+using System.Drawing;
 using Gizmox.WebGUI.Forms;
 using Habanero.Faces.Base;
 
@@ -32,15 +34,25 @@ namespace Habanero.Faces.VWG
         /// Constructs the Label
         ///</summary>
         ///<param name="labelText"></param>
-        public LabelVWG(string labelText)
+        public LabelVWG(string labelText = "")
         {
             base.Text = labelText;
+            this.ObserveGlobalUIHints();
         }
-        ///<summary>
-        /// Constructs the Label
-        ///</summary>
-        public LabelVWG()
+
+        private void ObserveGlobalUIHints()
         {
+            if (GlobalUIRegistry.UIStyleHints != null)
+            {
+                var hints = GlobalUIRegistry.UIStyleHints.LabelHints;
+                this.MinimumSize = new Size(hints.MinimumWidth, hints.MinimumHeight);
+                if ((hints.MaximumHeight > hints.MinimumHeight) && (hints.MaximumWidth > hints.MinimumWidth))
+                    this.MaximumSize = new Size(hints.MaximumWidth, hints.MaximumHeight);
+                if (hints.DefaultFontFamily != null)
+                    this.Font = new Font(hints.DefaultFontFamily, this.Font.Size);
+                if (hints.MinimumFontSize > this.Font.Size)
+                    this.Font = new Font(this.Font.FontFamily, hints.MinimumFontSize);
+            }
         }
 
         /// <summary>

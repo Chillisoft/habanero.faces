@@ -17,8 +17,11 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
+using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.Faces.Base;
+using Habanero.Faces.Base.Async;
+using Habanero.Faces.Win.Async;
 
 namespace Habanero.Faces.Win
 {
@@ -31,8 +34,11 @@ namespace Habanero.Faces.Win
     /// This control is suitable for a business object collection with a limited
     /// number of objects.
     /// </summary>
-    public class BOColTabControlWin : UserControlWin, IBOColTabControl
+    public class BOColTabControlWin : UserControlWin, IBOColTabControl, ISupportAsyncLoadingObject
     {
+        public EventHandler AsyncOperationComplete { get; set; }
+        public EventHandler AsyncOperationStarted { get; set; }
+        
         private readonly IControlFactory _controlFactory;
         private readonly ITabControl _tabControl;
         private readonly BOColTabControlManager _boColTabControlManager;
@@ -60,6 +66,18 @@ namespace Habanero.Faces.Win
             _boColTabControlManager.BusinessObjectSelected += delegate { FireBusinessObjectSelected(); };
             _boColTabControlManager.TabPageAdded += (sender, e) => FireTabPageAdded(e.TabPage, e.BOControl);
             _boColTabControlManager.TabPageRemoved += (sender, e) => FireTabPageRemoved(e.TabPage, e.BOControl);
+
+            this.AsyncOperationStarted += (sender, e) =>
+                {
+                    this.Cursor = Cursors.WaitCursor;
+                    this.Enabled = false;
+                };
+
+            this.AsyncOperationComplete += (sender, e) =>
+                {
+                    this.Cursor = Cursors.Default;
+                    this.Enabled = true;
+                };
         }
 
         private void FireTabPageAdded(ITabPage tabPage, IBusinessObjectControl boControl)
@@ -164,6 +182,35 @@ namespace Habanero.Faces.Win
             set { this.BOColTabControlManager.BusinessObjectControlCreator = value; }
         }
 
+        public void PopulateAsync<T>(Criteria criteria, IOrderCriteria order) where T : class, IBusinessObject, new()
+        {
+            var worker = new AsyncLoaderObject<T>()
+            {
+                DisplayObject = this,
+                AsyncOperationComplete = this.AsyncOperationComplete,
+                AsyncOperationStarted = this.AsyncOperationStarted,
+                Criteria = criteria
+            };
+            worker.FetchAsync();
+        }
+
+        public void PopulateAsync<T>(string criteria, string order) where T : class, IBusinessObject, new()
+        {
+            this.PopulateAsync<T>(CriteriaParser.CreateCriteria(criteria), OrderCriteria.FromString(order));
+        }
+
+        public void PopulateAsync<T>(DataRetrieverObjectDelegate retrieverCallback) where T: class, IBusinessObject, new()
+        {
+            var worker = new AsyncLoaderObject<T>()
+            {
+                DisplayObject = this,
+                AsyncOperationComplete = this.AsyncOperationComplete,
+                AsyncOperationStarted =  this.AsyncOperationStarted,
+                DataRetriever = retrieverCallback
+            };
+            worker.FetchAsync();
+        }
+
         /// <summary>
         /// Returns the manager that provides logic common to all
         /// UI environments
@@ -233,5 +280,6 @@ namespace Habanero.Faces.Win
         }
 
         #endregion
+
     }
 }

@@ -68,7 +68,7 @@ namespace Habanero.Faces.Base
 
                 foreach (ICollapsiblePanel panel in PanelsList)
                 {
-                    totalHeight += panel.ExpandedHeight + ColumnLayoutManager.GapSize;
+                    totalHeight += panel.ExpandedHeight + ColumnLayoutManager.VerticalGapSize;
                 }
                 return totalHeight;
             }

@@ -17,6 +17,7 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using Habanero.Base;
+using Habanero.Faces.Base.Async;
 
 namespace Habanero.Faces.Base
 {
@@ -86,5 +87,6 @@ namespace Habanero.Faces.Base
         /// the default handler does not interfere with your custom handler. 
         ///</summary>
         bool DoubleClickEditsBusinessObject { get; set; }
+
     }
 }

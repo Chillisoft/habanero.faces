@@ -34,7 +34,8 @@ namespace Habanero.Faces.Base
         /// </summary>
         protected readonly IControlFactory _controlFactory;
         private int _borderSize = DefaultBorderSize;
-        private int _gapSize = DefaultGapSize;
+        private int _horizontalGapSize = DefaultGapSize;
+        private int _verticalGapSize = DefaultGapSize;
         /// <summary>
         /// The default border size used in all layout managers. The Border size is the 
         /// Gap between the Edge of the parent control and the placement of the control in it.
@@ -64,8 +65,20 @@ namespace Habanero.Faces.Base
             {
                 throw new LayoutManagerException("You cannot initialise the layout manager with a control that already contains controls");
             }
+            this.ObserveGlobalUIHints();
             _controlFactory = controlFactory;
             SetManagedControl(managedControl);
+        }
+
+        private void ObserveGlobalUIHints()
+        {
+            if (GlobalUIRegistry.UIStyleHints != null)
+            {
+                var hints = GlobalUIRegistry.UIStyleHints.LayoutHints;
+                this.VerticalGapSize = hints.DefaultVerticalGap;
+                this.HorizontalGapSize = hints.DefaultHorizontalGap;
+                this.BorderSize = hints.DefaultBorderSize;
+            }
         }
 
         private void SetManagedControl(IControlHabanero managedControl)
@@ -108,12 +121,22 @@ namespace Habanero.Faces.Base
         /// <summary>
         /// Gets and sets the attribute controlling the gap size
         /// </summary>
-        public int GapSize
+        public int HorizontalGapSize
         {
-            get { return _gapSize; }
+            get { return _horizontalGapSize; }
             set
             {
-                _gapSize = value;
+                _horizontalGapSize = value;
+                RefreshControlPositions();
+            }
+        }
+
+        public int VerticalGapSize
+        {
+            get { return _verticalGapSize; }
+            set
+            {
+                _verticalGapSize = value;
                 RefreshControlPositions();
             }
         }

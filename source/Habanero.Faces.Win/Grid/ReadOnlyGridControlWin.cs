@@ -18,29 +18,21 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.ComponentModel;
+using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
+using Habanero.Faces.Base.Async;
+using Habanero.Faces.Win.Async;
 
 namespace Habanero.Faces.Win
 {
-    /// <summary>
-    /// Provides a combination of read-only grid, filter and buttons used to edit a
-    /// collection of business objects.
-    /// <br/>
-    /// Adding, editing and deleting objects is done by clicking the available
-    /// buttons in the button control (accessed through the Buttons property).
-    /// By default, this uses of a popup form for editing of the object, as defined
-    /// in the "form" element of the class definitions for that object.  You can
-    /// override the editing controls using the BusinessObjectEditor/Creator/Deletor
-    /// properties in this class.
-    /// <br/>
-    /// A filter control is placed above the grid and is used to filter which rows
-    /// are shown.
-    /// </summary>
-    public class ReadOnlyGridControlWin : PanelWin, IReadOnlyGridControl, ISupportInitialize
+    public class ReadOnlyGridControlWin : PanelWin, IReadOnlyGridControl, ISupportInitialize, ISupportAsyncLoadingCollection
     {
+        public EventHandler AsyncOperationComplete { get; set; }
+        public EventHandler AsyncOperationStarted { get; set; }
+        private bool _inAsyncOperation;
         private readonly IReadOnlyGridButtonsControl _buttons;
         private readonly IControlFactory _controlFactory;
         private readonly ReadOnlyGridWin _grid;
@@ -80,6 +72,17 @@ namespace Habanero.Faces.Win
             _doubleClickEditsBusinessObject = false;
             DoubleClickEditsBusinessObject = true;
             this.Grid.BusinessObjectSelected += Grid_OnBusinessObjectSelected;
+
+            this.AsyncOperationComplete += (sender, e) =>
+                {
+                    this.Enabled = true;
+                    this.Cursor = Cursors.Default;
+                };
+            this.AsyncOperationStarted += (sender, e) =>
+                {
+                    this.Enabled = false;
+                    this.Cursor = Cursors.WaitCursor;
+                };
         }
 
         #region IReadOnlyGridControl Members
@@ -315,6 +318,41 @@ namespace Habanero.Faces.Win
         public void SetBusinessObjectCollection(IBusinessObjectCollection boCollection)
         {
             InternalSetBOCol(boCollection);
+        }
+
+
+        public void PopulateAsync<T>(string criteria, string order) where T: class, IBusinessObject, new()
+        {
+            this.PopulateAsync<T>(CriteriaParser.CreateCriteria(criteria), OrderCriteria.FromString(order));
+        }
+
+        public void PopulateAsync<T>(Criteria criteria, IOrderCriteria order) where T: class, IBusinessObject, new()
+        {
+            lock (this)
+            {
+                if (this._inAsyncOperation)
+                    throw new MultipleAsyncOperationException("Application error: the application must not submit mutliple asynchronous requests to a grid control");
+            }
+            var worker = new AsyncLoaderCollection<T>()
+            {
+                Criteria = criteria,
+                DisplayObject = this,
+                AsyncOperationComplete = this.AsyncOperationComplete,
+                AsyncOperationStarted = this.AsyncOperationStarted
+            };
+            worker.FetchAsync();
+        }
+
+        public void PopulateAsync<T>(DataRetrieverCollectionDelegate dataRetrieverCallback) where T : class, IBusinessObject, new()
+        {
+            var worker = new AsyncLoaderCollection<T>()
+            {
+                DataRetriever = dataRetrieverCallback,
+                AsyncOperationComplete = this.AsyncOperationComplete,
+                AsyncOperationStarted = this.AsyncOperationStarted,
+                DisplayObject = this
+            };
+            worker.FetchAsync();
         }
 
         private void InternalSetBOCol(IBusinessObjectCollection boCollection)
@@ -589,5 +627,6 @@ namespace Habanero.Faces.Win
         }
 
         #endregion
+
     }
 }

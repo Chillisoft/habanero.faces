@@ -18,6 +18,7 @@
 // ---------------------------------------------------------------------------------
 
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 using Habanero.Faces.Base;
 
@@ -68,6 +69,22 @@ namespace Habanero.Faces.Win
                         this.Height = (int)size.Height + 1;
                     }
                 };
+            this.ObserveGlobalUIHints();
+        }
+
+        private void ObserveGlobalUIHints()
+        {
+            if (GlobalUIRegistry.UIStyleHints != null)
+            {
+                var hints = GlobalUIRegistry.UIStyleHints.CheckBoxHints;
+                this.MinimumSize = new Size(hints.MinimumWidth, hints.MinimumHeight);
+                if ((hints.MaximumHeight > hints.MinimumHeight) && (hints.MaximumWidth > hints.MinimumWidth))
+                    this.MaximumSize = new Size(hints.MaximumWidth, hints.MaximumHeight);
+                if (hints.DefaultFontFamily != null)
+                    this.Font = new Font(hints.DefaultFontFamily, this.Font.Size);
+                if (hints.MinimumFontSize > this.Font.Size)
+                    this.Font = new Font(this.Font.FontFamily, hints.MinimumFontSize);
+            }
         }
 
     }

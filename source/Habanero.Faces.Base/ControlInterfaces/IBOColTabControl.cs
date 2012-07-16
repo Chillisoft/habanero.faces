@@ -88,5 +88,6 @@ namespace Habanero.Faces.Base
         /// This has been created for performance reasons.
         /// </summary>
         BusinessObjectControlCreatorDelegate BusinessObjectControlCreator { get; set; }
+
     }
 }

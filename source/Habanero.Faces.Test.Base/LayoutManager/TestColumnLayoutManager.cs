@@ -210,7 +210,7 @@ namespace Habanero.Faces.Test.Base
 
             Assert.AreEqual(columnLayoutManager.BorderSize, control2.Left);
             Assert.AreEqual(columnLayoutManager.BorderSize + control1.Height +
-                            columnLayoutManager.GapSize, control2.Top);
+                            columnLayoutManager.VerticalGapSize, control2.Top);
             Assert.AreEqual(managedControl.Width - columnLayoutManager.BorderSize*2, control2.Width);
             //---------------Tear Down -------------------------          
         }
@@ -526,7 +526,8 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             IControlHabanero managedControl = GetControlFactory().CreatePanel();
             ColumnLayoutManager columnLayoutManager = new ColumnLayoutManager(managedControl, GetControlFactory());
-            columnLayoutManager.GapSize = 0;
+            columnLayoutManager.HorizontalGapSize = 0;
+            columnLayoutManager.VerticalGapSize = 0;
             columnLayoutManager.BorderSize = 0;
             IControlHabanero createdControl1 = GetControlFactory().CreateControl();
             IControlHabanero createdControl2 = GetControlFactory().CreateControl();
@@ -547,7 +548,8 @@ namespace Habanero.Faces.Test.Base
             int originalWidth = 400;
             managedControl.Width = originalWidth;
             ColumnLayoutManager columnLayoutManager = new ColumnLayoutManager(managedControl, GetControlFactory());
-            columnLayoutManager.GapSize = 0;
+            columnLayoutManager.HorizontalGapSize = 0;
+            columnLayoutManager.VerticalGapSize = 0;
             columnLayoutManager.BorderSize = 0;
             IControlHabanero createdControl1 = GetControlFactory().CreateControl();
             IControlHabanero createdControl2 = GetControlFactory().CreateControl();

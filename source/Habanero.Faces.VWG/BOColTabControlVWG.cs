@@ -17,6 +17,7 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
+using Habanero.BO;
 using Habanero.Base;
 using Habanero.Faces.Base;
 
@@ -159,6 +160,16 @@ namespace Habanero.Faces.VWG
         {
             get { return this.BOColTabControlManager.BusinessObjectControlCreator; }
             set { this.BOColTabControlManager.BusinessObjectControlCreator = value; }
+        }
+
+        public void Populate<T>(Criteria criteria) where T : class, IBusinessObject, new()
+        {
+            this.CurrentBusinessObject = Broker.GetBusinessObject<T>(criteria);
+        }
+
+        public void Populate<T>(string criteria) where T : class, IBusinessObject, new()
+        {
+            this.Populate<T>(CriteriaParser.CreateCriteria(criteria));
         }
 
         /// <summary>

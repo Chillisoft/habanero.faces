@@ -238,12 +238,13 @@ namespace Habanero.Faces.Test.Base
             IControlHabanero managedControl = CreateManagedControl();
             FlowLayoutManager manager = CreateFlowLayoutManager(managedControl);
             //---------------Execute Test ----------------------
-            manager.GapSize = 2;
+            manager.HorizontalGapSize = 2;
+            manager.VerticalGapSize = 2;
             manager.AddControl(CreateStandardControl());
             IControlHabanero ctl = CreateStandardControl();
             manager.AddControl(ctl);
             //---------------Test Result -----------------------
-            Assert.AreEqual(manager.GapSize + _STD_CONTROL_WIDTH + _STD_BORDER, ctl.Left, "Left of ctl should be bordersize + 10 + gapsize.");
+            Assert.AreEqual(manager.HorizontalGapSize + _STD_CONTROL_WIDTH + _STD_BORDER, ctl.Left, "Left of ctl should be bordersize + 10 + gapsize.");
         }
 
         [Test]
@@ -258,7 +259,8 @@ namespace Habanero.Faces.Test.Base
             manager.AddControl(CreateControl(80, 20));
             IControlHabanero ctl = CreateControl(50, 20);
             manager.AddControl(ctl);
-            manager.GapSize = 2;
+            manager.HorizontalGapSize = 2;
+            manager.VerticalGapSize = 2;
             //---------------Test Result -----------------------
             Assert.AreEqual(22, ctl.Top, "Top of ctl should be 20 + gapsize. Border is zero");
         }
@@ -607,7 +609,8 @@ namespace Habanero.Faces.Test.Base
         protected static FlowLayoutManager CreateFlowLayoutManager(IControlHabanero managedControl)
         {
             FlowLayoutManager manager = new FlowLayoutManager(managedControl, null);
-            manager.GapSize = _STD_GAP;
+            manager.HorizontalGapSize = _STD_GAP;
+            manager.VerticalGapSize = _STD_GAP;
             return manager;
         }
 
