@@ -5,11 +5,23 @@ using Habanero.Base;
 
 namespace Habanero.Faces.Base.Async
 {
+    /// <summary>
+    /// Loader for setting CurrentBusinessObject on a control asynchronously
+    /// </summary>
+    /// <typeparam name="T">BO type</typeparam>
     public class AsyncLoaderObjectWin<T> : AsyncLoaderBase<T> where T : class, IBusinessObject, new()
     {
+        /// <summary>
+        /// Delegate type used for the data retrieval method
+        /// </summary>
         public DataRetrieverObjectDelegate DataRetriever { get; set; }
+        /// <summary>
+        /// UI control which will be used to synchronise the UI portion of the work after the
+        /// long background operation completes
+        /// </summary>
         public ISupportAsyncLoadingObject DisplayObject { get; set; }
-        protected override void AsyncFetchWorker<T>()// where T: class, IBusinessObject, new()
+
+        protected override void AsyncFetchWorker<T>()
         {
             IBusinessObject bo;
             if (this.DataRetriever == null)

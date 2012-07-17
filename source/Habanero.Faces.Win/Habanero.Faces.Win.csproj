@@ -101,6 +101,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Async\AsyncLoaderObjectWin.cs" />
+    <Compile Include="Async\BackgroundWorkerWin.cs" />
+    <Compile Include="Async\MethodDispatcher.cs" />
+    <Compile Include="Async\UIThreadExecutorWin.cs" />
     <Compile Include="BOEditorControlWin.cs">
       <SubType>UserControl</SubType>
     </Compile>

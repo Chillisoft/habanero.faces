@@ -23,7 +23,7 @@ namespace Habanero.Faces.Test.Win
 
         public class BaseBO : BusinessObject
         {
-            public Guid ID
+            public new Guid ID
             {
                 get { return (Guid)this.GetPropertyValue("ID"); }
                 set { this.SetPropertyValue("ID", value); }
@@ -41,7 +41,7 @@ namespace Habanero.Faces.Test.Win
             {
                 return this.Name;
             }
-            public Guid ID
+            public new Guid ID
             {
                 get { return (Guid)this.GetPropertyValue("ID"); }
                 set { this.SetPropertyValue("ID", value); }

@@ -31,21 +31,6 @@ namespace Habanero.Faces.Win
 {
     public class ReadOnlyGridControlWin : PanelWin, IReadOnlyGridControl, ISupportInitialize
     {
-        public void ExecuteOnUIThread(Delegate method)
-        {
-            for (var i = 0; i < 30; i++)
-            {
-                try
-                {
-                    this.BeginInvoke(method);
-                    return;
-                }
-                catch (Exception)
-                {
-                    Thread.Sleep(100);
-                }
-            }
-        }
 
         public EventHandler AsyncOperationComplete { get; set; }
         public EventHandler AsyncOperationStarted { get; set; }
@@ -92,11 +77,19 @@ namespace Habanero.Faces.Win
 
             this.AsyncOperationComplete += (sender, e) =>
                 {
+                    lock (this)
+                    {
+                        this._inAsyncOperation = false;
+                    }
                     this.Enabled = true;
                     this.Cursor = Cursors.Default;
                 };
             this.AsyncOperationStarted += (sender, e) =>
                 {
+                    lock (this)
+                    {
+                        this._inAsyncOperation = true;
+                    }
                     this.Enabled = false;
                     this.Cursor = Cursors.WaitCursor;
                 };

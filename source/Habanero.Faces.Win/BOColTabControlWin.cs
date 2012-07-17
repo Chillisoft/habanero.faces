@@ -37,22 +37,6 @@ namespace Habanero.Faces.Win
     /// </summary>
     public class BOColTabControlWin : UserControlWin, IBOColTabControl
     {
-        public void ExecuteOnUIThread(Delegate method)
-        {
-            for (var i = 0; i < 30; i++)
-            {
-                try
-                {
-                    this.BeginInvoke(method);
-                    return;
-                }
-                catch (Exception)
-                {
-                    Thread.Sleep(100);
-                }
-            }
-        }
-
         public EventHandler AsyncOperationComplete { get; set; }
         public EventHandler AsyncOperationStarted { get; set; }
         

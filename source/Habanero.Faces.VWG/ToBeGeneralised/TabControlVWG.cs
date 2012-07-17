@@ -80,7 +80,7 @@ namespace Habanero.Faces.VWG
         /// <summary>
         /// Gets or sets the currently selected tab page
         /// </summary>
-        public ITabPage SelectedTab
+        public new ITabPage SelectedTab
         {
             get
             {

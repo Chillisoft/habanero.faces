@@ -75,7 +75,7 @@ namespace Habanero.Faces.VWG
         /// immediately redraw itself and any child controls.
         /// Does nothing in the VWG environment.
         /// </summary>
-        public void Refresh()
+        public override void Refresh()
         {
             // do nothing
         }
