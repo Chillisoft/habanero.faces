@@ -36,8 +36,8 @@ namespace Habanero.Faces.VWG
     /// </summary>
     public class BOColTabControlVWG : UserControlVWG, IBOColTabControl
     {
-        public EventHandler AsyncOperationComplete { get; set; }
-        public EventHandler AsyncOperationStarted { get; set; }
+        public EventHandler OnAsyncOperationComplete { get; set; }
+        public EventHandler OnAsyncOperationStarted { get; set; }
         private readonly IControlFactory _controlFactory;
         private readonly ITabControl _tabControl;
         private readonly BOColTabControlManager _boColTabControlManager;
@@ -153,19 +153,25 @@ namespace Habanero.Faces.VWG
             set { BOColTabControlManager.CurrentBusinessObject = value; }
         }
 
-        public void PopulateObjectAsync<T>(DataRetrieverObjectDelegate dataRetrieverCallback) where T : class, IBusinessObject, new()
+        public void PopulateObjectAsync<T>(DataRetrieverObjectDelegate dataRetrieverCallback, Action afterPopulation = null) where T : class, IBusinessObject, new()
         {
+            this.RunAsyncOperationStartedHandler();
             this.CurrentBusinessObject = dataRetrieverCallback();
+            this.RunAsyncOperationCompleteHandler();
+            if (afterPopulation != null) afterPopulation();
         }
 
-        public void PopulateObjectAsync<T>(Criteria criteria) where T : class, IBusinessObject, new()
+        public void PopulateObjectAsync<T>(Criteria criteria, Action afterPopulation = null) where T : class, IBusinessObject, new()
         {
+            this.RunAsyncOperationStartedHandler();
             this.CurrentBusinessObject = Broker.GetBusinessObject<T>(criteria);
+            this.RunAsyncOperationCompleteHandler();
+            if (afterPopulation != null) afterPopulation();
         }
 
-        public void PopulateObjectAsync<T>(string criteria) where T : class, IBusinessObject, new()
+        public void PopulateObjectAsync<T>(string criteria, Action afterPopulation = null) where T : class, IBusinessObject, new()
         {
-            this.PopulateObjectAsync<T>(CriteriaParser.CreateCriteria(criteria));
+            this.PopulateObjectAsync<T>(CriteriaParser.CreateCriteria(criteria), afterPopulation);
         }
 
         /// <summary>
@@ -266,33 +272,40 @@ namespace Habanero.Faces.VWG
             method.DynamicInvoke();
         }
 
-        public void PopulateCollectionAsync<T>(DataRetrieverCollectionDelegate dataRetrieverCallback) where T : class, IBusinessObject, new()
+        public void PopulateCollectionAsync<T>(DataRetrieverCollectionDelegate dataRetrieverCallback, Action populateAfter = null) where T : class, IBusinessObject, new()
         {
             this.RunAsyncOperationStartedHandler();
             this.BusinessObjectCollection = dataRetrieverCallback();
             this.RunAsyncOperationCompleteHandler();
+            if (populateAfter != null) populateAfter();
         }
 
         private void RunAsyncOperationStartedHandler()
         {
-            if (this.AsyncOperationStarted != null)
-                this.AsyncOperationStarted(this, new EventArgs());
+            if (this.OnAsyncOperationStarted != null)
+                this.OnAsyncOperationStarted(this, new EventArgs());
         }
 
         private void RunAsyncOperationCompleteHandler()
         {
-            if (this.AsyncOperationComplete != null)
-                this.AsyncOperationComplete(this, new EventArgs());
+            if (this.OnAsyncOperationComplete != null)
+                this.OnAsyncOperationComplete(this, new EventArgs());
         }
 
-        public void PopulateCollectionAsync<T>(Criteria criteria, IOrderCriteria order = null) where T : class, IBusinessObject, new()
+        public void PopulateCollectionAsync<T>(Criteria criteria, IOrderCriteria order = null, Action afterPopulation = null) where T : class, IBusinessObject, new()
         {
+            this.RunAsyncOperationStartedHandler();
             this.BusinessObjectCollection = Broker.GetBusinessObjectCollection<T>(criteria, order);
+            this.RunAsyncOperationCompleteHandler();
+            if (afterPopulation != null) afterPopulation();
         }
 
-        public void PopulateCollectionAsync<T>(string criteria, string order = null) where T : class, IBusinessObject, new()
+        public void PopulateCollectionAsync<T>(string criteria, string order = null, Action afterPopulation = null) where T : class, IBusinessObject, new()
         {
+            this.RunAsyncOperationStartedHandler();
             this.PopulateCollectionAsync<T>(CriteriaParser.CreateCriteria(criteria), OrderCriteria.FromString(order));
+            this.RunAsyncOperationCompleteHandler();
+            if (afterPopulation != null) afterPopulation();
         }
     }
 }

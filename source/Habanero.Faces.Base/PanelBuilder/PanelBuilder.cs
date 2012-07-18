@@ -425,7 +425,7 @@ namespace Habanero.Faces.Base
 
         private static IClassDef GetClassDef(UIFormField formField)
         {
-            return formField.GetClassDef();
+            return formField.ClassDef;
         }
 
         private static void AddMultiLineTextbox(UIFormField formField, IControlHabanero inputControl)

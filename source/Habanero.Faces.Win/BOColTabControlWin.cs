@@ -17,8 +17,10 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
+using System.Collections.Concurrent;
 using System.Threading;
 using System.Windows.Forms;
+using Habanero.BO;
 using Habanero.Base;
 using Habanero.Faces.Base;
 using Habanero.Faces.Base.Async;
@@ -37,8 +39,8 @@ namespace Habanero.Faces.Win
     /// </summary>
     public class BOColTabControlWin : UserControlWin, IBOColTabControl
     {
-        public EventHandler AsyncOperationComplete { get; set; }
-        public EventHandler AsyncOperationStarted { get; set; }
+        public EventHandler OnAsyncOperationComplete { get; set; }
+        public EventHandler OnAsyncOperationStarted { get; set; }
         
         private readonly IControlFactory _controlFactory;
         private readonly ITabControl _tabControl;
@@ -68,13 +70,13 @@ namespace Habanero.Faces.Win
             _boColTabControlManager.TabPageAdded += (sender, e) => FireTabPageAdded(e.TabPage, e.BOControl);
             _boColTabControlManager.TabPageRemoved += (sender, e) => FireTabPageRemoved(e.TabPage, e.BOControl);
 
-            this.AsyncOperationStarted += (sender, e) =>
+            this.OnAsyncOperationStarted += (sender, e) =>
                 {
                     this.Cursor = Cursors.WaitCursor;
                     this.Enabled = false;
                 };
 
-            this.AsyncOperationComplete += (sender, e) =>
+            this.OnAsyncOperationComplete += (sender, e) =>
                 {
                     this.Cursor = Cursors.Default;
                     this.Enabled = true;
@@ -183,33 +185,60 @@ namespace Habanero.Faces.Win
             set { this.BOColTabControlManager.BusinessObjectControlCreator = value; }
         }
 
-        public void PopulateObjectAsync<T>(Criteria criteria) where T : class, IBusinessObject, new()
+        public void PopulateObjectAsync<T>(Criteria criteria, Action afterPopulation = null) where T : class, IBusinessObject, new()
         {
-            var worker = new AsyncLoaderObjectWin<T>()
-            {
-                DisplayObject = this,
-                AsyncOperationComplete = this.AsyncOperationComplete,
-                AsyncOperationStarted = this.AsyncOperationStarted,
-                Criteria = criteria
-            };
-            worker.FetchAsync();
+            var data = new ConcurrentDictionary<string, object>();
+            data["businessobject"] = null;
+            this.RunOnAsyncOperationStarted();
+            BackgroundWorkerWin.Run(this, data,
+                (d) =>
+                {
+                    d["businessobject"] = Broker.GetBusinessObject<T>(criteria);
+                    return true;
+                },
+                (d) =>
+                {
+                    this.PopulateObjectFromAsyncUICallback(d, afterPopulation);
+                },
+                null,
+                this.NotifyObjectPopulationException);
         }
 
-        public void PopulateObjectAsync<T>(string criteria) where T : class, IBusinessObject, new()
+        public void PopulateObjectAsync<T>(string criteria, Action afterPopulate = null) where T : class, IBusinessObject, new()
         {
-            this.PopulateObjectAsync<T>(CriteriaParser.CreateCriteria(criteria));
+            this.PopulateObjectAsync<T>(CriteriaParser.CreateCriteria(criteria), afterPopulate);
         }
 
-        public void PopulateObjectAsync<T>(DataRetrieverObjectDelegate retrieverCallback) where T: class, IBusinessObject, new()
+        public void PopulateObjectAsync<T>(DataRetrieverObjectDelegate retrieverCallback, Action afterPopulate = null) where T: class, IBusinessObject, new()
         {
-            var worker = new AsyncLoaderObjectWin<T>()
-            {
-                DisplayObject = this,
-                AsyncOperationComplete = this.AsyncOperationComplete,
-                AsyncOperationStarted =  this.AsyncOperationStarted,
-                DataRetriever = retrieverCallback
-            };
-            worker.FetchAsync();
+            var data = new ConcurrentDictionary<string, object>();
+            data["businessobject"] = null;
+            this.RunOnAsyncOperationStarted();
+            BackgroundWorkerWin.Run(this, data,
+                (d) =>
+                {
+                    d["businessobject"] = retrieverCallback();
+                    return true;
+                },
+                (d) =>
+                {
+                    this.PopulateObjectFromAsyncUICallback(d, afterPopulate);
+                },
+                null,
+                this.NotifyObjectPopulationException);
+
+        }
+
+        private void NotifyObjectPopulationException(Exception ex)
+        {
+            GlobalRegistry.UIExceptionNotifier.Notify(ex, "Unable to load object data", "Error loading data");
+        }
+        private void PopulateObjectFromAsyncUICallback(ConcurrentDictionary<string, object> data, Action afterPopulation)
+        {
+            var bo  = data["businessobject"] as IBusinessObject;
+            this.CurrentBusinessObject = bo;
+            this.RunOnAsyncOperationComplete();
+            if (afterPopulation != null) afterPopulation();
         }
 
         /// <summary>
@@ -282,34 +311,72 @@ namespace Habanero.Faces.Win
 
         #endregion
 
-        public void PopulateCollectionAsync<T>(DataRetrieverCollectionDelegate dataRetrieverCallback) where T : class, IBusinessObject, new()
+        private void RunOnAsyncOperationStarted()
         {
-            var worker = new AsyncLoaderCollectionWin<T>()
-            {
-                AsyncOperationComplete = this.AsyncOperationComplete,
-                AsyncOperationStarted =  this.AsyncOperationStarted,
-                DataRetriever = dataRetrieverCallback,
-                DisplayObject = this
-            };
-            worker.FetchAsync();
+            if (this.OnAsyncOperationStarted != null)
+                this.OnAsyncOperationStarted(this, new EventArgs());
         }
 
-        public void PopulateCollectionAsync<T>(Criteria criteria, IOrderCriteria order = null) where T : class, IBusinessObject, new()
+        private void RunOnAsyncOperationComplete()
         {
-            var worker = new AsyncLoaderCollectionWin<T>()
-            {
-                AsyncOperationComplete =  this.AsyncOperationComplete,
-                AsyncOperationStarted = this.AsyncOperationStarted,
-                DisplayObject = this,
-                Criteria = criteria,
-                Order = order
-            };
-            worker.FetchAsync();
+            if (this.OnAsyncOperationComplete != null)
+                this.OnAsyncOperationComplete(this, new EventArgs());
         }
 
-        public void PopulateCollectionAsync<T>(string criteria, string order = null) where T : class, IBusinessObject, new()
+        private void PopulateCollectionFromAsyncUICallback(ConcurrentDictionary<string, object> data, Action afterPopulation)
         {
-            this.PopulateCollectionAsync<T>(CriteriaParser.CreateCriteria(criteria), OrderCriteria.FromString(order));
+            var boCollection = data["businessobjectcollection"] as IBusinessObjectCollection;
+            this.BusinessObjectCollection = boCollection;
+            this.RunOnAsyncOperationComplete();
+            if (afterPopulation != null) afterPopulation();
+        }
+
+        private void NotifyGridPopulationException(Exception ex)
+        {
+            GlobalRegistry.UIExceptionNotifier.Notify(ex, "Unable to load data grid", "Error loading data grid");
+        }
+
+        public void PopulateCollectionAsync<T>(DataRetrieverCollectionDelegate dataRetrieverCallback, Action afterPopulation = null) where T : class, IBusinessObject, new()
+        {
+            var data = new ConcurrentDictionary<string, object>();
+            data["businessobjectcollection"] = null;
+            this.RunOnAsyncOperationStarted();
+            BackgroundWorkerWin.Run(this, data,
+                (d) =>
+                {
+                    d["businessobjectcollection"] = dataRetrieverCallback();
+                    return true;
+                },
+                (d) =>
+                {
+                    this.PopulateCollectionFromAsyncUICallback(d, afterPopulation);
+                },
+                null,
+                this.NotifyGridPopulationException);
+        }
+
+        public void PopulateCollectionAsync<T>(Criteria criteria, IOrderCriteria order = null, Action afterPopulation = null) where T : class, IBusinessObject, new()
+        {
+            var data = new ConcurrentDictionary<string, object>();
+            data["businessobjectcollection"] = null;
+            this.RunOnAsyncOperationStarted();
+            BackgroundWorkerWin.Run(this, data,
+                (d) =>
+                {
+                    d["businessobjectcollection"] = Broker.GetBusinessObjectCollection<T>(criteria, order);
+                    return true;
+                },
+                (d) =>
+                {
+                    this.PopulateCollectionFromAsyncUICallback(d, afterPopulation);
+                },
+                null,
+                this.NotifyGridPopulationException);
+        }
+
+        public void PopulateCollectionAsync<T>(string criteria, string order = null, Action afterPopulation = null) where T : class, IBusinessObject, new()
+        {
+            this.PopulateCollectionAsync<T>(CriteriaParser.CreateCriteria(criteria), OrderCriteria.FromString(order), afterPopulation);
         }
     }
 }

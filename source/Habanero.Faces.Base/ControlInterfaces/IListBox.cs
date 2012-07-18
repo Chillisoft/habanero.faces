@@ -52,7 +52,7 @@ namespace Habanero.Faces.Base
         /// <summary>
         /// Occurs when the SelectedIndex property has changed
         /// </summary>
-        event EventHandler SelectedIndexChanged;
+        //event EventHandler SelectedIndexChanged; // provided by IListControl
         
         /// <summary>
         /// Unselects all items in the ListBox
@@ -79,7 +79,7 @@ namespace Habanero.Faces.Base
         /// <summary>
         /// Gets a collection containing the currently selected items in the ListBox
         /// </summary>
-        ISelectedObjectCollection SelectedItems { get; }
+        //ISelectedObjectCollection SelectedItems { get; } // provided by IListControl
 
         /// <summary>
         /// Gets or sets the method in which items are selected in the ListBox

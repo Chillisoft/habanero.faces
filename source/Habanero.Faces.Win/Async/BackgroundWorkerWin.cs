@@ -14,12 +14,12 @@ namespace Habanero.Faces.Win.Async
         public delegate void UIWorkerMethodDelegate(ConcurrentDictionary<string, object> data);
         public delegate void BackgroundWorkerExceptionHandlerDelegate(Exception ex);
 
+        public IActionDispatcher ActionDispatcher { get; protected set; }
         public BackgroundWorkerMethodDelegate BackgroundWorker { get; set; }
         public UIWorkerMethodDelegate OnSuccess { get; set; }
         public UIWorkerMethodDelegate OnCancelled { get; set; }
         public BackgroundWorkerExceptionHandlerDelegate OnException { get; set; }
         public ConcurrentDictionary<string, object> Data { get; set; }
-        public MethodDispatcher MethodDispatcher { get; set; }
 
         private Thread _thread;
 
@@ -62,7 +62,7 @@ namespace Habanero.Faces.Win.Async
                         if (!success)
                             break;
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         this.RunExceptionDelegate(new Exception("Delegate method returns a result which cannot be coalesced into a boolean value"));
                         success = false;
@@ -77,7 +77,7 @@ namespace Habanero.Faces.Win.Async
         {
             if (this.OnException != null)
             {
-                this.MethodDispatcher.Dispatch(() => { this.OnException(ex); });
+                this.ActionDispatcher.Dispatch(() => { this.OnException(ex); });
             }
         }
 
@@ -85,21 +85,19 @@ namespace Habanero.Faces.Win.Async
         {
             if (success && (this.OnSuccess != null))
             {
-                this.MethodDispatcher.Dispatch(() => { this.OnSuccess(this.Data); });
+                this.ActionDispatcher.Dispatch(() => { this.OnSuccess(this.Data); });
             }
             else if (this.OnCancelled != null)
             {
-                this.MethodDispatcher.Dispatch(() => { this.OnCancelled(this.Data); });
+                this.ActionDispatcher.Dispatch(() => { this.OnCancelled(this.Data); });
             }
         }
 
-        public static BackgroundWorkerWin Run(MethodDispatcher dispatcher, BackgroundWorkerMethodDelegate backgroundWorker, 
-            UIWorkerMethodDelegate onSuccess, UIWorkerMethodDelegate onCancel, BackgroundWorkerExceptionHandlerDelegate onException,
-            ConcurrentDictionary<string, object> data)
+        public static BackgroundWorkerWin Run(ActionDispatcher dispatcher, ConcurrentDictionary<string, object> data, BackgroundWorkerMethodDelegate backgroundWorker, UIWorkerMethodDelegate onSuccess, UIWorkerMethodDelegate onCancel, BackgroundWorkerExceptionHandlerDelegate onException)
         {
             var runner = new BackgroundWorkerWin()
             {
-                MethodDispatcher = dispatcher,
+                ActionDispatcher = dispatcher,
                 BackgroundWorker = backgroundWorker,
                 OnSuccess = onSuccess,
                 OnCancelled = onCancel,
@@ -110,11 +108,9 @@ namespace Habanero.Faces.Win.Async
             return runner;
         }
 
-        public static BackgroundWorkerWin Run(Control uiControl, BackgroundWorkerMethodDelegate backgroundWorker, 
-            UIWorkerMethodDelegate onSuccess, UIWorkerMethodDelegate onCancel, BackgroundWorkerExceptionHandlerDelegate onException,
-            ConcurrentDictionary<string, object> data)
+        public static BackgroundWorkerWin Run(Control uiControl, ConcurrentDictionary<string, object> data, BackgroundWorkerMethodDelegate backgroundWorker, UIWorkerMethodDelegate onSuccess, UIWorkerMethodDelegate onCancel, BackgroundWorkerExceptionHandlerDelegate onException)
         {
-            return Run(new MethodDispatcher(uiControl), backgroundWorker, onSuccess, onCancel, onException, data);
+            return Run(new ActionDispatcher(uiControl), data, backgroundWorker, onSuccess, onCancel, onException);
         }
 
     }

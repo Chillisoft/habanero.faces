@@ -3,14 +3,14 @@ using System.Windows.Forms;
 
 namespace Habanero.Faces.Win.Async
 {
-    public class MethodDispatcher
+    public class ActionDispatcher : IActionDispatcher
     {
         protected Control _dispatchControl;
-        public MethodDispatcher(Control dispatchOn)
+        public ActionDispatcher(Control dispatchOn)
         {
             this._dispatchControl = dispatchOn;
         }
-        public virtual void Dispatch(MethodInvoker method)
+        public virtual void Dispatch(Action method)
         {
             UIThreadExecutorWin.ExecuteOnUIThread(this._dispatchControl, method);
         }

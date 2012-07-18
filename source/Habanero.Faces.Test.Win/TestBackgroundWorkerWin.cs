@@ -10,13 +10,13 @@ namespace Habanero.Faces.Test.Win
     [TestFixture]
     class TestBackgroundWorkerWin
     {
-        private class MyMethodDispatcher : MethodDispatcher
+        private class MyMethodDispatcher : ActionDispatcher
         {
             public MyMethodDispatcher() : base(null)
             {
             }
 
-            public override void Dispatch(System.Windows.Forms.MethodInvoker method)
+            public override void Dispatch(Action method)
             {
                 method();
             }
@@ -33,11 +33,7 @@ namespace Habanero.Faces.Test.Win
             //---------------Execute Test ----------------------
             var worker = BackgroundWorkerWin.Run(
                 new MyMethodDispatcher(),
-                (data) => { return true; },
-                (data) => { successCalled = true; },
-                (data) => { cancelCalled = true; },
-                (ex) => { exceptionCalled = true; },
-                null);
+                null, (data) => { return true; }, (data) => { successCalled = true; }, (data) => { cancelCalled = true; }, (ex) => { exceptionCalled = true; });
             worker.WaitForBackgroundWorkerToComplete();
             //---------------Test Result -----------------------
             Assert.IsTrue(successCalled, "Success delegate not called (and should have been)");
@@ -58,11 +54,7 @@ namespace Habanero.Faces.Test.Win
             //---------------Execute Test ----------------------
             var worker = BackgroundWorkerWin.Run(
                 new MyMethodDispatcher(),
-                (data) => { return false; },
-                (data) => { successCalled = true; },
-                (data) => { cancelCalled = true; },
-                (ex) => { exceptionCalled = true; },
-                null);
+                null, (data) => { return false; }, (data) => { successCalled = true; }, (data) => { cancelCalled = true; }, (ex) => { exceptionCalled = true; });
             worker.WaitForBackgroundWorkerToComplete();
             //---------------Test Result -----------------------
             Assert.IsFalse(successCalled, "Success delegate called (and shouldn't have been)");
@@ -83,11 +75,7 @@ namespace Habanero.Faces.Test.Win
             //---------------Execute Test ----------------------
             var worker = BackgroundWorkerWin.Run(
                 new MyMethodDispatcher(),
-                (data) => { throw new Exception("Die!");  return false; },
-                (data) => { successCalled = true; },
-                (data) => { cancelCalled = true; },
-                (ex) => { exceptionCalled = true; },
-                null);
+                null, (data) => { throw new Exception("Die!");  return false; }, (data) => { successCalled = true; }, (data) => { cancelCalled = true; }, (ex) => { exceptionCalled = true; });
             worker.WaitForBackgroundWorkerToComplete();
             //---------------Test Result -----------------------
             Assert.IsFalse(successCalled, "Success delegate called (and shouldn't have been)");

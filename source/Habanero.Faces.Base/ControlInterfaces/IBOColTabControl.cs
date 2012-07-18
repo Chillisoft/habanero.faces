@@ -76,12 +76,6 @@ namespace Habanero.Faces.Base
         ITabPage GetTabPage(IBusinessObject bo);
 
         /// <summary>
-        /// Returns the business object represented in the currently
-        /// selected tab page
-        /// </summary>
-        IBusinessObject CurrentBusinessObject { get; set; }
-
-        /// <summary>
         /// Gets and Sets the Business Object Control Creator. This is a delegate for creating a
         ///  Business Object Control. This can be used as an alternate to setting the control
         /// on the <see cref="IBOColTabControl"/> so that a different instance of the control
