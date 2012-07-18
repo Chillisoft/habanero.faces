@@ -28,6 +28,7 @@ namespace Habanero.Faces.Win
         {
             Button = factory.CreateButton("...");
             TextBox = factory.CreateTextBox();
+            Button.MinimumSize = new Size(0, 0);
             TextBox.Enabled = false;
             this.Height = TextBox.Height;
             BorderLayoutManager borderLayoutManager = factory.CreateBorderLayoutManager(this);
