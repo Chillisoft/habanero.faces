@@ -118,6 +118,26 @@ namespace Habanero.Faces.Base
             }
         }
 
+        private int _gapSize;
+        /// <summary>
+        /// Gets and sets the attribute controlling gap size 
+        /// </summary>        
+        [Obsolete]
+        public int GapSize
+        {
+            get
+            {
+                return _gapSize;
+            }
+            set
+            {
+                _gapSize = value;
+                _horizontalGapSize = _gapSize;
+                _verticalGapSize = _gapSize;
+                RefreshControlPositions();
+            }
+        }
+
         /// <summary>
         /// Gets and sets the attribute controlling the gap size
         /// </summary>

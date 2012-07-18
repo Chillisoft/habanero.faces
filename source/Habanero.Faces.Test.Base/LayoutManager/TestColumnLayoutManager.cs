@@ -19,6 +19,7 @@
 
 using System.Drawing;
 using Habanero.Faces.Base;
+using Habanero.Test.Structure;
 using NUnit.Framework;
 using DockStyle=Habanero.Faces.Base.DockStyle;
 
@@ -80,6 +81,26 @@ namespace Habanero.Faces.Test.Base
             Assert.AreEqual(1, columnLayoutManager.ColumnCount);
             //---------------Tear Down   -----------------------
         }
+
+        [Test]
+        public void TestSetGapSize_ShouldSetHorizontalGapSizeAndVerticalGapSize()
+        {
+            //---------------Set up test pack-------------------
+
+            ColumnLayoutManager columnLayoutManager = GetColumnLayoutManager();
+            var randomGapSize = RandomValueGen.GetRandomInt(1, 500);
+            //---------------Assert Precondition----------------
+            Assert.AreEqual(0, columnLayoutManager.GapSize);
+            Assert.AreEqual(LayoutManager.DefaultGapSize, columnLayoutManager.HorizontalGapSize);
+            Assert.AreEqual(LayoutManager.DefaultGapSize, columnLayoutManager.VerticalGapSize);
+            //---------------Execute Test ----------------------
+            columnLayoutManager.GapSize = randomGapSize;
+            //---------------Test Result -----------------------
+            Assert.AreEqual(randomGapSize, columnLayoutManager.GapSize);
+            Assert.AreEqual(randomGapSize, columnLayoutManager.HorizontalGapSize);
+            Assert.AreEqual(randomGapSize, columnLayoutManager.VerticalGapSize);
+        }
+
 
         [Test]
         public void TestAddControl()
