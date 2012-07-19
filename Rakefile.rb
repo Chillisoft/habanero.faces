@@ -63,7 +63,9 @@ task :build => [:clean, :msbuild, :test]
 desc "Pushes Faces to Nuget"
 task :nuget => [:publishFacesBaseNugetPackage, 
 				:publishFacesVWGNugetPackage, 
-				:publishFacesWinNugetPackage ]
+				:publishFacesWinNugetPackage,
+				:publishFacesTestBaseNugetPackage,
+				:publishFacesTestWinNugetPackage]
 
 #------------------------build Faces  --------------------
 
@@ -125,4 +127,20 @@ pushnugetpackages :publishFacesWinNugetPackage do |package|
   package.Nugetid = "Habanero.Faces.Win.#{$nuget_publish_version}"
   package.Version = $nuget_publish_version_id
   package.Description = "Habanero.Faces.Win"
+end
+
+desc "Publish the Habanero.Faces.Test.Base nuget package"
+pushnugetpackages :publishFacesTestBaseNugetPackage do |package|
+  package.InputFileWithPath = "bin/Habanero.Faces.Test.Base.dll"
+  package.Nugetid = "Habanero.Faces.Test.Base.#{$nuget_publish_version}"
+  package.Version = $nuget_publish_version_id
+  package.Description = "Habanero.Faces.Test.Base"
+end
+
+desc "Publish the Habanero.Faces.Test.Win nuget package"
+pushnugetpackages :publishFacesTestWinNugetPackage do |package|
+  package.InputFileWithPath = "bin/Habanero.Faces.Test.Win.dll"
+  package.Nugetid = "Habanero.Faces.Test.Win.#{$nuget_publish_version}"
+  package.Version = $nuget_publish_version_id
+  package.Description = "Habanero.Faces.Test.Win"
 end
