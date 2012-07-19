@@ -17,6 +17,7 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
+using System.Drawing;
 
 namespace Habanero.Faces.Base
 {
@@ -78,7 +79,26 @@ namespace Habanero.Faces.Base
         /// </summary>
         protected override void RefreshControlPositions()
         {
-           
+           // resize the managed control to handle all of the docked controls
+            //if (this.ManagedControl == null) return;
+            //var rightMost = 0;
+            //var bottomMost = 0;
+            //foreach (var control in this.ManagedControl.Controls)
+            //{
+            //    var ctl = control as IControlHabanero;
+            //    if (ctl == null) continue;
+            //    if (ctl.Right > rightMost)
+            //        rightMost = ctl.Right;
+            //    if (ctl.Bottom > bottomMost)
+            //        bottomMost = ctl.Bottom;
+            //}
+            //if ((rightMost > 0) || (bottomMost > 0))
+            //{
+            //    var managedMin = this.ManagedControl.MinimumSize;
+            //    var minWidth = (managedMin.Width > rightMost) ? managedMin.Width : rightMost;
+            //    var minHeight = (managedMin.Height > bottomMost) ? managedMin.Height : bottomMost;
+            //    this.ManagedControl.MinimumSize = new Size(minWidth, minHeight);
+            //}
         }
 
         /// <summary>

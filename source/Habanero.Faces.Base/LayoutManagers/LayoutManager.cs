@@ -84,6 +84,8 @@ namespace Habanero.Faces.Base
         private void SetManagedControl(IControlHabanero managedControl)
         {
             _managedControl = managedControl;
+            if (managedControl == null)
+                return;
             _managedControl.Resize += this.ManagedControlResizeHandler;
         }
 

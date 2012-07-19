@@ -20,6 +20,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.Base.Util;
@@ -38,6 +39,7 @@ namespace Habanero.Faces.Win
         private readonly IPanel _filterButtonPanel;
         private readonly FilterControlManager _filterControlManager;
         private FilterModes _filterMode;
+        private FlowLayoutManager _buttonLayoutManager;
 
         /// <summary>
         /// The event that is fired when the filter is ready so that another control e.g. a grid can be filtered.
@@ -66,6 +68,9 @@ namespace Habanero.Faces.Win
 
             _controlPanel = controlFactory.CreatePanel();
             _controlPanel.Width = Width;
+
+            this.EnsureButtonsFit();
+            this._filterButtonPanel.Resize += (sender, e) => { this.EnsureButtonsFit(); };
 
             layoutManager.AddControl(_controlPanel, BorderLayoutManager.Position.Centre);
             layoutManager.AddControl(_filterButtonPanel, BorderLayoutManager.Position.East);
@@ -316,6 +321,24 @@ namespace Habanero.Faces.Win
                     FilterButton.Text = "Search";
                     FilterGroupBox.Text = "Search the Grid";
                 }
+                this.EnsureButtonsFit();
+            }
+        }
+
+        private void EnsureButtonsFit()
+        {
+            if (_filterButtonPanel.Visible)
+            {
+                var minHeight = 0;
+                var minWidth = 0;
+                foreach (var control in _filterButtonPanel.Controls)
+                {
+                    var ctl = control as IControlHabanero;
+                    if (ctl == null) continue;
+                    if (ctl.Width > minWidth) minWidth = ctl.Width;
+                    if (ctl.Bottom > minHeight) minHeight = ctl.Bottom;
+                }
+                this._controlPanel.MinimumSize = new Size(minWidth, minHeight);
             }
         }
 
@@ -468,9 +491,9 @@ namespace Habanero.Faces.Win
             FilterButton = CreateFilterButton(buttonWidth, buttonHeight);
             ClearButton = CreateClearButton(buttonWidth, buttonHeight);
 
-            FlowLayoutManager layoutManager = new FlowLayoutManager(filterButtonPanel, _controlFactory);
-            layoutManager.AddControl(FilterButton);
-            layoutManager.AddControl(ClearButton);
+            this._buttonLayoutManager = new FlowLayoutManager(filterButtonPanel, _controlFactory);
+            this._buttonLayoutManager.AddControl(FilterButton);
+            this._buttonLayoutManager.AddControl(ClearButton);
         }
 
         private IButton CreateClearButton(int buttonWidth, int buttonHeight)

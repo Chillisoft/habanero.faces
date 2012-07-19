@@ -37,7 +37,7 @@ namespace Habanero.Faces.Win
     public class FormExceptionNotifier : IExceptionNotifier
     {
         private static readonly IControlFactory _controlFactory = GlobalUIRegistry.ControlFactory;
-                private string _exceptionMessage ;
+        private string _exceptionMessage ;
 
         ///<summary>
         /// The last exception logged by the exception notifier
@@ -90,17 +90,21 @@ namespace Habanero.Faces.Win
             private const int SUMMARY_HEIGHT = 150;
             private const int FULL_DETAIL_HEIGHT = 300;
             private const int BUTTONS_HEIGHT = 50;
+            GridLayoutManager _layoutManager;
+            private bool _fullDetailsVisible;
+            IButtonGroupControl _buttonsDetail;
+            IButtonGroupControl _buttonsOK;
 
             /// <summary>
             /// Constructor that sets up the error message form
             /// </summary>
             public CollapsibleExceptionNotifyForm(Exception ex, string furtherMessage, string title)
             {
-                _exception = ex;
+                this._exception = ex;
 
-                _summary = _controlFactory.CreatePanel();
-                _summary.Text = title;
-                _summary.Height = SUMMARY_HEIGHT;
+                this._summary = _controlFactory.CreatePanel();
+                this._summary.Text = title;
+                this._summary.Height = SUMMARY_HEIGHT;
                 ITextBox messageTextBox = GetSimpleMessage(ex.Message);
                 messageTextBox.ScrollBars = ScrollBars.Vertical;
                 ILabel messageLabel = GetErrorLabel(furtherMessage);
@@ -108,35 +112,47 @@ namespace Habanero.Faces.Win
                 summaryManager.AddControl(messageLabel, BorderLayoutManager.Position.North);
                 summaryManager.AddControl(messageTextBox, BorderLayoutManager.Position.Centre);
 
-                IButtonGroupControl buttonsOK = _controlFactory.CreateButtonGroupControl();
-                //IButtonGroupControl buttonsDetail = _controlFactory.CreateButtonGroupControl();
-                buttonsOK.AddButton("&OK", new EventHandler(OKButtonClickHandler));
+                this._buttonsOK = _controlFactory.CreateButtonGroupControl();
+                this._buttonsOK.AddButton("&OK", new EventHandler(OKButtonClickHandler));
 
-                //_moreDetailButton = buttonsDetail.AddButton("&More Detail »", new EventHandler(MoreDetailClickHandler));
-                //buttonsOK.Height = BUTTONS_HEIGHT;
-                //buttonsDetail.Height = BUTTONS_HEIGHT;
-                //buttonsDetail.Width = _moreDetailButton.Width + 9;
+                this._buttonsDetail = _controlFactory.CreateButtonGroupControl();
+                this._buttonsDetail.AddButton("Email Error", EmailErrorClickHandler);
+                this._moreDetailButton = _buttonsDetail.AddButton("More Detail »", MoreDetailClickHandler);
+                this._buttonsDetail.Width = 2 * (_moreDetailButton.Width + 9);
+                this._fullDetailsVisible = false;
 
-                IButtonGroupControl buttonsDetail = _controlFactory.CreateButtonGroupControl();
-                buttonsDetail.AddButton("Email Error", EmailErrorClickHandler);
-                _moreDetailButton = buttonsDetail.AddButton("More Detail »", MoreDetailClickHandler);
-                buttonsDetail.Height = BUTTONS_HEIGHT;
-                buttonsDetail.Width = 2 * (_moreDetailButton.Width + 9);
-
-                SetFullDetailsPanel();
-
-                BorderLayoutManager manager = _controlFactory.CreateBorderLayoutManager(this);
-                manager.AddControl(_summary, BorderLayoutManager.Position.North);
-                manager.AddControl(buttonsDetail, BorderLayoutManager.Position.West);
-                manager.AddControl(buttonsOK, BorderLayoutManager.Position.East);
-                manager.AddControl(_fullDetail, BorderLayoutManager.Position.South);
+                this.SetFullDetailsPanel();
+                this.LayoutForm();
 
                 this.Text = title;
                 this.Width = 600;
                 this.Height = SUMMARY_HEIGHT + BUTTONS_HEIGHT + 16;
                 this.StartPosition = FormStartPosition.Manual;
                 this.Location = new Point(50, 50);
-                this.Resize += ResizeForm;
+                //this.Resize += ResizeForm;
+            }
+
+            private void LayoutForm()
+            {
+                while (this.Controls.Count > 0)
+                    this.Controls.Remove(this.Controls[0]);
+                if (this._layoutManager != null)
+                    this._layoutManager.ManagedControl = null;
+                this._layoutManager = new GridLayoutManager(this, _controlFactory);
+                if (this._fullDetailsVisible)
+                    this._layoutManager.SetGridSize(3, 3);
+                else
+                    this._layoutManager.SetGridSize(2, 3);
+                var btn = _controlFactory.CreateButton();
+                this._layoutManager.FixColumn(0, 3*btn.Width);
+                var btnLayout = this._buttonsDetail.LayoutManager;
+                this._layoutManager.FixRow(1, btn.Height + (3*(btnLayout.VerticalGapSize + btnLayout.BorderSize + this._layoutManager.VerticalGapSize)));
+                this._layoutManager.AddControl(this._summary, 1, 3);
+                this._layoutManager.AddControl(this._buttonsDetail);
+                this._layoutManager.AddControl(this._buttonsOK);
+                this._layoutManager.AddControl(_controlFactory.CreateControl());
+                if (this._fullDetailsVisible)
+                    this._layoutManager.AddControl(this._fullDetail, 1, 3);
             }
 
             private void EmailErrorClickHandler(object sender, EventArgs e)
@@ -212,8 +228,6 @@ namespace Habanero.Faces.Win
                 messageLabel.TextAlign = ContentAlignment.BottomLeft;
                 messageLabel.BackColor = Color.Red;
                 messageLabel.ForeColor = Color.White;
-                //messageLabel.Font = new Font(messageLabel.Font.FontFamily, 10);
-                //messageLabel.Height = 18;
                 return messageLabel;
             }
 
@@ -225,9 +239,6 @@ namespace Habanero.Faces.Win
                 ITextBox messageTextBox = _controlFactory.CreateTextBox();
                 messageTextBox.Text = message;
                 messageTextBox.Multiline = true;
-                //messageTextBox.ScrollBars = ScrollBars.Both;
-                //messageTextBox.ReadOnly = true;
-                //messageTextBox.Font = new Font(messageTextBox.Font.FontFamily, 10);
                 return messageTextBox;
             }
 
@@ -238,18 +249,20 @@ namespace Habanero.Faces.Win
             {
                 _fullDetail = _controlFactory.CreatePanel();
                 _fullDetail.Text = "Error Detail";
-                _fullDetail.Height = FULL_DETAIL_HEIGHT;
-                _fullDetail.Visible = false;
+
                 _errorDetails = _controlFactory.CreateTextBox();
                 _errorDetails.Text = ExceptionUtilities.GetExceptionString(_exception, 0, false);
                 _errorDetails.Multiline = true;
-//                _errorDetails.ScrollBars = ScrollBars.Both;
                 _showStackTrace = _controlFactory.CreateCheckBox();
                 _showStackTrace.Text = "&Show stack trace";
                 _showStackTrace.CheckedChanged += ShowStackTraceClicked;
-                BorderLayoutManager detailsManager = _controlFactory.CreateBorderLayoutManager(_fullDetail);
-                detailsManager.AddControl(_errorDetails, BorderLayoutManager.Position.Centre);
-                detailsManager.AddControl(_showStackTrace, BorderLayoutManager.Position.South);
+                var grid = new GridLayoutManager(_fullDetail, _controlFactory);
+                grid.SetGridSize(2, 1);
+                grid.FixRowBasedOnContents(1);
+                grid.AddControl(_errorDetails);
+                grid.AddControl(_showStackTrace);
+
+                this.Shown += (sender, e) => { this._fullDetail.Height = 0; };
             }
 
             /// <summary>
@@ -266,19 +279,10 @@ namespace Habanero.Faces.Win
             /// </summary>
             private void MoreDetailClickHandler(object sender, EventArgs e)
             {
-                if (!_fullDetail.Visible)
-                {
-                    Height = _summary.Height + BUTTONS_HEIGHT + 16 + FULL_DETAIL_HEIGHT;
-                    Width = 750;
-                    _fullDetail.Visible = true;
-                    _moreDetailButton.Text = "« &Less Detail";
-                }
-                else
-                {
-                    Height = _summary.Height + BUTTONS_HEIGHT + 16;
-                    _fullDetail.Visible = false;
-                    _moreDetailButton.Text = "&More Detail »";
-                }
+                this._fullDetailsVisible = !this._fullDetailsVisible;
+                this._moreDetailButton.Text = (this._fullDetailsVisible) ? "« &Less Detail" : "&More Detail »";
+                this.LayoutForm();
+                this.Height += (this._fullDetailsVisible ? 1 : -1) * FULL_DETAIL_HEIGHT;
             }
 
             /// <summary>
