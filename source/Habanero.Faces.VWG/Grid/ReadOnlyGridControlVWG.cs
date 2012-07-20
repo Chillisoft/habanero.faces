@@ -371,7 +371,7 @@ namespace Habanero.Faces.VWG
 
         public void PopulateCollectionAsync<T>(string criteria, string order, Action afterPopulation) where T : class, IBusinessObject, new()
         {
-            this.PopulateCollectionAsync<T>(CriteriaParser.CreateCriteria(criteria), OrderCriteria.FromString(order));
+            this.PopulateCollectionAsync<T>(CriteriaParser.CreateCriteria(criteria), OrderCriteria.FromString(order), afterPopulation);
         }
 
         public void PopulateCollectionAsync<T>(DataRetrieverCollectionDelegate dataRetrieverCallback, Action afterPopulation) where T : class, IBusinessObject, new()

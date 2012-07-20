@@ -37,6 +37,10 @@ namespace Habanero.Faces.Win
             borderLayoutManager.AddControl(Button, BorderLayoutManager.Position.East);
         }
 
+        /// <summary>
+        /// sets an icon on the picker button by a name of a resource to be found in one of the loaded assemblies
+        /// </summary>
+        /// <param name="resourceName">name of the resource to load, eg "doctor-icon.png"</param>
         public void SetButtonIcon(string resourceName)
         {
             foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())

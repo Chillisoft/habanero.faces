@@ -13,6 +13,7 @@ namespace Habanero.Faces.Base.UIHints
         public DateTimePickerHints DateTimePickerHints { get; set; }
         public ComboBoxHints ComboBoxHints { get; set; }
         public ControlHints CheckBoxHints { get; set; }
+        public GridHints GridHints { get; set; }
 
         public LayoutHints LayoutHints { get; set; }
 
@@ -25,6 +26,7 @@ namespace Habanero.Faces.Base.UIHints
             this.ComboBoxHints = new ComboBoxHints();
             this.TextBoxHints = new ControlHints();
             this.CheckBoxHints = new ControlHints();
+            this.GridHints = new GridHints();
         }
 
         public void SetAllControlHints(ControlHints setter)

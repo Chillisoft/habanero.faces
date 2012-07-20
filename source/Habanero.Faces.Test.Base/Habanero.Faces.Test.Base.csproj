@@ -234,6 +234,7 @@
     <Compile Include="TestTabPage.cs" />
     <Compile Include="TestTreeView.cs" />
     <Compile Include="TestTreeViewController.cs" />
+    <Compile Include="TestUIStyleHints.cs" />
     <Compile Include="TestUserControl.cs" />
     <Compile Include="Grid\TestDataGridViewNumericUpDownColumn.cs" />
     <Compile Include="TestBaseMethods.cs" />

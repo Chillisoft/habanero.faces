@@ -17,6 +17,7 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
+using System.Threading;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
@@ -1172,6 +1173,80 @@ namespace Habanero.Faces.Test.Base
 
             //---------------Test Result -----------------------
             Assert.AreEqual(col.Count - 1, grid.Grid.Rows.Count, "The additional filter should exclude " + boExclude.ID);
+        }
+
+        [Test]
+        public void PopulateCollectionAsync_WithCallback_RespectsSynchronousGlobalHint()
+        {
+            //---------------Set up test pack-------------------
+            GlobalUIRegistry.AsyncSettings.SynchroniseBackgroundOperations = true;
+            IClassDef classDef = ContactPersonTestBO.LoadDefaultClassDefWithUIDef();
+
+            ContactPersonTestBO boExclude = new ContactPersonTestBO {Surname = "Excude this one."};
+            boExclude.Save();
+
+            new ContactPersonTestBO {Surname = "Include this one."}.Save();
+
+            IReadOnlyGridControl grid = CreateReadOnlyGridControl(true);
+            grid.AdditionalSearchCriteria = "Surname <> '" + boExclude.Surname + "'";
+            grid.Initialise(classDef);
+
+            grid.FilterControl.Visible = true;
+            grid.FilterMode = FilterModes.Filter;
+
+            BusinessObjectCollection<ContactPersonTestBO> col = new BusinessObjectCollection<ContactPersonTestBO>();
+            col.LoadAll();
+            var afterPopCalled = false;
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            grid.PopulateCollectionAsync<ContactPersonTestBO>(() => { Thread.Sleep(100); return col; }, () => { afterPopCalled = true; });
+            
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(grid.BusinessObjectCollection);
+            Assert.IsTrue(afterPopCalled);
+        }
+
+        [Test]
+        public void ThisIsANewTestMethod()
+        {
+            //---------------Set up test pack-------------------
+            var p = new ContactPerson() { Surname = "foobar" };
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+
+            //---------------Test Result -----------------------
+            Assert.Fail("Test Not Yet Implemented");
+        }
+        [Test]
+        public void PopulateCollectionAsync_WithCriteria_RespectsSynchronousGlobalHint()
+        {
+            //---------------Set up test pack-------------------
+            GlobalUIRegistry.AsyncSettings.SynchroniseBackgroundOperations = true;
+            IClassDef classDef = ContactPersonTestBO.LoadDefaultClassDefWithUIDef();
+
+            ContactPersonTestBO boExclude = new ContactPersonTestBO {Surname = "Excude this one."};
+            boExclude.Save();
+
+            new ContactPersonTestBO {Surname = "Include this one."}.Save();
+
+            IReadOnlyGridControl grid = CreateReadOnlyGridControl(false);
+            grid.AdditionalSearchCriteria = "Surname <> '" + boExclude.Surname + "'";
+            grid.Initialise(classDef);
+
+            grid.FilterControl.Visible = true;
+            grid.FilterMode = FilterModes.Filter;
+
+            var afterPopCalled = false;
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            grid.PopulateCollectionAsync<ContactPersonTestBO>("", "", () => { afterPopCalled = true; });
+            
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(grid.BusinessObjectCollection);
+            Assert.IsTrue(afterPopCalled);
         }
 
         [Test]

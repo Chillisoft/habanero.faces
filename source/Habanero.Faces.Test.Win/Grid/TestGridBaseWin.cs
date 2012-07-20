@@ -1,6 +1,7 @@
 using System;
 using Habanero.Base;
 using Habanero.BO;
+using Habanero.Faces.Base.UIHints;
 using Habanero.Faces.Test.Base;
 using Habanero.Faces.Base;
 using Habanero.Faces.Test.Base.Grid;
@@ -193,7 +194,24 @@ namespace Habanero.Faces.Test.Win.Grid
             frm.Controls.Add((System.Windows.Forms.Control)gridBase);
         }
 
+        [Test]
+        public void Constructor_ObservesGlobalUIHints()
+        {
+            //---------------Set up test pack-------------------
+            GlobalUIRegistry.UIStyleHints = new UIStyleHints();
+            var gridHints = GlobalUIRegistry.UIStyleHints.GridHints;
+            gridHints.ColumnAutoSizingStrategy = GridColumnAutoSizingStrategies.FitLastColumnTakesSlack;
+            gridHints.ColumnAutoSizingPadding = 13;
+            BusinessObjectCollection<MyBO> col;
+            var grid = this.GetGridBaseWith_4_Rows(out col);
+            //---------------Assert Precondition----------------
 
+            //---------------Execute Test ----------------------
+
+            //---------------Test Result -----------------------
+            Assert.AreEqual(gridHints.ColumnAutoSizingStrategy, grid.ColumnAutoSizingStrategy, "global column sizing strategy not observed");
+            Assert.AreEqual(gridHints.ColumnAutoSizingPadding, grid.ColumnAutoSizingPadding, "global column padding not observed");
+        }
     }
 
 }

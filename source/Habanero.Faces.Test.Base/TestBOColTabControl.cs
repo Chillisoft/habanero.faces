@@ -18,6 +18,7 @@
 //---------------------------------------------------------------------------------
 
 using System;
+using System.Threading;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
@@ -271,6 +272,7 @@ namespace Habanero.Faces.Test.Base
         public void TestBusinessObjectControlIsSetWhenCollectionIsSet()
         {
             //---------------Set up test pack-------------------
+            GlobalUIRegistry.AsyncSettings.SynchroniseBackgroundOperations = true;
             IBOColTabControl boColTabControl = GetControlFactory().CreateBOColTabControl();
             BusinessObjectCollection<MyBO> myBoCol = SetupColTabControlWith3ItemCollection(boColTabControl);
             
@@ -281,6 +283,48 @@ namespace Habanero.Faces.Test.Base
             boColTabControl.BusinessObjectCollection = myBoCol;
 
             //---------------Test Result -----------------------
+            Assert.AreSame(myBoCol[0], boColTabControl.BusinessObjectControl.BusinessObject);
+        }
+
+        [Test]
+        public void PopulateCollectionAsync_WithCriteria_RespectsGlobalAsyncSettings()
+        {
+            //---------------Set up test pack-------------------
+            GlobalUIRegistry.AsyncSettings.SynchroniseBackgroundOperations = true;
+            IBOColTabControl boColTabControl = GetControlFactory().CreateBOColTabControl();
+            BusinessObjectCollection<MyBO> myBoCol = SetupColTabControlWith3ItemCollection(boColTabControl);
+            foreach (var bo in myBoCol)
+                bo.Save();
+            var compare = Broker.GetBusinessObjectCollection<MyBO>("", "");
+            
+            //---------------Assert Precondition----------------
+            Assert.IsNull(boColTabControl.BusinessObjectControl.BusinessObject);
+
+            //---------------Execute Test ----------------------
+            var afterCalled = false;
+            boColTabControl.PopulateCollectionAsync<MyBO>("", "", () => { afterCalled = true; });
+
+            //---------------Test Result -----------------------
+            Assert.IsTrue(afterCalled);
+            Assert.AreSame(compare[0], boColTabControl.BusinessObjectControl.BusinessObject);
+        }
+
+        [Test]
+        public void PopulateCollectionAsync_WithCallback_RespectsGlobalAsyncSettings()
+        {
+            //---------------Set up test pack-------------------
+            IBOColTabControl boColTabControl = GetControlFactory().CreateBOColTabControl();
+            BusinessObjectCollection<MyBO> myBoCol = SetupColTabControlWith3ItemCollection(boColTabControl);
+            
+            //---------------Assert Precondition----------------
+            Assert.IsNull(boColTabControl.BusinessObjectControl.BusinessObject);
+
+            //---------------Execute Test ----------------------
+            var afterCalled = false;
+            boColTabControl.PopulateCollectionAsync<MyBO>(() => { Thread.Sleep(100); return myBoCol; }, () => { afterCalled = true; });
+
+            //---------------Test Result -----------------------
+            Assert.IsTrue(afterCalled);
             Assert.AreSame(myBoCol[0], boColTabControl.BusinessObjectControl.BusinessObject);
         }
 

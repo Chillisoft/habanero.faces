@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.BO;
@@ -34,6 +35,9 @@ namespace Habanero.Faces.Win
     /// </summary>
     public abstract class GridBaseWin : DataGridViewWin, IGridBase
     {
+        public GridColumnAutoSizingStrategies ColumnAutoSizingStrategy { get; set; }
+        public int ColumnAutoSizingPadding { get; set; }
+
         private readonly GridBaseManager _manager;
 
         /// <summary>
@@ -44,9 +48,106 @@ namespace Habanero.Faces.Win
             ConfirmDeletion = false;
             CheckUserConfirmsDeletionDelegate = CheckUserWantsToDelete;
             _manager = new GridBaseManager(this);
-            GridBaseManager.CollectionChanged += delegate { FireCollectionChanged(); };
+            GridBaseManager.CollectionChanged += delegate { 
+                FireCollectionChanged();
+                ImplementColumnAutoSizingStrategy();
+            };
             GridBaseManager.BusinessObjectSelected += delegate { FireBusinessObjectSelected(); };
             DoubleClick += DoubleClickHandler;
+            if (GlobalUIRegistry.UIStyleHints != null)
+            {
+                var gridHints = GlobalUIRegistry.UIStyleHints.GridHints;
+                this.ColumnAutoSizingStrategy = gridHints.ColumnAutoSizingStrategy;
+                this.ColumnAutoSizingPadding = gridHints.ColumnAutoSizingPadding;
+            }
+            this.Resize += (sender, e) =>
+                {
+                    this.ImplementColumnAutoSizingStrategy();
+                };
+        }
+
+        protected void ImplementColumnAutoSizingStrategy()
+        {
+            if (this.ColumnAutoSizingStrategy == GridColumnAutoSizingStrategies.None) return;
+            if (this.Columns.Count == 0) return;
+            var grid = this as DataGridView;
+            if (this.ColumnAutoSizingStrategy == GridColumnAutoSizingStrategies.FitEqual)
+            {
+                for (var i = 0; i < grid.Columns.Count; i++)
+                    grid.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                return;
+            }
+            grid.Columns[grid.Columns.Count-1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            var requiredWidths = this.GetColumnHeaderRequiredWidths();
+            var columnCount = requiredWidths.Count;
+            if (columnCount == 0) return;
+            this.DetermineRequiredColumnWidths(requiredWidths, columnCount);
+            this.DistributeAvailableColumnWidths(requiredWidths);
+            for (var i = 0; i < (grid.Columns.Count-1); i++)
+            {
+                if (requiredWidths[i] > -1)
+                {
+                    grid.Columns[i].Width = requiredWidths[i];
+                    grid.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                }
+            }
+            this.AutoResizeColumns();
+        }
+
+        private List<int> GetColumnHeaderRequiredWidths()
+        {
+            var requiredWidths = new List<int>();
+            var padding = this.ColumnAutoSizingPadding;
+            using (var gfx = this.CreateGraphics())
+            {
+                for (var i = 0; i < this.Columns.Count; i++)
+                {
+                    if (this.Columns[i].Visible)
+                    {
+                        var heading = this.Columns[i].HeaderText;
+                        var size = gfx.MeasureString(heading, this.Font);
+                        requiredWidths.Add((int)(Math.Ceiling(size.Width) + padding));
+                    }
+                    else
+                        requiredWidths.Add(-1);
+                }
+            }
+            return requiredWidths;
+        }
+
+        private void DistributeAvailableColumnWidths(List<int> requiredWidths)
+        {
+            var totalRequiredWidth = requiredWidths.Where(w => w > -1).Sum();
+            var columnCount = requiredWidths.Where(w => w > -1).Count();
+            if (totalRequiredWidth < this.Width)
+            {
+                var averageAdd = (this.Width - totalRequiredWidth) / columnCount;
+                for (var i = 0; i < columnCount; i++)
+                {
+                    if (requiredWidths[i] < 0) continue;
+                    requiredWidths[i] += averageAdd;
+                }
+            }
+        }
+
+        private void DetermineRequiredColumnWidths(List<int> requiredWidths, int columnCount)
+        {
+            var padding = this.ColumnAutoSizingPadding;
+            using (var gfx = this.CreateGraphics())
+            {
+                foreach (DataGridViewRowWin row in this.Rows)
+                {
+                    for (var i = 0; i < columnCount; i++)
+                    {
+                        if (requiredWidths[i] < 0) continue;
+                        var value = row.Cells[i].Value.ToString();
+                        var size = gfx.MeasureString(value, this.Font);
+                        var requiredWidth = size.Width + padding;
+                        if (requiredWidth > requiredWidths[i])
+                            requiredWidths[i] = (int) Math.Ceiling((decimal) requiredWidth);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -169,6 +270,7 @@ namespace Habanero.Faces.Win
                 this.BusinessObjectSelected(this, new BOEventArgs(this.SelectedBusinessObject));
             }
         }
+
 
         /// <summary>
         /// Sets the business object collection displayed in the grid.  This

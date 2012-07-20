@@ -85,7 +85,6 @@ namespace Habanero.Faces.Base
                     return ret;
             }
             return null;
-            //return (IBOGridAndEditorControl) PopupForm.Controls[0];
         }
 
         ///<summary>

@@ -23,6 +23,7 @@ using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
+using System.Linq;
 
 namespace Habanero.Faces.Win
 {
@@ -111,6 +112,15 @@ namespace Habanero.Faces.Win
             var grid = new GridLayoutManager(this, _controlFactory);
             var filterLabel = _controlFactory.CreateLabel("Filter:");
             this._filterTextBox = _controlFactory.CreateTextBox();
+            var txtBox = this._filterTextBox as TextBox;
+            if (txtBox != null)
+            {
+                txtBox.KeyPress += (sender, e) =>
+                    {
+                        if (e.KeyChar == (char)27)
+                            this.ClearFilter();
+                    };
+            }
             grid.SetGridSize(3, 4);
             grid.FixRow(2, _buttonGroupControl.Height);
             grid.FixRow(0, this._filterTextBox.Height + 5);
@@ -131,23 +141,23 @@ namespace Habanero.Faces.Win
 
         private void DoFilter()
         {
-            var dataGrid = _readOnlyGridControl.Grid as DataGridView;
-            if (dataGrid == null)
-                return;
-            dataGrid.CurrentCell = null;
             var filter = this._filterTextBox.Text.Trim().ToLower();
             if (filter == this._lastFilterText)
                 return;
             this._lastFilterText = filter;
+            if (String.IsNullOrEmpty(filter))
+            {
+                this.ClearFilter();
+                return;
+            }
+            var dataGrid = _readOnlyGridControl.Grid as DataGridView;
+            if (dataGrid == null)
+                return;
+            dataGrid.CurrentCell = null;
             var parts = filter.Split(new char[] { ' ' });
             DataGridViewRow firstVisibleRow = null;
             foreach (DataGridViewRow r in dataGrid.Rows)
             {
-                if (filter == String.Empty)
-                {
-                    r.Visible = true;
-                    continue;
-                }
                 var hits = 0;
                 foreach (DataGridViewCell c in r.Cells)
                 {
@@ -170,6 +180,15 @@ namespace Habanero.Faces.Win
             }
             if (firstVisibleRow != null)
                 firstVisibleRow.Selected = true;
+        }
+
+        private void ClearFilter()
+        {
+            var dataGrid = _readOnlyGridControl.Grid as DataGridView;
+            if (dataGrid == null)
+                return;
+            foreach (DataGridViewRow r in dataGrid.Rows)
+                r.Visible = true;
         }
 
         private void RemoveObjectIDColumn()

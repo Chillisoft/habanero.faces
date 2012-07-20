@@ -17,6 +17,7 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 
+using System.Threading;
 using Habanero.Faces.Base.UIHints;
 
 namespace Habanero.Faces.Base
@@ -45,6 +46,31 @@ namespace Habanero.Faces.Base
         /// Gets and sets the store of global ui hints
         /// </summary>
         public static UIStyleHints UIStyleHints { get; set; }
+
+        /// <summary>
+        /// gets and sets a store of global async settings
+        /// </summary>
+        public static AsyncSettings AsyncSettings { 
+            get 
+            {
+                if (_asyncSettings == null)
+                {
+                    var mutex = new Mutex(false, "Habanero.Faces.Base.GlobalUIRegistry.AsyncSettings");
+                    if (mutex.WaitOne(0))
+                    {
+                        if (_asyncSettings == null)
+                            _asyncSettings = new AsyncSettings();
+                    }
+                    mutex.ReleaseMutex();
+                }
+                return _asyncSettings; 
+            }
+            set
+            {
+                _asyncSettings = value;
+            }
+        }
+        private static AsyncSettings _asyncSettings;
 
         /// <summary>
         /// Gets and sets the control factory to use in the application

@@ -187,6 +187,12 @@ namespace Habanero.Faces.Win
 
         public void PopulateObjectAsync<T>(Criteria criteria, Action afterPopulation = null) where T : class, IBusinessObject, new()
         {
+            if (GlobalUIRegistry.AsyncSettings.SynchroniseBackgroundOperations)
+            {
+                this.CurrentBusinessObject = Broker.GetBusinessObject<T>(criteria);
+                if (afterPopulation != null) afterPopulation();
+                return;
+            }
             var data = new ConcurrentDictionary<string, object>();
             data["businessobject"] = null;
             this.RunOnAsyncOperationStarted();
@@ -204,13 +210,19 @@ namespace Habanero.Faces.Win
                 this.NotifyObjectPopulationException);
         }
 
-        public void PopulateObjectAsync<T>(string criteria, Action afterPopulate = null) where T : class, IBusinessObject, new()
+        public void PopulateObjectAsync<T>(string criteria, Action afterPopulation = null) where T : class, IBusinessObject, new()
         {
-            this.PopulateObjectAsync<T>(CriteriaParser.CreateCriteria(criteria), afterPopulate);
+            this.PopulateObjectAsync<T>(CriteriaParser.CreateCriteria(criteria), afterPopulation);
         }
 
         public void PopulateObjectAsync<T>(DataRetrieverObjectDelegate retrieverCallback, Action afterPopulate = null) where T: class, IBusinessObject, new()
         {
+            if (GlobalUIRegistry.AsyncSettings.SynchroniseBackgroundOperations)
+            {
+                this.CurrentBusinessObject = retrieverCallback();
+                if (afterPopulate != null) afterPopulate();
+                return;
+            }
             var data = new ConcurrentDictionary<string, object>();
             data["businessobject"] = null;
             this.RunOnAsyncOperationStarted();
@@ -338,6 +350,12 @@ namespace Habanero.Faces.Win
 
         public void PopulateCollectionAsync<T>(DataRetrieverCollectionDelegate dataRetrieverCallback, Action afterPopulation = null) where T : class, IBusinessObject, new()
         {
+            if (GlobalUIRegistry.AsyncSettings.SynchroniseBackgroundOperations)
+            {
+                this.BusinessObjectCollection = dataRetrieverCallback();
+                afterPopulation();
+                return;
+            }
             var data = new ConcurrentDictionary<string, object>();
             data["businessobjectcollection"] = null;
             this.RunOnAsyncOperationStarted();
@@ -357,6 +375,12 @@ namespace Habanero.Faces.Win
 
         public void PopulateCollectionAsync<T>(Criteria criteria, IOrderCriteria order = null, Action afterPopulation = null) where T : class, IBusinessObject, new()
         {
+            if (GlobalUIRegistry.AsyncSettings.SynchroniseBackgroundOperations)
+            {
+                this.BusinessObjectCollection = Broker.GetBusinessObjectCollection<T>(criteria, order);
+                afterPopulation();
+                return;
+            }
             var data = new ConcurrentDictionary<string, object>();
             data["businessobjectcollection"] = null;
             this.RunOnAsyncOperationStarted();

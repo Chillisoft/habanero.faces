@@ -350,6 +350,12 @@ namespace Habanero.Faces.Win
 
         public void PopulateCollectionAsync<T>(Criteria criteria, IOrderCriteria order, Action afterPopulation = null) where T : class, IBusinessObject, new()
         {
+            if (GlobalUIRegistry.AsyncSettings.SynchroniseBackgroundOperations)
+            {
+                this.BusinessObjectCollection = Broker.GetBusinessObjectCollection<T>(criteria, order);
+                if (afterPopulation != null) afterPopulation();
+                return;
+            }
             lock (this)
             {
                 if (this._inAsyncOperation)
@@ -375,6 +381,12 @@ namespace Habanero.Faces.Win
 
         public void PopulateCollectionAsync<T>(DataRetrieverCollectionDelegate dataRetrieverCallback, Action afterPopulation = null) where T : class, IBusinessObject, new()
         {
+            if (GlobalUIRegistry.AsyncSettings.SynchroniseBackgroundOperations)
+            {
+                this.BusinessObjectCollection = dataRetrieverCallback();
+                if (afterPopulation != null) afterPopulation();
+                return;
+            }
             var data = new ConcurrentDictionary<string, object>();
             data["businessobjectcollection"] = null;
             this.RunOnAsyncOperationStarted();

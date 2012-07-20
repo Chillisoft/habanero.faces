@@ -29,6 +29,9 @@ namespace Habanero.Faces.VWG
     /// </summary>
     public abstract class GridBaseVWG : DataGridViewVWG, IGridBase
     {
+        public GridColumnAutoSizingStrategies ColumnAutoSizingStrategy { get; set; }
+        public int ColumnAutoSizingPadding { get; set; }
+
         /// <summary>
         /// Constructor for <see cref="GridBaseVWG"/>
         /// </summary>
@@ -40,12 +43,14 @@ namespace Habanero.Faces.VWG
             ConfirmDeletion = false;
             CheckUserConfirmsDeletionDelegate = CheckUserWantsToDelete;
         }
+
         /// <summary>
         /// Displays a message box to the user to check if they want to proceed with
         /// deleting the selected rows.
         /// </summary>
         /// <returns>Returns true if the user does want to delete</returns>
         public abstract bool CheckUserWantsToDelete();
+
         /// <summary>
         /// Occurs when a business object is selected
         /// </summary>
@@ -55,18 +60,22 @@ namespace Habanero.Faces.VWG
         /// Occurs when a row is double-clicked by the user
         /// </summary>
         public event RowDoubleClickedHandler RowDoubleClicked;
+
         // ReSharper disable UnusedMember.Local
+
         private void ToPreventCompilerWarnings()
         {
             RowDoubleClicked(new object(), new BOEventArgs(null));
         }
+
         // ReSharper restore UnusedMember.Local
+
         /// <summary>
         /// Occurs when the collection in the grid is changed
         /// </summary>
         public event EventHandler CollectionChanged;
 
-/*        /// <summary>
+        /*        /// <summary>
         /// Fires an event indicating that the selected business object
         /// is being edited
         /// </summary>
@@ -76,7 +85,7 @@ namespace Habanero.Faces.VWG
             FireSelectedBusinessObjectEdited(bo);
         }*/
 
-/*        /// <summary>
+        /*        /// <summary>
         /// Occurs when a business object is being edited
         /// </summary>
         public event EventHandler<BOEventArgs> BusinessObjectEdited;*/

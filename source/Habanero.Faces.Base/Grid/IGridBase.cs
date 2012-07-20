@@ -38,11 +38,20 @@ namespace Habanero.Faces.Base
     /// <param name="e">Attached arguments regarding the event</param>
     public delegate void RowDoubleClickedHandler(Object sender, BOEventArgs e);
 
+    public enum GridColumnAutoSizingStrategies
+    {
+        None,
+        FitEqual,
+        FitLastColumnTakesSlack
+    }
+
     /// <summary>
     /// Provides an Interface that is used by the Grid's in Habanero this extends the <see cref="IDataGridView"/> so that it is adapted to show business objects
     /// </summary>
     public interface IGridBase : IDataGridView, IBOColSelectorControl
     {
+        GridColumnAutoSizingStrategies ColumnAutoSizingStrategy { get; set; }
+        int ColumnAutoSizingPadding { get; set; }
         /// <summary>
         /// Sets the business object collection displayed in the grid.  This
         /// collection must be pre-loaded using the collection's Load() command.
