@@ -141,7 +141,7 @@ namespace Habanero.Faces.Win
                     for (var i = 0; i < columnCount; i++)
                     {
                         if (requiredWidths[i] < 0) continue;
-                        var value = row.Cells[i].Value.ToString();
+                        var value = (row.Cells[i].Value == null) ? "" : row.Cells[i].Value.ToString();
                         var size = gfx.MeasureString(value, this.Font);
                         var requiredWidth = size.Width + padding;
                         if (requiredWidth > requiredWidths[i])
