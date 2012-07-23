@@ -1714,7 +1714,7 @@ namespace Habanero.Faces.Test.Base
         {
             _keepValuePrivate = keepValuePrivate;
         }
-
+        [Obsolete("base member is obsolete")]
         public override IClassDef GetClassDef()
         {
             return _classDef;

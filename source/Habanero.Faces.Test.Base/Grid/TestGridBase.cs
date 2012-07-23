@@ -38,7 +38,7 @@ namespace Habanero.Faces.Test.Base.Grid
         [SetUp]
         public void SetupTest()
         {
-            GlobalUIRegistry.UISettings = null;
+            GlobalUIRegistry.UIStyleHints = null;
             ClassDef.ClassDefs.Clear();
             BORegistry.DataAccessor = new DataAccessorInMemory();
         }
