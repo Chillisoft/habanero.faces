@@ -119,6 +119,7 @@ namespace Habanero.Faces.Win
         {
             var totalRequiredWidth = requiredWidths.Where(w => w > -1).Sum();
             var columnCount = requiredWidths.Where(w => w > -1).Count();
+            if (columnCount < 1) return;
             if (totalRequiredWidth < this.Width)
             {
                 var averageAdd = (this.Width - totalRequiredWidth) / columnCount;
