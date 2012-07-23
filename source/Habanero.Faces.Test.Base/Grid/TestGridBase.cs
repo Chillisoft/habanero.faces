@@ -38,6 +38,7 @@ namespace Habanero.Faces.Test.Base.Grid
         [SetUp]
         public void SetupTest()
         {
+            GlobalUIRegistry.UISettings = null;
             ClassDef.ClassDefs.Clear();
             BORegistry.DataAccessor = new DataAccessorInMemory();
         }
@@ -244,7 +245,7 @@ namespace Habanero.Faces.Test.Base.Grid
             SetupGridColumnsForMyBo(gridBase);
 
             //---------------Execute Test ----------------------
-            gridBase.BusinessObjectCollection  = col;
+            gridBase.BusinessObjectCollection = col;
             IBusinessObject selectedBo = gridBase.SelectedBusinessObject;
             //---------------Test Result -----------------------
             Assert.AreSame(col[0], selectedBo);
