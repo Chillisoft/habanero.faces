@@ -24,6 +24,7 @@ using Habanero.Base;
 using Habanero.Base.Exceptions;
 using Habanero.Faces.Base;
 using Habanero.Util;
+using log4net.Appender;
 using FormStartPosition=System.Windows.Forms.FormStartPosition;
 using MessageBoxButtons=System.Windows.Forms.MessageBoxButtons;
 using MessageBoxIcon=System.Windows.Forms.MessageBoxIcon;
@@ -127,8 +128,7 @@ namespace Habanero.Faces.Win
                 this.Text = title;
                 this.Width = 600;
                 this.Height = SUMMARY_HEIGHT + BUTTONS_HEIGHT + 16;
-                this.StartPosition = FormStartPosition.Manual;
-                this.Location = new Point(50, 50);
+                this.StartPosition = FormStartPosition.CenterScreen;
                 //this.Resize += ResizeForm;
             }
 
@@ -140,19 +140,30 @@ namespace Habanero.Faces.Win
                     this._layoutManager.ManagedControl = null;
                 this._layoutManager = new GridLayoutManager(this, _controlFactory);
                 if (this._fullDetailsVisible)
-                    this._layoutManager.SetGridSize(3, 3);
+                    this._layoutManager.SetGridSize(4, 3);
                 else
                     this._layoutManager.SetGridSize(2, 3);
                 var btn = _controlFactory.CreateButton();
                 this._layoutManager.FixColumn(0, 3*btn.Width);
                 var btnLayout = this._buttonsDetail.LayoutManager;
-                this._layoutManager.FixRow(1, btn.Height + (3*(btnLayout.VerticalGapSize + btnLayout.BorderSize + this._layoutManager.VerticalGapSize)));
+                // this is nasty and hacky but there's obviously a layout-within-layout problem that needs to be addressed here
+                if (this._fullDetailsVisible)
+                    this._layoutManager.FixRowBasedOnContents(1);
+                else
+                    this._layoutManager.FixRow(1, btn.Height + (3*(btnLayout.VerticalGapSize + btnLayout.BorderSize + this._layoutManager.VerticalGapSize)));
                 this._layoutManager.AddControl(this._summary, 1, 3);
                 this._layoutManager.AddControl(this._buttonsDetail);
                 this._layoutManager.AddControl(this._buttonsOK);
                 this._layoutManager.AddControl(_controlFactory.CreateControl());
                 if (this._fullDetailsVisible)
-                    this._layoutManager.AddControl(this._fullDetail, 1, 3);
+                {
+                    this._layoutManager.AddControl(this._fullDetail, 2, 3);
+                    this.MinimumSize = new Size(640, 400);
+                }
+                else
+                {
+                    this.MinimumSize = new Size(640, 250);
+                }
             }
 
             private void EmailErrorClickHandler(object sender, EventArgs e)
@@ -258,10 +269,10 @@ namespace Habanero.Faces.Win
                 _showStackTrace.CheckedChanged += ShowStackTraceClicked;
                 var grid = new GridLayoutManager(_fullDetail, _controlFactory);
                 grid.SetGridSize(2, 1);
-                grid.FixRowBasedOnContents(1);
                 grid.AddControl(_errorDetails);
                 grid.AddControl(_showStackTrace);
-
+                var chk = _controlFactory.CreateCheckBox();
+                grid.FixRow(1, 40 + (2 * (grid.VerticalGapSize + grid.BorderSize)));
                 this.Shown += (sender, e) => { this._fullDetail.Height = 0; };
             }
 
@@ -282,7 +293,6 @@ namespace Habanero.Faces.Win
                 this._fullDetailsVisible = !this._fullDetailsVisible;
                 this._moreDetailButton.Text = (this._fullDetailsVisible) ? "« &Less Detail" : "&More Detail »";
                 this.LayoutForm();
-                this.Height += (this._fullDetailsVisible ? 1 : -1) * FULL_DETAIL_HEIGHT;
             }
 
             /// <summary>
