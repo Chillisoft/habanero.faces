@@ -72,12 +72,14 @@ namespace Habanero.Faces.Win
 
             this.OnAsyncOperationStarted += (sender, e) =>
                 {
+                    this.UseWaitCursor = true;
                     this.Cursor = Cursors.WaitCursor;
                     this.Enabled = false;
                 };
 
             this.OnAsyncOperationComplete += (sender, e) =>
                 {
+                    this.UseWaitCursor = false;
                     this.Cursor = Cursors.Default;
                     this.Enabled = true;
                 };

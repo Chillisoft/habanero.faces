@@ -83,6 +83,7 @@ namespace Habanero.Faces.Win
                         this._inAsyncOperation = false;
                     }
                     this.Enabled = true;
+                    this.UseWaitCursor = false;
                     this.Cursor = Cursors.Default;
                 };
             this.OnAsyncOperationStarted += (sender, e) =>
@@ -92,6 +93,7 @@ namespace Habanero.Faces.Win
                         this._inAsyncOperation = true;
                     }
                     this.Enabled = false;
+                    this.UseWaitCursor = true;
                     this.Cursor = Cursors.WaitCursor;
                 };
         }

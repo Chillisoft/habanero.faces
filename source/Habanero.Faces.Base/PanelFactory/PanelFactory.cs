@@ -260,9 +260,10 @@ namespace Habanero.Faces.Base
                     //                        }
                     //                    }
 
-                    ILabel labelControl = _controlFactory.CreateLabel(labelCaption, isCompulsory);
-                    controls[currentRow, currentColumn + 0] = new GridLayoutManager.ControlInfo(labelControl);
                     IControlHabanero ctl = CreateControl(field, _controlFactory);
+                    bool editable = CheckIfEditable(field, ctl);
+                    ILabel labelControl = _controlFactory.CreateLabel(labelCaption, isCompulsory && editable);
+                    controls[currentRow, currentColumn + 0] = new GridLayoutManager.ControlInfo(labelControl);
 
                     if (ctl is ITextBox && propDef != null)
                     {
@@ -295,7 +296,6 @@ namespace Habanero.Faces.Base
                         }
                     }
 
-                    bool editable = CheckIfEditable(field, ctl);
 
                     if (ctl is ITextBox)
                     {

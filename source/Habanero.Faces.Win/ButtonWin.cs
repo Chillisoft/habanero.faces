@@ -17,6 +17,7 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using Habanero.Faces.Base;
@@ -61,6 +62,25 @@ namespace Habanero.Faces.Win
             :base()
         {
             this.ObserveGlobalUIHints();
+            this.TextChanged += (sender, e) =>
+                {
+                    var lines = this.Text.Split(new char[] { '\n' });
+                    using (var gfx = CreateGraphics())
+                    {
+                        var minWidth = 0;
+                        foreach (var line in lines)
+                        {
+                            var s = gfx.MeasureString(line, this.Font);
+                            if (s.Width > minWidth) minWidth = (int)(Math.Ceiling(s.Width));
+                        }
+                        if (GlobalUIRegistry.UIStyleHints != null)
+                            minWidth += GlobalUIRegistry.UIStyleHints.LayoutHints.DefaultVerticalGap;
+                        else
+                            minWidth += 6;
+                        if (minWidth > this.MinimumSize.Width)
+                            this.MinimumSize = new Size(minWidth, this.MinimumSize.Height);
+                    }
+                };
         }
 
         private void ObserveGlobalUIHints()
