@@ -1208,18 +1208,6 @@ namespace Habanero.Faces.Test.Base
         }
 
         [Test]
-        public void ThisIsANewTestMethod()
-        {
-            //---------------Set up test pack-------------------
-            var p = new ContactPerson() { Surname = "foobar" };
-            //---------------Assert Precondition----------------
-
-            //---------------Execute Test ----------------------
-
-            //---------------Test Result -----------------------
-            Assert.Fail("Test Not Yet Implemented");
-        }
-        [Test]
         public void PopulateCollectionAsync_WithCriteria_RespectsSynchronousGlobalHint()
         {
             //---------------Set up test pack-------------------
