@@ -13,6 +13,7 @@ namespace Habanero.Faces.Base.UIHints
         public int MinimumHeight { get; set; }
         public FontFamily DefaultFontFamily { get; set; }
         public float MinimumFontSize { get; set; }
+        public bool AttemptToMakeTextFit { get; set; }
         public int MaximumWidth 
         { 
             get 

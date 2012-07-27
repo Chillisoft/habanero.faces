@@ -202,6 +202,10 @@ namespace Habanero.Faces.Base
         /// </summary>
         event EventHandler Closed;
 
+        /// <summary>
+        /// triggered when the form is first loaded
+        /// </summary>
+        event EventHandler Load;
 
         /// <summary>
         /// Occurs before closing the form

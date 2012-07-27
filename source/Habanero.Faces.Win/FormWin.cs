@@ -18,9 +18,11 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using Habanero.Faces.Base;
+using FormBorderStyle = System.Windows.Forms.FormBorderStyle;
 
 namespace Habanero.Faces.Win
 {
@@ -29,6 +31,8 @@ namespace Habanero.Faces.Win
     /// </summary>
     public class FormWin : Form, IFormHabanero
     {
+        private const int WM_SYSCOMMAND = 0x0112;
+        private const int SC_MAXIMIZE = 0xF030;
         public FormWin()
             :base()
         {
@@ -46,12 +50,23 @@ namespace Habanero.Faces.Win
                             break;
                     }
                 };
+            if (GlobalUIRegistry.UIStyleHints != null) 
+            {
+                var resourceName = GlobalUIRegistry.UIStyleHints.FormHints.DefaultIconResourceName;
+                if (resourceName != null)
+                    this.SetIcon(resourceName);
+            }
+            this.ParentChanged += (sender, e) =>
+                {
+                    if (GlobalUIRegistry.UIStyleHints != null)
+                    {
+                        var iconResourceName = GlobalUIRegistry.UIStyleHints.FormHints.MDIChildIconResourceName ?? GlobalUIRegistry.UIStyleHints.FormHints.DefaultIconResourceName;
+                        if (iconResourceName != null)
+                            this.SetIcon(iconResourceName);
+                    }
+                };
         }
 
-        protected override void OnShown(EventArgs e)
-        {
-            base.OnShown(e);
-        }
         /// <summary>
         /// Gets the collection of controls contained within the control
         /// </summary>
@@ -161,6 +176,25 @@ namespace Habanero.Faces.Win
         {
             get { return (Base.FormBorderStyle)base.FormBorderStyle; }
             set { base.FormBorderStyle = (System.Windows.Forms.FormBorderStyle)value; }
+        }
+
+        public void SetIcon(string resourceName)
+        {
+            var form = this as Form;
+            if (form == null) return;
+            var s = ResourceStreamer.GetResourceStreamByName(resourceName);
+            if (s == null) return;
+
+            try
+            {
+                var bmp = new Bitmap(Image.FromStream(s));
+                form.Icon = Icon.FromHandle(bmp.GetHicon());
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(String.Join("", new string[] 
+                    { "Unable to load resource by name for form icon: ", resourceName, "\n", ex.Message, "\n", ex.StackTrace}));
+            }
         }
     }
 }

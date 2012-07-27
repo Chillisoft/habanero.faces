@@ -14,6 +14,7 @@ namespace Habanero.Faces.Base.UIHints
         public ComboBoxHints ComboBoxHints { get; set; }
         public ControlHints CheckBoxHints { get; set; }
         public GridHints GridHints { get; set; }
+        public FormHints FormHints { get; set; }
 
         public LayoutHints LayoutHints { get; set; }
 
@@ -27,6 +28,7 @@ namespace Habanero.Faces.Base.UIHints
             this.TextBoxHints = new ControlHints();
             this.CheckBoxHints = new ControlHints();
             this.GridHints = new GridHints();
+            this.FormHints = new FormHints();
         }
 
         public void SetAllControlHints(ControlHints setter)

@@ -209,6 +209,8 @@
     <Compile Include="StandardControls\TestNumericUpDownMapperStrategyWin.cs" />
     <Compile Include="StandardControls\TestTextBoxMapperStrategyWin.cs" />
     <Compile Include="TestBackgroundWorkerWin.cs" />
+    <Compile Include="TestCollapsibleExceptionNotifyForm.cs" />
+    <Compile Include="TestResourceStreamer.cs" />
     <Compile Include="TestUnhandledExceptionHelperWin.cs" />
     <Compile Include="UnhandledExceptionHelperWin.cs" />
     <Compile Include="TestButtonSizePolicyUserDefinedWin.cs" />

@@ -321,7 +321,7 @@ namespace Habanero.Faces.Test.Base
 
             //---------------Execute Test ----------------------
             var afterCalled = false;
-            boColTabControl.PopulateCollectionAsync<MyBO>(() => { Thread.Sleep(100); return myBoCol; }, () => { afterCalled = true; });
+            boColTabControl.PopulateCollectionAsync(() => { Thread.Sleep(100); return myBoCol; }, () => { afterCalled = true; });
 
             //---------------Test Result -----------------------
             Assert.IsTrue(afterCalled);

@@ -14,7 +14,7 @@ namespace Habanero.Faces.Base.Async
         /// <param name="dataRetrieverCallback">delegate method to do the actual data retrieval.
         /// This delegate will not be called on the UI thread so be wary of UI threading concerns</param>
         /// <param name="afterPopulation">(optional) Action to be called after population completes without exception. Will be called on the UI thread.</param>
-        void PopulateCollectionAsync<T>(DataRetrieverCollectionDelegate dataRetrieverCallback, Action afterPopulation = null) where T : class, IBusinessObject, new();
+        void PopulateCollectionAsync(DataRetrieverCollectionDelegate dataRetrieverCallback, Action afterPopulation = null);
 
         /// <summary>
         /// Asynchronous population routine

@@ -1200,7 +1200,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            grid.PopulateCollectionAsync<ContactPersonTestBO>(() => { Thread.Sleep(100); return col; }, () => { afterPopCalled = true; });
+            grid.PopulateCollectionAsync(() => { Thread.Sleep(100); return col; }, () => { afterPopCalled = true; });
             
             //---------------Test Result -----------------------
             Assert.IsNotNull(grid.BusinessObjectCollection);

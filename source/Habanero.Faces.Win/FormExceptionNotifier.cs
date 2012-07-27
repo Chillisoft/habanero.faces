@@ -91,7 +91,7 @@ namespace Habanero.Faces.Win
             private const int SUMMARY_HEIGHT = 150;
             private const int FULL_DETAIL_HEIGHT = 300;
             private const int BUTTONS_HEIGHT = 50;
-            GridLayoutManager _layoutManager;
+            BorderLayoutManager _layoutManager;
             private bool _fullDetailsVisible;
             IButtonGroupControl _buttonsDetail;
             IButtonGroupControl _buttonsOK;
@@ -136,32 +136,31 @@ namespace Habanero.Faces.Win
             {
                 while (this.Controls.Count > 0)
                     this.Controls.Remove(this.Controls[0]);
-                if (this._layoutManager != null)
-                    this._layoutManager.ManagedControl = null;
-                this._layoutManager = new GridLayoutManager(this, _controlFactory);
-                if (this._fullDetailsVisible)
-                    this._layoutManager.SetGridSize(4, 3);
-                else
-                    this._layoutManager.SetGridSize(2, 3);
-                var btn = _controlFactory.CreateButton();
-                this._layoutManager.FixColumn(0, 3*btn.Width);
-                var btnLayout = this._buttonsDetail.LayoutManager;
-                // this is nasty and hacky but there's obviously a layout-within-layout problem that needs to be addressed here
-                if (this._fullDetailsVisible)
-                    this._layoutManager.FixRowBasedOnContents(1);
-                else
-                    this._layoutManager.FixRow(1, btn.Height + (3*(btnLayout.VerticalGapSize + btnLayout.BorderSize + this._layoutManager.VerticalGapSize)));
-                this._layoutManager.AddControl(this._summary, 1, 3);
-                this._layoutManager.AddControl(this._buttonsDetail);
-                this._layoutManager.AddControl(this._buttonsOK);
-                this._layoutManager.AddControl(_controlFactory.CreateControl());
+                var heightBeforeLayout = this._summary.Height;
+                var buttonsPanel = _controlFactory.CreatePanel();
+                var buttonsManager = _controlFactory.CreateBorderLayoutManager(buttonsPanel);
+                buttonsManager.AddControl(this._buttonsDetail, BorderLayoutManager.Position.West);
+                buttonsManager.AddControl(this._buttonsOK, BorderLayoutManager.Position.East);
+                buttonsPanel.Height = this._buttonsDetail.Height;
+
+                var topPanel = _controlFactory.CreatePanel();
+                var topManager = _controlFactory.CreateBorderLayoutManager(topPanel);
+                topManager.AddControl(this._summary, BorderLayoutManager.Position.Centre);
+                topManager.AddControl(buttonsPanel, BorderLayoutManager.Position.South);
+
+                this._layoutManager = _controlFactory.CreateBorderLayoutManager(this);
                 if (this._fullDetailsVisible)
                 {
-                    this._layoutManager.AddControl(this._fullDetail, 2, 3);
+                    var detailsPanel = _controlFactory.CreatePanel();
+                    var detailsManager = _controlFactory.CreateBorderLayoutManager(detailsPanel);
+                    detailsManager.AddControl(this._fullDetail, BorderLayoutManager.Position.Centre);
+                    this._layoutManager.AddControl(topPanel, BorderLayoutManager.Position.North);
+                    this._layoutManager.AddControl(detailsPanel, BorderLayoutManager.Position.Centre);
                     this.MinimumSize = new Size(640, 400);
                 }
                 else
                 {
+                    this._layoutManager.AddControl(topPanel, BorderLayoutManager.Position.Centre);
                     this.MinimumSize = new Size(640, 250);
                 }
             }
@@ -267,13 +266,17 @@ namespace Habanero.Faces.Win
                 _showStackTrace = _controlFactory.CreateCheckBox();
                 _showStackTrace.Text = "&Show stack trace";
                 _showStackTrace.CheckedChanged += ShowStackTraceClicked;
-                var grid = new GridLayoutManager(_fullDetail, _controlFactory);
-                grid.SetGridSize(2, 1);
-                grid.AddControl(_errorDetails);
-                grid.AddControl(_showStackTrace);
-                var chk = _controlFactory.CreateCheckBox();
-                grid.FixRow(1, 40 + (2 * (grid.VerticalGapSize + grid.BorderSize)));
-                this.Shown += (sender, e) => { this._fullDetail.Height = 0; };
+
+                var manager = _controlFactory.CreateBorderLayoutManager(_fullDetail);
+                manager.AddControl(_errorDetails, BorderLayoutManager.Position.Centre);
+                var chkPanel = _controlFactory.CreatePanel();
+                var vgap = LayoutManager.DefaultGapSize + LayoutManager.DefaultBorderSize;
+                if (GlobalUIRegistry.UIStyleHints != null)
+                    vgap = GlobalUIRegistry.UIStyleHints.LayoutHints.DefaultVerticalGap + GlobalUIRegistry.UIStyleHints.LayoutHints.DefaultBorderSize;
+                chkPanel.Height = _showStackTrace.Height + 2 * vgap;
+                var chkManager = _controlFactory.CreateBorderLayoutManager(chkPanel);
+                chkManager.AddControl(_showStackTrace, BorderLayoutManager.Position.West);
+                manager.AddControl(chkPanel, BorderLayoutManager.Position.South);
             }
 
             /// <summary>
@@ -308,6 +311,7 @@ namespace Habanero.Faces.Win
             /// </summary>
             private void ResizeForm(object sender, EventArgs e)
             {
+                /*
                 int sdHeight = Height - BUTTONS_HEIGHT - 16;
                 if (sdHeight > SUMMARY_HEIGHT)
                 {
@@ -316,6 +320,7 @@ namespace Habanero.Faces.Win
                 _summary.Height = sdHeight;
                 int heightRemaining = Height - BUTTONS_HEIGHT - sdHeight - 16;
                 _fullDetail.Height = heightRemaining > 0 ? heightRemaining : 0;
+                 * */
             }
 
             private static IDictionary GetEmailErrorSettings()

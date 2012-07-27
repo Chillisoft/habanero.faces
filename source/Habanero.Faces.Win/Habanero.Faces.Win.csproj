@@ -284,6 +284,7 @@
     <Compile Include="ExtendedTextBoxWin.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ResourceStreamer.cs" />
     <Compile Include="SplitContainerWin.cs">
       <SubType>Component</SubType>
     </Compile>

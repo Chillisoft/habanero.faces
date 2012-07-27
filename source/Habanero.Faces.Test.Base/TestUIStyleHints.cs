@@ -28,6 +28,7 @@ namespace Habanero.Faces.Test.Base
             Assert.IsNotNull(hints.LabelHints, "LabelHints not set");
             Assert.IsNotNull(hints.LayoutHints, "LayoutHints not set");
             Assert.IsNotNull(hints.TextBoxHints, "TextBoxHints not set");
+            Assert.IsNotNull(hints.FormHints, "FormHints is not set");
         }
     }
 }

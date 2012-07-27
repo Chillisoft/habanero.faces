@@ -272,7 +272,7 @@ namespace Habanero.Faces.VWG
             method.DynamicInvoke();
         }
 
-        public void PopulateCollectionAsync<T>(DataRetrieverCollectionDelegate dataRetrieverCallback, Action populateAfter = null) where T : class, IBusinessObject, new()
+        public void PopulateCollectionAsync(DataRetrieverCollectionDelegate dataRetrieverCallback, Action populateAfter = null)
         {
             this.RunAsyncOperationStartedHandler();
             this.BusinessObjectCollection = dataRetrieverCallback();

@@ -17,13 +17,17 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
 using System.Linq;
+using Habanero.Faces.Base.Async;
+using Habanero.Faces.Win.Async;
 
 namespace Habanero.Faces.Win
 {
@@ -47,8 +51,12 @@ namespace Habanero.Faces.Win
         private IBusinessObject _lastSelectedBusinessObject;
         private IBusinessObject _newBO;
         private Timer _filterTimer;
+        private bool _filterRequired;
+        private bool _inFilter;
+        private DateTime _lastFilterChanged;
         private ITextBox _filterTextBox;
-        private string _lastFilterText;
+        private bool _inAsyncOperation;
+        private ILabel _filterMessageLabel;
         /// <summary>
         /// Event that is raised when a business objects is selected.
         /// </summary>
@@ -69,9 +77,36 @@ namespace Habanero.Faces.Win
             BOEditorControlWin boEditorControlWin = new BOEditorControlWin(controlFactory, classDef, uiDefName);
             SetupGridAndBOEditorControlWin(controlFactory, boEditorControlWin, classDef, uiDefName);
             this._filterTimer = new Timer() { Enabled = true, Interval = 500 };
-            this._filterTimer.Tick += (sender, e) => { this.DoFilter(); };
-            this._lastFilterText = String.Empty;
-            this._filterTextBox.Text = String.Empty;
+            this._filterTimer.Tick += (sender, e) => 
+            {
+                if ((!this._inFilter) && (this._filterRequired) && (this._lastFilterChanged.AddMilliseconds(this._filterTimer.Interval) < DateTime.Now))
+                {
+                    this._filterRequired = false;
+                    this.DoFilter();
+                }
+            };
+
+            this.OnAsyncOperationComplete += (sender, e) =>
+                {
+                    lock (this)
+                    {
+                        this._inAsyncOperation = false;
+                    }
+                    this.Enabled = true;
+                    this.UseWaitCursor = false;
+                    this.Cursor = Cursors.Default;
+                };
+            this.OnAsyncOperationStarted += (sender, e) =>
+                {
+                    lock (this)
+                    {
+                        if (this._inAsyncOperation) throw new Exception("Already performing an asynchronous operation");
+                        this._inAsyncOperation = true;
+                    }
+                    this.Enabled = false;
+                    this.UseWaitCursor = true;
+                    this.Cursor = Cursors.WaitCursor;
+                };
         }
 
         ///<summary>
@@ -103,14 +138,11 @@ namespace Habanero.Faces.Win
             _controlFactory = controlFactory;
             _iboEditorControl = iboEditorControl;
 
-            IPanel panel = _controlFactory.CreatePanel();
             SetupReadOnlyGridControl(classDef ,gridUiDefName);
             SetupButtonGroupControl();
             UpdateControlEnabledState();
 
             this.RemoveObjectIDColumn();
-            var grid = new GridLayoutManager(this, _controlFactory);
-            var filterLabel = _controlFactory.CreateLabel("Filter:");
             this._filterTextBox = _controlFactory.CreateTextBox();
             var txtBox = this._filterTextBox as TextBox;
             if (txtBox != null)
@@ -119,20 +151,46 @@ namespace Habanero.Faces.Win
                     {
                         if (e.KeyChar == (char)27)
                             this.ClearFilter();
+                        else
+                        {
+                            this._lastFilterChanged = DateTime.Now;
+                            this._filterRequired = true;
+                        }
                     };
             }
+
+            var filterLabel = _controlFactory.CreateLabel("Filter:");
+            this._filterMessageLabel = _controlFactory.CreateLabel("");
+            this._filterMessageLabel.Font = new Font(this._filterMessageLabel.Font, FontStyle.Italic);
+            var grid = new GridLayoutManager(this, _controlFactory);
             grid.SetGridSize(3, 4);
             grid.FixRow(2, _buttonGroupControl.Height);
             grid.FixRow(0, this._filterTextBox.Height + 5);
             grid.FixColumn(0, filterLabel.Width);
-            grid.FixColumn(3, 300);
+
+            var leftMost = this.Width;
+            var rightMost = 0;
+            var bottomMost = 0;
+            foreach (var control in this._iboEditorControl.Controls)
+            {
+                var ctl = control as Control;
+                if (ctl == null) continue;
+                if (ctl.Left < leftMost) leftMost = ctl.Left;
+                if (ctl.Right > rightMost) rightMost = ctl.Right;
+                if (ctl.Bottom > bottomMost) bottomMost = ctl.Bottom;
+            }
+            var editorWidth = rightMost - leftMost;
+            grid.FixColumn(3, editorWidth);
+
             grid.AddControl(filterLabel);
-            grid.AddControl(this._filterTextBox);
-            grid.AddControl(_controlFactory.CreateLabel(), 1, 2);
+            grid.AddControl(this._filterTextBox, 1, 2);
+            grid.AddControl(this._filterMessageLabel);
             grid.AddControl(_readOnlyGridControl, 1, 3);
             grid.AddControl(_iboEditorControl);
             grid.AddControl(_buttonGroupControl, 1, 4);
-            
+
+            this.MinimumSize = new Size(editorWidth, bottomMost);
+
             _readOnlyGridControl.BusinessObjectSelected +=
                 ((sender, e) => FireBusinessObjectSelected(e.BusinessObject));
 
@@ -141,18 +199,22 @@ namespace Habanero.Faces.Win
 
         private void DoFilter()
         {
+            this._inFilter = true;
             var filter = this._filterTextBox.Text.Trim().ToLower();
-            if (filter == this._lastFilterText)
-                return;
-            this._lastFilterText = filter;
             if (String.IsNullOrEmpty(filter))
             {
                 this.ClearFilter();
+                this._inFilter = false;
                 return;
             }
             var dataGrid = _readOnlyGridControl.Grid as DataGridView;
             if (dataGrid == null)
+            {
+                this._inFilter = false;
                 return;
+            }
+            this.SetFilteringUIState();
+
             dataGrid.CurrentCell = null;
             var parts = filter.Split(new char[] { ' ' });
             DataGridViewRow firstVisibleRow = null;
@@ -180,6 +242,19 @@ namespace Habanero.Faces.Win
             }
             if (firstVisibleRow != null)
                 firstVisibleRow.Selected = true;
+            this._inFilter = false;
+            this.SetFilteringUIState();
+        }
+
+        private void SetFilteringUIState()
+        {
+            this._filterMessageLabel.Text = (this._inFilter) ? "Filtering... please wait..." : "";
+            this._filterTextBox.Enabled = !this._inFilter;
+            this._iboEditorControl.Enabled = !this._inFilter;
+            this._readOnlyGridControl.Enabled = !this._inFilter;
+            this._buttonGroupControl.Enabled = !this._inFilter;
+            this.UseWaitCursor = this._inFilter;
+            Application.DoEvents();
         }
 
         private void ClearFilter()
@@ -285,6 +360,11 @@ namespace Habanero.Faces.Win
 
         private void GridSelectionChanged(object sender, EventArgs e)
         {
+            if (this.SkipSaveOnSelectionChanged)
+            {
+                SetSelectedBusinessObject();
+                return;
+            }
             try
             {
                 if (_newBO != null)
@@ -334,14 +414,18 @@ namespace Habanero.Faces.Win
 
         private void SetSelectedBusinessObject()
         {
-            IBusinessObject businessObject = CurrentBusinessObject ?? _newBO;
-            _iboEditorControl.BusinessObject = businessObject;
-            if (businessObject != null)
+            try
             {
-                businessObject.PropertyUpdated += PropertyUpdated;
+                IBusinessObject businessObject = CurrentBusinessObject ?? _newBO;
+                _iboEditorControl.BusinessObject = businessObject;
+                if (businessObject != null)
+                {
+                    businessObject.PropertyUpdated += PropertyUpdated;
+                }
+                UpdateControlEnabledState();
+                _lastSelectedBusinessObject = businessObject;
             }
-            UpdateControlEnabledState();
-            _lastSelectedBusinessObject = businessObject;
+            catch (Exception) { }
         }
 
         private void PropertyUpdated(object sender, BOPropUpdatedEventArgs eventArgs)
@@ -556,6 +640,8 @@ namespace Habanero.Faces.Win
             get { return _readOnlyGridControl.SelectedBusinessObject; }
         }
 
+        public bool SkipSaveOnSelectionChanged { get; set; }
+
         ///<summary>
         /// Gets and Sets the currently selected business object
         ///</summary>
@@ -563,6 +649,63 @@ namespace Habanero.Faces.Win
         {
             get { return _readOnlyGridControl.SelectedBusinessObject; }
             set { _readOnlyGridControl.SelectedBusinessObject = value; }
+        }
+
+        public EventHandler OnAsyncOperationComplete { get; set; }
+        public EventHandler OnAsyncOperationStarted { get; set; }
+        IBusinessObjectCollection IHasBusinessObjectCollection.BusinessObjectCollection { get; set; }
+        public void PopulateCollectionAsync(DataRetrieverCollectionDelegate dataRetrieverCallback, Action afterPopulation = null)
+        {
+            if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
+            var data = new ConcurrentDictionary<string, object>();
+            data["collection"] = null;
+            BackgroundWorkerWin.Run(this, data,
+                (d) => { 
+                    d["collection"] = dataRetrieverCallback(); 
+                    return true; 
+                },
+                (d) =>
+                {
+                    this.PopulateCollectionUICallback(afterPopulation, d);
+                },
+                null,
+                this.NotifyPopulationException);
+            if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+        }
+
+        public void PopulateCollectionAsync<T>(Criteria criteria, IOrderCriteria order = null, Action afterPopulation = null) where T : class, IBusinessObject, new()
+        {
+            if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
+            var data = new ConcurrentDictionary<string, object>();
+            data["collection"] = null;
+            BackgroundWorkerWin.Run(this, data,
+                (d) => { d["collection"] = Broker.GetBusinessObjectCollection<T>(criteria, order); return true; },
+                (d) =>
+                {
+                    this.PopulateCollectionUICallback(afterPopulation, d);
+                },
+                null,
+                this.NotifyPopulationException);
+            if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+        }
+
+        private void PopulateCollectionUICallback(Action afterPopulation, ConcurrentDictionary<string, object> d)
+        {
+            this.BusinessObjectCollection = d["collection"] as IBusinessObjectCollection;
+            if (afterPopulation != null) afterPopulation();
+            if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+            this.UseWaitCursor = false;
+            this.Enabled = true;
+        }
+
+        private void NotifyPopulationException(Exception ex)
+        {
+            GlobalRegistry.UIExceptionNotifier.Notify(ex, "Unable to load data grid", "Error loading data grid");
+        }
+
+        public void PopulateCollectionAsync<T>(string criteria, string order = null, Action afterPopulation = null) where T : class, IBusinessObject, new()
+        {
+            this.PopulateCollectionAsync<T>(CriteriaParser.CreateCriteria(criteria), OrderCriteria.FromString(order), afterPopulation);
         }
     }
 
@@ -587,6 +730,7 @@ namespace Habanero.Faces.Win
         private IButton _cancelButton;
         private IButton _saveButton;
         private TBusinessObject _lastSelectedBusinessObject;
+        private bool _inAsyncOperation;
         /// <summary>
         /// Event for when the Business object is selected
         /// </summary>
@@ -601,6 +745,28 @@ namespace Habanero.Faces.Win
         {
             BOEditorControlWin<TBusinessObject> boEditorControl = new BOEditorControlWin<TBusinessObject>(controlFactory, uiDefName);
             SetupGridAndBOEditorControlWin(controlFactory, boEditorControl, uiDefName);
+            this.OnAsyncOperationComplete += (sender, e) =>
+                {
+                    lock (this)
+                    {
+                        this._inAsyncOperation = false;
+                    }
+                    this.Enabled = true;
+                    this.UseWaitCursor = false;
+                    this.Cursor = Cursors.Default;
+                    this.AddGridSelectionChangedEvent();
+                };
+            this.OnAsyncOperationStarted += (sender, e) =>
+                {
+                    this.RemoveGridSelectionChangedEvent();
+                    lock (this)
+                    {
+                        this._inAsyncOperation = true;
+                    }
+                    this.Enabled = false;
+                    this.UseWaitCursor = true;
+                    this.Cursor = Cursors.WaitCursor;
+                };
         }
 
         ///<summary>
@@ -724,6 +890,11 @@ namespace Habanero.Faces.Win
 
         private void GridSelectionChanged(object sender, EventArgs e)
         {
+            if (this.SkipSaveOnSelectionChanged)
+            {
+                SetSelectedBusinessObject();
+                return;
+            }
             if (_lastSelectedBusinessObject == null || _readOnlyGridControl.SelectedBusinessObject != _lastSelectedBusinessObject)
             {
                 if (!CheckRowSelectionCanChange()) return;
@@ -940,6 +1111,8 @@ namespace Habanero.Faces.Win
             get { return _readOnlyGridControl.SelectedBusinessObject; }
         }
 
+        public bool SkipSaveOnSelectionChanged { get; set; }
+
         ///<summary>
         /// The Current Business Object that is selected in the grid.
         ///</summary>
@@ -947,6 +1120,61 @@ namespace Habanero.Faces.Win
         {
             get { return (TBusinessObject)_readOnlyGridControl.SelectedBusinessObject; }
             set { _readOnlyGridControl.SelectedBusinessObject = value; }
+        }
+
+        public EventHandler OnAsyncOperationComplete { get; set; }
+        public EventHandler OnAsyncOperationStarted { get; set; }
+        IBusinessObjectCollection IHasBusinessObjectCollection.BusinessObjectCollection { get; set; }
+        public void PopulateCollectionAsync(DataRetrieverCollectionDelegate dataRetrieverCallback, Action afterPopulation = null)
+        {
+            if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
+            var data = new ConcurrentDictionary<string, object>();
+            data["collection"] = null;
+            BackgroundWorkerWin.Run(this, data,
+                (d) => { d["collection"] = dataRetrieverCallback(); return true; },
+                (d) =>
+                {
+                    this.PopulateCollectionUICallback(afterPopulation, d);
+                },
+                null,
+                this.NotifyPopulationException);
+            if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+        }
+
+        public void PopulateCollectionAsync<T>(Criteria criteria, IOrderCriteria order = null, Action afterPopulation = null) where T : class, IBusinessObject, new()
+        {
+            if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
+            var data = new ConcurrentDictionary<string, object>();
+            data["collection"] = null;
+            BackgroundWorkerWin.Run(this, data,
+                (d) => { d["collection"] = Broker.GetBusinessObjectCollection<T>(criteria, order); return true; },
+                (d) =>
+                {
+                    this.PopulateCollectionUICallback(afterPopulation, d);
+                },
+                null,
+                this.NotifyPopulationException);
+            if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+        }
+
+        private void PopulateCollectionUICallback(Action afterPopulation, ConcurrentDictionary<string, object> d)
+        {
+            var boCollection = d["collection"] as IBusinessObjectCollection;
+            this.BusinessObjectCollection = boCollection;
+            if (afterPopulation != null) afterPopulation();
+            if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+            this.UseWaitCursor = false;
+            this.Enabled = true;
+        }
+
+        private void NotifyPopulationException(Exception ex)
+        {
+            GlobalRegistry.UIExceptionNotifier.Notify(ex, "Unable to load data grid", "Error loading data grid");
+        }
+
+        public void PopulateCollectionAsync<T>(string criteria, string order = null, Action afterPopulation = null) where T : class, IBusinessObject, new()
+        {
+            this.PopulateCollectionAsync<T>(CriteriaParser.CreateCriteria(criteria), OrderCriteria.FromString(order), afterPopulation);
         }
     }
 }

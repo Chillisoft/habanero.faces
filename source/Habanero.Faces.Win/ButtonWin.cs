@@ -64,21 +64,24 @@ namespace Habanero.Faces.Win
             this.ObserveGlobalUIHints();
             this.TextChanged += (sender, e) =>
                 {
-                    var lines = this.Text.Split(new char[] { '\n' });
-                    using (var gfx = CreateGraphics())
+                    if ((GlobalUIRegistry.UIStyleHints != null) && (GlobalUIRegistry.UIStyleHints.ButtonHints.AttemptToMakeTextFit))
                     {
-                        var minWidth = 0;
-                        foreach (var line in lines)
+                        var lines = this.Text.Split(new char[] { '\n' });
+                        using (var gfx = CreateGraphics())
                         {
-                            var s = gfx.MeasureString(line, this.Font);
-                            if (s.Width > minWidth) minWidth = (int)(Math.Ceiling(s.Width));
+                            var minWidth = 0;
+                            foreach (var line in lines)
+                            {
+                                var s = gfx.MeasureString(line, this.Font);
+                                if (s.Width > minWidth) minWidth = (int)(Math.Ceiling(s.Width));
+                            }
+                            if (GlobalUIRegistry.UIStyleHints != null)
+                                minWidth += GlobalUIRegistry.UIStyleHints.LayoutHints.DefaultVerticalGap;
+                            else
+                                minWidth += 6;
+                            if (minWidth > this.MinimumSize.Width)
+                                this.MinimumSize = new Size(minWidth, this.MinimumSize.Height);
                         }
-                        if (GlobalUIRegistry.UIStyleHints != null)
-                            minWidth += GlobalUIRegistry.UIStyleHints.LayoutHints.DefaultVerticalGap;
-                        else
-                            minWidth += 6;
-                        if (minWidth > this.MinimumSize.Width)
-                            this.MinimumSize = new Size(minWidth, this.MinimumSize.Height);
                     }
                 };
         }

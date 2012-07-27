@@ -43,25 +43,17 @@ namespace Habanero.Faces.Win
         /// <param name="resourceName">name of the resource to load, eg "doctor-icon.png"</param>
         public void SetButtonIcon(string resourceName)
         {
-            foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+            var s = ResourceStreamer.GetResourceStreamByName(resourceName);
+            if (s == null) return;
+            var btn = Button as Button;
+            if (btn != null)
             {
-                foreach (var rName in asm.GetManifestResourceNames())
-                {
-                    if (rName.EndsWith(resourceName))
-                    {
-                        var s = asm.GetManifestResourceStream(rName);
-                        var btn = Button as Button;
-                        if (btn != null)
-                        {
-                            btn.ResetBackColor();
-                            btn.ResetForeColor();
-                            btn.Image = Image.FromStream(s);
-                            btn.Text = "";
-                            btn.Width = btn.Image.Width + 10;
-                            btn.Height = btn.Image.Height + 10;
-                        }
-                    }
-                }
+                btn.ResetBackColor();
+                btn.ResetForeColor();
+                btn.Image = Image.FromStream(s);
+                btn.Text = "";
+                btn.Width = btn.Image.Width + 10;
+                btn.Height = btn.Image.Height + 10;
             }
         }
 

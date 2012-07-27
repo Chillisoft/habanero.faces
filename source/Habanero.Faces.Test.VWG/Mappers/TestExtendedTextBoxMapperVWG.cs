@@ -400,6 +400,7 @@ namespace Habanero.Faces.Test.VWG.Mappers
             bool isReadOnly, IControlFactory controlFactory)
             : base(ctl, propName, isReadOnly, controlFactory)
         {
+            _loadCollectionAfterFormLoad = false;
             FormClosed = false;
         }
         public void CallCancelClick()

@@ -24,6 +24,8 @@ namespace Habanero.Faces.Base
         /// </summary>
         protected IButtonGroupControl SelectButtonGroupControl { get; set; }
 
+        protected bool _loadCollectionAfterFormLoad;
+
         ///<summary>
         /// Constructs the mapper for <see cref="IExtendedComboBox"/>.
         ///</summary>
@@ -31,6 +33,7 @@ namespace Habanero.Faces.Base
             (IExtendedTextBox ctl, string propName, bool isReadOnly, IControlFactory controlFactory)
             : base(ctl, propName, isReadOnly, controlFactory)
         {
+            this._loadCollectionAfterFormLoad = true;
             ExtendedTextBox = ctl;
             ExtendedTextBox.Button.Click += delegate
                      {
@@ -66,7 +69,7 @@ namespace Habanero.Faces.Base
         {
             IBOGridAndEditorControl iboGridAndEditorControl = GetIBOGridAndEditorControl();
             if (iboGridAndEditorControl == null) return null;
-            IBusinessObject businessObject = iboGridAndEditorControl.CurrentBusinessObject;
+            IBusinessObject businessObject = iboGridAndEditorControl.GridControl.SelectedBusinessObject; //.CurrentBusinessObject;
             return businessObject;
         }
 
@@ -101,14 +104,27 @@ namespace Habanero.Faces.Base
             SetupSelectButtonGroupControl();
             
             IBOGridAndEditorControl iboGridAndEditorControl = ControlFactory.CreateGridAndBOEditorControl(lookupTypeClassDef);
-            IBusinessObjectCollection col = GetCollection(classType);
-            iboGridAndEditorControl.BusinessObjectCollection = col;
+            iboGridAndEditorControl.SkipSaveOnSelectionChanged = true;
+            if (this._loadCollectionAfterFormLoad)
+            {
+                this.PopupForm.Load += (sender, e) =>
+                {
+                    //iboGridAndEditorControl.BusinessObjectCollection = GetCollection(classType);
+                    iboGridAndEditorControl.PopulateCollectionAsync(() => { return GetCollection(classType); });
+                };
+            }
+            else // this branch is really only here for tests which expect synchronous workings
+            {
+                iboGridAndEditorControl.BusinessObjectCollection = GetCollection(classType);
+            }
 
             //PopupForm.Controls.Add(iboGridAndEditorControl);
             BorderLayoutManager manager = ControlFactory.CreateBorderLayoutManager(PopupForm);
             manager.AddControl(iboGridAndEditorControl, BorderLayoutManager.Position.Centre);
             manager.AddControl(SelectButtonGroupControl, BorderLayoutManager.Position.South);
             iboGridAndEditorControl.Dock = DockStyle.Fill;
+
+            PopupForm.MinimumSize = new Size(iboGridAndEditorControl.MinimumSize.Width + 250, iboGridAndEditorControl.MinimumSize.Height + 100);
 
             PopupForm.Size = originalSize;
         }
@@ -151,7 +167,7 @@ namespace Habanero.Faces.Base
             PopupForm.Close();
         }
 
-        private IClassDef GetLookupTypeClassDef(out Type classType)
+        protected virtual IClassDef GetLookupTypeClassDef(out Type classType)
         {
             BOMapper mapper = new BOMapper(BusinessObject);
             IClassDef lookupTypeClassDef = mapper.GetLookupListClassDef(PropertyName);

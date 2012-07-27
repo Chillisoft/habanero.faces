@@ -39,6 +39,9 @@ namespace Habanero.Faces.Win
         public int ColumnAutoSizingPadding { get; set; }
 
         private readonly GridBaseManager _manager;
+        private Timer _resizeTimer;
+        private DateTime _lastResize;
+        private bool _resizeRequired;
 
         /// <summary>
         /// Constructor for <see cref="GridBaseWin"/>
@@ -60,9 +63,19 @@ namespace Habanero.Faces.Win
                 this.ColumnAutoSizingStrategy = gridHints.ColumnAutoSizingStrategy;
                 this.ColumnAutoSizingPadding = gridHints.ColumnAutoSizingPadding;
             }
+            this._resizeTimer = new Timer() { Enabled = true, Interval = 1000 };
+            this._resizeTimer.Tick += (sender, e) =>
+                {
+                    if (this._resizeRequired && (this._lastResize.AddMilliseconds(this._resizeTimer.Interval) < DateTime.Now))
+                    {
+                        this._resizeRequired = false;
+                        this.ImplementColumnAutoSizingStrategy();
+                    }
+                };
             this.Resize += (sender, e) =>
                 {
-                    this.ImplementColumnAutoSizingStrategy();
+                    this._resizeRequired = true;
+                    this._lastResize = DateTime.Now;
                 };
         }
 

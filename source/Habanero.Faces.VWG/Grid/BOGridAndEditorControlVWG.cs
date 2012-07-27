@@ -5,6 +5,7 @@ using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
+using Habanero.Faces.Base.Async;
 
 namespace Habanero.Faces.VWG.Grid
 {
@@ -176,6 +177,11 @@ namespace Habanero.Faces.VWG.Grid
 
         private void GridSelectionChanged(object sender, EventArgs e)
         {
+            if (this.SkipSaveOnSelectionChanged)
+            {
+                SetSelectedBusinessObject();
+                return;
+            }
             try
             {
                 if (_newBO != null)
@@ -447,6 +453,8 @@ namespace Habanero.Faces.VWG.Grid
             get { return _readOnlyGridControl.SelectedBusinessObject; }
         }
 
+        public bool SkipSaveOnSelectionChanged { get; set; }
+
         ///<summary>
         /// Gets and Sets the currently selected business object
         ///</summary>
@@ -454,6 +462,38 @@ namespace Habanero.Faces.VWG.Grid
         {
             get { return _readOnlyGridControl.SelectedBusinessObject; }
             set { _readOnlyGridControl.SelectedBusinessObject = value; }
+        }
+
+        public void ExecuteOnUIThread(Delegate method)
+        {
+            method.DynamicInvoke();
+        }
+
+        public EventHandler OnAsyncOperationComplete { get; set; }
+        public EventHandler OnAsyncOperationStarted { get; set; }
+        IBusinessObjectCollection IHasBusinessObjectCollection.BusinessObjectCollection { get; set; }
+        public void PopulateCollectionAsync(DataRetrieverCollectionDelegate dataRetrieverCallback, Action afterPopulation = null)
+        {
+            if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
+            this.BusinessObjectCollection = dataRetrieverCallback();
+            if (afterPopulation != null) afterPopulation();
+            if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+        }
+
+        public void PopulateCollectionAsync<T>(Criteria criteria, IOrderCriteria order = null, Action afterPopulation = null) where T : class, IBusinessObject, new()
+        {
+            if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
+            this.BusinessObjectCollection = Broker.GetBusinessObjectCollection<T>(criteria, order);
+            if (afterPopulation != null) afterPopulation();
+            if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+        }
+
+        public void PopulateCollectionAsync<T>(string criteria, string order = null, Action afterPopulation = null) where T : class, IBusinessObject, new()
+        {
+            if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
+            this.BusinessObjectCollection = Broker.GetBusinessObjectCollection<T>(criteria, order);
+            if (afterPopulation != null) afterPopulation();
+            if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
         }
     }
 
@@ -613,6 +653,11 @@ namespace Habanero.Faces.VWG.Grid
 
         private void GridSelectionChanged(object sender, EventArgs e)
         {
+            if (this.SkipSaveOnSelectionChanged)
+            {
+                SetSelectedBusinessObject();
+                return;
+            }
             if (_lastSelectedBusinessObject == null || _readOnlyGridControl.SelectedBusinessObject != _lastSelectedBusinessObject)
             {
                 if (!CheckRowSelectionCanChange()) return;
@@ -801,6 +846,10 @@ namespace Habanero.Faces.VWG.Grid
                 _readOnlyGridControl.BusinessObjectCollection = value;
                 _newButton.Enabled = true;
             }
+            get
+            {
+                return _readOnlyGridControl.BusinessObjectCollection;
+            }
         }
 
         /// <summary>
@@ -831,6 +880,8 @@ namespace Habanero.Faces.VWG.Grid
             get { return _readOnlyGridControl.SelectedBusinessObject; }
         }
 
+        public bool SkipSaveOnSelectionChanged { get; set; }
+
         ///<summary>
         /// The Current Business Object that is selected in the grid.
         ///</summary>
@@ -839,5 +890,37 @@ namespace Habanero.Faces.VWG.Grid
             get { return (TBusinessObject)_readOnlyGridControl.SelectedBusinessObject; }
             set { _readOnlyGridControl.SelectedBusinessObject = value; }
         }
+
+        public void PopulateCollectionAsync(DataRetrieverCollectionDelegate dataRetrieverCallback, Action afterPopulation = null)
+        {
+            if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
+            this.BusinessObjectCollection = dataRetrieverCallback();
+            if (afterPopulation != null) afterPopulation();
+            if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+        }
+
+        public void PopulateCollectionAsync<T>(Criteria criteria, IOrderCriteria order = null, Action afterPopulation = null) where T : class, IBusinessObject, new()
+        {
+            if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
+            this.BusinessObjectCollection = Broker.GetBusinessObjectCollection<T>(criteria, order);
+            if (afterPopulation != null) afterPopulation();
+            if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+        }
+
+        public void PopulateCollectionAsync<T>(string criteria, string order = null, Action afterPopulation = null) where T : class, IBusinessObject, new()
+        {
+            if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
+            this.BusinessObjectCollection = Broker.GetBusinessObjectCollection<T>(criteria, order);
+            if (afterPopulation != null) afterPopulation();
+            if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+        }
+
+        public void ExecuteOnUIThread(Delegate method)
+        {
+            method.DynamicInvoke();
+        }
+
+        public EventHandler OnAsyncOperationComplete { get; set; }
+        public EventHandler OnAsyncOperationStarted { get; set; }
     }
 }

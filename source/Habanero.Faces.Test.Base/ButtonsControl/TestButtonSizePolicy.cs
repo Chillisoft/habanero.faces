@@ -13,6 +13,7 @@ namespace Habanero.Faces.Test.Base.ButtonsControl
         [SetUp]
         public void SetupTest()
         {
+            GlobalUIRegistry.UIStyleHints = null;
         }
 
         [TestFixtureSetUp]

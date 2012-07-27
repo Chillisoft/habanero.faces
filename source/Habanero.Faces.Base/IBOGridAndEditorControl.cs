@@ -17,6 +17,7 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using Habanero.Base;
+using Habanero.Faces.Base.Async;
 
 namespace Habanero.Faces.Base
 {
@@ -25,7 +26,7 @@ namespace Habanero.Faces.Base
     /// The collection of business objects can be shown using any selector control e.g. an <see cref="IEditableGridControl"/>,
     ///   <see cref="IGridControl"/> etc.
     ///</summary>
-    public interface IBOGridAndEditorControl : IControlHabanero
+    public interface IBOGridAndEditorControl : IControlHabanero, ISupportAsyncLoadingCollection
     {
         /// <summary>
         /// Sets the business object collection to populate the grid.  If the grid
@@ -54,5 +55,7 @@ namespace Habanero.Faces.Base
         /// Method to create a new Business Object that is part of the collection.
         /// </summary>
         IBusinessObject CurrentBusinessObject { get; }
+
+        bool SkipSaveOnSelectionChanged { get; set; }
     }
 }

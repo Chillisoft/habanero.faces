@@ -381,7 +381,7 @@ namespace Habanero.Faces.Win
 
         }
 
-        public void PopulateCollectionAsync<T>(DataRetrieverCollectionDelegate dataRetrieverCallback, Action afterPopulation = null) where T : class, IBusinessObject, new()
+        public void PopulateCollectionAsync(DataRetrieverCollectionDelegate dataRetrieverCallback, Action afterPopulation = null)
         {
             if (GlobalUIRegistry.AsyncSettings.SynchroniseBackgroundOperations)
             {

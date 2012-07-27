@@ -350,7 +350,7 @@ namespace Habanero.Faces.Win
             GlobalRegistry.UIExceptionNotifier.Notify(ex, "Unable to load data grid", "Error loading data grid");
         }
 
-        public void PopulateCollectionAsync<T>(DataRetrieverCollectionDelegate dataRetrieverCallback, Action afterPopulation = null) where T : class, IBusinessObject, new()
+        public void PopulateCollectionAsync(DataRetrieverCollectionDelegate dataRetrieverCallback, Action afterPopulation = null)
         {
             if (GlobalUIRegistry.AsyncSettings.SynchroniseBackgroundOperations)
             {
