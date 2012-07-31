@@ -27,6 +27,7 @@ using Habanero.Base.Exceptions;
 using Habanero.Base.Util;
 using Habanero.BO;
 using Habanero.Faces.Base;
+using Habanero.Faces.Base.ControlInterfaces;
 using Habanero.Faces.Base.ControlMappers;
 using Habanero.Util;
 using AutoCompleteMode=System.Windows.Forms.AutoCompleteMode;
@@ -1351,7 +1352,10 @@ namespace Habanero.Faces.Win
         }
 
 
-
+        public IGenericGridFilterControl CreateGenericGridFilter(IGridBase grid)
+        {
+            return new GenericGridFilterControlWin(grid);
+        }
     }
 
 }

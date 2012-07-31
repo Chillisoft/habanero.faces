@@ -224,7 +224,7 @@ namespace Habanero.Faces.Win
         /// </summary>
         /// <param name="sender">The object that notified of the event</param>
         /// <param name="e">Attached arguments regarding the event</param>
-        private void OkButtonHandler(object sender, EventArgs e)
+        protected virtual void OkButtonHandler(object sender, EventArgs e)
         {
             try
             {
@@ -254,7 +254,7 @@ namespace Habanero.Faces.Win
         /// </summary>
         /// <param name="sender">The object that notified of the event</param>
         /// <param name="e">Attached arguments regarding the event</param>
-        private void CancelButtonHandler(object sender, EventArgs e)
+        protected virtual void CancelButtonHandler(object sender, EventArgs e)
         {
             if (CancelEditsToBusinessObject())
             {

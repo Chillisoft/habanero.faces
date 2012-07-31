@@ -78,7 +78,7 @@ namespace Habanero.Faces.Base
         /// <summary>
         /// Gets and sets the standard search criteria used for loading the grid when the <see cref="FilterModes"/>
         /// is set to Search or Filter. This search criteria will be appended with an AND to any search criteria returned
-        /// by the FilterControl. If possible please use the <see cref="IFilterControl.AddStaticStringFilterClause"/>
+        /// by the FilterControlControl. If possible please use the <see cref="IFilterControl.AddStaticStringFilterClause"/>
         /// that achieves the same objective in a more standardised manner.
         /// </summary>
         string AdditionalSearchCriteria { get; set; }

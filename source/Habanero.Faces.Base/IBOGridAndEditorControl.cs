@@ -18,6 +18,7 @@
 // ---------------------------------------------------------------------------------
 using Habanero.Base;
 using Habanero.Faces.Base.Async;
+using Habanero.Faces.Base.ControlInterfaces;
 
 namespace Habanero.Faces.Base
 {
@@ -34,7 +35,7 @@ namespace Habanero.Faces.Base
         /// Until you set a collection, the controls are disabled, since any given
         /// collection needs to be provided by a suitable context.
         /// </summary>
-        IBusinessObjectCollection BusinessObjectCollection { set; }
+        //IBusinessObjectCollection BusinessObjectCollection { set; }
 
         /// <summary>
         /// Returns the <see cref="IGridControl"/> that is being used along side of the <see cref="IBOEditorControl"/>
@@ -57,5 +58,7 @@ namespace Habanero.Faces.Base
         IBusinessObject CurrentBusinessObject { get; }
 
         bool SkipSaveOnSelectionChanged { get; set; }
+
+        IGenericGridFilterControl FilterControl { get; }
     }
 }

@@ -24,6 +24,7 @@ using Habanero.Base;
 using Habanero.Base.Exceptions;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
+using Habanero.Faces.Base.ControlInterfaces;
 using Habanero.Test.BO;
 using Habanero.Faces.Base;
 using Habanero.Faces.Win;
@@ -269,11 +270,12 @@ namespace Habanero.Faces.Test.Win.Selectors
             BOGridAndEditorControlWin<OrganisationTestBO> andBOGridAndEditorControlWin =
                 new BOGridAndEditorControlWin<OrganisationTestBO>(GetControlFactory(), iboEditorControl);
             //---------------Test Result -----------------------
-            Assert.AreEqual(3, andBOGridAndEditorControlWin.Controls.Count);
+            Assert.AreEqual(4, andBOGridAndEditorControlWin.Controls.Count);
             Assert.IsInstanceOf<IUserControlHabanero>(andBOGridAndEditorControlWin);
             Assert.IsInstanceOf<IBOEditorControl>(andBOGridAndEditorControlWin.Controls[0]);
             Assert.IsInstanceOf<IReadOnlyGridControl>(andBOGridAndEditorControlWin.Controls[1]);
-            Assert.IsInstanceOf<IButtonGroupControl>(andBOGridAndEditorControlWin.Controls[2]);
+            Assert.IsInstanceOf<IGenericGridFilterControl>(andBOGridAndEditorControlWin.Controls[2]);
+            Assert.IsInstanceOf<IButtonGroupControl>(andBOGridAndEditorControlWin.Controls[3]);
             Assert.AreSame(iboEditorControl, andBOGridAndEditorControlWin.IBOEditorControl);
             Assert.IsFalse(iboEditorControl.Enabled);
         }
@@ -291,11 +293,12 @@ namespace Habanero.Faces.Test.Win.Selectors
                 new BOGridAndEditorControlWin<OrganisationTestBO>
                     (GetControlFactory(), iboEditorControl, CUSTOM_UIDEF_NAME);
             //---------------Test Result -----------------------
-            Assert.AreEqual(3, andBOGridAndEditorControlWin.Controls.Count);
+            Assert.AreEqual(4, andBOGridAndEditorControlWin.Controls.Count);
             Assert.IsInstanceOf<IUserControlHabanero>(andBOGridAndEditorControlWin);
             Assert.IsInstanceOf<IBOEditorControl>(andBOGridAndEditorControlWin.Controls[0]);
             Assert.IsInstanceOf<IReadOnlyGridControl>(andBOGridAndEditorControlWin.Controls[1]);
-            Assert.IsInstanceOf<IButtonGroupControl>(andBOGridAndEditorControlWin.Controls[2]);
+            Assert.IsInstanceOf<IGenericGridFilterControl>(andBOGridAndEditorControlWin.Controls[2]);
+            Assert.IsInstanceOf<IButtonGroupControl>(andBOGridAndEditorControlWin.Controls[3]);
             Assert.AreSame(iboEditorControl, andBOGridAndEditorControlWin.IBOEditorControl);
         }
 

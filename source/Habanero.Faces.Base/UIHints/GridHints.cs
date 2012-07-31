@@ -9,5 +9,7 @@ namespace Habanero.Faces.Base.UIHints
     {
         public GridColumnAutoSizingStrategies ColumnAutoSizingStrategy { get; set; }
         public int ColumnAutoSizingPadding { get; set; }
+        public bool EnableAlternateRowColoring { get; set; }
+        public bool HideObjectIDColumn { get; set; }
     }
 }

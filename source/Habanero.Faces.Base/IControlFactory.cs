@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using Habanero.Base;
 using Habanero.Base.Util;
 using Habanero.BO;
+using Habanero.Faces.Base.ControlInterfaces;
 using Habanero.Faces.Base.ControlMappers;
 
 namespace Habanero.Faces.Base
@@ -777,6 +778,13 @@ namespace Habanero.Faces.Base
         ///</summary>
         ///<returns></returns>
         IExtendedComboBox CreateExtendedComboBox();
+
+        /// <summary>
+        /// creates a generic filter element for a grid, using the data in the grid
+        /// </summary>
+        /// <param name="grid">IGridBase element</param>
+        /// <returns></returns>
+        IGenericGridFilterControl CreateGenericGridFilter(IGridBase grid);
     }
 /*
     /// <summary>

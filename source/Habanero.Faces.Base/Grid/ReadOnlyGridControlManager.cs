@@ -24,7 +24,7 @@ namespace Habanero.Faces.Base
         private IControlFactory ControlFactory { get; set; }
 
         /// <summary>
-        /// The Inititialiser used to setup the Grid Columns and the FilterControl based 
+        /// The Inititialiser used to setup the Grid Columns and the FilterControlControl based 
         /// on the ClassDef.
         /// </summary>
         public IGridInitialiser GridInitialiser { get; private set; }
@@ -46,7 +46,7 @@ namespace Habanero.Faces.Base
         /// <summary>
         /// Gets and sets the standard search criteria used for loading the grid when the <see cref="FilterModes"/>
         /// is set to Search. This search criteria will be appended with an AND to any search criteria returned
-        /// by the FilterControl.
+        /// by the FilterControlControl.
         /// </summary>
         public string AdditionalSearchCriterial
         {

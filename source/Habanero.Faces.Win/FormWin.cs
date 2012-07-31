@@ -22,6 +22,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using Habanero.Faces.Base;
+using Habanero.Faces.Base.UIHints;
 using FormBorderStyle = System.Windows.Forms.FormBorderStyle;
 
 namespace Habanero.Faces.Win
@@ -33,23 +34,12 @@ namespace Habanero.Faces.Win
     {
         private const int WM_SYSCOMMAND = 0x0112;
         private const int SC_MAXIMIZE = 0xF030;
+        public bool EscapeClosesWindow { get { return _escapeClosesWindow; } set { this._manuallySetEscapeHandler = true; this._escapeClosesWindow = value; } }
+        private bool _escapeClosesWindow;
+        private bool _manuallySetEscapeHandler;
         public FormWin()
             :base()
         {
-            this.ControlAdded += (sender, e) =>
-                {
-                    var btn = e.Control as Button;
-                    if (btn == null) return;
-                    switch (btn.Text.ToLower())
-                    {
-                        case "ok":
-                            this.AcceptButton = btn;
-                            break;
-                        case "cancel":
-                            this.CancelButton = btn;
-                            break;
-                    }
-                };
             if (GlobalUIRegistry.UIStyleHints != null) 
             {
                 var resourceName = GlobalUIRegistry.UIStyleHints.FormHints.DefaultIconResourceName;
@@ -64,6 +54,10 @@ namespace Habanero.Faces.Win
                         if (iconResourceName != null)
                             this.SetIcon(iconResourceName);
                     }
+                };
+            this.Load += (sender, e) =>
+                {
+                    this.BindDefaultActions(this);
                 };
         }
 
@@ -103,6 +97,48 @@ namespace Habanero.Faces.Win
         public void Show(IControlHabanero owner)
         {
             base.Show((IWin32Window)owner);
+        }
+
+        private void BindDefaultActions(Control parent)
+        {
+            var hints = GlobalUIRegistry.UIStyleHints;
+            if (hints == null) return;
+            var bindOK = hints.FormHints.BindFirstOKButtonToAcceptButton;
+            var bindCancel = hints.FormHints.BindFirstCancelButtonToCancelButton;
+
+            foreach (var control in parent.Controls)
+            {
+                var ctl = control as Control;
+                if (ctl == null) continue;
+                var btn = ctl as Button;
+                if (btn != null)
+                {
+                    if (bindOK && (this.AcceptButton == null) && (btn.Text.ToLower() == "ok"))
+                    {
+                        this.AcceptButton = btn;
+                    }
+                    else if (bindCancel && (this.CancelButton == null) && (btn.Text.ToLower() == "cancel"))
+                    {
+                        this.CancelButton = btn;
+                    }
+                }
+                this.BindDefaultActions(ctl);
+            }
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (!this._manuallySetEscapeHandler)
+            {
+                var hints = GlobalUIRegistry.UIStyleHints;
+                if (hints != null)
+                {
+                    this.EscapeClosesWindow = (this.MdiParent == null) ? hints.FormHints.EscapeClosesDialogs : hints.FormHints.EscapeClosesMDIForms;
+                }
+            }
+            if ((this.EscapeClosesWindow) && (keyData == Keys.Escape))
+                this.Close();
+            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         /// <summary>

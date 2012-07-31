@@ -6,6 +6,7 @@ using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
 using Habanero.Faces.Base.Async;
+using Habanero.Faces.Base.ControlInterfaces;
 
 namespace Habanero.Faces.VWG.Grid
 {
@@ -91,7 +92,10 @@ namespace Habanero.Faces.VWG.Grid
             manager.AddControl(_iboEditorControl);
             manager.AddControl(_buttonGroupControl);
 
+            this.FilterControl = _controlFactory.CreateGenericGridFilter(_readOnlyGridControl.Grid);
+
             BorderLayoutManager layoutManager = _controlFactory.CreateBorderLayoutManager(this);
+            layoutManager.AddControl(this.FilterControl, BorderLayoutManager.Position.North);
             layoutManager.AddControl(_readOnlyGridControl, BorderLayoutManager.Position.West);
             layoutManager.AddControl(panel, BorderLayoutManager.Position.Centre);
             //layoutManager.AddControl(_selectButtonGroupControl, BorderLayoutManager.Position.South);
@@ -416,6 +420,10 @@ namespace Habanero.Faces.VWG.Grid
                 _readOnlyGridControl.BusinessObjectCollection = value;
                 _newButton.Enabled = true;
             }
+            get
+            {
+                return _readOnlyGridControl.BusinessObjectCollection;
+            }
         }
 
         /// <summary>
@@ -454,6 +462,7 @@ namespace Habanero.Faces.VWG.Grid
         }
 
         public bool SkipSaveOnSelectionChanged { get; set; }
+        public IGenericGridFilterControl FilterControl { get; protected set; }
 
         ///<summary>
         /// Gets and Sets the currently selected business object
@@ -471,7 +480,6 @@ namespace Habanero.Faces.VWG.Grid
 
         public EventHandler OnAsyncOperationComplete { get; set; }
         public EventHandler OnAsyncOperationStarted { get; set; }
-        IBusinessObjectCollection IHasBusinessObjectCollection.BusinessObjectCollection { get; set; }
         public void PopulateCollectionAsync(DataRetrieverCollectionDelegate dataRetrieverCallback, Action afterPopulation = null)
         {
             if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
@@ -578,7 +586,9 @@ namespace Habanero.Faces.VWG.Grid
             SetupButtonGroupControl();
             UpdateControlEnabledState();
 
+            this.FilterControl = controlFactory.CreateGenericGridFilter(_readOnlyGridControl.Grid);
             BorderLayoutManager layoutManager = _controlFactory.CreateBorderLayoutManager(this);
+            layoutManager.AddControl(this.FilterControl, BorderLayoutManager.Position.North);
             layoutManager.AddControl(_readOnlyGridControl, BorderLayoutManager.Position.West);
             layoutManager.AddControl(IBOEditorControl, BorderLayoutManager.Position.Centre);
             layoutManager.AddControl(ButtonGroupControl, BorderLayoutManager.Position.South);
@@ -881,6 +891,7 @@ namespace Habanero.Faces.VWG.Grid
         }
 
         public bool SkipSaveOnSelectionChanged { get; set; }
+        public IGenericGridFilterControl FilterControl { get; private set; }
 
         ///<summary>
         /// The Current Business Object that is selected in the grid.

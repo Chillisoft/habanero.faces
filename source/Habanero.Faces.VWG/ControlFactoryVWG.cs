@@ -26,7 +26,9 @@ using Habanero.Base.Exceptions;
 using Habanero.Base.Util;
 using Habanero.BO;
 using Habanero.Faces.Base;
+using Habanero.Faces.Base.ControlInterfaces;
 using Habanero.Faces.Base.ControlMappers;
+using Habanero.Faces.VWG.FilterControl;
 using Habanero.Faces.VWG.Grid;
 using Habanero.Util;
 using DateTimePickerFormat=Habanero.Faces.Base.DateTimePickerFormat;
@@ -1379,9 +1381,12 @@ namespace Habanero.Faces.VWG
             return new ExtendedComboBoxVWG(this);
         }
 
+        public IGenericGridFilterControl CreateGenericGridFilter(IGridBase grid)
+        {
+            return new GenericGridFilterControlVwg(grid);
+        }
+
         #endregion
-
-
     }
  
 

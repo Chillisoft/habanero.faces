@@ -271,7 +271,7 @@ namespace Habanero.Faces.Base
         }
 
         ///<summary>
-        /// Adds a ComboBox to the FilterControl for filtering on a Boolean Property.
+        /// Adds a ComboBox to the FilterControlControl for filtering on a Boolean Property.
         /// This allows the Developer to set a filter that allows the user to select true, false or nothing.
         /// (this is similar to a tristate CheckBox but is usually easier for a user).
         ///</summary>
@@ -472,7 +472,7 @@ namespace Habanero.Faces.Base
     }
 
     /// <summary>
-    /// FilterControl for filtering on a Boolean Property using a ComboBox with True and False instead of a TriState CheckBox.
+    /// FilterControlControl for filtering on a Boolean Property using a ComboBox with True and False instead of a TriState CheckBox.
     /// This allows the Developer to set a filter that allows the user to select true, false or nothing.
     /// (this is similar to a tristate CheckBox but is usually easier for a user).
     /// </summary>

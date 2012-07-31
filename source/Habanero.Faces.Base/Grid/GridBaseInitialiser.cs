@@ -14,7 +14,7 @@ namespace Habanero.Faces.Base
     /// ClassDef is provided, it is assumed that the grid will be set up in code
     /// by the developer.
     /// This only initialises the GridBase i.e. the Columns on the Grid and 
-    /// does not initialise things like the FilterControl.
+    /// does not initialise things like the FilterControlControl.
     /// </summary>
     public class GridBaseInitialiser : IGridInitialiser
     {

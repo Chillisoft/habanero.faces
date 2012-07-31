@@ -18,6 +18,7 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using Gizmox.WebGUI.Forms;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.Faces.Base;
@@ -31,6 +32,8 @@ namespace Habanero.Faces.VWG
     {
         public GridColumnAutoSizingStrategies ColumnAutoSizingStrategy { get; set; }
         public int ColumnAutoSizingPadding { get; set; }
+        public bool EnableAlternateRowColoring { get; set; }
+        public bool HideObjectIDColumn { get; set; }
 
         /// <summary>
         /// Constructor for <see cref="GridBaseVWG"/>
@@ -42,6 +45,32 @@ namespace Habanero.Faces.VWG
             GridBaseManager.CollectionChanged += delegate { FireCollectionChanged(); };
             ConfirmDeletion = false;
             CheckUserConfirmsDeletionDelegate = CheckUserWantsToDelete;
+            var hints = GlobalUIRegistry.UIStyleHints;
+            if (hints != null)
+            {
+                this.ColumnAutoSizingPadding = hints.GridHints.ColumnAutoSizingPadding;
+                this.ColumnAutoSizingStrategy = hints.GridHints.ColumnAutoSizingStrategy;
+                this.EnableAlternateRowColoring = hints.GridHints.EnableAlternateRowColoring;
+                this.HideObjectIDColumn = hints.GridHints.HideObjectIDColumn;
+                this.CollectionChanged += (s, e) => 
+                {
+                    this.SetIDColumnVisibility(!this.HideObjectIDColumn);
+                };
+            }
+        }
+
+        private void SetIDColumnVisibility(bool visible)
+        {
+            var toHide = new List<DataGridViewColumnVWG>();
+            foreach (DataGridViewColumnVWG col in this.Columns)
+            {
+                if (col.Name == "HABANERO_OBJECTID")
+                {
+                    toHide.Add(col);
+                }
+            }
+            foreach (var col in toHide)
+                col.Visible = visible;
         }
 
         /// <summary>

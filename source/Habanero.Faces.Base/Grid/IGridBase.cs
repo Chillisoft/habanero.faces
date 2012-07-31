@@ -52,6 +52,8 @@ namespace Habanero.Faces.Base
     {
         GridColumnAutoSizingStrategies ColumnAutoSizingStrategy { get; set; }
         int ColumnAutoSizingPadding { get; set; }
+        bool EnableAlternateRowColoring { get; set; }
+        bool HideObjectIDColumn { get; set; }
         /// <summary>
         /// Sets the business object collection displayed in the grid.  This
         /// collection must be pre-loaded using the collection's Load() command.

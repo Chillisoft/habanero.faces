@@ -91,7 +91,7 @@ namespace Habanero.Faces.VWG
             this.Grid.CurrentPage = 1;
             if (FilterMode == FilterModes.Search)
             {
-                string searchClause = FilterControl.GetFilterClause().GetFilterClauseString("%", "'");
+                string searchClause = FilterControlControl.GetFilterClause().GetFilterClauseString("%", "'");
                 if (!string.IsNullOrEmpty(AdditionalSearchCriteria))
                 {
                     if (!string.IsNullOrEmpty(searchClause))
@@ -106,7 +106,7 @@ namespace Habanero.Faces.VWG
             }
             else
             {
-                this.Grid.ApplyFilter(FilterControl.GetFilterClause());
+                this.Grid.ApplyFilter(FilterControlControl.GetFilterClause());
             }
         }*/
         ///<summary>
@@ -327,7 +327,7 @@ namespace Habanero.Faces.VWG
         /// <summary>
         /// Gets and sets the standard search criteria used for loading the grid when the <see cref="FilterModes"/>
         /// is set to Search. This search criteria will be appended with an AND to any search criteria returned
-        /// by the FilterControl.
+        /// by the FilterControlControl.
         /// </summary>
         public string AdditionalSearchCriteria
         {

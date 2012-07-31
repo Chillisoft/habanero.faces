@@ -129,6 +129,7 @@
     <Compile Include="ControlInterfaces\IDateRangeComboBox.cs" />
     <Compile Include="ControlInterfaces\IFileChooser.cs" />
     <Compile Include="ControlInterfaces\IFormHabanero.cs" />
+    <Compile Include="ControlInterfaces\IGenericGridFilterControl.cs" />
     <Compile Include="ControlInterfaces\IGridWithPanelControl.cs" />
     <Compile Include="ControlInterfaces\IGroupBoxGroupControl.cs" />
     <Compile Include="ControlInterfaces\IGroupControl.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="ControlMappers\EditableGridControlMapper.cs" />
     <Compile Include="ControlMappers\EnumComboBoxMapper.cs" />
     <Compile Include="ControlMappers\ExtendedComboBoxMapper.cs" />
+    <Compile Include="ControlMappers\ExtendedTextBoxMapperReadOnly.cs" />
     <Compile Include="ControlMappers\ISelectItemForm.cs" />
     <Compile Include="ControlMappers\ListComboBoxMapper.cs" />
     <Compile Include="ControlMappers\ReadOnlyGridMapper.cs" />

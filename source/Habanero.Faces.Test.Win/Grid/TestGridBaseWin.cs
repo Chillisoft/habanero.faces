@@ -202,6 +202,8 @@ namespace Habanero.Faces.Test.Win.Grid
             var gridHints = GlobalUIRegistry.UIStyleHints.GridHints;
             gridHints.ColumnAutoSizingStrategy = GridColumnAutoSizingStrategies.FitLastColumnTakesSlack;
             gridHints.ColumnAutoSizingPadding = 13;
+            gridHints.EnableAlternateRowColoring = true;
+            gridHints.HideObjectIDColumn = true;
             BusinessObjectCollection<MyBO> col;
             var grid = this.GetGridBaseWith_4_Rows(out col);
             //---------------Assert Precondition----------------
@@ -211,6 +213,8 @@ namespace Habanero.Faces.Test.Win.Grid
             //---------------Test Result -----------------------
             Assert.AreEqual(gridHints.ColumnAutoSizingStrategy, grid.ColumnAutoSizingStrategy, "global column sizing strategy not observed");
             Assert.AreEqual(gridHints.ColumnAutoSizingPadding, grid.ColumnAutoSizingPadding, "global column padding not observed");
+            Assert.AreEqual(gridHints.EnableAlternateRowColoring, grid.EnableAlternateRowColoring, "global alternate row coloring not observed");
+            Assert.AreEqual(gridHints.HideObjectIDColumn, grid.HideObjectIDColumn, "global hide id column not observed");
         }
     }
 

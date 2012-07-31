@@ -216,6 +216,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Async\MultipleAsyncOperationException.cs" />
+    <Compile Include="Grid\GenericGridFilterControlWin.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GroupBoxGroupControlWin.cs">
       <SubType>Component</SubType>
     </Compile>

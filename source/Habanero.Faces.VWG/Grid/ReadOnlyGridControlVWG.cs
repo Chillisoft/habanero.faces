@@ -287,7 +287,7 @@ namespace Habanero.Faces.VWG
         /// <summary>
         /// Gets and sets the standard search criteria used for loading the grid when the <see cref="FilterModes"/>
         /// is set to Search or Filter. This search criteria will be appended with an AND to any search criteria returned
-        /// by the FilterControl.
+        /// by the FilterControlControl.
         /// </summary>
         public string AdditionalSearchCriteria
         {

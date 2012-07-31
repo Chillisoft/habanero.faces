@@ -167,6 +167,9 @@
     <Compile Include="ExtendedComboBoxVWG.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="FilterControl\GenericGridFilterControlVwg.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Grid\EditableGridControlVWG.cs">
       <SubType>UserControl</SubType>
     </Compile>

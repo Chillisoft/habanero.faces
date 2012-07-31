@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Windows.Forms;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
@@ -9,6 +10,7 @@ using Habanero.Test.BO;
 using Habanero.Faces.Base;
 using Habanero.Faces.Win;
 using NUnit.Framework;
+using DockStyle = Habanero.Faces.Base.DockStyle;
 
 namespace Habanero.Faces.Test.Win.Mappers
 {
@@ -25,6 +27,12 @@ namespace Habanero.Faces.Test.Win.Mappers
             ContactPersonTestBO.LoadClassDefOrganisationTestBORelationship_MultipleReverse();
             BusinessObjectManager.Instance.ClearLoadedObjects();
             TestUtil.WaitForGC();
+            GlobalUIRegistry.AsyncSettings.SynchroniseBackgroundOperations = true;
+        }
+        [TearDown]
+        public void TearDown()
+        {
+            GlobalUIRegistry.AsyncSettings.SynchroniseBackgroundOperations = false;
         }
 
         private static IControlFactory GetControlFactory()
@@ -235,7 +243,13 @@ namespace Habanero.Faces.Test.Win.Mappers
             Assert.AreEqual("Cancel", control.Controls[0].Text);
             Assert.AreEqual("Select", control.Controls[1].Text);
 
-            BOGridAndEditorControlWin andBOGridAndEditorControlWin = (BOGridAndEditorControlWin)form.Controls[0];
+            BOGridAndEditorControlWin andBOGridAndEditorControlWin = null;
+            foreach (var ctl in form.Controls)
+            {
+                andBOGridAndEditorControlWin = form.Controls[0] as BOGridAndEditorControlWin;
+                if (andBOGridAndEditorControlWin != null) break;
+            }
+            Assert.IsNotNull(andBOGridAndEditorControlWin, "Can't find BO editor on popup form");
             //Assert.AreSame(mapper.BusinessObject, BOGridAndEditorControlWin.BOEditorControlWin.BusinessObject);
             Assert.IsTrue(andBOGridAndEditorControlWin.GridControl.IsInitialised);
             IBusinessObjectCollection collection = andBOGridAndEditorControlWin.GridControl.Grid.BusinessObjectCollection;
@@ -285,8 +299,9 @@ namespace Habanero.Faces.Test.Win.Mappers
             Assert.AreEqual("", extendedTextBox.Text, "Text on TextBox should be set to EmptyString");
         }
 
-        [Test]
-        public void Test_SelectButtonWhenClicked_ShouldApplyBusinessObjectChanges()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void Test_SelectButtonWhenClicked_ShouldApplyBusinessObjectChanges(bool enableEditing)
         {
             //---------------Set up test pack-------------------
             GetClassDefs();
@@ -295,6 +310,7 @@ namespace Habanero.Faces.Test.Win.Mappers
             const string propName = "OrganisationID";
             ExtendedTextBoxMapperSpy mapperSpy = new ExtendedTextBoxMapperSpy(
                 extendedTextBoxWin, propName, true, controlFactory);
+            mapperSpy.EnableEditing = enableEditing;
             ContactPersonTestBO contactPersonTestBo = new ContactPersonTestBO();
             mapperSpy.BusinessObject = contactPersonTestBo;
             var expectedSelectedBO = new OrganisationTestBO();

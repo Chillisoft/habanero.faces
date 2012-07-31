@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Timers;
 using Habanero.Base;
 using Habanero.BO;
+using Habanero.Faces.Base.Async;
+using Habanero.Faces.Base.ControlInterfaces;
 using Habanero.Faces.Base.ControlMappers;
 
 namespace Habanero.Faces.Base
@@ -15,6 +18,7 @@ namespace Habanero.Faces.Base
     // ReSharper disable MemberCanBePrivate.Global
     public class ExtendedTextBoxMapper : ControlMapper
     {
+        public bool EnableEditing { get; set; }
         /// <summary>
         /// The extended Text box being mapped to the property by this mapper.
         /// </summary>
@@ -25,6 +29,8 @@ namespace Habanero.Faces.Base
         protected IButtonGroupControl SelectButtonGroupControl { get; set; }
 
         protected bool _loadCollectionAfterFormLoad;
+        private IButton _OKButton;
+        private IButton _CancelButton;
 
         ///<summary>
         /// Constructs the mapper for <see cref="IExtendedComboBox"/>.
@@ -34,6 +40,7 @@ namespace Habanero.Faces.Base
             : base(ctl, propName, isReadOnly, controlFactory)
         {
             this._loadCollectionAfterFormLoad = true;
+            this.EnableEditing = true;
             ExtendedTextBox = ctl;
             ExtendedTextBox.Button.Click += delegate
                      {
@@ -52,13 +59,16 @@ namespace Habanero.Faces.Base
         /// <param name="e"></param>
         protected virtual void HandlePopUpFormClosedEvent(object sender, CancelEventArgs e)
         {
-            IBusinessObject currentBusinessObject = GetSelectedBusinessObject();
-            //TODO brett 27 May 2010: Check if dirty if dirty then 
-            // if valid Ask  have option of Save, CancelEdits, CancelClose.
-            // if not valid ask if want to CancelEdits or CancelClose
-            if ((currentBusinessObject != null) && currentBusinessObject.IsValid())
+            if (this.EnableEditing)
             {
-                currentBusinessObject.Save();
+                IBusinessObject currentBusinessObject = GetSelectedBusinessObject();
+                //TODO brett 27 May 2010: Check if dirty if dirty then 
+                // if valid Ask  have option of Save, CancelEdits, CancelClose.
+                // if not valid ask if want to CancelEdits or CancelClose
+                if ((currentBusinessObject != null) && currentBusinessObject.IsValid())
+                {
+                    currentBusinessObject.Save();
+                }
             }
         }
 
@@ -67,29 +77,32 @@ namespace Habanero.Faces.Base
         ///</summary>
         protected virtual IBusinessObject GetSelectedBusinessObject()
         {
-            IBOGridAndEditorControl iboGridAndEditorControl = GetIBOGridAndEditorControl();
-            if (iboGridAndEditorControl == null) return null;
-            IBusinessObject businessObject = iboGridAndEditorControl.GridControl.SelectedBusinessObject; //.CurrentBusinessObject;
-            return businessObject;
+            var grid = this.GetReadOnlyGrid();
+            if (grid == null) return null;
+            return grid.SelectedBusinessObject;
         }
 
         /// <summary>
-        /// Returns the <see cref="IBOGridAndEditorControl"/> that is being used to select and edit the
+        /// Returns the <see cref="IReadOnlyGrid"/> that is being used to select the
         /// RelatedBusinessObject.
         /// </summary>
         /// <returns></returns>
-        protected virtual IBOGridAndEditorControl GetIBOGridAndEditorControl()
+
+        protected virtual IReadOnlyGridControl GetReadOnlyGrid(IControlHabanero parent = null)
         {
-            if (PopupForm == null) return null;
-            foreach (var ctl in PopupForm.Controls)
+            if (parent == null) parent = this.PopupForm;
+            if (parent == null) return null;
+            foreach (var control in parent.Controls)
             {
-                var ret = ctl as IBOGridAndEditorControl;
-                if (ret != null)
-                    return ret;
+                var ctl = control as IControlHabanero;
+                if (ctl == null) continue;
+                var ret = ctl as IReadOnlyGridControl;
+                if (ret != null) return ret;
+                ret = this.GetReadOnlyGrid(ctl);
+                if (ret != null) return ret;
             }
             return null;
         }
-
         ///<summary>
         /// Shows the popup form that is displayed when the button is clicked.
         /// This popup form is used to edit the <see cref="BusinessObject"/>s that fill the combobox.
@@ -102,31 +115,81 @@ namespace Habanero.Faces.Base
             var originalSize = new Size(PopupForm.Size.Width, PopupForm.Size.Height);
             
             SetupSelectButtonGroupControl();
-            
-            IBOGridAndEditorControl iboGridAndEditorControl = ControlFactory.CreateGridAndBOEditorControl(lookupTypeClassDef);
-            iboGridAndEditorControl.SkipSaveOnSelectionChanged = true;
+            ISupportAsyncLoadingCollection viewer;
+            int minHeight;
+            int minWidth;
+            IGenericGridFilterControl filterControlPanel;
+            var control = this.GenerateSelectionInterface(lookupTypeClassDef, out viewer, out minHeight, out minWidth, out filterControlPanel);
+
+            this.LoadSelectionCollection(viewer, classType);
+
+            BorderLayoutManager manager = ControlFactory.CreateBorderLayoutManager(PopupForm);
+            manager.AddControl(control, BorderLayoutManager.Position.Centre);
+            manager.AddControl(SelectButtonGroupControl, BorderLayoutManager.Position.South);
+            if (filterControlPanel != null)
+                manager.AddControl(filterControlPanel, BorderLayoutManager.Position.North);
+            this.PopupForm.Text = "Loading... Please wait...";
+            control.Dock = DockStyle.Fill;
+
+            PopupForm.MinimumSize = new Size(minWidth + 250, minHeight + 100);
+            PopupForm.Size = originalSize;
+        }
+
+        private IControlHabanero GenerateSelectionInterface(IClassDef lookupTypeClassDef, 
+            out ISupportAsyncLoadingCollection viewer, out int minHeight, out int minWidth, out IGenericGridFilterControl filterControlPanel)
+        {
+            filterControlPanel = null;
+            IControlHabanero control;
+            IGenericGridFilterControl addFilterEvents = null;
+            if (this.EnableEditing)
+            {
+                var iboGridAndEditorControl = this.ControlFactory.CreateGridAndBOEditorControl(lookupTypeClassDef);
+                iboGridAndEditorControl.SkipSaveOnSelectionChanged = true;
+                iboGridAndEditorControl.GridControl.Grid.RowDoubleClicked += this.SelectClickHandler;
+                control = iboGridAndEditorControl;
+                viewer = iboGridAndEditorControl;
+                minWidth = iboGridAndEditorControl.MinimumSize.Width;
+                minHeight = iboGridAndEditorControl.MinimumSize.Height;
+                addFilterEvents = iboGridAndEditorControl.FilterControl;
+            }
+            else
+            {
+                var grid = this.ControlFactory.CreateReadOnlyGridControl();
+                filterControlPanel = this.ControlFactory.CreateGenericGridFilter(grid.Grid);
+                grid.DoubleClickEditsBusinessObject = false;
+                grid.AllowUsersToAddBO = false;
+                grid.AllowUsersToDeleteBO = false;
+                grid.AllowUsersToEditBO = false;
+                grid.Grid.RowDoubleClicked += SelectClickHandler;
+                grid.Buttons.Visible = false;
+                control = grid;
+                viewer = grid;
+                minWidth = grid.MinimumSize.Width;
+                minHeight = grid.MinimumSize.Height;
+                addFilterEvents = filterControlPanel;
+            }
+            if (addFilterEvents != null)
+            {
+                addFilterEvents.FilterStarted += (s, e) => { this.PopupForm.Text = "Filtering..."; };
+                addFilterEvents.FilterCompleted += (s, e) => { this.PopupForm.Text = "Please select..."; };
+            }
+            return control;
+        }
+
+        private void LoadSelectionCollection(ISupportAsyncLoadingCollection viewer, Type classType)
+        {
             if (this._loadCollectionAfterFormLoad)
             {
                 this.PopupForm.Load += (sender, e) =>
-                {
-                    //iboGridAndEditorControl.BusinessObjectCollection = GetCollection(classType);
-                    iboGridAndEditorControl.PopulateCollectionAsync(() => { return GetCollection(classType); });
-                };
+                    {
+                        viewer.PopulateCollectionAsync(() => { return GetCollection(classType); },
+                                                       () => { this.PopupForm.Text = "Please select..."; }); 
+                    };
             }
-            else // this branch is really only here for tests which expect synchronous workings
+            else // branch to make testing easier
             {
-                iboGridAndEditorControl.BusinessObjectCollection = GetCollection(classType);
+                viewer.BusinessObjectCollection = GetCollection(classType);
             }
-
-            //PopupForm.Controls.Add(iboGridAndEditorControl);
-            BorderLayoutManager manager = ControlFactory.CreateBorderLayoutManager(PopupForm);
-            manager.AddControl(iboGridAndEditorControl, BorderLayoutManager.Position.Centre);
-            manager.AddControl(SelectButtonGroupControl, BorderLayoutManager.Position.South);
-            iboGridAndEditorControl.Dock = DockStyle.Fill;
-
-            PopupForm.MinimumSize = new Size(iboGridAndEditorControl.MinimumSize.Width + 250, iboGridAndEditorControl.MinimumSize.Height + 100);
-
-            PopupForm.Size = originalSize;
         }
 
         private void CreatePopupForm()
@@ -135,13 +198,14 @@ namespace Habanero.Faces.Base
             PopupForm.Height = 600;
             PopupForm.Width = 800;
             PopupForm.MinimumSize = new Size(400, 300);
+            PopupForm.StartPosition = FormStartPosition.CenterScreen;
         } 
 
         private void SetupSelectButtonGroupControl()
         {
             SelectButtonGroupControl = ControlFactory.CreateButtonGroupControl();
-            SelectButtonGroupControl.AddButton("Cancel", CancelClickHandler);
-            SelectButtonGroupControl.AddButton("Select", SelectClickHandler);
+            this._CancelButton = SelectButtonGroupControl.AddButton("Cancel", CancelClickHandler);
+            this._OKButton = SelectButtonGroupControl.AddButton("Select", SelectClickHandler);
         }
         /// <summary>
         /// Handler for the Select click

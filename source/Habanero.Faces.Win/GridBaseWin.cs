@@ -37,6 +37,9 @@ namespace Habanero.Faces.Win
     {
         public GridColumnAutoSizingStrategies ColumnAutoSizingStrategy { get; set; }
         public int ColumnAutoSizingPadding { get; set; }
+        public bool EnableAlternateRowColoring { get; set; }
+        public bool HideObjectIDColumn { get; set; }
+        public bool AutoResizeColumnsOnGridResize { get; set; }
 
         private readonly GridBaseManager _manager;
         private Timer _resizeTimer;
@@ -54,6 +57,7 @@ namespace Habanero.Faces.Win
             GridBaseManager.CollectionChanged += delegate { 
                 FireCollectionChanged();
                 ImplementColumnAutoSizingStrategy();
+                ImplementAlternatRowColoring();
             };
             GridBaseManager.BusinessObjectSelected += delegate { FireBusinessObjectSelected(); };
             DoubleClick += DoubleClickHandler;
@@ -62,10 +66,17 @@ namespace Habanero.Faces.Win
                 var gridHints = GlobalUIRegistry.UIStyleHints.GridHints;
                 this.ColumnAutoSizingStrategy = gridHints.ColumnAutoSizingStrategy;
                 this.ColumnAutoSizingPadding = gridHints.ColumnAutoSizingPadding;
+                this.EnableAlternateRowColoring = gridHints.EnableAlternateRowColoring;
+                this.HideObjectIDColumn = gridHints.HideObjectIDColumn;
+                this.CollectionChanged += (s, e) =>
+                    {
+                        this.SetIDColumnVisibility(!this.HideObjectIDColumn);
+                    };
             }
             this._resizeTimer = new Timer() { Enabled = true, Interval = 1000 };
             this._resizeTimer.Tick += (sender, e) =>
                 {
+                    if (!this.AutoResizeColumnsOnGridResize) return;
                     if (this._resizeRequired && (this._lastResize.AddMilliseconds(this._resizeTimer.Interval) < DateTime.Now))
                     {
                         this._resizeRequired = false;
@@ -77,6 +88,44 @@ namespace Habanero.Faces.Win
                     this._resizeRequired = true;
                     this._lastResize = DateTime.Now;
                 };
+        }
+
+        private void SetIDColumnVisibility(bool visible)
+        {
+            var toHide = new List<DataGridViewColumnWin>();
+            foreach (DataGridViewColumnWin col in this.Columns)
+            {
+                if (col.Name == "HABANERO_OBJECTID")
+                {
+                    toHide.Add(col);
+                }
+            }
+            foreach (var col in toHide)
+                col.Visible = visible;
+        }
+
+        private void ImplementAlternatRowColoring()
+        {
+            if (!this.EnableAlternateRowColoring)
+            {
+                this.AlternatingRowsDefaultCellStyle = null;
+            }
+            else
+            {
+                var s = new DataGridViewCellStyle();
+                var bg = SystemColors.Window;
+                var fg = SystemColors.WindowText;
+                s.ForeColor = fg;
+                s.BackColor = Color.FromArgb(this.ApproachColor(fg.R, bg.R), this.ApproachColor(fg.G, bg.G), this.ApproachColor(fg.B, bg.B));
+                this.AlternatingRowsDefaultCellStyle = s;
+            }
+        }
+
+        private byte ApproachColor(byte fg, byte bg)
+        {
+            int fore = (int)fg;
+            int back = (int)bg;
+            return (byte)(back + (0.1 * (fore - back)));
         }
 
         protected void ImplementColumnAutoSizingStrategy()

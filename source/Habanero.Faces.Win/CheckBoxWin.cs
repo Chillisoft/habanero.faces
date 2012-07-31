@@ -65,7 +65,7 @@ namespace Habanero.Faces.Win
                     using (var gfx = CreateGraphics())
                     {
                         var size = gfx.MeasureString(this.Text, this.Font);
-                        this.Width = 15 + (int)size.Width + 1;
+                        this.Width = 20 + (int)size.Width + 1;
                         this.Height = (int)size.Height + 1;
                     }
                 };

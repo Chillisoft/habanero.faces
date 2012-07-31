@@ -27,6 +27,7 @@ using Habanero.BO.ClassDefinition;
 using Habanero.Faces.Base;
 using System.Linq;
 using Habanero.Faces.Base.Async;
+using Habanero.Faces.Base.ControlInterfaces;
 using Habanero.Faces.Win.Async;
 
 namespace Habanero.Faces.Win
@@ -50,13 +51,7 @@ namespace Habanero.Faces.Win
         private IButton _saveButton;
         private IBusinessObject _lastSelectedBusinessObject;
         private IBusinessObject _newBO;
-        private Timer _filterTimer;
-        private bool _filterRequired;
-        private bool _inFilter;
-        private DateTime _lastFilterChanged;
-        private ITextBox _filterTextBox;
         private bool _inAsyncOperation;
-        private ILabel _filterMessageLabel;
         /// <summary>
         /// Event that is raised when a business objects is selected.
         /// </summary>
@@ -76,15 +71,6 @@ namespace Habanero.Faces.Win
             _classDef = classDef;
             BOEditorControlWin boEditorControlWin = new BOEditorControlWin(controlFactory, classDef, uiDefName);
             SetupGridAndBOEditorControlWin(controlFactory, boEditorControlWin, classDef, uiDefName);
-            this._filterTimer = new Timer() { Enabled = true, Interval = 500 };
-            this._filterTimer.Tick += (sender, e) => 
-            {
-                if ((!this._inFilter) && (this._filterRequired) && (this._lastFilterChanged.AddMilliseconds(this._filterTimer.Interval) < DateTime.Now))
-                {
-                    this._filterRequired = false;
-                    this.DoFilter();
-                }
-            };
 
             this.OnAsyncOperationComplete += (sender, e) =>
                 {
@@ -106,6 +92,7 @@ namespace Habanero.Faces.Win
                     this.Enabled = false;
                     this.UseWaitCursor = true;
                     this.Cursor = Cursors.WaitCursor;
+                    Application.DoEvents();
                 };
         }
 
@@ -142,31 +129,15 @@ namespace Habanero.Faces.Win
             SetupButtonGroupControl();
             UpdateControlEnabledState();
 
-            this.RemoveObjectIDColumn();
-            this._filterTextBox = _controlFactory.CreateTextBox();
-            var txtBox = this._filterTextBox as TextBox;
-            if (txtBox != null)
-            {
-                txtBox.KeyPress += (sender, e) =>
-                    {
-                        if (e.KeyChar == (char)27)
-                            this.ClearFilter();
-                        else
-                        {
-                            this._lastFilterChanged = DateTime.Now;
-                            this._filterRequired = true;
-                        }
-                    };
-            }
+            this.FilterControl = controlFactory.CreateGenericGridFilter(this.GridControl.Grid);
+            this.FilterControl.FilterStarted += (sender, e) => { this.SetFilteringUIState(true); };
+            this.FilterControl.FilterCompleted += (sender, e) => { this.SetFilteringUIState(false); };
 
-            var filterLabel = _controlFactory.CreateLabel("Filter:");
-            this._filterMessageLabel = _controlFactory.CreateLabel("");
-            this._filterMessageLabel.Font = new Font(this._filterMessageLabel.Font, FontStyle.Italic);
             var grid = new GridLayoutManager(this, _controlFactory);
             grid.SetGridSize(3, 4);
             grid.FixRow(2, _buttonGroupControl.Height);
-            grid.FixRow(0, this._filterTextBox.Height + 5);
-            grid.FixColumn(0, filterLabel.Width);
+            grid.FixRow(0, this.FilterControl.Height + 5);
+            grid.FixColumn(0, this.FilterControl.Width);
 
             var leftMost = this.Width;
             var rightMost = 0;
@@ -182,9 +153,8 @@ namespace Habanero.Faces.Win
             var editorWidth = rightMost - leftMost;
             grid.FixColumn(3, editorWidth);
 
-            grid.AddControl(filterLabel);
-            grid.AddControl(this._filterTextBox, 1, 2);
-            grid.AddControl(this._filterMessageLabel);
+            grid.AddControl(this.FilterControl, 1, 3);
+            grid.AddControl(controlFactory.CreateControl());
             grid.AddControl(_readOnlyGridControl, 1, 3);
             grid.AddControl(_iboEditorControl);
             grid.AddControl(_buttonGroupControl, 1, 4);
@@ -197,92 +167,15 @@ namespace Habanero.Faces.Win
             _readOnlyGridControl.Grid.SelectionChanged += GridSelectionChanged;
         }
 
-        private void DoFilter()
+        private void SetFilteringUIState(bool filtering)
         {
-            this._inFilter = true;
-            var filter = this._filterTextBox.Text.Trim().ToLower();
-            if (String.IsNullOrEmpty(filter))
-            {
-                this.ClearFilter();
-                this._inFilter = false;
-                return;
-            }
-            var dataGrid = _readOnlyGridControl.Grid as DataGridView;
-            if (dataGrid == null)
-            {
-                this._inFilter = false;
-                return;
-            }
-            this.SetFilteringUIState();
-
-            dataGrid.CurrentCell = null;
-            var parts = filter.Split(new char[] { ' ' });
-            DataGridViewRow firstVisibleRow = null;
-            foreach (DataGridViewRow r in dataGrid.Rows)
-            {
-                var hits = 0;
-                foreach (DataGridViewCell c in r.Cells)
-                {
-                    var hit = false;
-                    foreach (var part in parts)
-                    {
-                        if (c.Value.ToString().ToLower().Contains(part))
-                        {
-                            hits++;
-                            hit = true;
-                            break;
-                        }
-                    }
-                    if (hit)
-                        break;
-                }
-                r.Visible = (hits == parts.Length);
-                if (firstVisibleRow == null)
-                    firstVisibleRow = r;
-            }
-            if (firstVisibleRow != null)
-                firstVisibleRow.Selected = true;
-            this._inFilter = false;
-            this.SetFilteringUIState();
-        }
-
-        private void SetFilteringUIState()
-        {
-            this._filterMessageLabel.Text = (this._inFilter) ? "Filtering... please wait..." : "";
-            this._filterTextBox.Enabled = !this._inFilter;
-            this._iboEditorControl.Enabled = !this._inFilter;
-            this._readOnlyGridControl.Enabled = !this._inFilter;
-            this._buttonGroupControl.Enabled = !this._inFilter;
-            this.UseWaitCursor = this._inFilter;
+            this._iboEditorControl.Enabled = !filtering;
+            this._readOnlyGridControl.Enabled = !filtering;
+            this._buttonGroupControl.Enabled = !filtering;
+            this.UseWaitCursor = filtering;
             Application.DoEvents();
         }
 
-        private void ClearFilter()
-        {
-            var dataGrid = _readOnlyGridControl.Grid as DataGridView;
-            if (dataGrid == null)
-                return;
-            foreach (DataGridViewRow r in dataGrid.Rows)
-                r.Visible = true;
-        }
-
-        private void RemoveObjectIDColumn()
-        {
-            var gridView = this._readOnlyGridControl.Grid as DataGridView;
-            if (gridView != null)
-            {
-                var toRemove = new List<DataGridViewColumn>();
-                foreach (DataGridViewColumn col in gridView.Columns)
-                {
-                    if (col.Name == "HABANERO_OBJECTID")
-                    {
-                        toRemove.Add(col);
-                    }
-                }
-                foreach (var col in toRemove)
-                    gridView.Columns.Remove(col);
-            }
-        }
 
         private void SetupButtonGroupControl()
         {
@@ -600,8 +493,12 @@ namespace Habanero.Faces.Win
             set
             {
                 if (value == null) throw new ArgumentNullException("value");
-                _readOnlyGridControl.BusinessObjectCollection =value;
+                _readOnlyGridControl.BusinessObjectCollection = value;
                 _newButton.Enabled = true;
+            }
+            get
+            {
+                return _readOnlyGridControl.BusinessObjectCollection;
             }
         }
 
@@ -641,6 +538,7 @@ namespace Habanero.Faces.Win
         }
 
         public bool SkipSaveOnSelectionChanged { get; set; }
+        public IGenericGridFilterControl FilterControl { get; protected set; }
 
         ///<summary>
         /// Gets and Sets the currently selected business object
@@ -653,7 +551,6 @@ namespace Habanero.Faces.Win
 
         public EventHandler OnAsyncOperationComplete { get; set; }
         public EventHandler OnAsyncOperationStarted { get; set; }
-        IBusinessObjectCollection IHasBusinessObjectCollection.BusinessObjectCollection { get; set; }
         public void PopulateCollectionAsync(DataRetrieverCollectionDelegate dataRetrieverCallback, Action afterPopulation = null)
         {
             if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
@@ -814,13 +711,27 @@ namespace Habanero.Faces.Win
             SetupButtonGroupControl();
             UpdateControlEnabledState();
 
+            this.FilterControl = controlFactory.CreateGenericGridFilter(this.GridControl.Grid);
+            this.FilterControl.FilterStarted += (sender, e) => { this.SetFilteringUIState(true); };
+            this.FilterControl.FilterCompleted += (sender, e) => { this.SetFilteringUIState(false); };
+
             BorderLayoutManager layoutManager = _controlFactory.CreateBorderLayoutManager(this);
+            layoutManager.AddControl(this.FilterControl, BorderLayoutManager.Position.North);
             layoutManager.AddControl(_readOnlyGridControl, BorderLayoutManager.Position.West);
             layoutManager.AddControl(IBOEditorControl, BorderLayoutManager.Position.Centre);
             layoutManager.AddControl(_buttonGroupControl, BorderLayoutManager.Position.South);
 
             _readOnlyGridControl.Grid.BusinessObjectSelected +=
                 ((sender, e) => FireBusinessObjectSelected(e.BusinessObject));
+        }
+
+        private void SetFilteringUIState(bool filtering)
+        {
+            this.IBOEditorControl.Enabled = !filtering;
+            this._readOnlyGridControl.Enabled = !filtering;
+            this._buttonGroupControl.Enabled = !filtering;
+            this.UseWaitCursor = filtering;
+            Application.DoEvents();
         }
 
 
@@ -1078,6 +989,10 @@ namespace Habanero.Faces.Win
                 _readOnlyGridControl.BusinessObjectCollection = value;
                 _newButton.Enabled = true;
             }
+            get
+            {
+                return _readOnlyGridControl.BusinessObjectCollection;
+            }
         }
 
         /// <summary>
@@ -1112,6 +1027,7 @@ namespace Habanero.Faces.Win
         }
 
         public bool SkipSaveOnSelectionChanged { get; set; }
+        public IGenericGridFilterControl FilterControl { get; protected set; }
 
         ///<summary>
         /// The Current Business Object that is selected in the grid.
