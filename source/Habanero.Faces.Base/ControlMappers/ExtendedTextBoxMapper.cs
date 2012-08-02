@@ -40,8 +40,6 @@ namespace Habanero.Faces.Base
         protected IButtonGroupControl SelectButtonGroupControl { get; set; }
 
         protected bool _loadCollectionAfterFormLoad;
-        private IButton _OKButton;
-        private IButton _CancelButton;
 
         ///<summary>
         /// Constructs the mapper for <see cref="IExtendedComboBox"/>.
@@ -218,8 +216,8 @@ namespace Habanero.Faces.Base
         private void SetupSelectButtonGroupControl()
         {
             SelectButtonGroupControl = ControlFactory.CreateButtonGroupControl();
-            this._CancelButton = SelectButtonGroupControl.AddButton("Cancel", CancelClickHandler);
-            this._OKButton = SelectButtonGroupControl.AddButton("Select", SelectClickHandler);
+            SelectButtonGroupControl.AddButton("Cancel", CancelClickHandler);
+            SelectButtonGroupControl.AddButton("Select", SelectClickHandler);
         }
         /// <summary>
         /// Handler for the Select click
@@ -253,11 +251,24 @@ namespace Habanero.Faces.Base
             return lookupTypeClassDef;
         }
 
-        private static IBusinessObjectCollection GetCollection(Type classType)
+        private IBusinessObjectCollection GetCollection(Type classType)
         {
+            string criteria = String.Empty;
+            string order = String.Empty;
+            try
+            {
+                var boll = this.BusinessObject.ClassDef.PropDefcol[this.PropertyName].LookupList as BusinessObjectLookupList;
+                if (boll != null)
+                {
+                    criteria = boll.Criteria == null ? String.Empty : boll.Criteria.ToString();
+                    order = boll.OrderCriteria == null ? String.Empty : boll.OrderCriteria.ToString();
+                }
+            }
+            catch (Exception) { }
             Type collectionType = typeof (BusinessObjectCollection<>).MakeGenericType(classType);
             IBusinessObjectCollection col = (IBusinessObjectCollection) Activator.CreateInstance(collectionType);
-            col.LoadAll();
+            col.Load(criteria, order);
+            //col.LoadAll();
             return col;
         }
 
