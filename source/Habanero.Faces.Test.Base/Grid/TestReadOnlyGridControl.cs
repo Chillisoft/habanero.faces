@@ -21,6 +21,7 @@ using System.Threading;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
+using Habanero.Faces.Base.UIHints;
 using Habanero.Test;
 using Habanero.Test.BO;
 using Habanero.Faces.Base;
@@ -40,6 +41,7 @@ namespace Habanero.Faces.Test.Base
             BORegistry.DataAccessor = new DataAccessorInMemory();
             BORegistry.BusinessObjectManager = new BusinessObjectManagerNull();
             GlobalRegistry.UIExceptionNotifier = new RethrowingExceptionNotifier();
+            GlobalUIRegistry.UIStyleHints = null;
         }
 
         [TestFixtureSetUp]
@@ -56,6 +58,7 @@ namespace Habanero.Faces.Test.Base
         public void TearDownTest()
         {
             CloseForm();
+            GlobalUIRegistry.UIStyleHints = null;
         }
 
         protected abstract void AddControlToForm(IControlHabanero control);
@@ -120,7 +123,7 @@ namespace Habanero.Faces.Test.Base
 
 
 
-            [Test]
+        [Test]
         public void TestAcceptance_FilterGrid()
         {
             //---------------Set up test pack-------------------
@@ -678,6 +681,87 @@ namespace Habanero.Faces.Test.Base
             //---------------Test Result -----------------------
             Assert.AreEqual(4, readOnlyGrid.Rows.Count);
         }
+
+        [TestCase(true,  true,  true,  true)]
+        [TestCase(true,  true,  true,  false)]
+        [TestCase(true,  true,  false, true)]
+        [TestCase(true,  false, true,  true)]
+        [TestCase(true,  true,  false, false)]
+        [TestCase(true,  false, true,  false)]
+        [TestCase(true,  false, false, true)]
+        [TestCase(true,  false, false, false)]
+        [TestCase(false, true,  true,  true)]
+        [TestCase(false, true,  true,  false)]
+        [TestCase(false, true,  false, true)]
+        [TestCase(false, false, true,  true)]
+        [TestCase(false, true,  false, false)]
+        [TestCase(false, false, true,  false)]
+        [TestCase(false, false, false, true)]
+        [TestCase(false, false, false, false)]
+        public void Test_WithBOCollection_HonoursGlobalUIHintsForButtonVisibility(bool showInactive, bool allowAdd, bool allowEdit, bool allowDelete)
+        {
+            //---------------Set up test pack-------------------
+            LoadMyBoDefaultClassDef();
+            BusinessObjectCollection<MyBO> col = CreateCollectionWith_4_Objects();
+            IReadOnlyGridControl readOnlyGridControl = CreateReadOnlyGridControl(true);
+            var hints = new UIStyleHints();
+            hints.GridHints.ShowDisabledOperationButtons = showInactive;
+            GlobalUIRegistry.UIStyleHints = hints;
+            readOnlyGridControl.AllowUsersToAddBO = allowAdd;
+            readOnlyGridControl.AllowUsersToDeleteBO = allowDelete;
+            readOnlyGridControl.AllowUsersToEditBO = allowEdit;
+
+            var add = readOnlyGridControl.Buttons["Add"];
+            var edit = readOnlyGridControl.Buttons["Edit"];
+            var delete = readOnlyGridControl.Buttons["Delete"];
+
+            AddControlToForm(readOnlyGridControl);
+            IReadOnlyGrid readOnlyGrid = readOnlyGridControl.Grid;
+
+            readOnlyGrid.Columns.Add("TestProp", "TestProp");
+            //---------------Execute Test ----------------------
+            readOnlyGridControl.SetBusinessObjectCollection(col);
+            //---------------Test Result -----------------------
+            Assert.AreEqual(4, readOnlyGrid.Rows.Count);
+
+            Assert.AreEqual(add.Visible, showInactive || allowAdd,      "Add button visibility not properly set for: showInactive (" + showInactive.ToString() + "), allowAdd: (" + allowAdd.ToString() + ")");
+            Assert.AreEqual(edit.Visible, showInactive || allowEdit,    "Edit button visibility not properly set for: showInactive (" + showInactive.ToString() + "), allowEdit: (" + allowEdit.ToString() + ")");
+            Assert.AreEqual(delete.Visible, showInactive || allowDelete,"Delete button visibility not properly set for: showInactive (" + showInactive.ToString() + "), allowDelete: (" + allowDelete.ToString() + ")");
+            Assert.AreEqual(add.Enabled, allowAdd, "Add button enabled state != allowAdd");
+            Assert.AreEqual(edit.Enabled, allowEdit, "Edit button enabled state != allowEdit");
+            Assert.AreEqual(delete.Enabled, allowDelete, "Add button enabled state != allowAdd");
+
+        }
+
+        [Test]
+        public void Test_WithNoBOCollection_HonoursGlobalUIHintsForButtonAutoEnabledState()
+        {
+            LoadMyBoDefaultClassDef();
+            BusinessObjectCollection<MyBO> col = new BusinessObjectCollection<MyBO>();
+            IReadOnlyGridControl readOnlyGridControl = CreateReadOnlyGridControl(true);
+            var hints = new UIStyleHints();
+            hints.GridHints.AutoDisableEditAndDeleteWhenNoSelectedObject = true;
+            GlobalUIRegistry.UIStyleHints = hints;
+            readOnlyGridControl.AllowUsersToAddBO = true;
+            readOnlyGridControl.AllowUsersToDeleteBO = true;
+            readOnlyGridControl.AllowUsersToEditBO = true;
+
+            var add = readOnlyGridControl.Buttons["Add"];
+            var edit = readOnlyGridControl.Buttons["Edit"];
+            var delete = readOnlyGridControl.Buttons["Delete"];
+
+            AddControlToForm(readOnlyGridControl);
+            IReadOnlyGrid readOnlyGrid = readOnlyGridControl.Grid;
+
+            readOnlyGrid.Columns.Add("TestProp", "TestProp");
+            //---------------Execute Test ----------------------
+            readOnlyGridControl.SetBusinessObjectCollection(col);
+            //---------------Test Result -----------------------
+            Assert.AreEqual(0, readOnlyGrid.Rows.Count);
+            Assert.IsFalse(edit.Enabled, "Edit button should be disabled with no grid items");
+            Assert.IsFalse(delete.Enabled, "Delete button should be disabled with no grid items");
+        }
+
 
         [Test]
         public void Test_SetBusinessObjectCollection_DefaultEditorsSetUp()

@@ -246,6 +246,7 @@
     <Compile Include="UIHints\FormHints.cs" />
     <Compile Include="UIHints\GridHints.cs" />
     <Compile Include="UIHints\LayoutHints.cs" />
+    <Compile Include="UIHints\StaticDataEditorManagerHints.cs" />
     <Compile Include="UIHints\UIStyleHints.cs" />
     <Compile Include="Util\AsyncSettings.cs" />
     <Compile Include="Util\CustomValidationEventArgs.cs" />

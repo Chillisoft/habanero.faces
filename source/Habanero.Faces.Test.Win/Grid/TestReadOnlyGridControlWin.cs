@@ -63,6 +63,7 @@ namespace Habanero.Faces.Test.Win.Grid
             System.Windows.Forms.Form frmLocal = new System.Windows.Forms.Form();
             frmLocal.Controls.Add((System.Windows.Forms.Control)control);
             frmLocal.Height = formHeight;
+            frmLocal.Visible = true;
         }
 
         [Test]

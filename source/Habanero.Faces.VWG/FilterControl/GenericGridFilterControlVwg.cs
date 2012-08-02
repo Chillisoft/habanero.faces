@@ -73,15 +73,6 @@ namespace Habanero.Faces.VWG.FilterControl
             Application.DoEvents();
         }
 
-        private void ClearFilter()
-        {
-            if (this.Grid == null)
-                return;
-            this.SetUIState(true);
-            foreach (DataGridViewRow r in this.Grid.Rows)
-                r.Visible = true;
-            this.SetUIState(false);
-        }
         private void DoFilter()
         {
             this._inFilter = true;
@@ -105,18 +96,34 @@ namespace Habanero.Faces.VWG.FilterControl
                 this.FilterCompleted(this, new EventArgs());
         }
 
+        private void ClearFilter()
+        {
+            if (this.Grid == null)
+                return;
+            if (this.FilterStarted != null)
+                this.FilterStarted(this, new EventArgs());
+            foreach (DataGridViewVWG.DataGridViewRowVWG r in this.Grid.Rows)
+                r.Visible = true;
+            if (this.FilterCompleted != null)
+                this.FilterCompleted(this, new EventArgs());
+        }
+
         public static void FilterGrid(IGridBase dataGrid, string filter)
         {
+            if (dataGrid.Rows.Count == 0) return;
             dataGrid.CurrentCell = null;
             var parts = filter.Split(new char[] { ' ' });
-            DataGridViewRow firstVisibleRow = null;
-            foreach (DataGridViewRow r in dataGrid.Rows)
+            DataGridViewVWG.DataGridViewRowVWG firstVisibleRow = null;
+            var colCount = GetColumnCount(dataGrid);
+
+            foreach (DataGridViewVWG.DataGridViewRowVWG r in dataGrid.Rows)
             {
                 var hits = 0;
                 foreach (var part in parts)
                 {
-                    foreach (DataGridViewCell c in r.Cells)
+                    for (var i = 0; i < colCount; i++)
                     {
+                        var c = r.Cells[i];
                         if (c.Value.ToString().ToLower().Contains(part))
                         {
                             hits++;
@@ -130,6 +137,25 @@ namespace Habanero.Faces.VWG.FilterControl
             }
             if (firstVisibleRow != null)
                 firstVisibleRow.Selected = true;
+        }
+
+        private static int GetColumnCount(IGridBase dataGrid)
+        {
+            var test = 0;
+            var error = false;
+            while (!error)
+            {
+                try
+                {
+                    var testVal = dataGrid.Rows[0].Cells[test];
+                    test++;
+                }
+                catch (Exception)
+                {
+                    error = true;
+                }
+            }
+            return test;
         }
     }
 }

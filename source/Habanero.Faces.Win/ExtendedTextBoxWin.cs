@@ -30,7 +30,7 @@ namespace Habanero.Faces.Win
             TextBox = factory.CreateTextBox();
             Button.MinimumSize = new Size(0, 0);
             TextBox.Enabled = false;
-            this.Height = TextBox.Height;
+            this.Height = TextBox.Height + 2;
             BorderLayoutManager borderLayoutManager = factory.CreateBorderLayoutManager(this);
             this.Padding = Padding.Empty;
             borderLayoutManager.AddControl(TextBox, BorderLayoutManager.Position.Centre);

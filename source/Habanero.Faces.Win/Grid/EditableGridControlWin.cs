@@ -68,7 +68,6 @@ namespace Habanero.Faces.Win
             layoutManager.AddControl(_buttons, BorderLayoutManager.Position.South);
             this.Grid.BusinessObjectSelected += Grid_OnBusinessObjectSelected;
             this.AllowUsersToAddBO = true;
-            //this.Grid.Rows[0].
         }
 
         /// <summary>

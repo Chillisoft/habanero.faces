@@ -18,6 +18,7 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows.Forms;
@@ -163,6 +164,19 @@ namespace Habanero.Faces.Win
             if (this.BusinessObjectSelected != null)
             {
                 this.BusinessObjectSelected(this, new BOEventArgs(this.SelectedBusinessObject));
+            }
+            this.SetButtonStatesForSelectedObject();
+        }
+
+        private void SetButtonStatesForSelectedObject()
+        {
+            var hints = GlobalUIRegistry.UIStyleHints;
+            if (hints == null) return;
+            if (hints.GridHints.AutoDisableEditAndDeleteWhenNoSelectedObject)
+            {
+                var editAndDeleteEnabled = !(this.SelectedBusinessObject == null);
+                this._buttons["Edit"].Enabled = editAndDeleteEnabled && this.AllowUsersToEditBO;
+                this._buttons["Delete"].Enabled = editAndDeleteEnabled && this.AllowUsersToDeleteBO;
             }
         }
 
@@ -632,7 +646,17 @@ namespace Habanero.Faces.Win
             set { 
                 this.Grid.AllowUserToAddRows = false;
                 _allowUsersToAddBo = value;
-                this.Buttons["Add"].Visible = value;
+                var hints = GlobalUIRegistry.UIStyleHints;
+                if (hints != null && hints.GridHints.ShowDisabledOperationButtons)
+                {
+                    this.Buttons["Add"].Visible = true;
+                    this.Buttons["Add"].Enabled = value;
+                }
+                else
+                {
+                    this.Buttons["Add"].Visible = value;
+                    this.Buttons["Add"].Enabled = value;
+                }
             }
         }
 
@@ -642,8 +666,20 @@ namespace Habanero.Faces.Win
         public bool AllowUsersToDeleteBO
         {
             get { return this.Grid.AllowUserToDeleteRows; }
-            set { this.Grid.AllowUserToDeleteRows = value;
-                this.Buttons["Delete"].Visible = value;
+            set { 
+                this.Grid.AllowUserToDeleteRows = value;
+                var hints = GlobalUIRegistry.UIStyleHints;
+                if (hints != null && hints.GridHints.ShowDisabledOperationButtons)
+                {
+                    this.Buttons["Delete"].Visible = true;
+                    this.Buttons["Delete"].Enabled = value;
+                    this.SetButtonStatesForSelectedObject();
+                }
+                else
+                {
+                    this.Buttons["Delete"].Visible = value;
+                    this.Buttons["Delete"].Enabled = value;
+                }
             }
         }
 
@@ -659,7 +695,18 @@ namespace Habanero.Faces.Win
             { 
                 this.Grid.ReadOnly = true;
                 _allowUsersToEditBo = value;
-                this.Buttons["Edit"].Visible = value;
+                var hints = GlobalUIRegistry.UIStyleHints;
+                if (hints != null && hints.GridHints.ShowDisabledOperationButtons)
+                {
+                    this.Buttons["Edit"].Visible = true;
+                    this.Buttons["Edit"].Enabled = value;
+                    this.SetButtonStatesForSelectedObject();
+                }
+                else
+                {
+                    this.Buttons["Edit"].Visible = value;
+                    this.Buttons["Edit"].Enabled = value;
+                }
                 this.DoubleClickEditsBusinessObject = value;
             }
         }

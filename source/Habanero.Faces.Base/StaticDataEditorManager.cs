@@ -94,9 +94,17 @@ namespace Habanero.Faces.Base
         public void AddSection(string sectionName)
         {
             ITreeNode treeNode = _controlFactory.CreateTreeNode(sectionName);
-            _treeView.Nodes.Add(treeNode);
+            var idx = _treeView.Nodes.Add(treeNode);
             if (_currentSectionNode == null) _treeView.TopNode = treeNode;
             _currentSectionNode = treeNode;
+            var hints = GlobalUIRegistry.UIStyleHints;
+            if (hints != null)
+            {
+                if (hints.StaticDataEditorManagerHints.AutoExpandSections)
+                {
+                    _treeView.Nodes[idx].ExpandAll();
+                }
+            }
         }
 
         /// <summary>

@@ -21,6 +21,7 @@ namespace Habanero.Faces.Test.VWG.Grid
             Gizmox.WebGUI.Forms.Form frm = new Gizmox.WebGUI.Forms.Form();
             frm.Controls.Add((Gizmox.WebGUI.Forms.Control)control);
             frm.Height = formHeight;
+            frm.Visible = true;
         }
 
         protected override IControlFactory GetControlFactory()

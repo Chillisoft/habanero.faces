@@ -87,10 +87,12 @@ namespace Habanero.Faces.Win
         {
             if (this.Grid == null)
                 return;
-            this.SetUIState(true);
-            foreach (DataGridViewRow r in this.Grid.Rows)
+            if (this.FilterStarted != null)
+                this.FilterStarted(this, new EventArgs());
+            foreach (DataGridViewWin.DataGridViewRowWin r in this.Grid.Rows)
                 r.Visible = true;
-            this.SetUIState(false);
+            if (this.FilterCompleted != null)
+                this.FilterCompleted(this, new EventArgs());
         }
         private void DoFilter()
         {

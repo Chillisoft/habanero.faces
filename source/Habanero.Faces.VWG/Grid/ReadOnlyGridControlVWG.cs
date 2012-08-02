@@ -85,6 +85,10 @@ namespace Habanero.Faces.VWG
             this.Grid.BusinessObjectSelected += Grid_OnBusinessObjectSelected;
             this.Buttons["Add"].Visible = _allowUsersToAddBo;
             this.Buttons["Edit"].Visible = _allowUsersToEditBo;
+            this.BusinessObjectSelected += (s, e) =>
+                {
+                    this.SetButtonStatesForSelectedObject();
+                };
         }
 
         #region IReadOnlyGridControl Members
@@ -581,6 +585,7 @@ namespace Habanero.Faces.VWG
         /// Note_This method is implemented so as to support the interface but always returns False and the set always sets false.
         ///   This is a readOnly Grid and it makes no sense.
         ///</summary>
+        /*
         public bool AllowUsersToAddBO
         {
             get { return _allowUsersToAddBo; }
@@ -591,10 +596,31 @@ namespace Habanero.Faces.VWG
                 this.Buttons["Add"].Visible = value;
             }
         }
+        */
+        public bool AllowUsersToAddBO
+        {
+            get { return _allowUsersToAddBo; }
+            set { 
+                this.Grid.AllowUserToAddRows = false;
+                _allowUsersToAddBo = value;
+                var hints = GlobalUIRegistry.UIStyleHints;
+                if (hints != null && hints.GridHints.ShowDisabledOperationButtons)
+                {
+                    this.Buttons["Add"].Visible = true;
+                    this.Buttons["Add"].Enabled = value;
+                }
+                else
+                {
+                    this.Buttons["Add"].Visible = value;
+                    this.Buttons["Add"].Enabled = value;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets and sets whether the user can Delete (<see cref="IBusinessObject.MarkForDelete"/>) <see cref="IBusinessObject"/>s via this control
         /// </summary>
+        /*
         public bool AllowUsersToDeleteBO
         {
             get { return this.Grid.AllowUserToDeleteRows; }
@@ -604,12 +630,33 @@ namespace Habanero.Faces.VWG
                 this.Buttons["Delete"].Visible = value;
             }
         }
+        */
+        public bool AllowUsersToDeleteBO
+        {
+            get { return this.Grid.AllowUserToDeleteRows; }
+            set { 
+                this.Grid.AllowUserToDeleteRows = value;
+                var hints = GlobalUIRegistry.UIStyleHints;
+                if (hints != null && hints.GridHints.ShowDisabledOperationButtons)
+                {
+                    this.Buttons["Delete"].Visible = true;
+                    this.Buttons["Delete"].Enabled = value;
+                    this.SetButtonStatesForSelectedObject();
+                }
+                else
+                {
+                    this.Buttons["Delete"].Visible = value;
+                    this.Buttons["Delete"].Enabled = value;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets and sets whether the user can edit <see cref="IBusinessObject"/>s via this control
         /// Note_This method is implemented so as to support the interface but always returns False and the set always sets false.
         ///   This is a readOnly Grid and it makes no sense.
         /// </summary>
+        /*
         public bool AllowUsersToEditBO
         {
             get { return _allowUsersToEditBo; }
@@ -618,6 +665,29 @@ namespace Habanero.Faces.VWG
                 this.Grid.ReadOnly = true;
                 _allowUsersToEditBo = value;
                 this.Buttons["Edit"].Visible = value;
+                this.DoubleClickEditsBusinessObject = value;
+            }
+        }
+        */
+        public bool AllowUsersToEditBO
+        {
+            get { return _allowUsersToEditBo; }
+            set 
+            { 
+                this.Grid.ReadOnly = true;
+                _allowUsersToEditBo = value;
+                var hints = GlobalUIRegistry.UIStyleHints;
+                if (hints != null && hints.GridHints.ShowDisabledOperationButtons)
+                {
+                    this.Buttons["Edit"].Visible = true;
+                    this.Buttons["Edit"].Enabled = value;
+                    this.SetButtonStatesForSelectedObject();
+                }
+                else
+                {
+                    this.Buttons["Edit"].Visible = value;
+                    this.Buttons["Edit"].Enabled = value;
+                }
                 this.DoubleClickEditsBusinessObject = value;
             }
         }
@@ -653,6 +723,18 @@ namespace Habanero.Faces.VWG
         public void ExecuteOnUIThread(Delegate method)
         {
             method.DynamicInvoke();
+        }
+
+        private void SetButtonStatesForSelectedObject()
+        {
+            var hints = GlobalUIRegistry.UIStyleHints;
+            if (hints == null) return;
+            if (hints.GridHints.AutoDisableEditAndDeleteWhenNoSelectedObject)
+            {
+                var editAndDeleteEnabled = !(this.SelectedBusinessObject == null);
+                this._buttons["Edit"].Enabled = editAndDeleteEnabled && this.AllowUsersToEditBO;
+                this._buttons["Delete"].Enabled = editAndDeleteEnabled && this.AllowUsersToDeleteBO;
+            }
         }
 
     }
