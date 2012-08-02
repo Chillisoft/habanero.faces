@@ -21,6 +21,7 @@ namespace Habanero.Faces.VWG.FilterControl
         private bool _inFilter;
         private bool _filterRequired;
         private DateTime _lastFilterChanged;
+        private DataGridViewCellStyle _gridOriginalAlternatingStyle;
 
         public GenericGridFilterControlVwg(IGridBase grid)
         {
@@ -90,7 +91,7 @@ namespace Habanero.Faces.VWG.FilterControl
             }
             if (this.FilterStarted != null)
                 this.FilterStarted(this, new EventArgs());
-            FilterGrid(this.Grid, filter);
+            FilterGrid(filter);
             this._inFilter = false;
             if (this.FilterCompleted != null)
                 this.FilterCompleted(this, new EventArgs());
@@ -104,17 +105,27 @@ namespace Habanero.Faces.VWG.FilterControl
                 this.FilterStarted(this, new EventArgs());
             foreach (DataGridViewVWG.DataGridViewRowVWG r in this.Grid.Rows)
                 r.Visible = true;
+            var wingrid = this.Grid as DataGridView;
+            if (wingrid != null)
+                this.SetAlternatingStyle(wingrid, this._gridOriginalAlternatingStyle);
             if (this.FilterCompleted != null)
                 this.FilterCompleted(this, new EventArgs());
         }
 
-        public static void FilterGrid(IGridBase dataGrid, string filter)
+        public void FilterGrid(string filter)
         {
+            var dataGrid = this.Grid;
             if (dataGrid.Rows.Count == 0) return;
             dataGrid.CurrentCell = null;
             var parts = filter.Split(new char[] { ' ' });
             DataGridViewVWG.DataGridViewRowVWG firstVisibleRow = null;
+            DataGridView gridControl = this.Grid as DataGridView;
+            if (gridControl != null)
+                this.SetAlternatingStyle(gridControl, null);
+
             var colCount = GetColumnCount(dataGrid);
+            var somethingHidden = false;
+            var somethingVisible = false;
 
             foreach (DataGridViewVWG.DataGridViewRowVWG r in dataGrid.Rows)
             {
@@ -132,12 +143,63 @@ namespace Habanero.Faces.VWG.FilterControl
                     }
                 }
                 r.Visible = (hits == parts.Length);
-                if (firstVisibleRow == null)
+                if (!r.Visible) somethingHidden = true;
+                if (r.Visible) somethingVisible = true;
+                r.Selected = false;
+                if ((firstVisibleRow == null) && r.Visible)
                     firstVisibleRow = r;
             }
             if (firstVisibleRow != null)
                 firstVisibleRow.Selected = true;
+            this.SetupFilteredAlternatingRowColors(gridControl, somethingVisible, somethingHidden);
         }
+
+        private void SetAlternatingStyle(DataGridView wingrid, DataGridViewCellStyle newStyle)
+        {
+            wingrid.AlternatingRowsDefaultCellStyleChanged -= this.RecordGridAltStyle;
+            wingrid.AlternatingRowsDefaultCellStyle = newStyle;
+            wingrid.AlternatingRowsDefaultCellStyleChanged += this.RecordGridAltStyle;
+        }
+
+        private void RecordGridAltStyle(object sender, EventArgs e)
+        {
+            var wingrid = this.Grid as DataGridView;
+            if (wingrid != null)
+                this._gridOriginalAlternatingStyle = wingrid.AlternatingRowsDefaultCellStyle;
+        }
+
+        private void SetupFilteredAlternatingRowColors(DataGridView gridcontrol, bool somethingVisible, bool somethingHidden)
+        {
+            if (gridcontrol != null)
+            {
+                if (somethingHidden && somethingVisible && this._gridOriginalAlternatingStyle != null)
+                {
+                    bool defaultStyle = true;
+                    for (var i = 0; i < gridcontrol.Rows.Count; i++)
+                    {
+                        var row = gridcontrol.Rows[i];
+                        if (!row.Visible) continue;
+                        var currentStyle = (defaultStyle) ? gridcontrol.DefaultCellStyle : this._gridOriginalAlternatingStyle;
+                        defaultStyle = !defaultStyle;
+                        foreach (DataGridViewCell cell in row.Cells)
+                        {
+                            cell.Style.BackColor = currentStyle.BackColor;
+                            cell.Style.ForeColor = currentStyle.ForeColor;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (DataGridViewRow row in gridcontrol.Rows)
+                    {
+                        foreach (DataGridViewCell cell in row.Cells)
+                            cell.Style = null;
+                    }
+                    this.SetAlternatingStyle(gridcontrol, this._gridOriginalAlternatingStyle);
+                }
+            }
+        }
+
 
         private static int GetColumnCount(IGridBase dataGrid)
         {

@@ -24,9 +24,12 @@ namespace Habanero.Faces.Win
         private bool _inFilter;
         private bool _filterRequired;
         private DateTime _lastFilterChanged;
+        private DataGridViewCellStyle _gridOriginalAlternatingStyle;
+        private DateTime _lastForcedEvents;
 
         public GenericGridFilterControlWin(IGridBase grid)
         {
+            this._lastForcedEvents = DateTime.Now;
             this.Grid = grid;
             this._timer = new Timer()
             {
@@ -65,6 +68,19 @@ namespace Habanero.Faces.Win
                 {
                     this.SetUIState(false);
                 };
+            var wingrid = Grid as DataGridView;
+            if (wingrid != null)
+            {
+                this._gridOriginalAlternatingStyle = wingrid.AlternatingRowsDefaultCellStyle;
+                wingrid.AlternatingRowsDefaultCellStyleChanged += this.RecordGridAltStyle;
+            }
+        }
+
+        private void RecordGridAltStyle(object sender, EventArgs e)
+        {
+            var wingrid = this.Grid as DataGridView;
+            if (wingrid != null)
+                this._gridOriginalAlternatingStyle = wingrid.AlternatingRowsDefaultCellStyle;
         }
 
         private void SetUIState(bool filtering)
@@ -90,7 +106,13 @@ namespace Habanero.Faces.Win
             if (this.FilterStarted != null)
                 this.FilterStarted(this, new EventArgs());
             foreach (DataGridViewWin.DataGridViewRowWin r in this.Grid.Rows)
+            {
+                this.DoEvents();
                 r.Visible = true;
+            }
+            var wingrid = this.Grid as DataGridView;
+            if (wingrid != null)
+                this.SetAlternatingStyle(wingrid, this._gridOriginalAlternatingStyle);
             if (this.FilterCompleted != null)
                 this.FilterCompleted(this, new EventArgs());
         }
@@ -111,22 +133,29 @@ namespace Habanero.Faces.Win
             }
             if (this.FilterStarted != null)
                 this.FilterStarted(this, new EventArgs());
-            FilterGrid(this.Grid, filter);
+            FilterGrid(filter);
             this._inFilter = false;
             if (this.FilterCompleted != null)
                 this.FilterCompleted(this, new EventArgs());
         }
 
-        public static void FilterGrid(IGridBase dataGrid, string filter)
+        private void FilterGrid(string filter)
         {
+            var dataGrid = this.Grid;
             if (dataGrid.Rows.Count == 0) return;
             dataGrid.CurrentCell = null;
             var parts = filter.Split(new char[] { ' ' });
             DataGridViewWin.DataGridViewRowWin firstVisibleRow = null;
-            var colCount = GetColumnCount(dataGrid);
+            var wingrid = dataGrid as DataGridView;
+            if (wingrid != null)
+                this.SetAlternatingStyle(wingrid, null);
 
+            var colCount = GetColumnCount(dataGrid);
+            var somethingHidden = false;
+            var somethingVisible = false;
             foreach (DataGridViewWin.DataGridViewRowWin r in dataGrid.Rows)
             {
+                this.DoEvents();
                 var hits = 0;
                 foreach (var part in parts)
                 {
@@ -141,11 +170,66 @@ namespace Habanero.Faces.Win
                     }
                 }
                 r.Visible = (hits == parts.Length);
-                if (firstVisibleRow == null)
+                if (!r.Visible) somethingHidden = true;
+                if (r.Visible) somethingVisible = true;
+                r.Selected = false;
+                if ((firstVisibleRow == null) && r.Visible)
                     firstVisibleRow = r;
             }
             if (firstVisibleRow != null)
                 firstVisibleRow.Selected = true;
+            this.SetupFilteredAlternatingRowColors(wingrid, somethingVisible, somethingHidden);
+        }
+
+        private void SetupFilteredAlternatingRowColors(DataGridView wingrid, bool somethingVisible, bool somethingHidden)
+        {
+            if (wingrid != null)
+            {
+                if (somethingHidden && somethingVisible && this._gridOriginalAlternatingStyle != null)
+                {
+                    bool defaultStyle = true;
+                    for (var i = 0; i < wingrid.Rows.Count; i++)
+                    {
+                        this.DoEvents();
+                        var row = wingrid.Rows[i];
+                        if (!row.Visible) continue;
+                        var currentStyle = (defaultStyle) ? wingrid.DefaultCellStyle : this._gridOriginalAlternatingStyle;
+                        defaultStyle = !defaultStyle;
+                        foreach (DataGridViewCell cell in row.Cells)
+                        {
+                            cell.Style.BackColor = currentStyle.BackColor;
+                            cell.Style.ForeColor = currentStyle.ForeColor;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (DataGridViewRow row in wingrid.Rows)
+                    {
+                        this.DoEvents();
+                        foreach (DataGridViewCell cell in row.Cells)
+                            cell.Style = null;
+                    }
+                    this.SetAlternatingStyle(wingrid, this._gridOriginalAlternatingStyle);
+                }
+            }
+        }
+
+        private void SetAlternatingStyle(DataGridView wingrid, DataGridViewCellStyle newStyle)
+        {
+            wingrid.AlternatingRowsDefaultCellStyleChanged -= this.RecordGridAltStyle;
+            wingrid.AlternatingRowsDefaultCellStyle = newStyle;
+            wingrid.AlternatingRowsDefaultCellStyleChanged += this.RecordGridAltStyle;
+        }
+
+        private void DoEvents()
+        {
+            var now = DateTime.Now;
+            if (this._lastForcedEvents.AddMilliseconds(500) < now)
+            {
+                Application.DoEvents();
+                this._lastForcedEvents = now;
+            }
         }
 
         private static int GetColumnCount(IGridBase dataGrid)

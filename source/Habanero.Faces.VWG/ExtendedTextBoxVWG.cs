@@ -47,6 +47,8 @@ namespace Habanero.Faces.VWG
         /// </summary>
         public ITextBox TextBox { get; private set; }
 
+        public IControlMapper ControlMapper { get; set; }
+
         ///<summary>
         /// Gets or sets the text associated with this control.           
         ///</summary>

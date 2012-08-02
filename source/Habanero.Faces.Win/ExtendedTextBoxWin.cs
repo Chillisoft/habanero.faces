@@ -30,7 +30,7 @@ namespace Habanero.Faces.Win
             TextBox = factory.CreateTextBox();
             Button.MinimumSize = new Size(0, 0);
             TextBox.Enabled = false;
-            this.Height = TextBox.Height + 2;
+            this.Height = TextBox.Height;
             BorderLayoutManager borderLayoutManager = factory.CreateBorderLayoutManager(this);
             this.Padding = Padding.Empty;
             borderLayoutManager.AddControl(TextBox, BorderLayoutManager.Position.Centre);
@@ -66,6 +66,8 @@ namespace Habanero.Faces.Win
         /// The Text box in which the result of the search are displayed.
         /// </summary>
         public ITextBox TextBox { get; private set; }
+
+        public IControlMapper ControlMapper { get; set; }
 
         ///<summary>
         /// Gets or sets the text associated with this control.           

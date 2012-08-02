@@ -18,11 +18,22 @@ namespace Habanero.Faces.Base
     // ReSharper disable MemberCanBePrivate.Global
     public class ExtendedTextBoxMapper : ControlMapper
     {
+        /// <summary>
+        /// Raised when the popup form has been created so that client code can fiddle with
+        /// the form or subscribe to events
+        /// </summary>
+        public EventHandler PopupFormCreated { get; set; }
+
+        /// <summary>
+        /// Boolean to enable / disable editing pane
+        /// </summary>
         public bool EnableEditing { get; set; }
+
         /// <summary>
         /// The extended Text box being mapped to the property by this mapper.
         /// </summary>
         protected IExtendedTextBox ExtendedTextBox { get; set; }
+
         /// <summary>
         /// The <see cref="IButtonGroupControl"/> that has been has the Cancel and Select Buttons.
         /// </summary>
@@ -42,6 +53,7 @@ namespace Habanero.Faces.Base
             this._loadCollectionAfterFormLoad = true;
             this.EnableEditing = true;
             ExtendedTextBox = ctl;
+            ExtendedTextBox.ControlMapper = this;
             ExtendedTextBox.Button.Click += delegate
                      {
                          SetupPopupForm();
@@ -107,7 +119,7 @@ namespace Habanero.Faces.Base
         /// Shows the popup form that is displayed when the button is clicked.
         /// This popup form is used to edit the <see cref="BusinessObject"/>s that fill the combobox.
         ///</summary>
-        protected virtual void SetupPopupForm()
+        public virtual void SetupPopupForm()
         {
             Type classType;
             IClassDef lookupTypeClassDef = GetLookupTypeClassDef(out classType);
@@ -133,6 +145,8 @@ namespace Habanero.Faces.Base
 
             PopupForm.MinimumSize = new Size(minWidth + 250, minHeight + 100);
             PopupForm.Size = originalSize;
+            if (this.PopupFormCreated != null)
+                this.PopupFormCreated(this.PopupForm, new EventArgs());
         }
 
         private IControlHabanero GenerateSelectionInterface(IClassDef lookupTypeClassDef, 

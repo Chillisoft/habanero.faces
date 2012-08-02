@@ -263,6 +263,7 @@ namespace Habanero.Faces.Win
                 _errorDetails = _controlFactory.CreateTextBox();
                 _errorDetails.Text = ExceptionUtilities.GetExceptionString(_exception, 0, false);
                 _errorDetails.Multiline = true;
+                _errorDetails.ScrollBars = ScrollBars.Both;
                 _showStackTrace = _controlFactory.CreateCheckBox();
                 _showStackTrace.Text = "&Show stack trace";
                 _showStackTrace.CheckedChanged += ShowStackTraceClicked;

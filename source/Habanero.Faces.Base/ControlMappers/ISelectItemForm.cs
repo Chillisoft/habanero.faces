@@ -20,6 +20,11 @@ namespace Habanero.Faces.Base.ControlMappers
         /// The Text box in which the result of the search are displayed.
         /// </summary>
         ITextBox TextBox { get; }
+
+        /// <summary>
+        /// The control mapper associated with this extended textbox, if any
+        /// </summary>
+        IControlMapper ControlMapper { get; set; }
     }
 
     /// <summary>

@@ -67,6 +67,7 @@ namespace Habanero.Faces.Win
                 this.ColumnAutoSizingStrategy = gridHints.ColumnAutoSizingStrategy;
                 this.ColumnAutoSizingPadding = gridHints.ColumnAutoSizingPadding;
                 this.EnableAlternateRowColoring = gridHints.EnableAlternateRowColoring;
+                this.ImplementAlternatRowColoring();
                 this.HideObjectIDColumn = gridHints.HideObjectIDColumn;
                 this.CollectionChanged += (s, e) =>
                     {
