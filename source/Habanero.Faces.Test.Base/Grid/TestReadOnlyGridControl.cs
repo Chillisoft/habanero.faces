@@ -758,6 +758,7 @@ namespace Habanero.Faces.Test.Base
             readOnlyGridControl.SetBusinessObjectCollection(col);
             //---------------Test Result -----------------------
             Assert.AreEqual(0, readOnlyGrid.Rows.Count);
+            Assert.IsTrue(add.Enabled, "Add button should be enabled when there are no items");
             Assert.IsFalse(edit.Enabled, "Edit button should be disabled with no grid items");
             Assert.IsFalse(delete.Enabled, "Delete button should be disabled with no grid items");
         }
