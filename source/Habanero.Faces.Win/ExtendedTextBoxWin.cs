@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Reflection;
 using System.Windows.Forms;
 using Habanero.Faces.Base;
@@ -45,16 +46,9 @@ namespace Habanero.Faces.Win
         {
             var s = ResourceStreamer.GetResourceStreamByName(resourceName);
             if (s == null) return;
-            var btn = Button as Button;
+            var btn = Button as ButtonWin;
             if (btn != null)
-            {
-                btn.ResetBackColor();
-                btn.ResetForeColor();
-                btn.Image = Image.FromStream(s);
-                btn.Text = "";
-                btn.Width = btn.Image.Width + 10;
-                btn.Height = btn.Image.Height + 10;
-            }
+                btn.SetIcon(resourceName);
         }
 
         ///<summary>

@@ -324,6 +324,7 @@
       <Link>Properties\AssemblyInfoShared.cs</Link>
     </Compile>
     <Compile Include="Util\DialogUtilities.cs" />
+    <Compile Include="Util\ImageUtil.cs" />
     <Compile Include="WinFormsControlAdapter.cs" />
     <Compile Include="Wizard\MessageWizardStepWin.cs">
       <SubType>UserControl</SubType>

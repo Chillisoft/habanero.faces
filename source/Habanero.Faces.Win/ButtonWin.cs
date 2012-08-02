@@ -21,6 +21,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using Habanero.Faces.Base;
+using Habanero.Faces.Win.Util;
 
 namespace Habanero.Faces.Win
 {
@@ -99,5 +100,27 @@ namespace Habanero.Faces.Win
                     this.Font = new Font(this.Font.FontFamily, hints.MinimumFontSize);
             }
         }
+
+        public void SetIcon(string resourceName)
+        {
+            var s = ResourceStreamer.GetResourceStreamByName(resourceName);
+            if (s == null) return;
+            this.SetIcon(Image.FromStream(s));
+        }
+
+        public void SetIcon(Image image)
+        {
+            var btn = this as Button;
+            if (btn != null)
+            {
+                btn.ResetBackColor();
+                btn.ResetForeColor();
+                btn.Image = ImageUtil.ResizeImage(image, btn.Height - 8);
+                btn.Text = "";
+                btn.Width = btn.Image.Width + 10;
+                btn.Height = btn.Image.Height + 10;
+            }
+        }
+
     }
 }
