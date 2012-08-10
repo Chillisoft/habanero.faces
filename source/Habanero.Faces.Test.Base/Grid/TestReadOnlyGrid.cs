@@ -53,7 +53,7 @@ namespace Habanero.Faces.Test.Base
 
 
 
-            [Test]
+        [Test]
         public void TestCreateGridBase()
         {
             //---------------Set up test pack-------------------
@@ -89,6 +89,7 @@ namespace Habanero.Faces.Test.Base
             Assert.AreEqual(4, readOnlyGrid.Rows.Count);
             //---------------Tear Down -------------------------    
         }
+
         [Test]
         public void Test_Set_BusinessObjectCollectionOnGrid_NoOfRows()
         {
@@ -104,54 +105,6 @@ namespace Habanero.Faces.Test.Base
             Assert.AreEqual(4, readOnlyGrid.Rows.Count);
             //---------------Tear Down -------------------------    
         }
-        ///// <summary>
-        ///// The following few tests monitor the sorting done in Gridbase based
-        ///// on the "sortColumn" attribute and apply equally to EditableGrid
-        ///// </summary>
-        //[Test]
-        //public void TestSortColumnAttributeDefault()
-        //{
-        //    Assert.IsNull(_grid.SortedColumn);
-        //    Assert.AreEqual(SortOrder.None, _grid.SortOrder);
-        //}
-
-        //[Test]
-        //public void TestSortColumnAttributeSuccess()
-        //{
-        //    _grid.SetBusinessObjectCollection(_grid.GetBusinessObjectCollection(), "Success1");
-        //    Assert.AreEqual("TestProp", _grid.SortedColumn.Name);
-        //    Assert.AreEqual(SortOrder.Ascending, _grid.SortOrder);
-
-        //    _grid.SetBusinessObjectCollection(_grid.GetBusinessObjectCollection(), "Success2");
-        //    Assert.AreEqual("TestProp", _grid.SortedColumn.Name);
-        //    Assert.AreEqual(SortOrder.Ascending, _grid.SortOrder);
-
-        //    _grid.SetBusinessObjectCollection(_grid.GetCollection(), "Success3");
-        //    Assert.AreEqual("TestProp", _grid.SortedColumn.Name);
-        //    Assert.AreEqual(SortOrder.Descending, _grid.SortOrder);
-
-        //    _grid.SetBusinessObjectCollection(_grid.GetCollection(), "Success4");
-        //    Assert.AreEqual("TestProp", _grid.SortedColumn.Name);
-        //    Assert.AreEqual(SortOrder.Descending, _grid.SortOrder);
-        //}
-
-        //[Test, ExpectedException(typeof(InvalidXmlDefinitionException))]
-        //public void TestSortColumnAttributeExceptionColumnName()
-        //{
-        //    _grid.SetBusinessObjectCollection(_grid.GetCollection(), "Error1");
-        //}
-
-        //[Test, ExpectedException(typeof(InvalidXmlDefinitionException))]
-        //public void TestSortColumnAttributeExceptionColumnNameAndOrder()
-        //{
-        //    _grid.SetBusinessObjectCollection(_grid.GetCollection(), "Error2");
-        //}
-
-        //[Test, ExpectedException(typeof(InvalidXmlDefinitionException))]
-        //public void TestSortColumnAttributeExceptionOrder()
-        //{
-        //    _grid.SetBusinessObjectCollection(_grid.GetCollection(), "Error3");
-        //}
 
         [Test]
         public void Test_GetBusinessObjectAtRow_WhenHasBO_ShouldRetBO()
@@ -171,23 +124,6 @@ namespace Habanero.Faces.Test.Base
             Assert.AreSame(col[1], actualBO);
 
         }
-/*        [Test]
-        public void Test_GetBusinessObjectAtRow_WhenNOtHasBO_ShouldRetNull()
-        {
-            //---------------Set up test pack-------------------
-            MyBO.LoadDefaultClassDef();
-            BusinessObjectCollection<MyBO> col = CreateCollectionWith_4_Objects();
-            IReadOnlyGrid readOnlyGrid = GetControlFactory().CreateReadOnlyGrid();
-            AddControlToForm(readOnlyGrid);
-            SetupGridColumnsForMyBo(readOnlyGrid);
-            readOnlyGrid.BusinessObjectCollection = col;
-            //---------------Assert Precondition----------------
-            Assert.AreEqual(4, readOnlyGrid.Rows.Count);
-            //---------------Execute Test ----------------------
-            var actualBO = readOnlyGrid.GetBusinessObjectAtRow(5);
-            //---------------Test Result -----------------------
-            Assert.IsNull(actualBO);
-        }*/
 
         [Test]
         public void Test_GetBusinessObjectAtRow_WhenSetViaCustomLoad_ShouldRetBO()

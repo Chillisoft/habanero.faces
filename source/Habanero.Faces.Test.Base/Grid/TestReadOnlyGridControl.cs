@@ -698,7 +698,7 @@ namespace Habanero.Faces.Test.Base
         [TestCase(false, false, true,  false)]
         [TestCase(false, false, false, true)]
         [TestCase(false, false, false, false)]
-        public void Test_WithBOCollection_HonoursGlobalUIHintsForButtonVisibility(bool showInactive, bool allowAdd, bool allowEdit, bool allowDelete)
+        public void Test_WithBOCollection_HonoursGlobalUIHintsForButtonVisibilityANDHonorsUserAllowedCRUDOperations(bool showInactive, bool allowAdd, bool allowEdit, bool allowDelete)
         {
             //---------------Set up test pack-------------------
             LoadMyBoDefaultClassDef();
