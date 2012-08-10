@@ -77,6 +77,18 @@ namespace Habanero.Faces.Win
             DoubleClickEditsBusinessObject = true;
             this.Grid.BusinessObjectSelected += Grid_OnBusinessObjectSelected;
 
+            this.OnAsyncOperationStarted += (sender, e) =>
+            {
+                lock (this)
+                {
+                    this._inAsyncOperation = true;
+                }
+                this.Enabled = false;
+                this.UseWaitCursor = true;
+                var f = this.FilterControl as Control;
+                if (f != null) f.UseWaitCursor = true;   // just to make sure
+                this.Cursor = Cursors.WaitCursor;
+            };
             this.OnAsyncOperationComplete += (sender, e) =>
                 {
                     lock (this)
@@ -85,17 +97,9 @@ namespace Habanero.Faces.Win
                     }
                     this.Enabled = true;
                     this.UseWaitCursor = false;
+                    var f = this.FilterControl as Control;
+                    if (f != null) f.UseWaitCursor = false;  // this is required to work around sometimes coming out of async but the wait cursor is left on the filter
                     this.Cursor = Cursors.Default;
-                };
-            this.OnAsyncOperationStarted += (sender, e) =>
-                {
-                    lock (this)
-                    {
-                        this._inAsyncOperation = true;
-                    }
-                    this.Enabled = false;
-                    this.UseWaitCursor = true;
-                    this.Cursor = Cursors.WaitCursor;
                 };
         }
 

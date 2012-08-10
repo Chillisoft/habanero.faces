@@ -137,8 +137,8 @@ namespace Habanero.Faces.Base
             try
             {
                 _gridControl.Initialise(classDef);
-                _gridControl.Grid.BusinessObjectCollection =
-                    BORegistry.DataAccessor.BusinessObjectLoader.GetBusinessObjectCollection(classDef, "");
+                var col = BORegistry.DataAccessor.BusinessObjectLoader.GetBusinessObjectCollection(classDef, "");
+                _gridControl.Grid.BusinessObjectCollection = col;
                 _gridControl.Enabled = true;
             }
             catch (Exception ex)

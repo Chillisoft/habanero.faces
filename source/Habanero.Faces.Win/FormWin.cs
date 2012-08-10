@@ -23,6 +23,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Habanero.Faces.Base;
 using Habanero.Faces.Base.UIHints;
+using Habanero.Faces.Win.Util;
 using FormBorderStyle = System.Windows.Forms.FormBorderStyle;
 
 namespace Habanero.Faces.Win
@@ -224,7 +225,9 @@ namespace Habanero.Faces.Win
             try
             {
                 var bmp = new Bitmap(Image.FromStream(s));
-                form.Icon = Icon.FromHandle(bmp.GetHicon());
+                var resized = ImageUtil.ResizeBitmap(bmp, 32);
+
+                form.Icon = Icon.FromHandle(resized.GetHicon());
             }
             catch (Exception ex)
             {

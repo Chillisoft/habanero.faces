@@ -240,6 +240,7 @@ namespace Habanero.Faces.Base
         ///</summary>
         protected virtual void CloseForm()
         {
+            PopupForm.Hide();
             PopupForm.Close();
         }
 

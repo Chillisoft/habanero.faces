@@ -149,9 +149,9 @@ namespace Habanero.Faces.Base
                     throw new ArgumentException("boControl must be of type IControlHabanero or one of its subtypes.");
                 }
                 BorderLayoutManager layoutManager = _controlFactory.CreateBorderLayoutManager(TabControl);
-                ITabPage tabPage = _controlFactory.CreateTabPage(BusinessObjectControl.Text);
-                BusinessObjectControl.Dock = DockStyle.Fill;
-                tabPage.Controls.Add(BusinessObjectControl);
+                ITabPage tabPage = _controlFactory.CreateTabPage(value.Text);
+                value.Dock = DockStyle.Fill;
+                tabPage.Controls.Add(value);
                 //_pageBoTable.Add(tabPage,_boControl.BusinessObject);
                 //_boPageTable.Add(_boControl.BusinessObject,tabPage);
                 layoutManager.AddControl(tabPage, BorderLayoutManager.Position.Centre);

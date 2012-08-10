@@ -1,8 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 using Habanero.Faces.Base;
 using Habanero.Faces.Base.ControlInterfaces;
 using Habanero.Faces.Win;
+using Timer = System.Windows.Forms.Timer;
+using System.Linq;
 
 namespace Habanero.Faces.Win
 {
@@ -22,13 +28,28 @@ namespace Habanero.Faces.Win
         private ILabel _filterLabel;
         private Timer _timer;
         private bool _inFilter;
+        private bool _cancelCurrentFilter;
         private bool _filterRequired;
         private DateTime _lastFilterChanged;
         private DataGridViewCellStyle _gridOriginalAlternatingStyle;
         private DateTime _lastForcedEvents;
+        private DataView _originalView;
+        private string _lastFilterText;
+
+        private void DataSourceChanged(object sender, EventArgs e)
+        {
+            this._originalView = null;
+            var _ds = this.Grid.DataSource as DataView;
+            if (_ds != null)
+                this._originalView = _ds;
+        }
 
         public GenericGridFilterControlWin(IGridBase grid)
         {
+            var ds = grid.DataSource as DataView;
+            if (ds != null) this._originalView = ds;
+            (grid as DataGridView).DataSourceChanged += this.DataSourceChanged;
+
             this._lastForcedEvents = DateTime.Now;
             this.Grid = grid;
             this._timer = new Timer()
@@ -38,8 +59,10 @@ namespace Habanero.Faces.Win
             };
             this._timer.Tick += (sender, e) => 
             {
-                if ((!this._inFilter) && (this._filterRequired) && (this._lastFilterChanged.AddMilliseconds(this._timer.Interval) < DateTime.Now))
+                if ((this._filterRequired) && (this._lastFilterChanged.AddMilliseconds(this._timer.Interval) < DateTime.Now))
                 {
+                    if (this._inFilter)
+                        this._cancelCurrentFilter = true;
                     this._filterRequired = false;
                     this.DoFilter();
                 }
@@ -49,8 +72,9 @@ namespace Habanero.Faces.Win
             this._filterLabel = factory.CreateLabel("Filter:");
             this._filterTextBox = factory.CreateTextBox();
             var txt = this._filterTextBox as TextBox;
-            txt.KeyPress += (sender, e) =>
+            txt.TextChanged += (sender, e) =>
                 {
+                    if (txt.Text == this._lastFilterText) return;
                     this._lastFilterChanged = DateTime.Now;
                     this._filterRequired = true;
                 };
@@ -85,7 +109,7 @@ namespace Habanero.Faces.Win
 
         private void SetUIState(bool filtering)
         {
-            this.Enabled = !filtering;
+            //this.Enabled = !filtering;
             this.Grid.Enabled = !filtering;
             this.UseWaitCursor = filtering;
             this.Cursor = filtering ? Cursors.WaitCursor : Cursors.Default;
@@ -105,80 +129,123 @@ namespace Habanero.Faces.Win
                 return;
             if (this.FilterStarted != null)
                 this.FilterStarted(this, new EventArgs());
-            foreach (DataGridViewWin.DataGridViewRowWin r in this.Grid.Rows)
-            {
-                this.DoEvents();
-                r.Visible = true;
-            }
             var wingrid = this.Grid as DataGridView;
             if (wingrid != null)
+            {
+                wingrid.DataSource = this._originalView;
                 this.SetAlternatingStyle(wingrid, this._gridOriginalAlternatingStyle);
+            }
             if (this.FilterCompleted != null)
                 this.FilterCompleted(this, new EventArgs());
         }
         private void DoFilter()
         {
-            this._inFilter = true;
-            var filter = this._filterTextBox.Text.Trim().ToLower();
-            if (String.IsNullOrEmpty(filter))
+            lock (this)
             {
-                this.ClearFilter();
+                this._inFilter = true;
+                this._cancelCurrentFilter = false;
+                var filter = this._filterTextBox.Text.Trim().ToLower();
+                if (filter == this._lastFilterText) return;
+                this._lastFilterText = filter;
+                if (String.IsNullOrEmpty(filter))
+                {
+                    this.ClearFilter();
+                    this._inFilter = false;
+                    return;
+                }
+                if (this.Grid == null)
+                {
+                    this._inFilter = false;
+                    return;
+                }
+                if (this.FilterStarted != null)
+                    this.FilterStarted(this, new EventArgs());
+                FilterGrid(filter);
                 this._inFilter = false;
-                return;
+                if (this.FilterCompleted != null)
+                    this.FilterCompleted(this, new EventArgs());
             }
-            if (this.Grid == null)
-            {
-                this._inFilter = false;
-                return;
-            }
-            if (this.FilterStarted != null)
-                this.FilterStarted(this, new EventArgs());
-            FilterGrid(filter);
-            this._inFilter = false;
-            if (this.FilterCompleted != null)
-                this.FilterCompleted(this, new EventArgs());
         }
 
         private void FilterGrid(string filter)
         {
-            var dataGrid = this.Grid;
-            if (dataGrid.Rows.Count == 0) return;
-            dataGrid.CurrentCell = null;
+            var wingrid = this.Grid as DataGridView;
+            if (wingrid == null) return;
+            if (wingrid.Rows.Count == 0) return;
+            wingrid.CurrentCell = null;
             var parts = filter.Split(new char[] { ' ' });
-            DataGridViewWin.DataGridViewRowWin firstVisibleRow = null;
-            var wingrid = dataGrid as DataGridView;
-            if (wingrid != null)
-                this.SetAlternatingStyle(wingrid, null);
 
-            var colCount = GetColumnCount(dataGrid);
+            this.SetAlternatingStyle(wingrid, null);
+
             var somethingHidden = false;
             var somethingVisible = false;
-            foreach (DataGridViewWin.DataGridViewRowWin r in dataGrid.Rows)
+            var searchColumns = GetSearchColumnIndexes(wingrid);
+            var searchCells = new List<string>();
+            var subTable = this._originalView.Table.Clone();
+            foreach (DataRow row in this._originalView.Table.Rows)
             {
                 this.DoEvents();
+                if (this._cancelCurrentFilter)
+                    break;
                 var hits = 0;
                 foreach (var part in parts)
                 {
-                    for (var i = 0; i < colCount; i++)
+                    searchCells.Clear();
+                    foreach (var i in searchColumns)
                     {
-                        var c = r.Cells[i];
-                        if (c.Value.ToString().ToLower().Contains(part))
-                        {
-                            hits++;
-                            break;
-                        }
+                        var cell = row[i];
+                        var v = cell as String;
+                        if (v == null || v.Length == 0) continue;
+                        searchCells.Add(v);
                     }
+                    var searchRow = String.Join("\n", searchCells);
+                    if (searchRow.ToLower().Contains(part))
+                        hits++;
                 }
-                r.Visible = (hits == parts.Length);
-                if (!r.Visible) somethingHidden = true;
-                if (r.Visible) somethingVisible = true;
-                r.Selected = false;
-                if ((firstVisibleRow == null) && r.Visible)
-                    firstVisibleRow = r;
+                if (hits == parts.Length)
+                {
+                    subTable.ImportRow(row);
+                    somethingVisible = true;
+                }
+                else
+                    somethingHidden = true;
             }
-            if (firstVisibleRow != null)
-                firstVisibleRow.Selected = true;
+            this.SetNewDataSource(subTable, wingrid);
             this.SetupFilteredAlternatingRowColors(wingrid, somethingVisible, somethingHidden);
+        }
+
+        private void SetNewDataSource(DataTable subTable, DataGridView wingrid)
+        {
+            var vw = new DataView(subTable);
+            wingrid.DataSourceChanged -= this.DataSourceChanged;
+            wingrid.DataSource = vw;
+            var newCols = new List<DataGridViewColumn>();
+            var visibility = new List<bool>();
+            foreach (DataGridViewColumn col in wingrid.Columns)
+            {
+                var newCol = (Activator.CreateInstance(col.GetType())) as DataGridViewColumn;
+                newCol.DataPropertyName = col.DataPropertyName;
+                newCol.HeaderText = col.HeaderText;
+                newCol.Visible = col.Visible;
+                visibility.Add(col.Visible);
+                newCols.Add(newCol);
+            }
+            wingrid.Columns.Clear();
+            wingrid.Columns.AddRange(newCols.ToArray());
+            //for (var i = 0; i < visibility.Count; i++)
+            //    wingrid.Columns[0].Visible = visibility[i];
+            wingrid.DataSourceChanged += this.DataSourceChanged;
+        }
+
+        private List<int> GetSearchColumnIndexes(DataGridView dataGrid)
+        {
+            var ret = new List<int>();
+            for (var i = 0; i < dataGrid.Columns.Count; i++)
+            {
+                if (dataGrid.Columns[i].Visible)
+                    ret.Add(i);
+            }
+            return ret;
         }
 
         private void SetupFilteredAlternatingRowColors(DataGridView wingrid, bool somethingVisible, bool somethingHidden)
@@ -190,7 +257,9 @@ namespace Habanero.Faces.Win
                     bool defaultStyle = true;
                     for (var i = 0; i < wingrid.Rows.Count; i++)
                     {
-                        this.DoEvents();
+                        //this.DoEvents();
+                        if (this._cancelCurrentFilter)
+                            break;
                         var row = wingrid.Rows[i];
                         if (!row.Visible) continue;
                         var currentStyle = (defaultStyle) ? wingrid.DefaultCellStyle : this._gridOriginalAlternatingStyle;
@@ -206,7 +275,7 @@ namespace Habanero.Faces.Win
                 {
                     foreach (DataGridViewRow row in wingrid.Rows)
                     {
-                        this.DoEvents();
+                        //this.DoEvents();
                         foreach (DataGridViewCell cell in row.Cells)
                             cell.Style = null;
                     }
@@ -232,23 +301,5 @@ namespace Habanero.Faces.Win
             }
         }
 
-        private static int GetColumnCount(IGridBase dataGrid)
-        {
-            var test = 0;
-            var error = false;
-            while (!error)
-            {
-                try
-                {
-                    var testVal = dataGrid.Rows[0].Cells[test];
-                    test++;
-                }
-                catch (Exception)
-                {
-                    error = true;
-                }
-            }
-            return test;
-        }
     }
 }
