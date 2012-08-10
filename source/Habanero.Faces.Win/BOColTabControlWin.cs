@@ -18,7 +18,6 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.Collections.Concurrent;
-using System.Threading;
 using System.Windows.Forms;
 using Habanero.BO;
 using Habanero.Base;
@@ -198,7 +197,7 @@ namespace Habanero.Faces.Win
             var data = new ConcurrentDictionary<string, object>();
             data["businessobject"] = null;
             this.RunOnAsyncOperationStarted();
-            BackgroundWorkerWin.Run(this, data,
+            (new HabaneroBackgroundWorker()).Run(this, data,
                 (d) =>
                 {
                     d["businessobject"] = Broker.GetBusinessObject<T>(criteria);
@@ -228,7 +227,7 @@ namespace Habanero.Faces.Win
             var data = new ConcurrentDictionary<string, object>();
             data["businessobject"] = null;
             this.RunOnAsyncOperationStarted();
-            BackgroundWorkerWin.Run(this, data,
+            (new HabaneroBackgroundWorker()).Run(this, data,
                 (d) =>
                 {
                     d["businessobject"] = retrieverCallback();
@@ -361,7 +360,7 @@ namespace Habanero.Faces.Win
             var data = new ConcurrentDictionary<string, object>();
             data["businessobjectcollection"] = null;
             this.RunOnAsyncOperationStarted();
-            BackgroundWorkerWin.Run(this, data,
+            (new HabaneroBackgroundWorker()).Run(this, data,
                 (d) =>
                 {
                     d["businessobjectcollection"] = dataRetrieverCallback();
@@ -386,7 +385,7 @@ namespace Habanero.Faces.Win
             var data = new ConcurrentDictionary<string, object>();
             data["businessobjectcollection"] = null;
             this.RunOnAsyncOperationStarted();
-            BackgroundWorkerWin.Run(this, data,
+            (new HabaneroBackgroundWorker()).Run(this, data,
                 (d) =>
                 {
                     d["businessobjectcollection"] = Broker.GetBusinessObjectCollection<T>(criteria, order);

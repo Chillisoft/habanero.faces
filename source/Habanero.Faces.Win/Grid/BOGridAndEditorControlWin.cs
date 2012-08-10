@@ -556,7 +556,7 @@ namespace Habanero.Faces.Win
             if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
             var data = new ConcurrentDictionary<string, object>();
             data["collection"] = null;
-            BackgroundWorkerWin.Run(this, data,
+            (new HabaneroBackgroundWorker()).Run(this, data,
                 (d) => { 
                     d["collection"] = dataRetrieverCallback(); 
                     return true; 
@@ -575,7 +575,7 @@ namespace Habanero.Faces.Win
             if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
             var data = new ConcurrentDictionary<string, object>();
             data["collection"] = null;
-            BackgroundWorkerWin.Run(this, data,
+            (new HabaneroBackgroundWorker()).Run(this, data,
                 (d) => { d["collection"] = Broker.GetBusinessObjectCollection<T>(criteria, order); return true; },
                 (d) =>
                 {
@@ -1046,7 +1046,7 @@ namespace Habanero.Faces.Win
             if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
             var data = new ConcurrentDictionary<string, object>();
             data["collection"] = null;
-            BackgroundWorkerWin.Run(this, data,
+            (new HabaneroBackgroundWorker()).Run(this, data,
                 (d) => { d["collection"] = dataRetrieverCallback(); return true; },
                 (d) =>
                 {
@@ -1062,7 +1062,7 @@ namespace Habanero.Faces.Win
             if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
             var data = new ConcurrentDictionary<string, object>();
             data["collection"] = null;
-            BackgroundWorkerWin.Run(this, data,
+            (new HabaneroBackgroundWorker()).Run(this, data,
                 (d) => { d["collection"] = Broker.GetBusinessObjectCollection<T>(criteria, order); return true; },
                 (d) =>
                 {

@@ -100,8 +100,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Async\BackgroundWorkerWin.cs" />
-    <Compile Include="Async\IActionDispatcher.cs" />
+    <Compile Include="Async\HabaneroBackgroundWorkerExtension.cs" />
     <Compile Include="Async\ActionDispatcher.cs" />
     <Compile Include="Async\UIThreadExecutorWin.cs" />
     <Compile Include="BOEditorControlWin.cs">

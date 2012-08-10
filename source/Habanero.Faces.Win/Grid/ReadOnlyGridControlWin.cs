@@ -384,7 +384,7 @@ namespace Habanero.Faces.Win
             var data = new ConcurrentDictionary<string, object>();
             data["businessobjectcollection"] = null;
             this.RunOnAsyncOperationStarted();
-            BackgroundWorkerWin.Run(this, data,
+            (new HabaneroBackgroundWorker()).Run(this, data,
               (d) =>
               {
                   d["businessobjectcollection"] = Broker.GetBusinessObjectCollection<T>(criteria, order);
@@ -410,7 +410,7 @@ namespace Habanero.Faces.Win
             var data = new ConcurrentDictionary<string, object>();
             data["businessobjectcollection"] = null;
             this.RunOnAsyncOperationStarted();
-            BackgroundWorkerWin.Run(this, data,
+            (new HabaneroBackgroundWorker()).Run(this, data,
                 (d) =>
                 {
                     d["businessobjectcollection"] = dataRetrieverCallback();
