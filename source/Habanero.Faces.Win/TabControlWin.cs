@@ -30,6 +30,51 @@ namespace Habanero.Faces.Win
     /// </summary>
     public class TabControlWin : TabControl, ITabControl
     {
+        public TabControlWin()
+        {
+            this.BindMouseWheelToTabScroll();
+        }
+
+        private void BindMouseWheelToTabScroll()
+        {
+            this.MouseWheel += (sender, mouseEventArgs) =>
+               {
+                   if (!this.MousePositionInTabArea(mouseEventArgs)) return;
+                   this.ScrollToApplicableTab(mouseEventArgs);
+               };
+        }
+
+        private void ScrollToApplicableTab(MouseEventArgs mouseEventArgs)
+        {
+            if (mouseEventArgs.Delta > 0)
+            {
+                if (this.SelectedIndex > 0)
+                    this.SelectedIndex--;
+            }
+            else
+            {
+                if (this.SelectedIndex < (this.TabCount - 1))
+                    this.SelectedIndex++;
+            }
+        }
+
+        private bool MousePositionInTabArea(MouseEventArgs mouseEventArgs)
+        {
+            var point = new Point(mouseEventArgs.X, mouseEventArgs.Y);
+            var inTabRect = false;
+            for (var i = 0; i < this.TabPages.Count; i++)
+            {
+                if (this.GetTabRect(i).Contains(point))
+                {
+                    inTabRect = true;
+                    break;
+                }
+            }
+            if (!inTabRect)
+                return false;
+            return true;
+        }
+
         /// <summary>
         /// Gets or sets the anchoring style.
         /// </summary>
