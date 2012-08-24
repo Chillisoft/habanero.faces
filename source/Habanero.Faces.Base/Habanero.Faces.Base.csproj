@@ -245,6 +245,7 @@
     <Compile Include="UIHints\DateTimePickerHints.cs" />
     <Compile Include="UIHints\FormHints.cs" />
     <Compile Include="UIHints\GridHints.cs" />
+    <Compile Include="UIHints\HintsBase.cs" />
     <Compile Include="UIHints\LayoutHints.cs" />
     <Compile Include="UIHints\StaticDataEditorManagerHints.cs" />
     <Compile Include="UIHints\UIStyleHints.cs" />

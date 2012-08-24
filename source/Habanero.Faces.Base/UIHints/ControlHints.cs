@@ -7,13 +7,43 @@ using System.Text;
 
 namespace Habanero.Faces.Base.UIHints
 {
-    public class ControlHints
+    public class ControlHints : HintsBase
     {
-        public int MinimumWidth { get; set; }
-        public int MinimumHeight { get; set; }
-        public FontFamily DefaultFontFamily { get; set; }
-        public float MinimumFontSize { get; set; }
-        public bool AttemptToMakeTextFit { get; set; }
+        private int _minimumWidth;
+        public int MinimumWidth
+        {
+            get { return this._minimumWidth; }
+            set { this._minimumWidth = value; }
+        }
+
+        private int _minimumHeight;
+        public int MinimumHeight
+        {
+            get { return this._minimumHeight; }
+            set { this._minimumHeight = value; RunOnHintsChangedHandler(); }
+        }
+
+        private FontFamily _defaultFontFamily;
+        public FontFamily DefaultFontFamily
+        {
+            get { return this._defaultFontFamily; }
+            set { this._defaultFontFamily = value; RunOnHintsChangedHandler(); }
+        }
+
+        private float _minimumFontSize;
+        public float MinimumFontSize
+        {
+            get { return this._minimumFontSize; }
+            set { this._minimumFontSize = value; RunOnHintsChangedHandler();  }
+        }
+
+        private bool _attemptToMakeTextFit;
+        public bool AttemptToMakeTextFit
+        {
+            get { return this._attemptToMakeTextFit; }
+            set { this._attemptToMakeTextFit = value; RunOnHintsChangedHandler(); }
+        }
+
         public int MaximumWidth 
         { 
             get 
@@ -21,8 +51,8 @@ namespace Habanero.Faces.Base.UIHints
                 if (_maximumWidth > this.MinimumWidth) 
                     return this._maximumWidth;
                 return 0;
-            } 
-            set { this._maximumWidth = value; }
+            }
+            set { this._maximumWidth = value; RunOnHintsChangedHandler(); }
         }
         private int _maximumWidth;
         public int MaximumHeight 
@@ -36,6 +66,7 @@ namespace Habanero.Faces.Base.UIHints
             set
             {
                 this._maximumHeight = value;
+                RunOnHintsChangedHandler();
             }
         }
         private int _maximumHeight;

@@ -7,6 +7,11 @@ namespace Habanero.Faces.Base.UIHints
 {
     public class ComboBoxHints : ControlHints
     {
-        public bool AllowTextEditing { get; set; }
+        private bool _allowTextEditing;
+        public bool AllowTextEditing
+        {
+            get { return this._allowTextEditing; }
+            set { this._allowTextEditing = value; RunOnHintsChangedHandler(); }
+        }
     }
 }

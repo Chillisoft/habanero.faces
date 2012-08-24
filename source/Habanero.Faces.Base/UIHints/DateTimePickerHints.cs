@@ -20,6 +20,7 @@ namespace Habanero.Faces.Base.UIHints
                 if (GlobalUIRegistry.DateDisplaySettings == null)
                     GlobalUIRegistry.DateDisplaySettings = new DateDisplaySettings();
                 GlobalUIRegistry.DateDisplaySettings.DateTimePickerDefaultFormat = value;
+                RunOnHintsChangedHandler();
             }
         }
     }

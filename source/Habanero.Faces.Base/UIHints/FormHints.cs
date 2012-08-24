@@ -5,13 +5,48 @@ using System.Text;
 
 namespace Habanero.Faces.Base.UIHints
 {
-    public class FormHints
+    public class FormHints : HintsBase
     {
-        public string DefaultIconResourceName { get; set; }
-        public string MDIChildIconResourceName { get; set; }
-        public bool EscapeClosesDialogs { get; set; }
-        public bool EscapeClosesMDIForms { get; set; }
-        public bool BindFirstOKButtonToAcceptButton { get; set; }
-        public bool BindFirstCancelButtonToCancelButton { get; set; }
+        private string _defaultIconResourceName;
+        public string DefaultIconResourceName
+        {
+            get { return this._defaultIconResourceName; }
+            set { this._defaultIconResourceName = value; RunOnHintsChangedHandler();  }
+        }
+
+        private string _mdiChildIconResourceName;
+        public string MDIChildIconResourceName
+        {
+            get { return this._mdiChildIconResourceName; }
+            set { this._mdiChildIconResourceName = value; RunOnHintsChangedHandler(); }
+        }
+
+        private bool _escapeClosesDialogs;
+        public bool EscapeClosesDialogs
+        {
+            get { return this._escapeClosesDialogs; }
+            set { this._escapeClosesDialogs = value; RunOnHintsChangedHandler();  }
+        }
+
+        private bool _escapeClosesMdiForms;
+        public bool EscapeClosesMDIForms
+        {
+            get { return this._escapeClosesMdiForms; }
+            set { this._escapeClosesMdiForms = value; RunOnHintsChangedHandler(); }
+        }
+
+        private bool _bindFirstOkButtonToAcceptButton;
+        public bool BindFirstOKButtonToAcceptButton
+        {
+            get { return this._bindFirstOkButtonToAcceptButton; }
+            set { this._bindFirstOkButtonToAcceptButton = value; RunOnHintsChangedHandler(); }
+        }
+
+        private bool _bindFirstCancelButtonToCancelButton;
+        public bool BindFirstCancelButtonToCancelButton
+        {
+            get { return this._bindFirstCancelButtonToCancelButton; }
+            set { this._bindFirstCancelButtonToCancelButton = value; RunOnHintsChangedHandler(); }
+        }
     }
 }

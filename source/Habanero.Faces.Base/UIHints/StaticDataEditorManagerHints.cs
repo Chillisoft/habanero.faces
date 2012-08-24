@@ -5,8 +5,13 @@ using System.Text;
 
 namespace Habanero.Faces.Base.UIHints
 {
-    public class StaticDataEditorManagerHints
+    public class StaticDataEditorManagerHints : HintsBase
     {
-        public bool AutoExpandSections { get; set; }
+        private bool _autoExpandSections;
+        public bool AutoExpandSections
+        {
+            get { return this._autoExpandSections; }
+            set { this._autoExpandSections = value; RunOnHintsChangedHandler(); }
+        }
     }
 }
