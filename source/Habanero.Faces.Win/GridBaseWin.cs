@@ -64,6 +64,10 @@ namespace Habanero.Faces.Win
             if (GlobalUIRegistry.UIStyleHints != null)
             {
                 var gridHints = GlobalUIRegistry.UIStyleHints.GridHints;
+                this.DefaultCellStyle.Padding = new Padding(gridHints.Padding.Left, gridHints.Padding.Top, gridHints.Padding.Right, gridHints.Padding.Bottom);
+                var vpad = this.DefaultCellStyle.Padding.Top + this.DefaultCellStyle.Padding.Bottom;
+                this.ColumnHeadersHeight += vpad;
+                this.RowTemplate.Height += vpad;
                 this.ColumnAutoSizingStrategy = gridHints.ColumnAutoSizingStrategy;
                 this.ColumnAutoSizingPadding = gridHints.ColumnAutoSizingPadding;
                 this.EnableAlternateRowColoring = gridHints.EnableAlternateRowColoring;

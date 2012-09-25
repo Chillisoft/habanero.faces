@@ -38,6 +38,7 @@ namespace Habanero.Faces.VWG
     {
         public EventHandler OnAsyncOperationComplete { get; set; }
         public EventHandler OnAsyncOperationStarted { get; set; }
+        public EventHandler OnAsyncOperationException { get; set; }
         private readonly IControlFactory _controlFactory;
         private readonly ITabControl _tabControl;
         private readonly BOColTabControlManager _boColTabControlManager;
@@ -155,18 +156,34 @@ namespace Habanero.Faces.VWG
 
         public void PopulateObjectAsync<T>(DataRetrieverObjectDelegate dataRetrieverCallback, Action afterPopulation = null) where T : class, IBusinessObject, new()
         {
-            this.RunAsyncOperationStartedHandler();
-            this.CurrentBusinessObject = dataRetrieverCallback();
-            this.RunAsyncOperationCompleteHandler();
-            if (afterPopulation != null) afterPopulation();
+            try
+            {
+                this.RunAsyncOperationStartedHandler();
+                this.CurrentBusinessObject = dataRetrieverCallback();
+                this.RunAsyncOperationCompleteHandler();
+                if (afterPopulation != null) afterPopulation();
+            }
+            catch (Exception e)
+            {
+                if (this.OnAsyncOperationException != null)
+                    this.OnAsyncOperationException(this, new ExceptionEventArgs(e));
+            }
         }
 
         public void PopulateObjectAsync<T>(Criteria criteria, Action afterPopulation = null) where T : class, IBusinessObject, new()
         {
-            this.RunAsyncOperationStartedHandler();
-            this.CurrentBusinessObject = Broker.GetBusinessObject<T>(criteria);
-            this.RunAsyncOperationCompleteHandler();
-            if (afterPopulation != null) afterPopulation();
+            try
+            {
+                this.RunAsyncOperationStartedHandler();
+                this.CurrentBusinessObject = Broker.GetBusinessObject<T>(criteria);
+                this.RunAsyncOperationCompleteHandler();
+                if (afterPopulation != null) afterPopulation();
+            }
+            catch (Exception e)
+            {
+                if (this.OnAsyncOperationException != null)
+                    this.OnAsyncOperationException(this, new ExceptionEventArgs(e));
+            }
         }
 
         public void PopulateObjectAsync<T>(string criteria, Action afterPopulation = null) where T : class, IBusinessObject, new()

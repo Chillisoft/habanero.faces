@@ -480,28 +480,54 @@ namespace Habanero.Faces.VWG.Grid
 
         public EventHandler OnAsyncOperationComplete { get; set; }
         public EventHandler OnAsyncOperationStarted { get; set; }
+        public EventHandler OnAsyncOperationException { get; set; }
+
         public void PopulateCollectionAsync(DataRetrieverCollectionDelegate dataRetrieverCallback, Action afterPopulation = null)
         {
             if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
-            this.BusinessObjectCollection = dataRetrieverCallback();
-            if (afterPopulation != null) afterPopulation();
-            if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+            try
+            {
+                this.BusinessObjectCollection = dataRetrieverCallback();
+                if (afterPopulation != null) afterPopulation();
+                if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+            }
+            catch (Exception ex)
+            {
+                if (this.OnAsyncOperationException != null)
+                    this.OnAsyncOperationException(this, new ExceptionEventArgs(ex));
+            }
         }
 
         public void PopulateCollectionAsync<T>(Criteria criteria, IOrderCriteria order = null, Action afterPopulation = null) where T : class, IBusinessObject, new()
         {
             if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
-            this.BusinessObjectCollection = Broker.GetBusinessObjectCollection<T>(criteria, order);
-            if (afterPopulation != null) afterPopulation();
-            if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+            try
+            {
+                this.BusinessObjectCollection = Broker.GetBusinessObjectCollection<T>(criteria, order);
+                if (afterPopulation != null) afterPopulation();
+                if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+            }
+            catch (Exception ex)
+            {
+                if (this.OnAsyncOperationException != null)
+                    this.OnAsyncOperationException(this, new ExceptionEventArgs(ex));
+            }
         }
 
         public void PopulateCollectionAsync<T>(string criteria, string order = null, Action afterPopulation = null) where T : class, IBusinessObject, new()
         {
-            if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
-            this.BusinessObjectCollection = Broker.GetBusinessObjectCollection<T>(criteria, order);
-            if (afterPopulation != null) afterPopulation();
-            if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+            try
+            {
+                if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
+                this.BusinessObjectCollection = Broker.GetBusinessObjectCollection<T>(criteria, order);
+                if (afterPopulation != null) afterPopulation();
+                if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+            }
+            catch (Exception ex)
+            {
+                if (this.OnAsyncOperationException != null)
+                    this.OnAsyncOperationException(this, new ExceptionEventArgs(ex));
+            }
         }
     }
 
@@ -904,26 +930,50 @@ namespace Habanero.Faces.VWG.Grid
 
         public void PopulateCollectionAsync(DataRetrieverCollectionDelegate dataRetrieverCallback, Action afterPopulation = null)
         {
-            if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
-            this.BusinessObjectCollection = dataRetrieverCallback();
-            if (afterPopulation != null) afterPopulation();
-            if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+            try
+            {
+                if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
+                this.BusinessObjectCollection = dataRetrieverCallback();
+                if (afterPopulation != null) afterPopulation();
+                if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (this.OnAsyncOperationException != null)
+                    this.OnAsyncOperationException(this, new ExceptionEventArgs(e));
+            }
         }
 
         public void PopulateCollectionAsync<T>(Criteria criteria, IOrderCriteria order = null, Action afterPopulation = null) where T : class, IBusinessObject, new()
         {
-            if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
-            this.BusinessObjectCollection = Broker.GetBusinessObjectCollection<T>(criteria, order);
-            if (afterPopulation != null) afterPopulation();
-            if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+            try
+            {
+                if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
+                this.BusinessObjectCollection = Broker.GetBusinessObjectCollection<T>(criteria, order);
+                if (afterPopulation != null) afterPopulation();
+                if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (this.OnAsyncOperationException != null)
+                    this.OnAsyncOperationException(this, new ExceptionEventArgs(e));
+            }
         }
 
         public void PopulateCollectionAsync<T>(string criteria, string order = null, Action afterPopulation = null) where T : class, IBusinessObject, new()
         {
-            if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
-            this.BusinessObjectCollection = Broker.GetBusinessObjectCollection<T>(criteria, order);
-            if (afterPopulation != null) afterPopulation();
-            if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+            try
+            {
+                if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
+                this.BusinessObjectCollection = Broker.GetBusinessObjectCollection<T>(criteria, order);
+                if (afterPopulation != null) afterPopulation();
+                if (this.OnAsyncOperationComplete != null) this.OnAsyncOperationComplete(this, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (this.OnAsyncOperationException != null)
+                    this.OnAsyncOperationException(this, new ExceptionEventArgs(e));
+            }
         }
 
         public void ExecuteOnUIThread(Delegate method)
@@ -933,5 +983,6 @@ namespace Habanero.Faces.VWG.Grid
 
         public EventHandler OnAsyncOperationComplete { get; set; }
         public EventHandler OnAsyncOperationStarted { get; set; }
+        public EventHandler OnAsyncOperationException { get; set; }
     }
 }

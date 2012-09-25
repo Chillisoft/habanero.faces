@@ -40,7 +40,8 @@ namespace Habanero.Faces.Win
     {
         public EventHandler OnAsyncOperationComplete { get; set; }
         public EventHandler OnAsyncOperationStarted { get; set; }
-        
+        public EventHandler OnAsyncOperationException { get; set; }
+
         private readonly IControlFactory _controlFactory;
         private readonly ITabControl _tabControl;
         private readonly BOColTabControlManager _boColTabControlManager;
@@ -244,7 +245,10 @@ namespace Habanero.Faces.Win
 
         private void NotifyObjectPopulationException(Exception ex)
         {
-            GlobalRegistry.UIExceptionNotifier.Notify(ex, "Unable to load object data", "Error loading data");
+            if (this.OnAsyncOperationException != null)
+                this.OnAsyncOperationException(this, new ExceptionEventArgs(ex));
+            else
+                GlobalRegistry.UIExceptionNotifier.Notify(ex, "Unable to load object data", "Error loading data");
         }
         private void PopulateObjectFromAsyncUICallback(ConcurrentDictionary<string, object> data, Action afterPopulation)
         {

@@ -36,6 +36,7 @@ namespace Habanero.Faces.Win
 
         public EventHandler OnAsyncOperationComplete { get; set; }
         public EventHandler OnAsyncOperationStarted { get; set; }
+        public EventHandler OnAsyncOperationException { get; set; }
         private bool _inAsyncOperation;
         private readonly IReadOnlyGridButtonsControl _buttons;
         private readonly IControlFactory _controlFactory;
@@ -426,7 +427,10 @@ namespace Habanero.Faces.Win
 
         private void NotifyGridPopulationException(Exception ex)
         {
-            GlobalRegistry.UIExceptionNotifier.Notify(ex, "Unable to load data grid", "Error loading data grid");
+            if (this.OnAsyncOperationException != null)
+                this.OnAsyncOperationException(this, new ExceptionEventArgs(ex));
+            else
+                GlobalRegistry.UIExceptionNotifier.Notify(ex, "Unable to load data grid", "Error loading data grid");
         }
 
         private void PopulateFromAsyncUICallback(ConcurrentDictionary<string, object> data, Action afterPopulation)

@@ -551,6 +551,8 @@ namespace Habanero.Faces.Win
 
         public EventHandler OnAsyncOperationComplete { get; set; }
         public EventHandler OnAsyncOperationStarted { get; set; }
+        public EventHandler OnAsyncOperationException { get; set; }
+
         public void PopulateCollectionAsync(DataRetrieverCollectionDelegate dataRetrieverCallback, Action afterPopulation = null)
         {
             if (this.OnAsyncOperationStarted != null) this.OnAsyncOperationStarted(this, new EventArgs());
@@ -597,7 +599,10 @@ namespace Habanero.Faces.Win
 
         private void NotifyPopulationException(Exception ex)
         {
-            GlobalRegistry.UIExceptionNotifier.Notify(ex, "Unable to load data grid", "Error loading data grid");
+            if (this.OnAsyncOperationException != null)
+                this.OnAsyncOperationException(this, new ExceptionEventArgs(ex));
+            else
+                GlobalRegistry.UIExceptionNotifier.Notify(ex, "Unable to load data grid", "Error loading data grid");
         }
 
         public void PopulateCollectionAsync<T>(string criteria, string order = null, Action afterPopulation = null) where T : class, IBusinessObject, new()
@@ -1040,6 +1045,7 @@ namespace Habanero.Faces.Win
 
         public EventHandler OnAsyncOperationComplete { get; set; }
         public EventHandler OnAsyncOperationStarted { get; set; }
+        public EventHandler OnAsyncOperationException { get; set; }
         IBusinessObjectCollection IHasBusinessObjectCollection.BusinessObjectCollection { get; set; }
         public void PopulateCollectionAsync(DataRetrieverCollectionDelegate dataRetrieverCallback, Action afterPopulation = null)
         {
@@ -1085,7 +1091,10 @@ namespace Habanero.Faces.Win
 
         private void NotifyPopulationException(Exception ex)
         {
-            GlobalRegistry.UIExceptionNotifier.Notify(ex, "Unable to load data grid", "Error loading data grid");
+            if (this.OnAsyncOperationException != null)
+                this.OnAsyncOperationException(this, new ExceptionEventArgs(ex));
+            else
+                GlobalRegistry.UIExceptionNotifier.Notify(ex, "Unable to load data grid", "Error loading data grid");
         }
 
         public void PopulateCollectionAsync<T>(string criteria, string order = null, Action afterPopulation = null) where T : class, IBusinessObject, new()

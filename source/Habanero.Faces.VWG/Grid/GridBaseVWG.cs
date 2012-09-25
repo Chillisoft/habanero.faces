@@ -48,6 +48,10 @@ namespace Habanero.Faces.VWG
             var hints = GlobalUIRegistry.UIStyleHints;
             if (hints != null)
             {
+                this.DefaultCellStyle.Padding = new Padding(hints.GridHints.Padding.Left, hints.GridHints.Padding.Top, hints.GridHints.Padding.Right, hints.GridHints.Padding.Bottom);
+                var vpad = this.DefaultCellStyle.Padding.Top + this.DefaultCellStyle.Padding.Bottom;
+                this.ColumnHeadersHeight += vpad;
+                this.RowTemplate.Height += vpad;
                 this.ColumnAutoSizingPadding = hints.GridHints.ColumnAutoSizingPadding;
                 this.ColumnAutoSizingStrategy = hints.GridHints.ColumnAutoSizingStrategy;
                 this.EnableAlternateRowColoring = hints.GridHints.EnableAlternateRowColoring;

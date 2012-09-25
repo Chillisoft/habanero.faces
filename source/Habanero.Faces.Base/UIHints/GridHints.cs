@@ -7,6 +7,25 @@ namespace Habanero.Faces.Base.UIHints
 {
     public class GridHints : HintsBase
     {
+        public class CellPadding
+        {
+            public int Left { get; protected set; }
+            public int Right { get; protected set; }
+            public int Top { get; protected set; }
+            public int Bottom { get; protected set; }
+            public CellPadding(int left, int top, int right, int bottom)
+            {
+                this.Left = left;
+                this.Right = right;
+                this.Top = top;
+                this.Bottom = bottom;
+            }
+        }
+
+        public GridHints()
+        {
+            this.Padding = new CellPadding(0, 0, 0, 0);
+        }
         private GridColumnAutoSizingStrategies _columnAutoSizingStrategy;
         public GridColumnAutoSizingStrategies ColumnAutoSizingStrategy
         {
@@ -47,6 +66,13 @@ namespace Habanero.Faces.Base.UIHints
         {
             get { return this._showDisabledOperationButtons; }
             set { this._showDisabledOperationButtons = value; RunOnHintsChangedHandler(); }
+        }
+
+        private CellPadding _padding;
+        public CellPadding Padding
+        {
+            get { return this._padding; }
+            set { this._padding = value; RunOnHintsChangedHandler(); }
         }
     }
 }

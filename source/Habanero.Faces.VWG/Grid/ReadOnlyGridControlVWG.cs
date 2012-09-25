@@ -48,6 +48,7 @@ namespace Habanero.Faces.VWG
     {
         public EventHandler OnAsyncOperationComplete { get; set; }
         public EventHandler OnAsyncOperationStarted { get; set; }
+        public EventHandler OnAsyncOperationException { get; set; }
         private readonly IReadOnlyGridButtonsControl _buttons;
         private readonly IControlFactory _controlFactory;
         private readonly ReadOnlyGridVWG _grid;
@@ -355,10 +356,18 @@ namespace Habanero.Faces.VWG
 
         public void PopulateCollectionAsync<T>(Criteria criteria, IOrderCriteria order, Action afterPopulation = null) where T : class, IBusinessObject, new()
         {
-            this.RunAsyncOperationStarted();
-            this.BusinessObjectCollection = Broker.GetBusinessObjectCollection<T>(criteria, order);
-            this.RunAsyncOperationComplete();
-            if (afterPopulation != null) afterPopulation();
+            try
+            {
+                this.RunAsyncOperationStarted();
+                this.BusinessObjectCollection = Broker.GetBusinessObjectCollection<T>(criteria, order);
+                this.RunAsyncOperationComplete();
+                if (afterPopulation != null) afterPopulation();
+            }
+            catch (Exception ex)
+            {
+                if (this.OnAsyncOperationException != null)
+                    this.OnAsyncOperationException(this, new ExceptionEventArgs(ex));
+            }
         }
 
         private void RunAsyncOperationStarted()
@@ -380,10 +389,18 @@ namespace Habanero.Faces.VWG
 
         public void PopulateCollectionAsync(DataRetrieverCollectionDelegate dataRetrieverCallback, Action afterPopulation)
         {
-            this.RunAsyncOperationStarted();
-            this.BusinessObjectCollection = dataRetrieverCallback();
-            this.RunAsyncOperationComplete();
-            if (afterPopulation != null) afterPopulation();
+            try
+            {
+                this.RunAsyncOperationStarted();
+                this.BusinessObjectCollection = dataRetrieverCallback();
+                this.RunAsyncOperationComplete();
+                if (afterPopulation != null) afterPopulation();
+            }
+            catch (Exception e)
+            {
+                if (this.OnAsyncOperationException != null)
+                    this.OnAsyncOperationException(this, new ExceptionEventArgs(e));
+            }
         }
 
         ///<summary>
