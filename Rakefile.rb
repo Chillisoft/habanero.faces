@@ -68,6 +68,7 @@ task :nuget => [:publishFacesBaseNugetPackage,
 				:publishFacesTestWinNugetPackage]
 
 #------------------------build Faces  --------------------
+task :msbuild => [:autoUpdateVersions]
 
 desc "Cleans the bin folder"
 task :clean do
