@@ -135,6 +135,7 @@
     <Compile Include="HabaneroControls\FilterControl\TestMultiplePropStringTextBoxFilterWin.cs" />
     <Compile Include="HabaneroControls\FilterControl\TestStringStaticFilterWin.cs" />
     <Compile Include="HabaneroControls\FilterControl\TestStringTextBoxFilterWin.cs" />
+    <Compile Include="TestUtilsUI.cs" />
     <Compile Include="HabaneroControls\TestBOColTabControlManagerWin.cs" />
     <Compile Include="HabaneroControls\TestBOSelectorAndBOEditorManagerWin.cs" />
     <Compile Include="HabaneroControls\TestComboBoxCollectionSelectorWin.cs" />

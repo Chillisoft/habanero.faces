@@ -8,6 +8,7 @@ using Habanero.Test;
 using NUnit.Framework;
 using System.Collections.Generic;
 using AnchorStyles = System.Windows.Forms.AnchorStyles;
+using DockStyle = System.Windows.Forms.DockStyle;
 
 namespace Habanero.Faces.Test.Win.HabaneroControls
 {
@@ -451,19 +452,9 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
             //---------------Execute Test ----------------------
 
             //---------------Test Result -----------------------
-            var frm = new Form();
-            frm.Width = 800;
-            frm.Height = 600;
-            grid.Width = frm.Width;
-            grid.Height = frm.Height;
-            grid.Top = 0;
-            grid.Left = 0;
-            grid.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
-            frm.Controls.Add(grid);
-            Application.EnableVisualStyles();
-            Application.Run(frm);
-
+            TestUtilsUI.ShowInVisualTestingForm(grid);
         }
+
         //
         //        [Test]
         //        public void TestAddStringFilterTextBoxTextChanged()
