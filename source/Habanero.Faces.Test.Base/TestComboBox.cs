@@ -32,12 +32,12 @@ namespace Habanero.Faces.Test.Base
     /// <summary>
     /// This test class tests the ComboBox class.
     /// </summary>
-    public abstract class TestComboBox
+    public abstract class TestComboBox : TestBaseWithDisposing
     {
 
         protected IComboBox CreateComboBox()
         {
-            return GetControlFactory().CreateComboBox();
+            return GetControlledLifetimeFor(GetControlFactory().CreateComboBox());
         }
 
         protected abstract IControlFactory GetControlFactory();

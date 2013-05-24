@@ -176,6 +176,7 @@
     <Compile Include="Mappers\TestTextBoxMapper.cs" />
     <Compile Include="Selectors\TestBOColSelectorLinker.cs" />
     <Compile Include="Selectors\TestBOColSelectorLinkerComboBox.cs" />
+    <Compile Include="TestBaseWithDisposing.cs" />
     <Compile Include="TestCollapsibleMenu.cs" />
     <Compile Include="TestCollapsibleMenuBuilder.cs" />
     <Compile Include="TestBusinessObjectDeletor.cs" />

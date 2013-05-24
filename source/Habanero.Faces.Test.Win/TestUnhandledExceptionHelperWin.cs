@@ -104,8 +104,8 @@ namespace Habanero.Faces.Test.Win
                 Assert.IsInstanceOf<Win32Exception>(unhandledExceptionEventArgs.ExceptionObject);
                 var unhandledExceptionObject = (Win32Exception)unhandledExceptionEventArgs.ExceptionObject;
                 StringAssert.Contains("Error creating window handle", exception.Message);
-                Assert.AreEqual(exception.NativeErrorCode, unhandledExceptionObject.NativeErrorCode, "NativeError code was expected to be the same as the exception");
                 Assert.AreEqual(exception.Message, unhandledExceptionObject.Message, "Message was expected to be the same as the exception");
+                Assert.AreEqual(exception.NativeErrorCode, unhandledExceptionObject.NativeErrorCode, "NativeError code was expected to be the same as the exception");
             }
         }
 

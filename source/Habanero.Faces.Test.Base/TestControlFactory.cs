@@ -17,7 +17,6 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using Habanero.Base;
@@ -36,9 +35,8 @@ using Rhino.Mocks;
 // ReSharper disable InconsistentNaming
 namespace Habanero.Faces.Test.Base
 {
-
     [TestFixture]
-    public abstract class TestControlFactory
+    public abstract class TestControlFactory : TestBaseWithDisposing
     {
         protected IControlFactory _factory;
 
@@ -62,31 +60,6 @@ namespace Habanero.Faces.Test.Base
         public void TestTearDown()
         {
             //Code that is executed after each and every test is executed in this fixture/class.
-        }
-
-        [TestFixtureTearDown]
-        public void TestFixtureTearDown()
-        {
-            //Code that is executed after each and every test is executed in this fixture/class.
-            IDisposable disposable;
-            while (_objectsToDispose.TryPop(out disposable))
-            {
-                disposable.Dispose();
-            }
-        }
-
-        private readonly ConcurrentStack<IDisposable> _objectsToDispose = new ConcurrentStack<IDisposable>();
-
-        protected void DisposeOnTearDown(object obj)
-        {
-            var disposable = obj as IDisposable;
-            if (disposable != null) _objectsToDispose.Push(disposable);
-        }
-
-        protected T GetControlledLifetimeFor<T>(T obj)
-        {
-            DisposeOnTearDown(obj);
-            return obj;
         }
 
 
