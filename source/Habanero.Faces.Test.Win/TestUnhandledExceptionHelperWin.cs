@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Security.Policy;
 using System.Windows.Forms;
 using NUnit.Framework;
 
@@ -10,10 +11,15 @@ namespace Habanero.Faces.Test.Win
     {
         static void CauseUnhandledException()
         {
-            var badControl = new BadControl();
-            Form form = new Form();
-            form.Controls.Add(badControl);
-            form.Show();
+            using (var badControl = new BadControl())
+            {
+                using (var form = new Form())
+                {
+                    form.Controls.Add(badControl);
+                    form.Show();
+                }
+            }
+            
         }
 
         private class BadControl : Control
@@ -95,12 +101,11 @@ namespace Habanero.Faces.Test.Win
                 //---------------Execute Test ----------------------
                 var exception = Assert.Throws<Win32Exception>(CauseUnhandledException, "Expected to throw an Win32Exception");
                 //---------------Test Result -----------------------
-                Assert.IsNotNull(unhandledExceptionEventArgs);
+                Assert.IsNotNull(unhandledExceptionEventArgs, "Should have thrown an unhandled exception");
                 Assert.IsInstanceOf<Win32Exception>(unhandledExceptionEventArgs.ExceptionObject);
                 var unhandledExceptionObject = (Win32Exception)unhandledExceptionEventArgs.ExceptionObject;
                 StringAssert.Contains("Error creating window handle", exception.Message);
-                Assert.AreEqual(exception.NativeErrorCode, unhandledExceptionObject.NativeErrorCode);
-                Assert.AreEqual(exception.Message, unhandledExceptionObject.Message);
+                Assert.AreEqual(exception.Message, unhandledExceptionObject.Message, "Message was expected to be the same as the exception");
             }
         }
 

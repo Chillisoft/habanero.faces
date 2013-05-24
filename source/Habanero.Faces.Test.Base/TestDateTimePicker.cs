@@ -29,7 +29,7 @@ namespace Habanero.Faces.Test.Base
     /// This class tests the DateTimePicker control.
     ///  - The issue of the control being nullable or not is tested.
     /// </summary>
-    public abstract class TestDateTimePicker
+    public abstract class TestDateTimePicker : TestBaseWithDisposing
     {
         protected abstract void SetBaseDateTimePickerValue(IDateTimePicker dateTimePicker, DateTime value);
         protected abstract void SetBaseDateTimePickerCheckedValue(IDateTimePicker dateTimePicker, bool value);
@@ -44,6 +44,7 @@ namespace Habanero.Faces.Test.Base
         protected IDateTimePicker CreateDateTimePicker()
         {
             IDateTimePicker dateTimePicker = GetControlFactory().CreateDateTimePicker();
+            DisposeOnTearDown(dateTimePicker);
             //IFormHabanero form = GetControlFactory().CreateForm();
             //form.Controls.Add(dateTimePicker);
             //form.Visible = true;

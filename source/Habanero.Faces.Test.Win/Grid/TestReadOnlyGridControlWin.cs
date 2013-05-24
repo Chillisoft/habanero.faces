@@ -10,7 +10,7 @@ namespace Habanero.Faces.Test.Win.Grid
     [TestFixture]
     public class TestReadOnlyGridControlWin : TestReadOnlyGridControl
     {
-        private System.Windows.Forms.Form frm;
+        private System.Windows.Forms.Form _form;
 
         protected override IControlFactory GetControlFactory()
         {
@@ -28,18 +28,19 @@ namespace Habanero.Faces.Test.Win.Grid
                 new Habanero.Faces.Win.ReadOnlyGridControlWin(GetControlFactory());
             if (putOnForm)
             {
-                frm = new System.Windows.Forms.Form();
-                frm.Controls.Add(readOnlyGridControlWin);
-                frm.Show();
+                _form = new System.Windows.Forms.Form();
+                _form.Controls.Add(readOnlyGridControlWin);
+                _form.Show();
             }
             return readOnlyGridControlWin;
         }
 
         protected override void CloseForm()
         {
-            if (frm == null) return;
-            frm.Close();
-            frm = null;
+            if (_form == null) return;
+            _form.Close();
+            _form.Dispose();
+            _form = null;
         }
 
         protected override IClassDef LoadMyBoDefaultClassDef()
