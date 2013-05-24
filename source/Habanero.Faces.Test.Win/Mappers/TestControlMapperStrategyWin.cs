@@ -399,9 +399,10 @@ namespace Habanero.Faces.Test.Win.Mappers
             frm.Show();
             strategyWin.CallCtlKeyUpHandler();
             //---------------Test Result -----------------------
-            Assert.IsTrue(tbWin2.ContainsFocus);
-            Assert.IsTrue(gotFocus);
+            Assert.IsTrue(tbWin2.ContainsFocus, "Textbox was expected to contain the focus");
+            Assert.IsTrue(gotFocus, "Textbox should have received the gotfocus event");
         }
+        
         [Test]
         public void Test_HandleEnterKey_WhenCheckBox_ShouldMoveToNextControl()
         {
@@ -423,8 +424,8 @@ namespace Habanero.Faces.Test.Win.Mappers
             frm.Show();
             strategyWin.CallCtlKeyUpHandler();
             //---------------Test Result -----------------------
-            Assert.IsTrue(cbWin.ContainsFocus);
-            Assert.IsTrue(gotFocus);
+            Assert.IsTrue(cbWin.ContainsFocus, "CheckBoxWin was expected to contain the focus");
+            Assert.IsTrue(gotFocus, "CheckBoxWin should have received the gotfocus event");
         }
 
         [Test]

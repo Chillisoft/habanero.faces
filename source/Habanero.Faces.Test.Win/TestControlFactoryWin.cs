@@ -17,13 +17,39 @@ namespace Habanero.Faces.Test.Win
     [TestFixture]
     public class TestControlFactoryWin : TestControlFactory
     {
+        public class ControlFactoryTester
+        {
+            private readonly IControlFactory _factoryUnderTest;
+
+            public ControlFactoryTester(IControlFactory factoryUnderTest)
+            {
+                if (factoryUnderTest == null) throw new ArgumentNullException("factoryUnderTest");
+                _factoryUnderTest = factoryUnderTest;
+            }
+
+            public void ShouldCreateCorrectWinControl<T>()
+            {
+                var controlType = typeof (T);
+                using (var controlHabanero = _factoryUnderTest.CreateControl(controlType))
+                {
+                    Assert.IsNotNull(controlHabanero);
+                    Assert.AreEqual(controlType.Name + "Win", controlHabanero.GetType().Name);
+                }
+            }
+        }
+
+        private ControlFactoryTester CreateControlFactoryTester()
+        {
+            return new ControlFactoryTester(_factory);
+        }
+
         [Test]
         public void TestCreateCheckBoxWin()
         {
             //---------------Set up test pack-------------------
             //---------------Execute Test ----------------------
-
             ICheckBox cbx = GetControlFactory().CreateCheckBox();
+            DisposeOnTearDown(cbx);
             //---------------Test Result -----------------------
             Assert.IsFalse(cbx.Checked);
         }
@@ -35,6 +61,7 @@ namespace Habanero.Faces.Test.Win
             //---------------Execute Test ----------------------
 
             ICheckBox cbx = GetControlFactory().CreateCheckBox(true);
+            DisposeOnTearDown(cbx);
             //---------------Test Result -----------------------
             Assert.IsTrue(cbx.Checked);
 
@@ -46,11 +73,13 @@ namespace Habanero.Faces.Test.Win
             //---------------Set up test pack-------------------
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
-            IControlHabanero controlHabanero = _factory.CreateControl(typeof(System.Windows.Forms.ComboBox));
-            //---------------Verify Result -----------------------
-            Assert.IsNotNull(controlHabanero);
-            Assert.AreEqual(typeof(Habanero.Faces.Win.ComboBoxWin), controlHabanero.GetType());
-            Assert.AreEqual(GetStandardTextBoxHeight(), controlHabanero.Height);
+            using (var controlHabanero = _factory.CreateControl(typeof(System.Windows.Forms.ComboBox)))
+            {
+                //---------------Verify Result -----------------------
+                Assert.IsNotNull(controlHabanero);
+                Assert.AreEqual(typeof(Habanero.Faces.Win.ComboBoxWin), controlHabanero.GetType());
+                Assert.AreEqual(GetStandardTextBoxHeight(), controlHabanero.Height);
+            }
         }
 
         [Test]
@@ -60,6 +89,7 @@ namespace Habanero.Faces.Test.Win
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             IControlHabanero controlHabanero = _factory.CreateControl(typeof(Habanero.Faces.Win.EditableGridControlWin));
+            DisposeOnTearDown(controlHabanero);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(controlHabanero);
             Assert.AreEqual(typeof(Habanero.Faces.Win.EditableGridControlWin), controlHabanero.GetType());
@@ -70,50 +100,49 @@ namespace Habanero.Faces.Test.Win
         public void TestCreateControl_ViaType_CreateCheckBox()
         {
             //---------------Set up test pack-------------------
+            var tester = CreateControlFactoryTester();
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
-            IControlHabanero controlHabanero = _factory.CreateControl(typeof(System.Windows.Forms.CheckBox));
-            //---------------Verify Result -----------------------
-            Assert.IsNotNull(controlHabanero);
-            Assert.AreEqual(typeof(Habanero.Faces.Win.CheckBoxWin), controlHabanero.GetType());
+            tester.ShouldCreateCorrectWinControl<System.Windows.Forms.CheckBox>();
+            //---------------Verify Result ---------------------
 
         }
+
         [Test]
         public void TestCreateControl_ViaType_CreateTextBox()
         {
             //---------------Set up test pack-------------------
+            var tester = CreateControlFactoryTester();
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
-            IControlHabanero controlHabanero = _factory.CreateControl(typeof(System.Windows.Forms.TextBox));
-            //---------------Verify Result -----------------------
-            Assert.IsNotNull(controlHabanero);
-            Assert.AreEqual(typeof(Habanero.Faces.Win.TextBoxWin), controlHabanero.GetType());
+            tester.ShouldCreateCorrectWinControl<System.Windows.Forms.TextBox>();
+            //---------------Verify Result ---------------------
 
         }
+
         [Test]
         public void TestCreateControl_ViaType_CreateListBox()
         {
             //---------------Set up test pack-------------------
+            var tester = CreateControlFactoryTester();
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
-            IControlHabanero controlHabanero = _factory.CreateControl(typeof(System.Windows.Forms.ListBox));
-            //---------------Verify Result -----------------------
-            Assert.IsNotNull(controlHabanero);
-            Assert.AreEqual(typeof(Habanero.Faces.Win.ListBoxWin), controlHabanero.GetType());
+            tester.ShouldCreateCorrectWinControl<System.Windows.Forms.ListBox>();
+            //---------------Verify Result ---------------------
 
         }
+
         [Test]
         public void TestCreateControl_ViaType_CreateDateTimePicker()
         {
             //---------------Set up test pack-------------------
+            var tester = CreateControlFactoryTester();
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
-            IControlHabanero controlHabanero = _factory.CreateControl(typeof(System.Windows.Forms.DateTimePicker));
-            //---------------Verify Result -----------------------
-            Assert.IsNotNull(controlHabanero);
-            Assert.AreEqual(typeof(Habanero.Faces.Win.DateTimePickerWin), controlHabanero.GetType());
-
+            tester.ShouldCreateCorrectWinControl<System.Windows.Forms.DateTimePicker>();
+            //---------------Verify Result ---------------------
         }
+
 
         [Test]
         public void TestCreateControl_ViaType_NumericUpDown()
@@ -122,6 +151,7 @@ namespace Habanero.Faces.Test.Win
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             object controlHabanero = _factory.CreateControl(typeof(System.Windows.Forms.NumericUpDown));
+            DisposeOnTearDown(controlHabanero);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(controlHabanero);
             Assert.AreEqual(typeof(Habanero.Faces.Win.NumericUpDownWin), controlHabanero.GetType());
@@ -156,6 +186,7 @@ namespace Habanero.Faces.Test.Win
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             IControlHabanero control = _factory.CreateControl(typeName, assemblyName);
+            DisposeOnTearDown(control);
             //---------------Verify Result -----------------------
             Assert.IsTrue(control is System.Windows.Forms.TextBox);
 
@@ -222,6 +253,7 @@ namespace Habanero.Faces.Test.Win
             Assert.IsTrue(columnType.IsSubclassOf(GetMasterGridColumnType()));
             //---------------Execute Test ----------------------
             IDataGridViewColumn column = GetControlFactory().CreateDataGridViewColumn(typeName, assemblyName);
+            DisposeOnTearDown(column);
             //---------------Test Result -----------------------
             Assert.IsNotNull(column);
             Assert.IsInstanceOf(GetHabaneroMasterGridColumnType(), column);
@@ -236,6 +268,7 @@ namespace Habanero.Faces.Test.Win
             Assert.IsTrue(columnType.IsSubclassOf(GetMasterGridColumnType()));
             //---------------Execute Test ----------------------
             IDataGridViewColumn column = GetControlFactory().CreateDataGridViewColumn(columnType);
+            DisposeOnTearDown(column);
             //---------------Test Result -----------------------
             Assert.IsNotNull(column);
             Assert.IsInstanceOf(GetHabaneroMasterGridColumnType(), column);
@@ -251,6 +284,7 @@ namespace Habanero.Faces.Test.Win
             Assert.IsTrue(typeName.Contains("DataGridViewCheckBoxColumn"));
             //---------------Execute Test ----------------------
             object column = GetControlFactory().CreateDataGridViewColumn(typeName, null);
+            DisposeOnTearDown(column);
             //---------------Test Result -----------------------
             Assert.IsNotNull(column);
             Assert.IsInstanceOf(typeof(IDataGridViewCheckBoxColumn), column);

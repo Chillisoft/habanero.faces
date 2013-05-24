@@ -17,6 +17,7 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using Habanero.Base;
@@ -62,6 +63,34 @@ namespace Habanero.Faces.Test.Base
         {
             //Code that is executed after each and every test is executed in this fixture/class.
         }
+
+        [TestFixtureTearDown]
+        public void TestFixtureTearDown()
+        {
+            //Code that is executed after each and every test is executed in this fixture/class.
+            IDisposable disposable;
+            while (_objectsToDispose.TryPop(out disposable))
+            {
+                disposable.Dispose();
+            }
+        }
+
+        private readonly ConcurrentStack<IDisposable> _objectsToDispose = new ConcurrentStack<IDisposable>();
+
+        protected void DisposeOnTearDown(object obj)
+        {
+            var disposable = obj as IDisposable;
+            if (disposable != null) _objectsToDispose.Push(disposable);
+        }
+
+        protected T GetControlledLifetimeFor<T>(T obj)
+        {
+            DisposeOnTearDown(obj);
+            return obj;
+        }
+
+
+
         protected virtual int GetStandardTextBoxHeight()
         {
             return 21;
@@ -85,6 +114,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
             IMainMenuHabanero mmenu = _factory.CreateMainMenu();
+            DisposeOnTearDown(mmenu);
             //---------------Test Result -----------------------
             Assert.IsNotNull(mmenu);
             TestUtil.AssertStringEmpty(mmenu.Name, "mmenu.Name");
@@ -98,6 +128,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
             IMenuItem mmenu = _factory.CreateMenuItem(name);
+            DisposeOnTearDown(mmenu);
             //---------------Test Result -----------------------
             Assert.IsNotNull(mmenu);
             Assert.AreEqual(name, mmenu.Text);
@@ -107,10 +138,12 @@ namespace Habanero.Faces.Test.Base
         public void Test_CreateMenuItem_FromHabaneroMenuItem()
         {
             //---------------Set up test pack-------------------
-            HabaneroMenu.Item item = new HabaneroMenu.Item(null, TestUtil.GetRandomString());          
+            HabaneroMenu.Item item = new HabaneroMenu.Item(null, TestUtil.GetRandomString());
+            DisposeOnTearDown(item);     
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
             IMenuItem mmenu = _factory.CreateMenuItem(item);
+            DisposeOnTearDown(mmenu);
             //---------------Test Result -----------------------
             Assert.IsNotNull(mmenu);
             Assert.AreEqual(item.Name, mmenu.Text);
@@ -123,6 +156,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             ILabel lbl = _factory.CreateLabel();
+            DisposeOnTearDown(lbl);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(lbl);
             Assert.IsFalse(lbl.TabStop);
@@ -137,6 +171,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Execute Test ----------------------
 
             ILabel lbl = _factory.CreateLabel(labelText);
+            DisposeOnTearDown(lbl);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(lbl);
             Assert.IsFalse(lbl.TabStop);
@@ -156,6 +191,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Execute Test ----------------------
 
             ILabel lbl = _factory.CreateLabel(labelText, true);
+            DisposeOnTearDown(lbl);
             //---------------Verify Result -----------------------
             //Assert.AreEqual(lbl.PreferredWidth + 10, lbl.Width);
             if (!(GetControlFactory() is ControlFactoryWin))    // windows labels are auto-sized
@@ -174,6 +210,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Execute Test ----------------------
 
             IButton button = _factory.CreateButton(buttonText);
+            DisposeOnTearDown(button);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(button);
             Assert.IsTrue(button.TabStop);
@@ -196,6 +233,7 @@ namespace Habanero.Faces.Test.Base
             hints.MinimumWidth = defaultButton.Width + RandomValueGen.GetRandomInt(10, 20);
             hints.MinimumFontSize = defaultButton.Font.Size + 2;
             var newButton = GetControlFactory().CreateButton();
+            DisposeOnTearDown(newButton);
             
             //---------------Assert Precondition----------------
 
@@ -216,6 +254,7 @@ namespace Habanero.Faces.Test.Base
             hints.MaximumHeight = RandomValueGen.GetRandomInt(30, 40);
             hints.MaximumWidth = RandomValueGen.GetRandomInt(60, 100);
             var btn = GetControlFactory().CreateButton();
+            DisposeOnTearDown(btn);
             btn.Width = hints.MaximumWidth + RandomValueGen.GetRandomInt(10, 20);
             btn.Height = hints.MaximumHeight + RandomValueGen.GetRandomInt(10, 20);
             
@@ -243,6 +282,7 @@ namespace Habanero.Faces.Test.Base
                 }
             };
             var ctl = GetControlFactory().CreateControl();
+            DisposeOnTearDown(ctl);
             var manager = new GridLayoutManager(ctl, GetControlFactory());
             //---------------Assert Precondition----------------
 
@@ -264,6 +304,7 @@ namespace Habanero.Faces.Test.Base
             hints.MinimumHeight = defaultcontrol.Height + RandomValueGen.GetRandomInt(10, 20);
             hints.MinimumWidth = defaultcontrol.Width + RandomValueGen.GetRandomInt(10, 20);
             var newcontrol = GetControlFactory().CreateDateTimePicker();
+            DisposeOnTearDown(newcontrol);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -279,11 +320,13 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             var defaultcontrol = GetControlFactory().CreateDateTimePicker();
+            DisposeOnTearDown(defaultcontrol);
             GlobalUIRegistry.UIStyleHints = new UIStyleHints();
             var hints = GlobalUIRegistry.UIStyleHints.DateTimePickerHints;
             hints.MaximumHeight = defaultcontrol.Height + RandomValueGen.GetRandomInt(10, 20);
             hints.MaximumWidth = defaultcontrol.Width + RandomValueGen.GetRandomInt(10, 20);
             var newcontrol = GetControlFactory().CreateDateTimePicker();
+            DisposeOnTearDown(newcontrol);
             newcontrol.Width = hints.MaximumWidth + 10;
             newcontrol.Height = hints.MaximumHeight + 10;
             //---------------Assert Precondition----------------
@@ -300,11 +343,13 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             var defaultcontrol = GetControlFactory().CreateLabel();
+            DisposeOnTearDown(defaultcontrol);
             GlobalUIRegistry.UIStyleHints = new UIStyleHints();
             var hints = GlobalUIRegistry.UIStyleHints.LabelHints;
             hints.MinimumHeight = defaultcontrol.Height + RandomValueGen.GetRandomInt(10, 20);
             hints.MinimumWidth = defaultcontrol.Width + RandomValueGen.GetRandomInt(10, 20);
             var newcontrol = GetControlFactory().CreateLabel();
+            DisposeOnTearDown(newcontrol);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -320,11 +365,13 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             var defaultcontrol = GetControlFactory().CreateLabel();
+            DisposeOnTearDown(defaultcontrol);
             GlobalUIRegistry.UIStyleHints = new UIStyleHints();
             var hints = GlobalUIRegistry.UIStyleHints.LabelHints;
             hints.MaximumHeight = defaultcontrol.Height + RandomValueGen.GetRandomInt(10, 20);
             hints.MaximumWidth = defaultcontrol.Width + RandomValueGen.GetRandomInt(10, 20);
             var newcontrol = GetControlFactory().CreateLabel();
+            DisposeOnTearDown(newcontrol);
             newcontrol.Width = hints.MaximumWidth + 10;
             newcontrol.Height = hints.MaximumHeight + 10;
             //---------------Assert Precondition----------------
@@ -341,11 +388,13 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             var defaultcontrol = GetControlFactory().CreateCheckBox();
+            DisposeOnTearDown(defaultcontrol);
             GlobalUIRegistry.UIStyleHints = new UIStyleHints();
             var hints = GlobalUIRegistry.UIStyleHints.CheckBoxHints;
             hints.MinimumHeight = defaultcontrol.Height + RandomValueGen.GetRandomInt(10, 20);
             hints.MinimumWidth = defaultcontrol.Width + RandomValueGen.GetRandomInt(10, 20);
             var newcontrol = GetControlFactory().CreateCheckBox();
+            DisposeOnTearDown(newcontrol);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -361,11 +410,13 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             var defaultcontrol = GetControlFactory().CreateCheckBox();
+            DisposeOnTearDown(defaultcontrol);
             GlobalUIRegistry.UIStyleHints = new UIStyleHints();
             var hints = GlobalUIRegistry.UIStyleHints.CheckBoxHints;
             hints.MaximumHeight = defaultcontrol.Height + RandomValueGen.GetRandomInt(10, 20);
             hints.MaximumWidth = defaultcontrol.Width + RandomValueGen.GetRandomInt(10, 20);
             var newcontrol = GetControlFactory().CreateCheckBox();
+            DisposeOnTearDown(newcontrol);
             newcontrol.Width = hints.MaximumWidth + 10;
             newcontrol.Height = hints.MaximumHeight + 10;
             //---------------Assert Precondition----------------
@@ -382,11 +433,13 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             var defaultcontrol = GetControlFactory().CreateTextBox();
+            DisposeOnTearDown(defaultcontrol);
             GlobalUIRegistry.UIStyleHints = new UIStyleHints();
             var hints = GlobalUIRegistry.UIStyleHints.TextBoxHints;
             hints.MinimumHeight = defaultcontrol.Height + RandomValueGen.GetRandomInt(10, 20);
             hints.MinimumWidth = defaultcontrol.Width + RandomValueGen.GetRandomInt(10, 20);
             var newcontrol = GetControlFactory().CreateTextBox();
+            DisposeOnTearDown(newcontrol);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -402,11 +455,13 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             var defaultcontrol = GetControlFactory().CreateTextBox();
+            DisposeOnTearDown(defaultcontrol);
             GlobalUIRegistry.UIStyleHints = new UIStyleHints();
             var hints = GlobalUIRegistry.UIStyleHints.TextBoxHints;
             hints.MaximumHeight = defaultcontrol.Height + RandomValueGen.GetRandomInt(10, 20);
             hints.MaximumWidth = defaultcontrol.Width + RandomValueGen.GetRandomInt(10, 20);
             var newcontrol = GetControlFactory().CreateTextBox();
+            DisposeOnTearDown(newcontrol);
             newcontrol.Width = hints.MaximumWidth + 10;
             newcontrol.Height = hints.MaximumHeight + 10;
             //---------------Assert Precondition----------------
@@ -423,12 +478,14 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             var defaultcontrol = GetControlFactory().CreateComboBox();
+            DisposeOnTearDown(defaultcontrol);
             GlobalUIRegistry.UIStyleHints = new UIStyleHints();
             var hints = GlobalUIRegistry.UIStyleHints.ComboBoxHints;
             hints.MinimumHeight = defaultcontrol.Height + RandomValueGen.GetRandomInt(10, 20);
             hints.MinimumWidth = defaultcontrol.Width + RandomValueGen.GetRandomInt(10, 20);
             hints.AllowTextEditing = false;
             var newcontrol = GetControlFactory().CreateComboBox();
+            DisposeOnTearDown(newcontrol);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -454,11 +511,13 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             var defaultcontrol = GetControlFactory().CreateLabel();
+            DisposeOnTearDown(defaultcontrol);
             GlobalUIRegistry.UIStyleHints = new UIStyleHints();
             var hints = GlobalUIRegistry.UIStyleHints.LabelHints;
             hints.MaximumHeight = defaultcontrol.Height + RandomValueGen.GetRandomInt(10, 20);
             hints.MaximumWidth = defaultcontrol.Width + RandomValueGen.GetRandomInt(10, 20);
             var newcontrol = GetControlFactory().CreateLabel();
+            DisposeOnTearDown(newcontrol);
             newcontrol.Width = hints.MaximumWidth + 10;
             newcontrol.Height = hints.MaximumHeight + 10;
             //---------------Assert Precondition----------------
@@ -511,6 +570,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             IGroupBox groupBox = _factory.CreateGroupBox();
+            DisposeOnTearDown(groupBox);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(groupBox);
             Assert.AreEqual("", groupBox.Text);
@@ -528,6 +588,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Execute Test ----------------------
 
             IGroupBox groupBox = _factory.CreateGroupBox(groupBoxText);
+            DisposeOnTearDown(groupBox);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(groupBox);
             Assert.AreEqual(groupBoxText, groupBox.Text);
@@ -547,6 +608,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Execute Test ----------------------
 
             IDataGridView dataGridView = _factory.CreateDataGridView();
+            DisposeOnTearDown(dataGridView);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(dataGridView);
               
@@ -562,6 +624,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             IDefaultBOEditorForm boEditorForm = _factory.CreateBOEditorForm(businessObject);
+            DisposeOnTearDown(boEditorForm);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(boEditorForm);
             Assert.AreSame(businessObject, boEditorForm.PanelInfo.BusinessObject);
@@ -578,6 +641,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             IDefaultBOEditorForm boEditorForm = _factory.CreateBOEditorForm(businessObject, uiDefName);
+            DisposeOnTearDown(boEditorForm);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(boEditorForm);
             Assert.AreSame(businessObject, boEditorForm.PanelInfo.BusinessObject);
@@ -596,6 +660,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             IDefaultBOEditorForm boEditorForm = _factory.CreateBOEditorForm(businessObject, uiDefName, action);
+            DisposeOnTearDown(boEditorForm);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(boEditorForm);
             Assert.AreSame(businessObject, boEditorForm.PanelInfo.BusinessObject);
@@ -614,6 +679,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             IDefaultBOEditorForm boEditorForm = _factory.CreateBOEditorForm(businessObject, uiDefName, controlCreator);
+            DisposeOnTearDown(boEditorForm);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(boEditorForm);
             Assert.AreSame(businessObject, boEditorForm.PanelInfo.BusinessObject);
@@ -627,6 +693,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             //---------------Execute Test ----------------------
             IControlHabanero control = _factory.CreateControl("NumericUpDown", null);
+            DisposeOnTearDown(control);
             //---------------Test Result -----------------------
             Assert.IsInstanceOf(typeof(INumericUpDown), control);
         }
@@ -643,6 +710,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Execute Test ----------------------
 
             IButton button = _factory.CreateButton(buttonText, handler);
+            DisposeOnTearDown(button);
 
             button.PerformClick();
             //---------------Verify Result -----------------------
@@ -665,6 +733,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             ITextBox textBox = _factory.CreateTextBox();
+            DisposeOnTearDown(textBox);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(textBox);
             Assert.IsTrue(textBox.TabStop);
@@ -678,6 +747,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             ITextBox textBox = _factory.CreatePasswordTextBox();
+            DisposeOnTearDown(textBox);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(textBox);
             Assert.IsTrue(textBox.TabStop);
@@ -692,6 +762,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             IProgressBar progressBar = _factory.CreateProgressBar();
+            DisposeOnTearDown(progressBar);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(progressBar);
             Assert.AreEqual(0, progressBar.Minimum);
@@ -709,6 +780,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             ITreeView treeView = _factory.CreateTreeView(treeViewname);
+            DisposeOnTearDown(treeView);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(treeView);
             Assert.IsTrue(treeView.TabStop);
@@ -724,6 +796,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             ITreeNode treeNode = _factory.CreateTreeNode(treeNodeName);
+            DisposeOnTearDown(treeNode);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(treeNode);
             Assert.AreEqual(treeNodeName, treeNode.Text);
@@ -737,12 +810,13 @@ namespace Habanero.Faces.Test.Base
             const string pnlName = "PanelName";
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
-            IPanel panelName = _factory.CreatePanel(pnlName, GetControlFactory());
+            IPanel panel = _factory.CreatePanel(pnlName, GetControlFactory());
+            DisposeOnTearDown(panel);
             //---------------Verify Result -----------------------
-            Assert.IsNotNull(panelName);
+            Assert.IsNotNull(panel);
             //Assert.IsTrue(treeView.TabStop);
 
-            Assert.AreEqual(pnlName, panelName.Name);
+            Assert.AreEqual(pnlName, panel.Name);
               
         }
 
@@ -753,6 +827,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             IUserControlHabanero userControlHabanero = _factory.CreateUserControl();
+            DisposeOnTearDown(userControlHabanero);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(userControlHabanero);
               
@@ -766,6 +841,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             IUserControlHabanero userControlHabanero = _factory.CreateUserControl(name);
+            DisposeOnTearDown(userControlHabanero);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(userControlHabanero);
             Assert.AreEqual(name, userControlHabanero.Name);
@@ -779,6 +855,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             IDateTimePicker dateTimePicker = _factory.CreateDateTimePicker();
+            DisposeOnTearDown(dateTimePicker);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(dateTimePicker);
             //Assert.IsTrue(treeView.TabStop);
@@ -792,6 +869,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
                     IDateTimePicker dateTimePicker = _factory.CreateDateTimePicker(testDate);
+                    DisposeOnTearDown(dateTimePicker);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(dateTimePicker);
             Assert.AreEqual(testDate,dateTimePicker.Value);
@@ -805,6 +883,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             IDateTimePicker dateTimePicker = _factory.CreateMonthPicker();
+            DisposeOnTearDown(dateTimePicker);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(dateTimePicker);
             Assert.AreEqual("MMM yyyy", dateTimePicker.CustomFormat);
@@ -816,10 +895,11 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             string text = TestUtil.GetRandomString();
-            int expectedWidth = _factory.CreateLabel(text, false).PreferredWidth + 25;
+            int expectedWidth = GetControlledLifetimeFor(_factory.CreateLabel(text, false)).PreferredWidth + 25;
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             IRadioButton radioButton = _factory.CreateRadioButton(text);
+            DisposeOnTearDown(radioButton);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(radioButton);
             Assert.AreEqual(text, radioButton.Text);
@@ -835,6 +915,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             INumericUpDown upDown = _factory.CreateNumericUpDownCurrency();
+            DisposeOnTearDown(upDown);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(upDown);
             Assert.AreEqual(2, upDown.DecimalPlaces);
@@ -850,6 +931,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             INumericUpDown upDown = _factory.CreateNumericUpDownInteger();
+            DisposeOnTearDown(upDown);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(upDown);
             Assert.AreEqual(0, upDown.DecimalPlaces);
@@ -865,6 +947,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             INumericUpDown upDown = _factory.CreateNumericUpDown();
+            DisposeOnTearDown(upDown);
             //---------------Verify Result -----------------------
             Assert.IsNotNull(upDown);
             Assert.AreEqual(0, upDown.DecimalPlaces);
@@ -880,6 +963,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             IControlHabanero control = _factory.CreateControl(typeName, assemblyName);
+            DisposeOnTearDown(control);
             //---------------Verify Result -----------------------
             Assert.IsTrue(control is ITextBox);
               
@@ -892,6 +976,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
             IControlHabanero control = _factory.CreateControl();
+            DisposeOnTearDown(control);
             //---------------Test Result -----------------------
             Assert.IsNotNull(control);
             Assert.AreEqual(100, control.Width);
@@ -940,6 +1025,7 @@ namespace Habanero.Faces.Test.Base
 
             //---------------Execute Test ----------------------
             IDateRangeComboBox comboBox = GetControlFactory().CreateDateRangeComboBox();
+            DisposeOnTearDown(comboBox);
             //---------------Test Result -----------------------
             Assert.IsNotNull(comboBox);
             Assert.AreEqual(15, comboBox.Items.Count);       // Includes blank option in the list
@@ -956,6 +1042,7 @@ namespace Habanero.Faces.Test.Base
 
             //---------------Execute Test ----------------------
             IDateRangeComboBox comboBox = GetControlFactory().CreateDateRangeComboBox(options);
+            DisposeOnTearDown(comboBox);
             //---------------Test Result -----------------------
             Assert.IsNotNull(comboBox);
             Assert.IsFalse(comboBox.IgnoreTime);
@@ -975,6 +1062,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
             IDataGridViewColumn column = GetControlFactory().CreateDataGridViewColumn(null, null);
+            DisposeOnTearDown(column);
             //---------------Test Result -----------------------
             Type expectedHabaneroType = GetHabaneroMasterGridColumnType();
             Type expectedMasterType = GetMasterTextBoxGridColumnType();
@@ -1026,11 +1114,13 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             IDataGridViewNumericUpDownColumn dataGridViewNumericUpDownColumn = GetControlFactory().CreateDataGridViewNumericUpDownColumn();
+            DisposeOnTearDown(dataGridViewNumericUpDownColumn);
             //-------------Assert Preconditions -------------
 
             //---------------Execute Test ----------------------
             IDataGridViewColumn dataGridViewColumn = GetControlFactory().
                 CreateDataGridViewColumn("DataGridViewNumericUpDownColumn", null);
+            DisposeOnTearDown(dataGridViewColumn);
             //---------------Test Result -----------------------
             Assert.IsNotNull(dataGridViewColumn);
             Assert.IsInstanceOf(typeof(IDataGridViewNumericUpDownColumn), dataGridViewColumn);
@@ -1042,11 +1132,13 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             IDataGridViewDateTimeColumn dataGridViewNumericUpDownColumn = GetControlFactory().CreateDataGridViewDateTimeColumn();
+            DisposeOnTearDown(dataGridViewNumericUpDownColumn);
             //-------------Assert Preconditions -------------
 
             //---------------Execute Test ----------------------
             IDataGridViewColumn dataGridViewColumn = GetControlFactory().
                 CreateDataGridViewColumn("DataGridViewDateTimeColumn", null);
+            DisposeOnTearDown(dataGridViewColumn);
             //---------------Test Result -----------------------
             Assert.IsNotNull(dataGridViewColumn);
             Assert.IsInstanceOf(typeof(IDataGridViewDateTimeColumn), dataGridViewColumn);
@@ -1058,11 +1150,13 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             IDataGridViewCheckBoxColumn dataGridViewNumericUpDownColumn = GetControlFactory().CreateDataGridViewCheckBoxColumn();
+            DisposeOnTearDown(dataGridViewNumericUpDownColumn);
             //-------------Assert Preconditions -------------
 
             //---------------Execute Test ----------------------
             IDataGridViewColumn dataGridViewColumn = GetControlFactory().
                 CreateDataGridViewColumn("DataGridViewCheckBoxColumn", null);
+            DisposeOnTearDown(dataGridViewColumn);
             //---------------Test Result -----------------------
             Assert.IsNotNull(dataGridViewColumn);
             Assert.IsInstanceOf(typeof(IDataGridViewCheckBoxColumn), dataGridViewColumn);
@@ -1074,11 +1168,13 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             IDataGridViewComboBoxColumn dataGridViewNumericUpDownColumn = GetControlFactory().CreateDataGridViewComboBoxColumn();
+            DisposeOnTearDown(dataGridViewNumericUpDownColumn);
             //-------------Assert Preconditions -------------
 
             //---------------Execute Test ----------------------
             IDataGridViewColumn dataGridViewColumn = GetControlFactory().
                 CreateDataGridViewColumn("DataGridViewComboBoxColumn", null);
+            DisposeOnTearDown(dataGridViewColumn);
             //---------------Test Result -----------------------
             Assert.IsNotNull(dataGridViewColumn);
             Assert.IsInstanceOf(typeof(IDataGridViewComboBoxColumn), dataGridViewColumn);
@@ -1100,6 +1196,7 @@ namespace Habanero.Faces.Test.Base
 
             //---------------Execute Test ----------------------
             var groupBoxGroupControl = GetControlFactory().CreateGroupBoxGroupControl();
+            DisposeOnTearDown(groupBoxGroupControl);
             //---------------Test Result -----------------------
             Assert.IsNotNull(groupBoxGroupControl);
         }
@@ -1113,6 +1210,7 @@ namespace Habanero.Faces.Test.Base
 
             //---------------Execute Test ----------------------
             IComboBox control = factory.CreateComboBox();
+            DisposeOnTearDown(control);
             //---------------Test Result -----------------------
             Assert.IsNotNull(control);
             Assert.AreEqual(GetStandardTextBoxHeight(), control.Height);
@@ -1126,6 +1224,7 @@ namespace Habanero.Faces.Test.Base
 
             //---------------Execute Test ----------------------
             IBOComboBoxSelector control = factory.CreateComboBoxSelector();
+            DisposeOnTearDown(control);
             //---------------Test Result -----------------------
             Assert.IsNotNull(control);
             Assert.AreEqual(GetStandardTextBoxHeight(), control.Height);
@@ -1139,6 +1238,7 @@ namespace Habanero.Faces.Test.Base
 
             //---------------Execute Test ----------------------
             IBOCollapsiblePanelSelector control = factory.CreateCollapsiblePanelSelector();
+            DisposeOnTearDown(control);
             //---------------Test Result -----------------------
             Assert.IsNotNull(control);
         }
@@ -1153,6 +1253,7 @@ namespace Habanero.Faces.Test.Base
 
             //---------------Execute Test ----------------------
             IBOPanelEditorControl control = factory.CreateBOEditorControl<ContactPersonTestBO>("default");
+            DisposeOnTearDown(control);
             //---------------Test Result -----------------------
             Assert.IsNotNull(control);
         }
@@ -1167,6 +1268,7 @@ namespace Habanero.Faces.Test.Base
 
             //---------------Execute Test ----------------------
             IBOPanelEditorControl control = factory.CreateBOEditorControl<ContactPersonTestBO>();
+            DisposeOnTearDown(control);
             //---------------Test Result -----------------------
             Assert.IsNotNull(control);
         }
@@ -1180,6 +1282,7 @@ namespace Habanero.Faces.Test.Base
 
             //---------------Execute Test ----------------------
             IBOPanelEditorControl control = factory.CreateBOEditorControl(classDef, "default");
+            DisposeOnTearDown(control);
             //---------------Test Result -----------------------
             Assert.IsNotNull(control);
         }
@@ -1193,6 +1296,7 @@ namespace Habanero.Faces.Test.Base
 
             //---------------Execute Test ----------------------
             IBOPanelEditorControl control = factory.CreateBOEditorControl(classDef);
+            DisposeOnTearDown(control);
             //---------------Test Result -----------------------
             Assert.IsNotNull(control);
         }
@@ -1206,6 +1310,7 @@ namespace Habanero.Faces.Test.Base
 
             //---------------Execute Test ----------------------
             IMainTitleIconControl control = factory.CreateMainTitleIconControl();
+            DisposeOnTearDown(control);
             //---------------Test Result -----------------------
             Assert.IsNotNull(control);
         }
@@ -1219,6 +1324,7 @@ namespace Habanero.Faces.Test.Base
 
             //---------------Execute Test ----------------------
             var extendedTextBox = factory.CreateExtendedTextBox();
+            DisposeOnTearDown(extendedTextBox);
             //---------------Test Result -----------------------
             Assert.IsNotNull(extendedTextBox);
         }
@@ -1232,6 +1338,7 @@ namespace Habanero.Faces.Test.Base
 
             //---------------Execute Test ----------------------
             var extendedTextBox = factory.CreateGridAndBOEditorControl(classDef);
+            DisposeOnTearDown(extendedTextBox);
             //---------------Test Result -----------------------
             Assert.IsNotNull(extendedTextBox);
         }
@@ -1245,6 +1352,7 @@ namespace Habanero.Faces.Test.Base
 
             //---------------Execute Test ----------------------
             var extendedTextBox = factory.CreateGridAndBOEditorControl<MyBO>();
+            DisposeOnTearDown(extendedTextBox);
             //---------------Test Result -----------------------
             Assert.IsNotNull(extendedTextBox);
         }

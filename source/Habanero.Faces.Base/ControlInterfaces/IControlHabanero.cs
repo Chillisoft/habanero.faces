@@ -196,7 +196,7 @@ namespace Habanero.Faces.Base
     /// <summary>
     /// Defines controls, which are components with visual representation
     /// </summary>
-    public interface IControlHabanero
+    public interface IControlHabanero : IDisposable
     {
 
         /// <summary>
