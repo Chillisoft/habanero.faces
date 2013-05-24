@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Security.Policy;
 using System.Windows.Forms;
 using NUnit.Framework;
 
@@ -105,7 +106,6 @@ namespace Habanero.Faces.Test.Win
                 var unhandledExceptionObject = (Win32Exception)unhandledExceptionEventArgs.ExceptionObject;
                 StringAssert.Contains("Error creating window handle", exception.Message);
                 Assert.AreEqual(exception.Message, unhandledExceptionObject.Message, "Message was expected to be the same as the exception");
-                Assert.AreEqual(exception.NativeErrorCode, unhandledExceptionObject.NativeErrorCode, "NativeError code was expected to be the same as the exception");
             }
         }
 
