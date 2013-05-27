@@ -103,7 +103,7 @@ getnugetpackages :installNugetPackages do |ip|
 						"Habanero.Test.DB.#{$nuget_habanero_version}",   
 						"Habanero.Smooth.#{$nuget_smooth_version}",
 						"Habanero.Naked.#{$nuget_smooth_version}",
-						"nunit.framework"]
+						"nunit.Trunk"]
 end
 
 desc "Publish the Habanero.Faces.Base nuget package"

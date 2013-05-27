@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base
 {
-    public abstract class TestBOColSelector
+    public abstract class TestBOColSelector:TestBaseWithDisposing
     {
         [TestFixtureSetUp]
         public void TestFixtureSetUp()

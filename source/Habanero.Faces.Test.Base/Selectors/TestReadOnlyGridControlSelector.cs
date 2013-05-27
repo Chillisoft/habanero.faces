@@ -51,6 +51,10 @@ namespace Habanero.Faces.Test.Base
         {
             return 0;
         }
+        private IBOColSelectorControl CreateDisposableSelector()
+        {
+            return GetControlledLifetimeFor(CreateSelector());
+        }
 
         [Test]
         public virtual void Test_Constructor_ReadOnlyGridControlSet()
@@ -60,7 +64,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            IBOColSelectorControl colSelector = CreateSelector();
+            IBOColSelectorControl colSelector = CreateDisposableSelector();
             //---------------Test Result -----------------------
             Assert.IsInstanceOf(typeof(IReadOnlyGridControl), colSelector);
         }
@@ -70,7 +74,7 @@ namespace Habanero.Faces.Test.Base
         public override void Test_Set_SelectedBusinessObject_ItemNotInList_SetsItemNull()
         {
             //---------------Set up test pack-------------------
-            IBOColSelectorControl colSelector = CreateSelector();
+            IBOColSelectorControl colSelector = CreateDisposableSelector();
             MyBO myBO = new MyBO();
             MyBO myBO2 = new MyBO();
             BusinessObjectCollection<MyBO> collection = new BusinessObjectCollection<MyBO> { myBO, myBO2 };
@@ -93,7 +97,7 @@ namespace Habanero.Faces.Test.Base
         public override void Test_SetBOCollection_WhenAutoSelectsFirstItem_ShouldSelectFirstItem()
         {
             //---------------Set up test pack-------------------
-            IBOColSelectorControl colSelector = CreateSelector();
+            IBOColSelectorControl colSelector = CreateDisposableSelector();
             MyBO myBO = new MyBO();
             MyBO myBO2 = new MyBO();
             BusinessObjectCollection<MyBO> collection = new BusinessObjectCollection<MyBO> { myBO, myBO2 };
