@@ -55,7 +55,10 @@ namespace Habanero.Faces.Test.Base
         {
             return index;
         }
-
+        private IBOColSelectorControl CreateDisposableSelector()
+        {
+            return GetControlledLifetimeFor(CreateSelector());
+        }
         [Test]
         public virtual void Test_Constructor_ReadOnlyGridControlSet()
         {
@@ -64,7 +67,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            IBOColSelectorControl colSelector = CreateSelector();
+            IBOColSelectorControl colSelector = CreateDisposableSelector();
             //---------------Test Result -----------------------
             Assert.IsInstanceOf(typeof(IEditableGridControl), colSelector);
         }
@@ -73,7 +76,7 @@ namespace Habanero.Faces.Test.Base
         public override void Test_ResetBOCol_ToNullClearsItems()
         {
             //---------------Set up test pack-------------------
-            IBOColSelectorControl colSelector = CreateSelector();
+            IBOColSelectorControl colSelector = CreateDisposableSelector();
             IBusinessObject myBO;
             IBusinessObjectCollection collection = GetCollectionWithOneBO(out myBO); 
             colSelector.BusinessObjectCollection = collection;
@@ -93,7 +96,7 @@ namespace Habanero.Faces.Test.Base
         public override void Test_Set_SelectedBusinessObject_ItemNotInList_SetsItemNull()
         {
             //---------------Set up test pack-------------------
-            IBOColSelectorControl colSelector = CreateSelector();
+            IBOColSelectorControl colSelector = CreateDisposableSelector();
             IBusinessObject myBO;
             IBusinessObjectCollection collection = GetCollectionWithTowBOs(out myBO); 
             colSelector.BusinessObjectCollection = collection;
@@ -115,7 +118,7 @@ namespace Habanero.Faces.Test.Base
         public override void Test_SetBOCollection_WhenAutoSelectsFirstItem_ShouldSelectFirstItem()
         {
             //---------------Set up test pack-------------------
-            IBOColSelectorControl colSelector = CreateSelector();
+            IBOColSelectorControl colSelector = CreateDisposableSelector();
             IBusinessObject myBO;
             IBusinessObjectCollection collection = GetCollectionWithTowBOs(out myBO);
             //---------------Assert Precondition----------------
@@ -133,7 +136,7 @@ namespace Habanero.Faces.Test.Base
         public override void Test_AutoSelectsFirstItem_NoItems()
         {
             //---------------Set up test pack-------------------
-            IBOColSelectorControl colSelector = CreateSelector();
+            IBOColSelectorControl colSelector = CreateDisposableSelector();
             IBusinessObjectCollection collection = GetCollectionWithNoItems();
             //---------------Assert Precondition----------------
             Assert.AreEqual(0, colSelector.NoOfItems);
