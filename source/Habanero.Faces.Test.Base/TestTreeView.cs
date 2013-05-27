@@ -23,7 +23,7 @@ using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base
 {
-    public abstract class TestTreeView
+    public abstract class TestTreeView:TestBaseWithDisposing
     {
         protected abstract IControlFactory GetControlFactory();
 
@@ -31,8 +31,8 @@ namespace Habanero.Faces.Test.Base
         public void Test_TreeNode_TreeView()
         {
             //--------------- Set up test pack ------------------
-            ITreeView treeView = GetControlFactory().CreateTreeView("test");
-            ITreeNode node = GetControlFactory().CreateTreeNode("TestNode");
+            ITreeView treeView = GetControlledLifetimeFor(GetControlFactory().CreateTreeView("test"));
+            ITreeNode node = GetControlledLifetimeFor(GetControlFactory().CreateTreeNode("TestNode"));
             treeView.Nodes.Add(node);
             //--------------- Test Preconditions ----------------
             Assert.AreEqual(1, treeView.Nodes.Count);
