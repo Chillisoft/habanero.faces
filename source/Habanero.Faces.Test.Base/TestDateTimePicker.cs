@@ -43,7 +43,7 @@ namespace Habanero.Faces.Test.Base
 
         protected IDateTimePicker CreateDateTimePicker()
         {
-            IDateTimePicker dateTimePicker = GetControlFactory().CreateDateTimePicker();
+            IDateTimePicker dateTimePicker = GetControlledLifetimeFor(GetControlFactory().CreateDateTimePicker());
             DisposeOnTearDown(dateTimePicker);
             //IFormHabanero form = GetControlFactory().CreateForm();
             //form.Controls.Add(dateTimePicker);

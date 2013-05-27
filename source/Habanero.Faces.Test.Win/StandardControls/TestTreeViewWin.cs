@@ -24,7 +24,7 @@ namespace Habanero.Faces.Test.Win.StandardControls
         public void Test_SuppressDoubleClickEvent_GetAndSet_WithTrue()
         {
             //---------------Set up test pack-------------------
-            TreeViewWin treeView = (TreeViewWin)GetControlFactory().CreateTreeView();
+            TreeViewWin treeView = GetControlledLifetimeFor((TreeViewWin)GetControlFactory().CreateTreeView());
             const bool newValue = true;
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
@@ -37,7 +37,7 @@ namespace Habanero.Faces.Test.Win.StandardControls
         public void Test_SuppressDoubleClickEvent_GetAndSet_WithFalse()
         {
             //---------------Set up test pack-------------------
-            TreeViewWin treeView = (TreeViewWin)GetControlFactory().CreateTreeView();
+            TreeViewWin treeView = GetControlledLifetimeFor((TreeViewWin)GetControlFactory().CreateTreeView());
             const bool newValue = false;
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
@@ -59,8 +59,8 @@ namespace Habanero.Faces.Test.Win.StandardControls
             using (var unhandledExceptionHelper = new UnhandledExceptionHelperWin())
             {   
                 //---------------Set up test pack-------------------
-                TreeViewWin treeView = (TreeViewWin) GetControlFactory().CreateTreeView();
-                var form = GetControlFactory().CreateForm();
+                TreeViewWin treeView = GetControlledLifetimeFor((TreeViewWin) GetControlFactory().CreateTreeView());
+                var form = GetControlledLifetimeFor(GetControlFactory().CreateForm());
                 form.Controls.Add(treeView);
                 //---------------Assert Precondition----------------
                 Assert.IsTrue(unhandledExceptionHelper.IsExceptionHandlingActive);
