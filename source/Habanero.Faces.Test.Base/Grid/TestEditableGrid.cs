@@ -43,7 +43,7 @@ namespace Habanero.Faces.Test.Base
     ///  - that the combo box drops down on click as this requires being in edit mode
     /// </summary>
     [TestFixture]
-    public abstract class TestEditableGrid
+    public abstract class TestEditableGrid:TestBaseWithDisposing
     {
         protected const string _HABANERO_OBJECTID = "HABANERO_OBJECTID";
 

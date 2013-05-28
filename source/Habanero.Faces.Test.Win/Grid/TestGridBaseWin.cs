@@ -47,7 +47,7 @@ namespace Habanero.Faces.Test.Win.Grid
             GridBaseWinStub gridBase = new GridBaseWinStub();
             System.Windows.Forms.Form frm = new System.Windows.Forms.Form();
             frm.Controls.Add(gridBase);
-            return gridBase;
+            return GetControlledLifetimeFor(gridBase);
         }
 
         [Test]

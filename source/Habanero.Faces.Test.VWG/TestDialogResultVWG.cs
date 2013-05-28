@@ -1,17 +1,19 @@
+using Habanero.Faces.Test.Base;
 using Habanero.Faces.VWG;
 using NUnit.Framework;
 
 namespace Habanero.Faces.Test.VWG
 {
     [TestFixture]
-    public class TestDialogResultVWG
+    public class TestDialogResultVWG:TestBaseWithDisposing
     {
+
         [Test]
         public void TestDialogResultVWG_Abort()
         {
             //---------------Set up test pack-------------------
             FormVWG formVWG = new FormVWG();
-
+            DisposeOnTearDown(formVWG);
             //---------------Execute Test ----------------------
             formVWG.DialogResult = Habanero.Faces.Base.DialogResult.Abort;
             //---------------Test Result -----------------------
@@ -25,7 +27,7 @@ namespace Habanero.Faces.Test.VWG
         {
             //---------------Set up test pack-------------------
             FormVWG formVWG = new FormVWG();
-
+            DisposeOnTearDown(formVWG);
             //---------------Execute Test ----------------------
             formVWG.DialogResult = Habanero.Faces.Base.DialogResult.Cancel;
             //---------------Test Result -----------------------
@@ -40,7 +42,7 @@ namespace Habanero.Faces.Test.VWG
         {
             //---------------Set up test pack-------------------
             FormVWG formVWG = new FormVWG();
-
+            DisposeOnTearDown(formVWG);
             //---------------Execute Test ----------------------
             formVWG.DialogResult = Habanero.Faces.Base.DialogResult.Ignore;
             //---------------Test Result -----------------------
@@ -55,7 +57,7 @@ namespace Habanero.Faces.Test.VWG
         {
             //---------------Set up test pack-------------------
             FormVWG formVWG = new FormVWG();
-
+            DisposeOnTearDown(formVWG);
             //---------------Execute Test ----------------------
             formVWG.DialogResult = Habanero.Faces.Base.DialogResult.No;
             //---------------Test Result -----------------------
@@ -70,7 +72,7 @@ namespace Habanero.Faces.Test.VWG
         {
             //---------------Set up test pack-------------------
             FormVWG formVWG = new FormVWG();
-
+            DisposeOnTearDown(formVWG);
             //---------------Execute Test ----------------------
             formVWG.DialogResult = Habanero.Faces.Base.DialogResult.None;
             //---------------Test Result -----------------------
@@ -85,7 +87,7 @@ namespace Habanero.Faces.Test.VWG
         {
             //---------------Set up test pack-------------------
             FormVWG formVWG = new FormVWG();
-
+            DisposeOnTearDown(formVWG);
             //---------------Execute Test ----------------------
             formVWG.DialogResult = Habanero.Faces.Base.DialogResult.OK;
             //---------------Test Result -----------------------
@@ -100,7 +102,7 @@ namespace Habanero.Faces.Test.VWG
         {
             //---------------Set up test pack-------------------
             FormVWG formVWG = new FormVWG();
-
+            DisposeOnTearDown(formVWG);
             //---------------Execute Test ----------------------
             formVWG.DialogResult = Habanero.Faces.Base.DialogResult.Retry;
             //---------------Test Result -----------------------
@@ -115,7 +117,7 @@ namespace Habanero.Faces.Test.VWG
         {
             //---------------Set up test pack-------------------
             FormVWG formVWG = new FormVWG();
-
+            DisposeOnTearDown(formVWG);
             //---------------Execute Test ----------------------
             formVWG.DialogResult = Habanero.Faces.Base.DialogResult.Yes;
             //---------------Test Result -----------------------

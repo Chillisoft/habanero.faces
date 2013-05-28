@@ -38,7 +38,7 @@ namespace Habanero.Faces.Test.Base.Mappers
         [SetUp]
         public void SetupTest()
         {
-            _cb = GetControlFactory().CreateCheckBox();
+            _cb = CreateCheckBox();
             _mapper = new CheckBoxMapper(_cb, "SampleBoolean", false, GetControlFactory());
             _sampleBusinessObject = new Sample();
         }
@@ -51,6 +51,11 @@ namespace Habanero.Faces.Test.Base.Mappers
             Assert.AreSame("SampleBoolean", _mapper.PropertyName);
         }
 
+
+        protected ICheckBox CreateCheckBox()
+        {
+            return GetControlledLifetimeFor(GetControlFactory().CreateCheckBox());
+        }
 
         [Test]
         public void TestDisplayingRelatedProperty()

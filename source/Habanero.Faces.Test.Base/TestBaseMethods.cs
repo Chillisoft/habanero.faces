@@ -24,7 +24,7 @@ using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base
 {
-    public abstract class TestBaseMethods
+    public abstract class TestBaseMethods : TestBaseWithDisposing
     {
         protected abstract IControlHabanero CreateControl();
         protected abstract IControlFactory GetControlFactory();

@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base
 {
-    public abstract class TestMenuItem
+    public abstract class TestMenuItem:TestBaseWithDisposing
     {
         protected virtual IMenuItem CreateControl()
         {
@@ -13,7 +13,7 @@ namespace Habanero.Faces.Test.Base
 
         protected virtual IMenuItem CreateControl(string itemName)
         {
-            return GetControlFactory().CreateMenuItem(itemName);
+            return GetControlledLifetimeFor(GetControlFactory().CreateMenuItem(itemName));
         }
 
         private static string GetRandomString()

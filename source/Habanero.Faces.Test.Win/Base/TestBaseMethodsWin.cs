@@ -33,7 +33,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateButton();
+            return GetControlledLifetimeFor(GetControlFactory().CreateButton());
         }
     }
 
@@ -45,7 +45,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateCheckBox();
+            return GetControlledLifetimeFor(GetControlFactory().CreateCheckBox());
         }
     }
 
@@ -57,7 +57,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateCollapsiblePanel();
+            return GetControlledLifetimeFor(GetControlFactory().CreateCollapsiblePanel());
         }
     }
 
@@ -69,7 +69,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateCollapsiblePanelGroupControl();
+            return GetControlledLifetimeFor(GetControlFactory().CreateCollapsiblePanelGroupControl());
         }
     }
 
@@ -82,7 +82,7 @@ namespace Habanero.Faces.Test.Win.Base
         [STAThread]
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateComboBox();
+            return GetControlledLifetimeFor(GetControlFactory().CreateComboBox());
         }
     }
 
@@ -96,7 +96,7 @@ namespace Habanero.Faces.Test.Win.Base
         [STAThread]
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateComboBoxSelector();
+            return GetControlledLifetimeFor(GetControlFactory().CreateComboBoxSelector());
         }
     }
 
@@ -108,7 +108,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateControl();
+            return GetControlledLifetimeFor(GetControlFactory().CreateControl());
         }
     }
 
@@ -120,7 +120,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateDateTimePicker();
+            return GetControlledLifetimeFor(GetControlFactory().CreateDateTimePicker());
         }
     }
 
@@ -132,7 +132,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateForm();
+            return GetControlledLifetimeFor(GetControlFactory().CreateForm());
         }
 
         private IFormHabanero CreateForm()
@@ -163,7 +163,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateGroupBox();
+            return GetControlledLifetimeFor(GetControlFactory().CreateGroupBox());
         }
     }
     /// <summary>
@@ -174,7 +174,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateGroupBoxGroupControl();
+            return GetControlledLifetimeFor(GetControlFactory().CreateGroupBoxGroupControl());
         }
     }
     /// <summary>
@@ -185,7 +185,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateLabel();
+            return GetControlledLifetimeFor(GetControlFactory().CreateLabel());
         }
     }
     /// <summary>
@@ -196,7 +196,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateListBox();
+            return GetControlledLifetimeFor(GetControlFactory().CreateListBox());
         }
     }
 
@@ -209,7 +209,7 @@ namespace Habanero.Faces.Test.Win.Base
         [STAThread]
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateListBoxSelector();
+            return GetControlledLifetimeFor(GetControlFactory().CreateListBoxSelector());
         }
     }
 
@@ -251,7 +251,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateNumericUpDown();
+            return GetControlledLifetimeFor(GetControlFactory().CreateNumericUpDown());
         }
 
 
@@ -261,6 +261,7 @@ namespace Habanero.Faces.Test.Win.Base
         {
             //---------------Set up test pack-------------------
             INumericUpDown textBox = GetControlFactory().CreateNumericUpDown();
+            DisposeOnTearDown(textBox);
             //---------------Execute Test ----------------------
             textBox.TextAlign = HorizontalAlignment.Left;
             //---------------Test Result -----------------------
@@ -273,6 +274,7 @@ namespace Habanero.Faces.Test.Win.Base
         {
             //---------------Set up test pack-------------------
             INumericUpDown textBox = GetControlFactory().CreateNumericUpDown();
+            DisposeOnTearDown(textBox);
             //---------------Execute Test ----------------------
             textBox.TextAlign = HorizontalAlignment.Center;
             //---------------Test Result -----------------------
@@ -285,6 +287,7 @@ namespace Habanero.Faces.Test.Win.Base
         {
             //---------------Set up test pack-------------------
             INumericUpDown textBox = GetControlFactory().CreateNumericUpDown();
+            DisposeOnTearDown(textBox);
             //---------------Execute Test ----------------------
             textBox.TextAlign = HorizontalAlignment.Right;
             //---------------Test Result -----------------------
@@ -301,7 +304,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreatePanel();
+            return GetControlledLifetimeFor(GetControlFactory().CreatePanel());
         }
     }
 
@@ -313,7 +316,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreatePictureBox();
+            return GetControlledLifetimeFor(GetControlFactory().CreatePictureBox());
         }
     }
       
@@ -326,7 +329,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateProgressBar();
+            return GetControlledLifetimeFor(GetControlFactory().CreateProgressBar());
         }
     }
     /// <summary>
@@ -337,7 +340,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateRadioButton("");
+            return GetControlledLifetimeFor(GetControlFactory().CreateRadioButton(""));
         }
     }
     /// <summary>
@@ -348,7 +351,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateSplitContainer();
+            return GetControlledLifetimeFor(GetControlFactory().CreateSplitContainer());
         }
     }
     /// <summary>
@@ -359,7 +362,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateSplitter();
+            return GetControlledLifetimeFor(GetControlFactory().CreateSplitter());
         }
 
         [Test]
@@ -382,7 +385,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateTabControl();
+            return GetControlledLifetimeFor(GetControlFactory().CreateTabControl());
         }
     }
     /// <summary>
@@ -393,7 +396,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateTabPage("");
+            return GetControlledLifetimeFor(GetControlFactory().CreateTabPage(""));
         }
     }
     /// <summary>
@@ -404,7 +407,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateTextBox();
+            return GetControlledLifetimeFor(GetControlFactory().CreateTextBox());
         }
     }
     /// <summary>
@@ -415,7 +418,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateTreeView("");
+            return GetControlledLifetimeFor(GetControlFactory().CreateTreeView(""));
         }
     }
     /// <summary>
@@ -426,7 +429,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return new UserControlWin();
+            return GetControlledLifetimeFor(new UserControlWin());
         }
     }
     /// <summary>
@@ -437,7 +440,7 @@ namespace Habanero.Faces.Test.Win.Base
     {
         protected override IControlHabanero CreateControl()
         {
-            return GetControlFactory().CreateDataGridView();
+            return GetControlledLifetimeFor(GetControlFactory().CreateDataGridView());
         }
     }
 }

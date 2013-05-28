@@ -27,7 +27,7 @@ using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base
 {
-    public abstract class TestDataGridViewDateTimeColumn
+    public abstract class TestDataGridViewDateTimeColumn:TestBaseWithDisposing
     {
         [SetUp]
         public void SetupTest()

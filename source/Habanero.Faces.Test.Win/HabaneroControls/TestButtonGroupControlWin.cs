@@ -30,7 +30,7 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
         public void Test_SetDefaultButton_WinOnly()
         {
             //---------------Set up test pack-------------------
-            IButtonGroupControl buttons = GetControlFactory().CreateButtonGroupControl();
+            IButtonGroupControl buttons = CreateButtonGroupControl();
             IButton btn = buttons.AddButton("Test");
             System.Windows.Forms.Form frm = new System.Windows.Forms.Form();
             frm.Controls.Add((System.Windows.Forms.Control)buttons);
@@ -44,7 +44,7 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
         public void Test_UseMnemonic_WinOnly()
         {
             //---------------Set up test pack-------------------
-            IButtonGroupControl buttons = GetControlFactory().CreateButtonGroupControl();
+            IButtonGroupControl buttons = CreateButtonGroupControl();
 
             //---------------Execute Test ----------------------
             System.Windows.Forms.Button btn = (System.Windows.Forms.Button)buttons.AddButton("Test", delegate { });
@@ -56,7 +56,7 @@ namespace Habanero.Faces.Test.Win.HabaneroControls
         public void Test_ButtonIndexer_WithASpecialCharactersInTheName_Failing()
         {
             //---------------Set up test pack-------------------
-            IButtonGroupControl buttons = GetControlFactory().CreateButtonGroupControl();
+            IButtonGroupControl buttons = CreateButtonGroupControl();
             //---------------Execute Test ----------------------
             const string buttonText = "T est@";
             IButton btn = buttons.AddButton(buttonText);

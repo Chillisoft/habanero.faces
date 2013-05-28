@@ -41,7 +41,7 @@ namespace Habanero.Faces.Test.VWG.Grid
                 new ReadOnlyGridControlVWGStub(GetControlFactory());
             Gizmox.WebGUI.Forms.Form frm = new Gizmox.WebGUI.Forms.Form();
             frm.Controls.Add(readOnlyGridControlVWG);
-            return readOnlyGridControlVWG;
+            return GetControlledLifetimeFor(readOnlyGridControlVWG);
         }
 
         protected override void CloseForm()

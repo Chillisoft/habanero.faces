@@ -26,7 +26,7 @@ namespace Habanero.Faces.Test.Win.PanelBuilder
             //---------------Set up test pack-------------------
             Sample.SampleUserInterfaceMapper interfaceMapper = GetSampleUserInterfaceMapper();
             UIFormTab singleFieldTab = interfaceMapper.GetFormTabOneFieldsWithAlignment_NumericUpDown();
-            Habanero.Faces.Base.PanelBuilder panelBuilder = new Habanero.Faces.Base.PanelBuilder(GetControlFactory());
+            Habanero.Faces.Base.PanelBuilder panelBuilder = CreatePanelBuilder();
             //---------------Assert Precondition----------------
             Assert.AreEqual("left", ((UIFormField)singleFieldTab[0][0]).Alignment);
             Assert.AreEqual("right", ((UIFormField)singleFieldTab[0][1]).Alignment);
@@ -55,51 +55,5 @@ namespace Habanero.Faces.Test.Win.PanelBuilder
 
 
         //TODO: add tests that label and error provider get tabstop set to false
-
-
-        //        [Test]
-        //        public void Test_Set_IndividualControlCreator_Null_ShouldRaiseError()
-        //        {
-        //            //---------------Set up test pack-------------------
-        //            ClassDef classDef = Sample.CreateClassDefWithTwoPropsOneInteger();
-        //            UIForm form = classDef.UIDefCol["TwoTabs"].UIForm;
-        //            PanelBuilder panelBuilder = new PanelBuilder(GetControlFactory());
-        //            //---------------Assert Precondition----------------
-        //            Assert.AreEqual(2, form.Count);
-        //            //---------------Execute Test ----------------------
-        //            try
-        //            {
-        //                panelBuilder.SetControlCreators(GetControlFactory().CreateTabControl, null);
-        //                Assert.Fail("expected ArgumentNullException");
-        //            }
-        //                //---------------Test Result -----------------------
-        //            catch (ArgumentNullException ex)
-        //            {
-        //                StringAssert.Contains("Value cannot be null", ex.Message);
-        //                StringAssert.Contains("individualControlCreator", ex.ParamName);
-        //            }
-        //        }
-
-        //[Test, Ignore("This doesn't work in code for some reason")]
-        //public void Test_BuildPanelForTab_SetToolTip()
-        //{
-        //    //---------------Set up test pack-------------------
-        //    ClassDef classDef = Sample.CreateClassDefWithTwoPropsOneWithToolTipText();
-        //    UIFormTab twoFieldTabOneHasToolTip = classDef.UIDefCol["default"].UIForm[0];
-        //    PanelBuilder panelBuilder = new PanelBuilder(GetControlFactory());
-        //    //-------------Assert Preconditions -------------
-
-        //    //---------------Execute Test ----------------------
-        //    IPanel panel = panelBuilder.BuildPanel(twoFieldTabOneHasToolTip).Panel;
-        //    //---------------Test Result -----------------------
-        //    IControlCollection controls = panel.Controls;
-        //    ILabel labelWithToolTip =
-        //        (ILabel)controls[PanelBuilder.LABEL_CONTROL_COLUMN_NO];
-        //    IControlHabanero controlHabanero =
-        //        controls[PanelBuilder.INPUT_CONTROL_COLUMN_NO];
-        //    IToolTip toolTip = GetControlFactory().CreateToolTip();
-
-        //    Assert.AreEqual("Test tooltip text", toolTip.GetToolTip(controlHabanero));
-        //}
     }
 }

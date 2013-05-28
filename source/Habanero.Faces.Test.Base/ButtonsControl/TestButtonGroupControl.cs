@@ -28,7 +28,7 @@ using Rhino.Mocks;
 
 namespace Habanero.Faces.Test.Base
 {
-    public abstract class TestButtonGroupControl
+    public abstract class TestButtonGroupControl:TestBaseWithDisposing
     {
         [SetUp]
         public void SetupTest()
@@ -51,7 +51,10 @@ namespace Habanero.Faces.Test.Base
 
         protected abstract IControlFactory GetControlFactory();
         protected abstract void AddControlToForm(IControlHabanero cntrl);
-
+        protected IButtonGroupControl CreateButtonGroupControl()
+        {
+            return GetControlledLifetimeFor(GetControlFactory().CreateButtonGroupControl());
+        }
      
       
             [Test]
@@ -59,7 +62,7 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             //---------------Execute Test ----------------------
-            var buttons = GetControlFactory().CreateButtonGroupControl();
+            var buttons = CreateButtonGroupControl();
             ////---------------Test Result -----------------------
             Assert.IsNotNull(buttons);
             Assert.IsTrue(buttons is IButtonGroupControl);
@@ -72,7 +75,7 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             const string buttonText = "Test";
-            IButtonGroupControl buttons = GetControlFactory().CreateButtonGroupControl();
+            IButtonGroupControl buttons = CreateButtonGroupControl();
             //---------------Assert Precondition----------------
             Assert.AreEqual(0, buttons.Controls.Count);
             //---------------Execute Test ----------------------
@@ -91,7 +94,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             const string buttonText = "Test";
             const string buttonName = "buttonName";
-            IButtonGroupControl buttons = GetControlFactory().CreateButtonGroupControl();
+            IButtonGroupControl buttons = CreateButtonGroupControl();
             //---------------Assert Precondition----------------
             Assert.AreEqual(0, buttons.Controls.Count);
             //---------------Execute Test ----------------------
@@ -109,7 +112,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             const string buttonText = "Test";
             const string buttonname = "buttonName";
-            IButtonGroupControl buttons = GetControlFactory().CreateButtonGroupControl();
+            IButtonGroupControl buttons = CreateButtonGroupControl();
             bool clicked = false;
             //---------------Execute Test ----------------------
             IButton btnTest = buttons.AddButton(buttonname, buttonText, delegate { clicked = true; });
@@ -122,7 +125,7 @@ namespace Habanero.Faces.Test.Base
         public void Test_AddButtons_ShouldAddToControls()
         {
             //---------------Set up test pack-------------------
-            IButtonGroupControl buttons = GetControlFactory().CreateButtonGroupControl();
+            IButtonGroupControl buttons = CreateButtonGroupControl();
             AddControlToForm(buttons);
             //---------------Execute Test ----------------------
             IButton btn = buttons.AddButton("Test");
@@ -135,7 +138,7 @@ namespace Habanero.Faces.Test.Base
         public void Test_AddButton_WithTwoButtons_ShouldHaveTwoControls()
         {
             //---------------Set up test pack-------------------
-            IButtonGroupControl buttons = GetControlFactory().CreateButtonGroupControl();
+            IButtonGroupControl buttons = CreateButtonGroupControl();
             AddControlToForm(buttons);
             IButton btn = buttons.AddButton("Test");
             //---------------Execute Test ----------------------
@@ -150,7 +153,7 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             const string buttonName = "Test";
-            IButtonGroupControl buttons = GetControlFactory().CreateButtonGroupControl();
+            IButtonGroupControl buttons = CreateButtonGroupControl();
             IButton btn = buttons.AddButton(buttonName);
             //---------------Execute Test ----------------------
             IButton returnedButton = buttons[buttonName];
@@ -163,7 +166,7 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             const string buttonName = "Test";
-            IButtonGroupControl buttons = GetControlFactory().CreateButtonGroupControl();
+            IButtonGroupControl buttons = CreateButtonGroupControl();
             buttons.AddButton(TestUtil.GetRandomString());
             IButton btn = buttons.AddButton(buttonName);
             buttons.AddButton(TestUtil.GetRandomString());
@@ -178,7 +181,7 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             const string buttonName = "Test";
-            IButtonGroupControl buttons = GetControlFactory().CreateButtonGroupControl();
+            IButtonGroupControl buttons = CreateButtonGroupControl();
             IButton btn = buttons.AddButton(buttonName);
             //---------------Execute Test ----------------------
             IButton returnedButton = buttons["NotFound"];
@@ -190,7 +193,7 @@ namespace Habanero.Faces.Test.Base
         public void Test_ButtonIndexer_WithSpecialCharactersInTheName_ShouldReturnCorrectButton()
         {
             //---------------Set up test pack-------------------
-            IButtonGroupControl buttons = GetControlFactory().CreateButtonGroupControl();
+            IButtonGroupControl buttons = CreateButtonGroupControl();
             //---------------Execute Test ----------------------
             const string buttonText = "T est%_&^ #$�<>()!:;.,?[]+-=*/'";
             IButton btn = buttons.AddButton(buttonText);
@@ -204,7 +207,7 @@ namespace Habanero.Faces.Test.Base
         public void Test_HideButton()
         {
             //---------------Set up test pack-------------------
-            IButtonGroupControl buttons = GetControlFactory().CreateButtonGroupControl();
+            IButtonGroupControl buttons = CreateButtonGroupControl();
             //---------------Execute Test ----------------------
             IButton btn = buttons.AddButton("Test");
             //---------------Test Result -----------------------
@@ -218,7 +221,7 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             const string buttonName = "Test";
-            IButtonGroupControl buttons = GetControlFactory().CreateButtonGroupControl();
+            IButtonGroupControl buttons = CreateButtonGroupControl();
             //---------------Execute Test ----------------------
             IButton btnTest = buttons.AddButton(buttonName, delegate {  });
             //---------------Test Result -----------------------
@@ -232,7 +235,7 @@ namespace Habanero.Faces.Test.Base
         public void Test_CustomButtonEventHandler()
         {
             //---------------Set up test pack-------------------
-            IButtonGroupControl buttons = GetControlFactory().CreateButtonGroupControl();
+            IButtonGroupControl buttons = CreateButtonGroupControl();
             EventHandler eventHandler = MockRepository.GenerateStub<EventHandler>();
             IButton btn = buttons.AddButton("Test", eventHandler);
             //---------------Execute Test ----------------------
@@ -245,7 +248,7 @@ namespace Habanero.Faces.Test.Base
         public void Test_CustomButtonEventHandler_WhenExceptionThrown_ShouldBeCaughtByUIExceptionNotifier()
         {
             //---------------Set up test pack-------------------
-            IButtonGroupControl buttons = GetControlFactory().CreateButtonGroupControl();
+            IButtonGroupControl buttons = CreateButtonGroupControl();
             RecordingExceptionNotifier recordingExceptionNotifier = new RecordingExceptionNotifier();
             GlobalRegistry.UIExceptionNotifier = recordingExceptionNotifier;
             bool clickEventFired = false;
@@ -270,7 +273,7 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
 
-            IButtonGroupControl buttonGroupControl = GetControlFactory().CreateButtonGroupControl();
+            IButtonGroupControl buttonGroupControl = CreateButtonGroupControl();
             buttonGroupControl.Width = 200;
             //---------------Execute Test ----------------------
             IButton btnTest = buttonGroupControl.AddButton("Test");
@@ -285,7 +288,7 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
 
-            IButtonGroupControl buttonGroupControl = GetControlFactory().CreateButtonGroupControl();
+            IButtonGroupControl buttonGroupControl = CreateButtonGroupControl();
             buttonGroupControl.Width = 50;
             //---------------Execute Test ----------------------
             IButton btnTest = buttonGroupControl.AddButton("Test");
@@ -299,7 +302,7 @@ namespace Habanero.Faces.Test.Base
         public void Test_ButtonSizePolicy_GetAndSet()
         {
             //---------------Set up test pack-------------------
-            IButtonGroupControl buttonGroupControl = GetControlFactory().CreateButtonGroupControl();
+            IButtonGroupControl buttonGroupControl = CreateButtonGroupControl();
             IButtonSizePolicy buttonSizePolicy = MockRepository.GenerateStub<IButtonSizePolicy>();
             //---------------Execute Test ----------------------
             buttonGroupControl.ButtonSizePolicy = buttonSizePolicy;
@@ -311,7 +314,7 @@ namespace Habanero.Faces.Test.Base
         public void Test_ButtonSizePolicy_ShouldBeUsedByButtonGroupControl()
         {
             //---------------Set up test pack-------------------
-            IButtonGroupControl buttonGroupControl = GetControlFactory().CreateButtonGroupControl();
+            IButtonGroupControl buttonGroupControl = CreateButtonGroupControl();
             IButtonSizePolicy buttonSizePolicy = MockRepository.GenerateStub<IButtonSizePolicy>();
             buttonGroupControl.ButtonSizePolicy = buttonSizePolicy;
             //---------------Execute Test ----------------------

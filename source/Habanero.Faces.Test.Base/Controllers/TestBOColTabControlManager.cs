@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base.Controllers
 {
-    public abstract class TestBOColTabControlManager
+    public abstract class TestBOColTabControlManager:TestBaseWithDisposing
     {
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
@@ -29,7 +29,10 @@ namespace Habanero.Faces.Test.Base.Controllers
             return GetBusinessObjectControl();
         }
 
-
+        protected ITabControl CreateTabControl()
+        {
+            return GetControlledLifetimeFor(GetControlFactory().CreateTabControl());
+        }
         [Test]
         public void Test_Create_tabControlNull_ExpectException()
         {
@@ -55,7 +58,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         public void Test_Create_controlFactoryNull_ExpectException()
         {
             //---------------Set up test pack-------------------
-            ITabControl tabControl = GetControlFactory().CreateTabControl();
+            ITabControl tabControl = CreateTabControl();
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -77,7 +80,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             BusinessObjectCollection<MyBO> myBOs = new BusinessObjectCollection<MyBO> {{new MyBO(), new MyBO()}};
-            ITabControl tabControl = GetControlFactory().CreateTabControl();
+            ITabControl tabControl = CreateTabControl();
             BOColTabControlManager selectorManager = new BOColTabControlManager(tabControl, GetControlFactory());
             selectorManager.BusinessObjectControl = GetBusinessObjectControl();
             //---------------Verify test pack-------------------
@@ -93,7 +96,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         public void TestConstructor()
         {
             //---------------Set up test pack-------------------
-            ITabControl tabControl = GetControlFactory().CreateTabControl();
+            ITabControl tabControl = CreateTabControl();
             IControlFactory controlFactory = GetControlFactory();
             //---------------Execute Test ----------------------
             BOColTabControlManager selectorManager = new BOColTabControlManager(tabControl, controlFactory);
@@ -109,7 +112,7 @@ namespace Habanero.Faces.Test.Base.Controllers
 		{
 			//---------------Set up test pack-------------------
 
-			ITabControl tabControl = GetControlFactory().CreateTabControl();
+			ITabControl tabControl = CreateTabControl();
 			BOColTabControlManager selectorManager = new BOColTabControlManager(tabControl, GetControlFactory());
 			selectorManager.BusinessObjectControl = GetBusinessObjectControl();
 			//---------------Verify test pack-------------------
@@ -124,7 +127,7 @@ namespace Habanero.Faces.Test.Base.Controllers
     	public void Test_Set_Collection_WhenBOControlNotSet_ShouldRaiseError()
     	{
     		//---------------Set up test pack-------------------
-    		ITabControl tabControl = GetControlFactory().CreateTabControl();
+    		ITabControl tabControl = CreateTabControl();
     		IControlFactory controlFactory = GetControlFactory();
     		BOColTabControlManager selectorManager = new BOColTabControlManager(tabControl, controlFactory);
     		BusinessObjectCollection<MyBO> myBoCol = new BusinessObjectCollection<MyBO> { new MyBO(), new MyBO(), new MyBO() };
@@ -149,7 +152,7 @@ namespace Habanero.Faces.Test.Base.Controllers
 		public void Test_Set_Collection_ShouldPopulateTabs()
         {
             //---------------Set up test pack-------------------
-            ITabControl tabControl = GetControlFactory().CreateTabControl();
+            ITabControl tabControl = CreateTabControl();
             IControlFactory controlFactory = GetControlFactory();
             BOColTabControlManager selectorManager = new BOColTabControlManager(tabControl, controlFactory);
             BusinessObjectCollection<MyBO> myBoCol = new BusinessObjectCollection<MyBO>
@@ -166,7 +169,7 @@ namespace Habanero.Faces.Test.Base.Controllers
 		public void Test_Set_Collection_WithAutoSelectFirstItemAsTrue_ShouldSelectFirstItem()
         {
             //---------------Set up test pack-------------------
-            ITabControl tabControl = GetControlFactory().CreateTabControl();
+            ITabControl tabControl = CreateTabControl();
             IControlFactory controlFactory = GetControlFactory();
 			BOColTabControlManager selectorManager = new BOColTabControlManager(tabControl, controlFactory);
 			MyBO firstBo;
@@ -185,7 +188,7 @@ namespace Habanero.Faces.Test.Base.Controllers
 		public void Test_Set_Collection_WhenUsingABusinessObjectControl_ShouldSetToCurrentBO()
         {
             //---------------Set up test pack-------------------
-            ITabControl tabControl = GetControlFactory().CreateTabControl();
+            ITabControl tabControl = CreateTabControl();
             IControlFactory controlFactory = GetControlFactory();
 			BOColTabControlManager selectorManager = new BOColTabControlManager(tabControl, controlFactory);
 			MyBO firstBo;
@@ -205,7 +208,7 @@ namespace Habanero.Faces.Test.Base.Controllers
 		public void Test_Set_Collection_WhenUsingABusinessObjectControl_ShouldOnlySetBOOnce()
         {
             //---------------Set up test pack-------------------
-            ITabControl tabControl = GetControlFactory().CreateTabControl();
+            ITabControl tabControl = CreateTabControl();
             IControlFactory controlFactory = GetControlFactory();
 			BOColTabControlManager selectorManager = new BOColTabControlManager(tabControl, controlFactory);
 			MyBO firstBo;
@@ -235,7 +238,7 @@ namespace Habanero.Faces.Test.Base.Controllers
 		public void Test_Set_CurrentBusinessObject_WhenUsingABusinessObjectControl_ShouldOnlySetBOOnce()
         {
             //---------------Set up test pack-------------------
-            ITabControl tabControl = GetControlFactory().CreateTabControl();
+            ITabControl tabControl = CreateTabControl();
             IControlFactory controlFactory = GetControlFactory();
 			BOColTabControlManager selectorManager = new BOColTabControlManager(tabControl, controlFactory);
 			MyBO firstBo;
@@ -260,7 +263,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         public void TestSelectedBusinessObject()
         {
             //---------------Set up test pack-------------------
-            ITabControl tabControl = GetControlFactory().CreateTabControl();
+            ITabControl tabControl = CreateTabControl();
             IControlFactory controlFactory = GetControlFactory();
             BOColTabControlManager selectorManager = new BOColTabControlManager(tabControl, controlFactory);
             MyBO selectedBO = new MyBO();
@@ -278,7 +281,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         public void Test_Set_SelectedBusinessObject_BOColNull_ShouldRaiseError()
         {
             //---------------Set up test pack-------------------
-            ITabControl tabControl = GetControlFactory().CreateTabControl();
+            ITabControl tabControl = CreateTabControl();
             IControlFactory controlFactory = GetControlFactory();
             BOColTabControlManager selectorManager = new BOColTabControlManager(tabControl, controlFactory);
             MyBO selectedBO = new MyBO();
@@ -305,7 +308,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         public void Test_Set_SelectedBusinessObject()
         {
             //---------------Set up test pack-------------------
-            ITabControl tabControl = GetControlFactory().CreateTabControl();
+            ITabControl tabControl = CreateTabControl();
             IControlFactory controlFactory = GetControlFactory();
             BOColTabControlManager selectorManager = new BOColTabControlManager(tabControl, controlFactory);
             MyBO selectedBO = new MyBO();
@@ -322,7 +325,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         [Test]
         public void Test_BusinessObjectAddedToCollection()
         {
-            ITabControl tabControl = GetControlFactory().CreateTabControl();
+            ITabControl tabControl = CreateTabControl();
             BOColTabControlManager selectorManager = CreateBOTabControlManager(tabControl);
             MyBO addedBo = new MyBO();
             BusinessObjectCollection<MyBO> myBoCol = new BusinessObjectCollection<MyBO>
@@ -341,7 +344,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         [Test]
         public void Test_WhenUsingCreator_WhenBusinessObejctAddedToCollection_ShouldAddTab()
         {
-            ITabControl tabControl = GetControlFactory().CreateTabControl();
+            ITabControl tabControl = CreateTabControl();
             IControlFactory controlFactory = GetControlFactory();
             BOColTabControlManager selectorManager = new BOColTabControlManager(tabControl, controlFactory);
             BusinessObjectControlCreatorDelegate creator = BusinessObjectControlCreator;
@@ -378,7 +381,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         [Test]
         public void Test_WhenUsingCreator_WhenBusinessObejctRemovedToCollection_ShouldRemoveTab()
         {
-            ITabControl tabControl = GetControlFactory().CreateTabControl();
+            ITabControl tabControl = CreateTabControl();
             IControlFactory controlFactory = GetControlFactory();
             BOColTabControlManager selectorManager = new BOColTabControlManager(tabControl, controlFactory);
             BusinessObjectControlCreatorDelegate creator = BusinessObjectControlCreator;
@@ -418,7 +421,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         public void Test_WhenUsingCreator_SetUpBOTabColManagerWithDelegateForCreating_aBOControl()
         {
             //---------------Set up test pack-------------------
-            ITabControl tabControl = GetControlFactory().CreateTabControl();
+            ITabControl tabControl = CreateTabControl();
             IControlFactory controlFactory = GetControlFactory();
             BOColTabControlManager selectorManager = new BOColTabControlManager(tabControl, controlFactory);
             BusinessObjectControlCreatorDelegate creator = BusinessObjectControlCreator;
@@ -491,7 +494,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         [Test]
         public void TestBusinessObejctRemovedFromCollection()
         {
-            ITabControl tabControl = GetControlFactory().CreateTabControl();
+            ITabControl tabControl = CreateTabControl();
             BOColTabControlManager selectorManager = CreateBOTabControlManager(tabControl);
             MyBO removedBo = new MyBO();
             BusinessObjectCollection<MyBO> myBoCol = new BusinessObjectCollection<MyBO>
@@ -511,7 +514,7 @@ namespace Habanero.Faces.Test.Base.Controllers
             // onto each tab i.e. all the tabs use the Same BusinessObjectControl
             // setting the selected Bo to null is therefore not a particularly 
             // sensible action on a BOTabControl.t up test pack-------------------
-            ITabControl tabControl = GetControlFactory().CreateTabControl();
+            ITabControl tabControl = CreateTabControl();
             BOColTabControlManager selectorManager = CreateBOTabControlManager(tabControl);
             MyBO myBO = new MyBO();
             BusinessObjectCollection<MyBO> collection = new BusinessObjectCollection<MyBO> { myBO };
@@ -528,7 +531,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         public void Test_Selector_Clear_ClearsItems()
         {
             //---------------Set up test pack-------------------
-            ITabControl tabControl = GetControlFactory().CreateTabControl();
+            ITabControl tabControl = CreateTabControl();
             BOColTabControlManager selectorManager = CreateBOTabControlManager(tabControl);
             MyBO bo;
             BusinessObjectCollection<MyBO> col= GetMyBoCol_3Items(out bo);

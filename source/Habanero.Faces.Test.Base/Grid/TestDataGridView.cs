@@ -30,13 +30,13 @@ namespace Habanero.Faces.Test.Base.Grid
     /// <summary>
     /// This test class tests the DataGridView class.
     /// </summary>
-    public abstract class TestDataGridView
+    public abstract class TestDataGridView:TestBaseWithDisposing
     {
         protected abstract IControlFactory GetControlFactory();
 
         private IDataGridView CreateDataGridView()
         {
-            return GetControlFactory().CreateDataGridView();
+            return GetControlledLifetimeFor(GetControlFactory().CreateDataGridView());
         }
 
       
@@ -48,7 +48,7 @@ namespace Habanero.Faces.Test.Base.Grid
         {
             //---------------Set up test pack-------------------
             //---------------Execute Test ----------------------
-            IDataGridView dataGridView = GetControlFactory().CreateDataGridView();
+            IDataGridView dataGridView = CreateDataGridView();
             //---------------Test Result -----------------------
             Assert.IsNotNull(dataGridView);
             //---------------Tear Down -------------------------   
@@ -58,7 +58,7 @@ namespace Habanero.Faces.Test.Base.Grid
         public void Test_Rows_Remove()
         {
             //---------------Set up test pack-------------------
-            IDataGridView dataGridView = GetControlFactory().CreateDataGridView();
+            IDataGridView dataGridView = CreateDataGridView();
             AddToForm(dataGridView);
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add("TestColumn");
@@ -92,7 +92,7 @@ namespace Habanero.Faces.Test.Base.Grid
         public virtual void TestConversion_DataGridViewSelectionMode_CellSelect()
         {
             //---------------Set up test pack-------------------
-            IDataGridView control = GetControlFactory().CreateDataGridView();
+            IDataGridView control = CreateDataGridView();
             //-------------Assert Preconditions -------------
             //---------------Execute Test ----------------------
             control.SelectionMode = DataGridViewSelectionMode.CellSelect;
@@ -105,7 +105,7 @@ namespace Habanero.Faces.Test.Base.Grid
         public virtual void TestConversion_DataGridViewSelectionMode_FullRowSelect()
         {
             //---------------Set up test pack-------------------
-            IDataGridView control = GetControlFactory().CreateDataGridView();
+            IDataGridView control = CreateDataGridView();
             //-------------Assert Preconditions -------------
             //---------------Execute Test ----------------------
             control.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -118,7 +118,7 @@ namespace Habanero.Faces.Test.Base.Grid
         public virtual void TestConversion_DataGridViewSelectionMode_FullColumnSelect()
         {
             //---------------Set up test pack-------------------
-            IDataGridView control = GetControlFactory().CreateDataGridView();
+            IDataGridView control = CreateDataGridView();
             //-------------Assert Preconditions -------------
             //---------------Execute Test ----------------------
             control.SelectionMode = DataGridViewSelectionMode.FullColumnSelect;
@@ -131,7 +131,7 @@ namespace Habanero.Faces.Test.Base.Grid
         public virtual void TestConversion_DataGridViewSelectionMode_RowHeaderSelect()
         {
             //---------------Set up test pack-------------------
-            IDataGridView control = GetControlFactory().CreateDataGridView();
+            IDataGridView control = CreateDataGridView();
             //-------------Assert Preconditions -------------
             //---------------Execute Test ----------------------
             control.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;

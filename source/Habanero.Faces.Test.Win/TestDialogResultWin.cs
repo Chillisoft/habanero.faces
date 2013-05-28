@@ -1,18 +1,19 @@
 using Habanero.Faces.Base;
+using Habanero.Faces.Test.Base;
 using Habanero.Faces.Win;
 using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Win
 {
     [TestFixture]
-    public class TestDialogResultWin
+    public class TestDialogResultWin:TestBaseWithDisposing
     {
         [Test]
         public void TestDialogResultWin_Abort()
         {
             //---------------Set up test pack-------------------
             FormWin formWin = new FormWin();
-
+            DisposeOnTearDown(formWin);
             //---------------Execute Test ----------------------
             formWin.DialogResult = Habanero.Faces.Base.DialogResult.Abort;
             //---------------Test Result -----------------------
@@ -26,6 +27,7 @@ namespace Habanero.Faces.Test.Win
         {
             //---------------Set up test pack-------------------
             FormWin formWin = new FormWin();
+            DisposeOnTearDown(formWin);
 
             //---------------Execute Test ----------------------
             formWin.DialogResult = Habanero.Faces.Base.DialogResult.Cancel;
@@ -41,7 +43,7 @@ namespace Habanero.Faces.Test.Win
         {
             //---------------Set up test pack-------------------
             FormWin formWin = new FormWin();
-
+            DisposeOnTearDown(formWin);
             //---------------Execute Test ----------------------
             formWin.DialogResult = Habanero.Faces.Base.DialogResult.Ignore;
             //---------------Test Result -----------------------
@@ -56,7 +58,7 @@ namespace Habanero.Faces.Test.Win
         {
             //---------------Set up test pack-------------------
             FormWin formWin = new FormWin();
-
+            DisposeOnTearDown(formWin);
             //---------------Execute Test ----------------------
             formWin.DialogResult = Habanero.Faces.Base.DialogResult.No;
             //---------------Test Result -----------------------
@@ -71,7 +73,7 @@ namespace Habanero.Faces.Test.Win
         {
             //---------------Set up test pack-------------------
             FormWin formWin = new FormWin();
-
+            DisposeOnTearDown(formWin);
             //---------------Execute Test ----------------------
             formWin.DialogResult = Habanero.Faces.Base.DialogResult.None;
             //---------------Test Result -----------------------
@@ -86,7 +88,7 @@ namespace Habanero.Faces.Test.Win
         {
             //---------------Set up test pack-------------------
             FormWin formWin = new FormWin();
-
+            DisposeOnTearDown(formWin);
             //---------------Execute Test ----------------------
             formWin.DialogResult = Habanero.Faces.Base.DialogResult.OK;
             //---------------Test Result -----------------------
@@ -101,7 +103,7 @@ namespace Habanero.Faces.Test.Win
         {
             //---------------Set up test pack-------------------
             FormWin formWin = new FormWin();
-
+            DisposeOnTearDown(formWin);
             //---------------Execute Test ----------------------
             formWin.DialogResult = Habanero.Faces.Base.DialogResult.Retry;
             //---------------Test Result -----------------------
@@ -116,7 +118,7 @@ namespace Habanero.Faces.Test.Win
         {
             //---------------Set up test pack-------------------
             FormWin formWin = new FormWin();
-
+            DisposeOnTearDown(formWin);
             //---------------Execute Test ----------------------
             formWin.DialogResult = Habanero.Faces.Base.DialogResult.Yes;
             //---------------Test Result -----------------------

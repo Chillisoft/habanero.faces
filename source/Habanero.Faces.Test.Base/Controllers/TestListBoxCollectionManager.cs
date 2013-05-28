@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base.Controllers
 {
-    public abstract class TestListBoxCollectionManager
+    public abstract class TestListBoxCollectionManager:TestBaseWithDisposing
     {
         [TestFixtureSetUp]
         public void TestFixtureSetup()
@@ -22,6 +22,10 @@ namespace Habanero.Faces.Test.Base.Controllers
         }
 
         protected abstract IControlFactory GetControlFactory();
+        protected IListBox CreateListBox()
+        {
+            return GetControlledLifetimeFor(GetControlFactory().CreateListBox());
+        }
 
         [Test]
         public void TestCreateTestListBoxCollectionController()
@@ -33,7 +37,7 @@ namespace Habanero.Faces.Test.Base.Controllers
             MyBO myBO1 = new MyBO();
             MyBO myBO2 = new MyBO();
             myBOs.Add(myBO1, myBO2);
-            IListBox cmb = GetControlFactory().CreateListBox();
+            IListBox cmb = CreateListBox();
             var selector = CreateListBoxCollectionManager(cmb);
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
@@ -53,7 +57,7 @@ namespace Habanero.Faces.Test.Base.Controllers
             ClassDef.ClassDefs.Clear();
             MyBO.LoadClassDefWithBoolean();
 
-            IListBox cmb = GetControlFactory().CreateListBox();
+            IListBox cmb = CreateListBox();
             var selector = CreateListBoxCollectionManager(cmb);
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
@@ -67,7 +71,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         public void TestConstructor()
         {
             //---------------Set up test pack-------------------
-            IListBox listBox = GetControlFactory().CreateListBox();
+            IListBox listBox = CreateListBox();
             //---------------Execute Test ----------------------
             var manager = CreateListBoxCollectionManager(listBox);
             //---------------Test Result -----------------------
@@ -100,7 +104,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             ClassDef.ClassDefs.Clear();
-            IListBox listBox = GetControlFactory().CreateListBox();
+            IListBox listBox = CreateListBox();
             var manager = CreateListBoxCollectionManager(listBox);
             MyBO.LoadDefaultClassDef();
             BusinessObjectCollection<MyBO> myBoCol = new BusinessObjectCollection<MyBO>
@@ -122,7 +126,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             ClassDef.ClassDefs.Clear();
-            IListBox listBox = GetControlFactory().CreateListBox();
+            IListBox listBox = CreateListBox();
             var manager = CreateListBoxCollectionManager(listBox);
             MyBO.LoadDefaultClassDef();
             BusinessObjectCollection<MyBO> myBoCol = new BusinessObjectCollection<MyBO>();
@@ -142,7 +146,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         public void TestBusinessObejctAddedToCollection_ShouldAddToItems()
         {
             ClassDef.ClassDefs.Clear();
-            IListBox listBox = GetControlFactory().CreateListBox();
+            IListBox listBox = CreateListBox();
             var manager = CreateListBoxCollectionManager(listBox);
             MyBO.LoadDefaultClassDef();
             BusinessObjectCollection<MyBO> myBoCol = new BusinessObjectCollection<MyBO>();
@@ -161,7 +165,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         public void TestBusinessObjectRemovedFromCollection_ShouldRemoveFromItems()
         {
             ClassDef.ClassDefs.Clear();
-            var listBox = GetControlFactory().CreateListBox();
+            var listBox = CreateListBox();
             var manager = CreateListBoxCollectionManager(listBox);
             MyBO.LoadDefaultClassDef();
             var myBoCol = new BusinessObjectCollection<MyBO>();
@@ -183,7 +187,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             ClassDef.ClassDefs.Clear();
-            var listBox = GetControlFactory().CreateListBox();
+            var listBox = CreateListBox();
             var manager = CreateListBoxCollectionManager(listBox);
             MyBO.LoadDefaultClassDef();
             var myBoCol = new BusinessObjectCollection<MyBO>();
@@ -217,7 +221,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             ClassDef.ClassDefs.Clear();
-            var listBox = GetControlFactory().CreateListBox();
+            var listBox = CreateListBox();
             var manager = CreateListBoxCollectionManager(listBox);
             MyBO.LoadDefaultClassDef();
             var myBoCol = new BusinessObjectCollection<MyBO>();

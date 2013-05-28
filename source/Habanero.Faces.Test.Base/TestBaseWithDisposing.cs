@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using Habanero.Faces.Base;
 using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base
@@ -16,8 +17,16 @@ namespace Habanero.Faces.Test.Base
             IDisposable disposable;
             while (_objectsToDispose.TryPop(out disposable))
             {
+                CloseIfForm(disposable);
                 disposable.Dispose();
             }
+        }
+
+        private static void CloseIfForm(IDisposable disposable)
+        {
+            var formHabanero = disposable as IFormHabanero;
+            if (formHabanero == null) return;
+            if (formHabanero.Visible) formHabanero.Close();
         }
 
         protected void DisposeOnTearDown(object obj)

@@ -31,7 +31,7 @@ using NUnit.Framework;
 // ReSharper disable InconsistentNaming
 namespace Habanero.Faces.Test.Base.Grid
 {
-    public abstract class TestGridBase 
+    public abstract class TestGridBase:TestBaseWithDisposing 
     {
         protected const string _gridIdColumnName = "HABANERO_OBJECTID";
 

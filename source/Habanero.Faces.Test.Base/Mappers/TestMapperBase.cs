@@ -30,7 +30,7 @@ namespace Habanero.Faces.Test.Base.Mappers
     /// <summary>
     /// Summary description for TestMapperBase.
     /// </summary>
-    public class TestMapperBase //: TestUsingDatabase
+    public class TestMapperBase:TestBaseWithDisposing //: TestUsingDatabase
     {
         protected MyBO itsMyBo;
 
