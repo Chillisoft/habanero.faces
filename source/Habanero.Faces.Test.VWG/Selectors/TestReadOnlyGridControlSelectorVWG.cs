@@ -19,7 +19,7 @@ namespace Habanero.Faces.Test.VWG.Selectors
             IReadOnlyGridControl readOnlyGridControl = GetControlFactory().CreateReadOnlyGridControl();
             Gizmox.WebGUI.Forms.Form frm = new Gizmox.WebGUI.Forms.Form();
             frm.Controls.Add((Gizmox.WebGUI.Forms.Control)readOnlyGridControl);
-            return readOnlyGridControl;
+            return GetControlledLifetimeFor(readOnlyGridControl);
         }
     }
 }

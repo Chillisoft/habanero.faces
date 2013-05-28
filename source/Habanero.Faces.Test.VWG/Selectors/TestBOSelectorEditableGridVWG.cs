@@ -19,7 +19,7 @@ namespace Habanero.Faces.Test.VWG.Selectors
             IEditableGridControl editableGridControl = GetControlFactory().CreateEditableGridControl();
             Gizmox.WebGUI.Forms.Form frm = new Gizmox.WebGUI.Forms.Form();
             frm.Controls.Add((Gizmox.WebGUI.Forms.Control)editableGridControl);
-            return editableGridControl;
+            return GetControlledLifetimeFor(editableGridControl);
         }
     }
 }

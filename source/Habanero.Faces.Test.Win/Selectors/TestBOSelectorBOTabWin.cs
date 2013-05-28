@@ -24,7 +24,7 @@ namespace Habanero.Faces.Test.Win.Selectors
         {
             IBOColTabControl control = GetControlFactory().CreateBOColTabControl();
             control.BusinessObjectControl = this.GetBusinessObjectControlStub();
-            return control;
+            return GetControlledLifetimeFor(control);
         }
 
         protected override IBusinessObjectControl GetBusinessObjectControlStub()
