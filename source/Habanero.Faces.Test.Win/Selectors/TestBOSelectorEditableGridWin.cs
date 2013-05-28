@@ -21,7 +21,7 @@ namespace Habanero.Faces.Test.Win.Selectors
 
         protected override IBOColSelectorControl CreateSelector()
         {
-            IEditableGridControl editableGridControl = GetControlFactory().CreateEditableGridControl();
+            IEditableGridControl editableGridControl = GetControlledLifetimeFor(GetControlFactory().CreateEditableGridControl());
             System.Windows.Forms.Form frm = new System.Windows.Forms.Form();
             frm.Controls.Add((System.Windows.Forms.Control)editableGridControl);
             return editableGridControl;
