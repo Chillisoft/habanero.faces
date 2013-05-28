@@ -39,7 +39,7 @@ namespace Habanero.Faces.Test.VWG.Grid
             GridBaseVWGStub gridBase = new GridBaseVWGStub();
             Gizmox.WebGUI.Forms.Form frm = new Gizmox.WebGUI.Forms.Form();
             frm.Controls.Add(gridBase);
-            return gridBase;
+            return GetControlledLifetimeFor(gridBase);
         }
 
         protected override void AddControlToForm(IGridBase gridBase)

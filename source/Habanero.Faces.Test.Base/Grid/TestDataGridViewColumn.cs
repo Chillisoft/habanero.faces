@@ -22,7 +22,7 @@ using NUnit.Framework;
 namespace Habanero.Faces.Test.Base
 {
 //    [TestFixture]
-    public class TestDataGridViewColumn//:TestBase
+    public class TestDataGridViewColumn:TestBaseWithDisposing//:TestBase
     {
         //[SetUp]
         //public override void SetupTest()

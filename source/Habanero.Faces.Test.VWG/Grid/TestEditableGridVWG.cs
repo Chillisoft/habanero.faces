@@ -18,7 +18,7 @@ namespace Habanero.Faces.Test.VWG.Grid
             EditableGridVWG editableGridVWG = new EditableGridVWG();
             Gizmox.WebGUI.Forms.Form frm = new Gizmox.WebGUI.Forms.Form();
             frm.Controls.Add(editableGridVWG);
-            return editableGridVWG;
+            return GetControlledLifetimeFor(editableGridVWG);
         }
 
         protected override IFormHabanero AddControlToForm(IGridBase gridBase)

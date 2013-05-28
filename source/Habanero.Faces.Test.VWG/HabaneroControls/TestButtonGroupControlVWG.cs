@@ -26,7 +26,7 @@ namespace Habanero.Faces.Test.VWG.HabaneroControls
         public void Test_SetDefaultButton()
         {
             //---------------Set up test pack-------------------
-            IButtonGroupControl buttons = GetControlFactory().CreateButtonGroupControl();
+            IButtonGroupControl buttons = CreateButtonGroupControl();
             buttons.AddButton("Test");
             Gizmox.WebGUI.Forms.Form frm = new Gizmox.WebGUI.Forms.Form();
             frm.Controls.Add((Gizmox.WebGUI.Forms.Control)buttons);

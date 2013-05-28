@@ -29,7 +29,7 @@ using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base
 {
-    public abstract class TestReadOnlyGridControl //: TestUsingDatabase
+    public abstract class TestReadOnlyGridControl:TestBaseWithDisposing //: TestUsingDatabase
     {
         private const string _gridIdColumnName = "HABANERO_OBJECTID";
         //TODO: Tests that if Init not called throws sensible errors
@@ -67,60 +67,6 @@ namespace Habanero.Faces.Test.Base
         protected abstract IReadOnlyGridControl CreateReadOnlyGridControl();
         protected abstract IReadOnlyGridControl CreateReadOnlyGridControl(bool putOnForm);
         protected abstract void CloseForm();
-
-
-            //[Test]
-        //public void TestInitGrid_DefaultUIDef_VerifyColumnsSetupCorrectly()
-        //{
-        //    //---------------Set up test pack-------------------
-        //    ClassDef classDef = LoadMyBoDefaultClassDef();
-        //    IReadOnlyGridControl grid = CreateReadOnlyGridControl();
-        //    UIDef uiDef = classDef.UIDefCol["default"];
-        //    UIGrid uiGridDef = uiDef.UIGrid;
-        //    //---------------Assert Preconditions---------------
-        //    Assert.AreEqual(2, uiGridDef.Count, "2 defined columns in the defaultDef");
-        //    UIGridColumn columnDef1 = uiGridDef[0];
-        //    Assert.AreEqual("TestProp", columnDef1.PropertyName);
-        //    UIGridColumn columnDef2 = uiGridDef[1];
-        //    Assert.AreEqual("TestProp2", columnDef2.PropertyName);
-        //    //---------------Execute Test ----------------------
-        //    grid.Initialise(classDef);
-
-        //    //---------------Test Result -----------------------
-        //    IDataGridViewColumn idColumn = grid.Grid.Columns[0];
-        //    AssertVerifyIDFieldSetUpCorrectly(idColumn);
-
-        //    IDataGridViewColumn dataColumn1 = grid.Grid.Columns[1];
-        //    AssertThatDataColumnSetupCorrectly(classDef, columnDef1, dataColumn1);
-
-        //    IDataGridViewColumn dataColumn2 = grid.Grid.Columns[2];
-        //    AssertThatDataColumnSetupCorrectly(classDef, columnDef2, dataColumn2);
-        //    //---------------Tear Down -------------------------          
-        //}
-
-        //[Test]
-        //public void TestInitGrid_WithNonDefaultUIDef()
-        //{
-        //    //---------------Set up test pack-------------------
-        //    ClassDef classDef = LoadMyBoDefaultClassDef();
-        //    string alternateUIDefName = "Alternate";
-        //    IReadOnlyGridControl grid = CreateReadOnlyGridControl();
-        //    UIDef uiDef = classDef.UIDefCol[alternateUIDefName];
-        //    UIGrid uiGridDef = uiDef.UIGrid;
-        //    //---------------Assert Preconditions---------------
-        //    Assert.AreEqual(1, uiGridDef.Count, "1 defined column in the alternateUIDef");
-        //    //---------------Execute Test ----------------------
-        //    grid.Initialise(classDef, alternateUIDefName);
-
-        //    //---------------Test Result -----------------------
-        //    Assert.AreEqual(alternateUIDefName, grid.UiDefName);
-        //    Assert.AreEqual(classDef, grid.ClassDef);
-        //    Assert.AreEqual(uiGridDef.Count + 1, grid.Grid.Columns.Count,
-        //                    "There should be 1 ID column and 1 defined column in the alternateUIDef");
-        //    //---------------Tear Down -------------------------          
-        //}
-        //}
-
 
 
         [Test]
@@ -297,6 +243,7 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             IReadOnlyGridControl gridControl = GetControlFactory().CreateReadOnlyGridControl();
+            DisposeOnTearDown(gridControl);
             MyBO.LoadDefaultClassDef();
             IClassDef def = ClassDef.ClassDefs[typeof (MyBO)];
             gridControl.Initialise(def);
@@ -315,6 +262,7 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             IReadOnlyGridControl gridControl = GetControlFactory().CreateReadOnlyGridControl();
+            DisposeOnTearDown(gridControl);
             MyBO.LoadDefaultClassDef();
             IClassDef def = ClassDef.ClassDefs[typeof (MyBO)];
             gridControl.Initialise(def);

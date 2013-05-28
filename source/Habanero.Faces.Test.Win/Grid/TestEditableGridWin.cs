@@ -615,6 +615,7 @@ namespace Habanero.Faces.Test.Win.Grid
         protected override IFormHabanero AddControlToForm(IGridBase gridBase)
         {
             IFormHabanero frm = GetControlFactory().CreateForm();
+            DisposeOnTearDown(frm);
             frm.Controls.Add(gridBase);
             return frm;
         }
@@ -650,7 +651,8 @@ namespace Habanero.Faces.Test.Win.Grid
             EditableGridWin editableGridWin = new EditableGridWin();
             System.Windows.Forms.Form frm = new System.Windows.Forms.Form();
             frm.Controls.Add(editableGridWin);
-            return editableGridWin;
+            DisposeOnTearDown(frm);
+            return GetControlledLifetimeFor(editableGridWin);
         }
     }
 }

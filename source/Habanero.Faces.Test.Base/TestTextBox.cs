@@ -27,15 +27,13 @@ namespace Habanero.Faces.Test.Base
     /// <summary>
     /// This test class tests the TextBox class.
     /// </summary>
-    public abstract class TestTextBox
+    public abstract class TestTextBox:TestBaseWithDisposing
     {
         protected abstract IControlFactory GetControlFactory();
 
-       
-
-               
-
-   
-
+        protected ITextBox CreateTextBox()
+        {
+            return GetControlledLifetimeFor(GetControlFactory().CreateTextBox());
+        }
     }
 }

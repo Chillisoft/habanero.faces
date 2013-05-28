@@ -16,7 +16,7 @@ namespace Habanero.Faces.Test.VWG.StandardControls
         public void TestPreferredSize()
         {
             //---------------Set up test pack-------------------
-            ILabel myLabel = GetControlFactory().CreateLabel();
+            ILabel myLabel = CreateLabel();
             string labelText = "sometext";
             myLabel.Text = labelText;
 

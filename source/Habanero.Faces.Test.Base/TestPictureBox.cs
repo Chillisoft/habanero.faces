@@ -29,7 +29,7 @@ namespace Habanero.Faces.Test.Base
     /// <summary>
     /// This test class tests the Panel class.
     /// </summary>
-    public abstract class TestPictureBox
+    public abstract class TestPictureBox:TestBaseWithDisposing
     {
         protected abstract IControlFactory GetControlFactory();
 
@@ -37,7 +37,7 @@ namespace Habanero.Faces.Test.Base
 
         protected IPictureBox CreatePictureBox()
         {
-            IPictureBox pictureBox = GetControlFactory().CreatePictureBox();
+            IPictureBox pictureBox = GetControlledLifetimeFor(GetControlFactory().CreatePictureBox());
             return pictureBox;
         }
 

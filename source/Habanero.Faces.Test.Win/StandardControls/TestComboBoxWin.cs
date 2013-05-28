@@ -19,8 +19,9 @@ namespace Habanero.Faces.Test.Win.StandardControls
         {
             //---------------Set up test pack-------------------
             FormWin form = new FormWin();
+            DisposeOnTearDown(form);
             List<string> defs = new List<string> {"AA", "BBB"};
-            IComboBox selector = GetControlFactory().CreateComboBox();
+            IComboBox selector = CreateComboBox();
             form.Controls.Add((System.Windows.Forms.Control)selector);
             System.Windows.Forms.ComboBox winCombo = (System.Windows.Forms.ComboBox)selector;
             //---------------Assert Precondition----------------

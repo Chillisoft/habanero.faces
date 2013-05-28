@@ -25,7 +25,7 @@ namespace Habanero.Faces.Test.VWG.PanelBuilder
             //---------------Set up test pack-------------------
             Sample.SampleUserInterfaceMapper interfaceMapper = GetSampleUserInterfaceMapper();
             UIFormTab singleFieldTab = interfaceMapper.GetFormTabOneFieldsWithNumericUpDown();
-            Habanero.Faces.Base.PanelBuilder panelBuilder = new Habanero.Faces.Base.PanelBuilder(GetControlFactory());
+            Habanero.Faces.Base.PanelBuilder panelBuilder = CreatePanelBuilder();
             //---------------Assert Precondition----------------
             Assert.AreEqual("right", ((UIFormField)singleFieldTab[0][0]).Alignment);
 

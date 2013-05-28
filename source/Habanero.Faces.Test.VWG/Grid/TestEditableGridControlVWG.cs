@@ -62,7 +62,7 @@ namespace Habanero.Faces.Test.VWG.Grid
             EditableGridControlVWG editableGridControlVWG = new EditableGridControlVWG(GetControlFactory());
             Form frm = new Form();
             frm.Controls.Add(editableGridControlVWG);
-            return editableGridControlVWG;
+            return GetControlledLifetimeFor(editableGridControlVWG);
         }
 
         protected override IFormHabanero AddControlToForm(IControlHabanero cntrl)
@@ -71,7 +71,7 @@ namespace Habanero.Faces.Test.VWG.Grid
             Form formVWG = form;
             formVWG.Controls.Add((Control)cntrl);
 
-            return form;
+            return GetControlledLifetimeFor(form);
         }
 
         //TODO_: if pagination gets introduced into Win, then move this test back out into the parent

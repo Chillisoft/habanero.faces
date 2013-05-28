@@ -37,7 +37,7 @@ namespace Habanero.Faces.Test.Base
     /// - When filtering on win version, should selection move to top? (in similar way that on Giz it moves back to page 1)
     /// - Custom methods like one that changes behaviour of combobox clicking and pressing delete button
     /// </summary>
-    public abstract class TestEditableGridControl
+    public abstract class TestEditableGridControl:TestBaseWithDisposing
     {
         private const string _HABANERO_OBJECTID = "HABANERO_OBJECTID";
 
@@ -942,7 +942,7 @@ namespace Habanero.Faces.Test.Base
             IEditableGridControl gridControl = CreateEditableGridControl();
             SetupGridColumnsForMyBo(gridControl.Grid);
             gridControl.SetBusinessObjectCollection(col);
-            return gridControl;
+            return GetControlledLifetimeFor(gridControl);
         }
 
         private static void SetupGridColumnsForMyBo(IDataGridView gridBase)

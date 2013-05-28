@@ -25,7 +25,7 @@ using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base
 {
-    public abstract class TestDataGridViewNumericUpDownColumn
+    public abstract class TestDataGridViewNumericUpDownColumn:TestBaseWithDisposing
     {
         [SetUp]
         public void SetupTest()

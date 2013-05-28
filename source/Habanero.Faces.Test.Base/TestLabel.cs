@@ -27,18 +27,21 @@ namespace Habanero.Faces.Test.Base
     /// <summary>
     /// This test class tests the Label class.
     /// </summary>
-    public abstract class TestLabel
+    public abstract class TestLabel:TestBaseWithDisposing
     {
         protected abstract IControlFactory GetControlFactory();
 
-
+        protected ILabel CreateLabel()
+        {
+            return GetControlledLifetimeFor(GetControlFactory().CreateLabel());
+        }
       
-            [Test]
+        [Test]
         public void TestCreateLabel()
         {
             //---------------Set up test pack-------------------
             //---------------Execute Test ----------------------
-            ILabel myLabel = GetControlFactory().CreateLabel();
+            ILabel myLabel = CreateLabel();
 
             //---------------Test Result -----------------------
             Assert.IsNotNull(myLabel);

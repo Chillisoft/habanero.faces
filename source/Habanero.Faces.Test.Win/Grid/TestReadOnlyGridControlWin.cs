@@ -31,8 +31,9 @@ namespace Habanero.Faces.Test.Win.Grid
                 _form = new System.Windows.Forms.Form();
                 _form.Controls.Add(readOnlyGridControlWin);
                 _form.Show();
+                DisposeOnTearDown(_form);
             }
-            return readOnlyGridControlWin;
+            return GetControlledLifetimeFor(readOnlyGridControlWin);
         }
 
         protected override void CloseForm()
@@ -62,6 +63,7 @@ namespace Habanero.Faces.Test.Win.Grid
         protected override void AddControlToForm(IControlHabanero control, int formHeight)
         {
             System.Windows.Forms.Form frmLocal = new System.Windows.Forms.Form();
+            DisposeOnTearDown(frmLocal);
             frmLocal.Controls.Add((System.Windows.Forms.Control)control);
             frmLocal.Height = formHeight;
             frmLocal.Visible = true;

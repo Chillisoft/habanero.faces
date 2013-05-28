@@ -17,7 +17,7 @@ namespace Habanero.Faces.Test.Win.StandardControls
         public void TestScrollBars_Vertical()
         {
             //---------------Set up test pack-------------------
-            ITextBox textBox = GetControlFactory().CreateTextBox();
+            ITextBox textBox = CreateTextBox();
             //---------------Execute Test ----------------------
             textBox.ScrollBars = ScrollBars.Vertical;
             //---------------Test Result -----------------------
@@ -29,7 +29,7 @@ namespace Habanero.Faces.Test.Win.StandardControls
         public void TestScrollBars_Horizontal()
         {
             //---------------Set up test pack-------------------
-            ITextBox textBox = GetControlFactory().CreateTextBox();
+            ITextBox textBox = CreateTextBox();
             //---------------Execute Test ----------------------
             textBox.ScrollBars = ScrollBars.Horizontal;
             //---------------Test Result -----------------------
@@ -41,7 +41,7 @@ namespace Habanero.Faces.Test.Win.StandardControls
         public void TestScrollBars_None()
         {
             //---------------Set up test pack-------------------
-            ITextBox textBox = GetControlFactory().CreateTextBox();
+            ITextBox textBox = CreateTextBox();
             //---------------Execute Test ----------------------
             textBox.ScrollBars = ScrollBars.None;
             //---------------Test Result -----------------------
@@ -53,7 +53,7 @@ namespace Habanero.Faces.Test.Win.StandardControls
         public void TestScrollBars_Both()
         {
             //---------------Set up test pack-------------------
-            ITextBox textBox = GetControlFactory().CreateTextBox();
+            ITextBox textBox = CreateTextBox();
             //---------------Execute Test ----------------------
             textBox.ScrollBars = ScrollBars.Both;
             //---------------Test Result -----------------------

@@ -31,18 +31,21 @@ namespace Habanero.Faces.Test.Base
     /// <summary>
     /// This test class tests the Button class.
     /// </summary>
-    public abstract class TestButton
+    public abstract class TestButton:TestBaseWithDisposing
     {
         protected abstract IControlFactory GetControlFactory();
 
-     
+        protected IButton CreateButton()
+        {
+            return GetControlledLifetimeFor(GetControlFactory().CreateButton());
+        }
 
         [Test]
         public void TestCreateButton()
         {
             //---------------Set up test pack-------------------
             //---------------Execute Test ----------------------
-            IButton myButton = GetControlFactory().CreateButton();
+            IButton myButton = CreateButton();
 
             //---------------Test Result -----------------------
             Assert.IsNotNull(myButton);
@@ -54,7 +57,7 @@ namespace Habanero.Faces.Test.Base
         public void Test_PerformClick()
         {
             //---------------Set up test pack-------------------
-            IButton button = this.GetControlFactory().CreateButton();
+            IButton button = CreateButton();
             bool clicked = false;
             button.Click += delegate(object sender, EventArgs e)
             {

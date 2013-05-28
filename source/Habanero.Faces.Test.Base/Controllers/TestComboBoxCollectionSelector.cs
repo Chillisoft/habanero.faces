@@ -29,7 +29,7 @@ using NUnit.Framework;
 namespace Habanero.Faces.Test.Base.Controllers
 {
 
-    public abstract class TestComboBoxCollectionSelector
+    public abstract class TestComboBoxCollectionSelector:TestBaseWithDisposing
     {
         protected abstract IControlFactory GetControlFactory();
 
@@ -42,6 +42,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         private ComboBoxCollectionSelector CreateComboBoxCollectionSelector()
         {
             IComboBox cmbox = GetControlFactory().CreateComboBox();
+            DisposeOnTearDown(cmbox);
             IControlFactory controlFactory = GetControlFactory();
             return new ComboBoxCollectionSelector(cmbox, controlFactory);
         }
@@ -61,7 +62,9 @@ namespace Habanero.Faces.Test.Base.Controllers
             MyBO.LoadClassDefWithBoolean();
             BusinessObjectCollection<MyBO> myBOs = new BusinessObjectCollection<MyBO> {{new MyBO(), new MyBO()}};
             IComboBox cmb = GetControlFactory().CreateComboBox();
-            ComboBoxCollectionSelector selector = new ComboBoxCollectionSelector(cmb,GetControlFactory());
+            DisposeOnTearDown(cmb);
+            ComboBoxCollectionSelector selector = new ComboBoxCollectionSelector(cmb, GetControlFactory());
+            DisposeOnTearDown(selector);
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             selector.SetCollection(myBOs);
@@ -78,7 +81,9 @@ namespace Habanero.Faces.Test.Base.Controllers
             MyBO.LoadClassDefWithBoolean();
 
             IComboBox cmb = GetControlFactory().CreateComboBox();
+            DisposeOnTearDown(cmb);
             ComboBoxCollectionSelector selector = new ComboBoxCollectionSelector(cmb, GetControlFactory());
+            DisposeOnTearDown(selector);
             //---------------Verify test pack-------------------
             //---------------Execute Test ----------------------
             selector.SetCollection(null);
@@ -92,9 +97,11 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             IComboBox cmbox = GetControlFactory().CreateComboBox();
+            DisposeOnTearDown(cmbox);
             IControlFactory controlFactory = GetControlFactory();
             //---------------Execute Test ----------------------
             ComboBoxCollectionSelector selectorManager = new ComboBoxCollectionSelector(cmbox, controlFactory);
+            DisposeOnTearDown(selectorManager);
             //---------------Test Result -----------------------
             Assert.IsNotNull(selectorManager);
             Assert.AreSame(cmbox, selectorManager.Control);
@@ -146,8 +153,10 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             var cmbox = GetControlFactory().CreateComboBox();
+            DisposeOnTearDown(cmbox);
             var controlFactory = GetControlFactory();
             var selectorManager = new ComboBoxCollectionSelector(cmbox, controlFactory) {IncludeBlankItem = false};
+            DisposeOnTearDown(selectorManager);
             MyBO.LoadDefaultClassDef();
             var myBoCol = new BusinessObjectCollection<MyBO>
                                                          {new MyBO(), new MyBO(), new MyBO()};
@@ -163,8 +172,10 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             var cmbox = GetControlFactory().CreateComboBox();
+            DisposeOnTearDown(cmbox);
             var controlFactory = GetControlFactory();
             var selectorManager = new ComboBoxCollectionSelector(cmbox, controlFactory);
+            DisposeOnTearDown(selectorManager);
             MyBO.LoadDefaultClassDef();
             var myBoCol = new BusinessObjectCollection<MyBO>
                                                          {new MyBO(), new MyBO(), new MyBO()};
@@ -180,8 +191,10 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             var cmbox = GetControlFactory().CreateComboBox();
+            DisposeOnTearDown(cmbox);
             var controlFactory = GetControlFactory();
             var selectorManager = new ComboBoxCollectionSelector(cmbox, controlFactory);
+            DisposeOnTearDown(selectorManager);
             MyBO.LoadDefaultClassDef();
             var firstBo = new MyBO();
             var myBoCol = new BusinessObjectCollection<MyBO> 
@@ -197,8 +210,10 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             var cmbox = GetControlFactory().CreateComboBox();
+            DisposeOnTearDown(cmbox);
             var controlFactory = GetControlFactory();
             var selectorManager = new ComboBoxCollectionSelector(cmbox, controlFactory);
+            DisposeOnTearDown(selectorManager);
             MyBO.LoadDefaultClassDef();
             var firstBo = new MyBO();
             var myBoCol = new BusinessObjectCollection<MyBO>
@@ -215,8 +230,10 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             var cmbox = GetControlFactory().CreateComboBox();
+            DisposeOnTearDown(cmbox);
             var controlFactory = GetControlFactory();
             var selectorManager = new ComboBoxCollectionSelector(cmbox, controlFactory);
+            DisposeOnTearDown(selectorManager);
             selectorManager.PreserveSelectedItem = true;
             selectorManager.IncludeBlankItem = true;
             MyBO.LoadDefaultClassDef();
@@ -235,9 +252,11 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             var cmbox = GetControlFactory().CreateComboBox();
+            DisposeOnTearDown(cmbox);
             var controlFactory = GetControlFactory();
             var selectorManager = new ComboBoxCollectionSelector(cmbox, controlFactory)
                                                              {IncludeBlankItem = false};
+            DisposeOnTearDown(selectorManager);
             MyBO.LoadDefaultClassDef();
             var selectedBO = new MyBO();
             var myBoCol = new BusinessObjectCollection<MyBO>
@@ -254,9 +273,11 @@ namespace Habanero.Faces.Test.Base.Controllers
         public void Test_BusinessObjectAddedToCollection()
         {
             var cmbox = GetControlFactory().CreateComboBox();
+            DisposeOnTearDown(cmbox);
             var controlFactory = GetControlFactory();
             var selectorManager = new ComboBoxCollectionSelector(cmbox, controlFactory)
                                                              {IncludeBlankItem = false};
+            DisposeOnTearDown(selectorManager);
             MyBO.LoadDefaultClassDef();
             var addedBo = new MyBO();
             var myBoCol = new BusinessObjectCollection<MyBO>
@@ -273,9 +294,11 @@ namespace Habanero.Faces.Test.Base.Controllers
         public void Test_BusinessObjectRemovedFromCollection()
         {
             IComboBox cmbox = GetControlFactory().CreateComboBox();
+            DisposeOnTearDown(cmbox);
             IControlFactory controlFactory = GetControlFactory();
             ComboBoxCollectionSelector selectorManager = new ComboBoxCollectionSelector(cmbox, controlFactory)
                                                              {IncludeBlankItem = false};
+            DisposeOnTearDown(selectorManager);
             MyBO.LoadDefaultClassDef();
             MyBO removedBo = new MyBO();
             BusinessObjectCollection<MyBO> myBoCol = new BusinessObjectCollection<MyBO>
@@ -292,8 +315,10 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             var cmbox = GetControlFactory().CreateComboBox();
+            DisposeOnTearDown(cmbox);
             var controlFactory = GetControlFactory();
             var selectorManager = new ComboBoxCollectionSelector(cmbox, controlFactory) {IncludeBlankItem = false};
+            DisposeOnTearDown(selectorManager);
             MyBO.LoadDefaultClassDef();
             var myBOs = new BusinessObjectCollection<MyBO> { { new MyBO(), new MyBO() } };
             selectorManager.SetCollection(myBOs);
@@ -323,8 +348,10 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             var cmbox = GetControlFactory().CreateComboBox();
+            DisposeOnTearDown(cmbox);
             var controlFactory = GetControlFactory();
             var selectorManager = new ComboBoxCollectionSelector(cmbox, controlFactory) {IncludeBlankItem = false};
+            DisposeOnTearDown(selectorManager);
             MyBO.LoadDefaultClassDef();
             var myBOs = new BusinessObjectCollection<MyBO> { { new MyBO(), new MyBO() } };
             selectorManager.SetCollection(myBOs);
@@ -354,8 +381,10 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             var cmbox = GetControlFactory().CreateComboBox();
+            DisposeOnTearDown(cmbox);
             var controlFactory = GetControlFactory();
             var selectorManager = new ComboBoxCollectionSelector(cmbox, controlFactory) {IncludeBlankItem = false};
+            DisposeOnTearDown(selectorManager);
             MyBO.LoadDefaultClassDef();
             var myBOs = new BusinessObjectCollection<MyBO> { { new MyBO(), new MyBO() } };
             selectorManager.SetCollection(myBOs);
@@ -382,8 +411,10 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             IComboBox cmbox = GetControlFactory().CreateComboBox();
+            DisposeOnTearDown(cmbox);
             IControlFactory controlFactory = GetControlFactory();
             ComboBoxCollectionSelector selectorManager = new ComboBoxCollectionSelector(cmbox, controlFactory, false);
+            DisposeOnTearDown(selectorManager);
             MyBO.LoadDefaultClassDef();
             BusinessObjectCollection<MyBO> myBOs = new BusinessObjectCollection<MyBO> { { new MyBO(), new MyBO() } };
             selectorManager.SetCollection(myBOs);
@@ -412,9 +443,11 @@ namespace Habanero.Faces.Test.Base.Controllers
 		{
 			//---------------Set up test pack-------------------
 			var cmbox = GetControlFactory().CreateComboBox();
-			var controlFactory = GetControlFactory();
+            DisposeOnTearDown(cmbox);
+            var controlFactory = GetControlFactory();
 			var selectorManager = new ComboBoxCollectionSelector(cmbox, controlFactory, false);
-			MyBO.LoadDefaultClassDef();
+            DisposeOnTearDown(selectorManager);
+            MyBO.LoadDefaultClassDef();
 
 			var myBOs = new BusinessObjectCollection<MyBO> { { new MyBO(), new MyBO(), new MyBO() } };
 			selectorManager.SetCollection(myBOs);
@@ -446,9 +479,11 @@ namespace Habanero.Faces.Test.Base.Controllers
 		{
 			//---------------Set up test pack-------------------
 			var cmbox = GetControlFactory().CreateComboBox();
-			var controlFactory = GetControlFactory();
+            DisposeOnTearDown(cmbox);
+            var controlFactory = GetControlFactory();
 			var selectorManager = new ComboBoxCollectionSelector(cmbox, controlFactory, false);
-			MyBO.LoadDefaultClassDef();
+            DisposeOnTearDown(selectorManager);
+            MyBO.LoadDefaultClassDef();
 
 			var myBOs = new BusinessObjectCollection<MyBO> { { new MyBO(), new MyBO(), new MyBO() } };
 			selectorManager.SetCollection(myBOs);
@@ -478,9 +513,11 @@ namespace Habanero.Faces.Test.Base.Controllers
 		{
 			//---------------Set up test pack-------------------
 			var cmbox = GetControlFactory().CreateComboBox();
-			var controlFactory = GetControlFactory();
+            DisposeOnTearDown(cmbox);
+            var controlFactory = GetControlFactory();
 			var selectorManager = new ComboBoxCollectionSelector(cmbox, controlFactory, false);
-			MyBO.LoadDefaultClassDef();
+            DisposeOnTearDown(selectorManager);
+            MyBO.LoadDefaultClassDef();
 
 			var myBOs = new BusinessObjectCollection<MyBO> { { new MyBO() } };
 			selectorManager.SetCollection(myBOs);
@@ -512,9 +549,11 @@ namespace Habanero.Faces.Test.Base.Controllers
             //---------------Set up test pack-------------------
             BORegistry.DataAccessor = new DataAccessorInMemory();
             IComboBox cmbox = GetControlFactory().CreateComboBox();
+            DisposeOnTearDown(cmbox);
             IControlFactory controlFactory = GetControlFactory();
             ComboBoxCollectionSelector selectorManager = new ComboBoxCollectionSelector(cmbox, controlFactory)
                                                              {IncludeBlankItem = false};
+            DisposeOnTearDown(selectorManager);
             MyBO.LoadDefaultClassDef();
             BusinessObjectCollection<MyBO> myBOs = new BusinessObjectCollection<MyBO> { { new MyBO(), new MyBO() } };
             selectorManager.SetCollection(myBOs);
@@ -546,10 +585,12 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             IComboBox cmbox = GetControlFactory().CreateComboBox();
+            DisposeOnTearDown(cmbox);
             IControlFactory controlFactory = GetControlFactory();
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
             ComboBoxCollectionSelector selectorManager = new ComboBoxCollectionSelector(cmbox, controlFactory, false);
+            DisposeOnTearDown(selectorManager);
             //---------------Test Result -----------------------
             Assert.IsInstanceOf<IBOColSelector>(selectorManager);
         }
@@ -559,6 +600,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             ComboBoxCollectionSelector selectorManager = CreateComboBoxCollectionSelector();
+            DisposeOnTearDown(selectorManager);
             SetupSelectorWithTestPackCollection(selectorManager, false);
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
@@ -572,6 +614,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             ComboBoxCollectionSelector selectorManager = CreateComboBoxCollectionSelector();
+            DisposeOnTearDown(selectorManager);
             SetupSelectorWithTestPackCollection(selectorManager, true);
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
@@ -585,6 +628,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             ComboBoxCollectionSelector selectorManager = CreateComboBoxCollectionSelector();
+            DisposeOnTearDown(selectorManager);
             SetupSelectorWithTestPackCollection(selectorManager, true);
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
@@ -598,6 +642,7 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             ComboBoxCollectionSelector selectorManager = CreateComboBoxCollectionSelector();
+            DisposeOnTearDown(selectorManager);
             MyBO.LoadDefaultClassDef();
             BusinessObjectCollection<MyBO> myBOs = new BusinessObjectCollection<MyBO> { { new MyBO(), new MyBO() } };
             //---------------Assert Precondition----------------
@@ -612,8 +657,10 @@ namespace Habanero.Faces.Test.Base.Controllers
         {
             //---------------Set up test pack-------------------
             IComboBox cmbox = GetControlFactory().CreateComboBox();
+            DisposeOnTearDown(cmbox);
             IControlFactory controlFactory = GetControlFactory();
             var selectorManager = new ComboBoxCollectionSelector(cmbox, controlFactory);
+            DisposeOnTearDown(selectorManager);
             selectorManager.IncludeBlankItem = false;
             MyBO.LoadDefaultClassDef();
             MyBO selectedBO = new MyBO();

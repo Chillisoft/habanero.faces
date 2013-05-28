@@ -29,7 +29,7 @@ using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base
 {
-    public abstract class TestPanelInfo
+    public abstract class TestPanelInfo:TestBaseWithDisposing
     {
         [SetUp]
         public void SetupTest()
@@ -46,12 +46,17 @@ namespace Habanero.Faces.Test.Base
 
         protected abstract IControlFactory GetControlFactory();
 
+        protected IPanel CreatePanel()
+        {
+            return GetControlledLifetimeFor(GetControlFactory().CreatePanel());
+        }
+
         [Test]
         public void TestPanel()
         {
             //---------------Set up test pack-------------------
             IPanelInfo panelInfo = new PanelInfo();
-            IPanel panel = GetControlFactory().CreatePanel();
+            IPanel panel = CreatePanel();
             //---------------Assert Precondition----------------
             Assert.IsNull(panelInfo.Panel);
             //---------------Execute Test ----------------------

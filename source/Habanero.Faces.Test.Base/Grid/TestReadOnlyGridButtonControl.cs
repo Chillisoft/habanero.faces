@@ -26,7 +26,7 @@ using NUnit.Framework;
 namespace Habanero.Faces.Test.Base
 {
 #pragma warning disable 618,612
-    public abstract class TestReadOnlyGridButtonControl //: TestUsingDatabase
+    public abstract class TestReadOnlyGridButtonControl:TestBaseWithDisposing //: TestUsingDatabase
     {
 
 
@@ -58,6 +58,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             //---------------Execute Test ----------------------
             IControlHabanero grid = GetControlFactory().CreateReadOnlyGridButtonsControl();
+            DisposeOnTearDown(grid);
             //---------------Test Result ----------------------
             Assert.IsNotNull(grid);
             Assert.IsTrue(grid is IReadOnlyGridButtonsControl);
@@ -69,6 +70,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             //---------------Execute Test ----------------------
             IControlHabanero grid = GetControlFactory().CreateReadOnlyGridButtonsControl();
+            DisposeOnTearDown(grid);
             //---------------Test Result ----------------------
             IReadOnlyGridButtonsControl readOnlyGridButtonsControl = (IReadOnlyGridButtonsControl)grid;
             AddControlToForm(readOnlyGridButtonsControl);
@@ -96,6 +98,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             //---------------Execute Test ----------------------
             IControlHabanero grid = GetControlFactory().CreateReadOnlyGridButtonsControl();
+            DisposeOnTearDown(grid);
             //---------------Test Result ----------------------
 
             IReadOnlyGridButtonsControl readOnlyGridButtonsControl = (IReadOnlyGridButtonsControl)grid;
@@ -125,7 +128,7 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             IReadOnlyGridButtonsControl readOnlyGridButtonsControl = GetControlFactory().CreateReadOnlyGridButtonsControl();
-
+            DisposeOnTearDown(readOnlyGridButtonsControl);
             IButton btn = readOnlyGridButtonsControl["Delete"];
             //--------------verify Test pack -------------------
             Assert.IsFalse(btn.Visible);
@@ -140,7 +143,7 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             IReadOnlyGridButtonsControl readOnlyGridButtonsControl = GetControlFactory().CreateReadOnlyGridButtonsControl();
-
+            DisposeOnTearDown(readOnlyGridButtonsControl);
             IButton btn = readOnlyGridButtonsControl["Delete"];
             readOnlyGridButtonsControl.ShowDefaultDeleteButton = true;
             //--------------verify PreConditions -------------------
@@ -156,6 +159,7 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             IReadOnlyGridButtonsControl readOnlyGridButtonsControl = GetControlFactory().CreateReadOnlyGridButtonsControl();
+            DisposeOnTearDown(readOnlyGridButtonsControl);
             AddControlToForm(readOnlyGridButtonsControl);  
             IButton btn = readOnlyGridButtonsControl["Delete"];
             btn.Visible = true;
@@ -173,6 +177,7 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             IReadOnlyGridButtonsControl readOnlyGridButtonsControl = GetControlFactory().CreateReadOnlyGridButtonsControl();
+            DisposeOnTearDown(readOnlyGridButtonsControl);
             AddControlToForm(readOnlyGridButtonsControl);
             IButton btn = readOnlyGridButtonsControl["Add"];
             bool addClicked = false;
@@ -189,6 +194,7 @@ namespace Habanero.Faces.Test.Base
         {
             //---------------Set up test pack-------------------
             IReadOnlyGridButtonsControl readOnlyGridButtonsControl = GetControlFactory().CreateReadOnlyGridButtonsControl();
+            DisposeOnTearDown(readOnlyGridButtonsControl);
             AddControlToForm(readOnlyGridButtonsControl);
             IButton btn = readOnlyGridButtonsControl["Edit"];
             bool editClicked = false;
@@ -207,6 +213,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             MyBO.LoadDefaultClassDef();
             IReadOnlyGridControl readOnlyGridControl = GetControlFactory().CreateReadOnlyGridControl();
+            DisposeOnTearDown(readOnlyGridControl);
             BusinessObjectCollection<MyBO> myBOS = new BusinessObjectCollection<MyBO>();
             myBOS.Add(new MyBO());
             MyBO bo = new MyBO();

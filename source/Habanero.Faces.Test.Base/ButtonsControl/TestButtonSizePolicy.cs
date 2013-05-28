@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Habanero.BO.ClassDefinition;
+using Habanero.Base;
 using Habanero.Faces.Base;
 
 using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base.ButtonsControl
 {
-    public abstract class TestButtonSizePolicy
+    public abstract class TestButtonSizePolicy:TestBaseWithDisposing
     {
         [SetUp]
         public void SetupTest()
@@ -41,6 +42,7 @@ namespace Habanero.Faces.Test.Base.ButtonsControl
             const string buttonText = "TestMustBeLongEnoughToBeGreaterThanTwelthOfScreen";
             IControlCollection buttonCollection = GetControlFactory().CreatePanel().Controls;
             IButton btnTest = GetControlFactory().CreateButton(buttonText);
+            DisposeOnTearDown(btnTest);
             buttonCollection.Add(btnTest);
 
             //---------------Execute Test ----------------------
@@ -48,6 +50,7 @@ namespace Habanero.Faces.Test.Base.ButtonsControl
 
             ////---------------Test Result -----------------------
             ILabel lbl = GetControlFactory().CreateLabel(buttonText);
+            DisposeOnTearDown(lbl);
             Assert.AreEqual(lbl.PreferredWidth + 15, btnTest.Width, "Button width is incorrect.");
         }
 
@@ -60,8 +63,10 @@ namespace Habanero.Faces.Test.Base.ButtonsControl
             const string buttonText = "TestMustBeLongEnoughToBeGreaterThanTwelthOfScreen";
             IControlCollection buttonCollection = GetControlFactory().CreatePanel().Controls;
             IButton btnTest1 = GetControlFactory().CreateButton("Test");
+            DisposeOnTearDown(btnTest1);
             buttonCollection.Add(btnTest1);
             IButton btnTest2 = GetControlFactory().CreateButton(buttonText);
+            DisposeOnTearDown(btnTest2);
             buttonCollection.Add(btnTest2);
 
             //---------------Execute Test ----------------------
@@ -69,6 +74,7 @@ namespace Habanero.Faces.Test.Base.ButtonsControl
             ////---------------Test Result -----------------------
 
             ILabel lbl = GetControlFactory().CreateLabel(buttonText);
+            DisposeOnTearDown(lbl);
             Assert.AreEqual(lbl.PreferredWidth + 15, btnTest1.Width, "Button width is incorrect.");
 
             Assert.AreEqual(btnTest2.Width, btnTest1.Width, "Button width is incorrect.");

@@ -28,7 +28,7 @@ namespace Habanero.Faces.Test.Base
     /// <summary>
     /// Summary description for TestReadOnlyGrid.
     /// </summary>
-    public abstract class TestReadOnlyGrid
+    public abstract class TestReadOnlyGrid:TestBaseWithDisposing
     {
         [SetUp]
         public void SetupTest()
@@ -59,7 +59,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             //---------------Execute Test ----------------------
             IControlHabanero grid = GetControlFactory().CreateReadOnlyGrid();
-
+            DisposeOnTearDown(grid);
             ////---------------Test Result -----------------------
             Assert.IsNotNull(grid);
             Assert.IsTrue(grid is IReadOnlyGrid);
@@ -79,6 +79,7 @@ namespace Habanero.Faces.Test.Base
             MyBO.LoadDefaultClassDef();
             BusinessObjectCollection<MyBO> col = CreateCollectionWith_4_Objects();
             IReadOnlyGrid readOnlyGrid = GetControlFactory().CreateReadOnlyGrid();
+            DisposeOnTearDown(readOnlyGrid);
             AddControlToForm(readOnlyGrid);
             SetupGridColumnsForMyBo(readOnlyGrid);
             //---------------Execute Test ----------------------
@@ -97,6 +98,7 @@ namespace Habanero.Faces.Test.Base
             MyBO.LoadDefaultClassDef();
             BusinessObjectCollection<MyBO> col = CreateCollectionWith_4_Objects();
             IReadOnlyGrid readOnlyGrid = GetControlFactory().CreateReadOnlyGrid();
+            DisposeOnTearDown(readOnlyGrid);
             AddControlToForm(readOnlyGrid);
             SetupGridColumnsForMyBo(readOnlyGrid);
             //---------------Execute Test ----------------------
@@ -113,6 +115,7 @@ namespace Habanero.Faces.Test.Base
             MyBO.LoadDefaultClassDef();
             BusinessObjectCollection<MyBO> col = CreateCollectionWith_4_Objects();
             IReadOnlyGrid readOnlyGrid = GetControlFactory().CreateReadOnlyGrid();
+            DisposeOnTearDown(readOnlyGrid);
             AddControlToForm(readOnlyGrid);
             SetupGridColumnsForMyBo(readOnlyGrid);
             readOnlyGrid.BusinessObjectCollection = col;
@@ -132,6 +135,7 @@ namespace Habanero.Faces.Test.Base
             MyBO.LoadDefaultClassDef();
             BusinessObjectCollection<MyBO> col = CreateCollectionWith_4_Objects();
             IReadOnlyGrid readOnlyGrid = GetControlFactory().CreateReadOnlyGrid();
+            DisposeOnTearDown(readOnlyGrid);
             AddControlToForm(readOnlyGrid);
             SetupGridColumnsForMyBo(readOnlyGrid);
             readOnlyGrid.BusinessObjectCollection = col;

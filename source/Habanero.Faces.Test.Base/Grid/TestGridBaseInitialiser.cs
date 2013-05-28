@@ -11,7 +11,7 @@ using Rhino.Mocks;
 namespace Habanero.Faces.Test.Base
 {
     [TestFixture]
-    public abstract class TestGridBaseInitialiser
+    public abstract class TestGridBaseInitialiser:TestBaseWithDisposing
     {
         private const string _gridIdColumnName = "HABANERO_OBJECTID";
 
@@ -505,6 +505,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             IClassDef classDef = MyBO.LoadClassDefWithDateTimeParameterFormat();
             IEditableGridControl grid = GetControlFactory().CreateEditableGridControl();
+            DisposeOnTearDown(grid);
             IGridInitialiser initialiser = new GridBaseInitialiser(grid.Grid, GetControlFactory());
             IUIDef uiDef = classDef.UIDefCol["default"];
             IUIGrid uiGridDef = uiDef.UIGrid;
@@ -531,6 +532,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             IClassDef classDef = MyBO.LoadClassDefWith_Grid_1ComboBoxColumn();
             IEditableGridControl grid = GetControlFactory().CreateEditableGridControl();
+            DisposeOnTearDown(grid);
             IGridInitialiser initialiser = new GridBaseInitialiser(grid.Grid, GetControlFactory());
             IUIDef uiDef = classDef.UIDefCol["default"];
             IUIGrid uiGridDef = uiDef.UIGrid;
@@ -556,6 +558,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Set up test pack-------------------
             IClassDef classDef = MyBO.LoadClassDefWith_Grid_1ComboBoxColumn();
             IEditableGridControl grid = GetControlFactory().CreateEditableGridControl();
+            DisposeOnTearDown(grid);
             IGridInitialiser initialiser = new GridBaseInitialiser(grid.Grid, GetControlFactory());
             IUIDef uiDef = classDef.UIDefCol["default"];
             IUIGrid uiGridDef = uiDef.UIGrid;
@@ -578,7 +581,7 @@ namespace Habanero.Faces.Test.Base
 
         private IReadOnlyGridControl CreateReadOnlyGridControl()
         {
-            return GetControlFactory().CreateReadOnlyGridControl();
+            return GetControlledLifetimeFor(GetControlFactory().CreateReadOnlyGridControl());
         }
 
         private static IClassDef LoadMyBoDefaultClassDef()

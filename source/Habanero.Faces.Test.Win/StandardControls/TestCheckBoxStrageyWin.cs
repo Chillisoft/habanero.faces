@@ -11,7 +11,7 @@ using Rhino.Mocks;
 namespace Habanero.Faces.Test.Win.StandardControls
 {
     [TestFixture]
-    public class TestCheckBoxStrageyWin 
+    public class TestCheckBoxStrageyWin :TestBaseWithDisposing
     {
         protected IControlFactory GetControlFactory()
         {
@@ -23,6 +23,7 @@ namespace Habanero.Faces.Test.Win.StandardControls
         {
             //---------------Set up test pack-------------------
             var checkBoxWin = new CheckBoxWin {Name = "TestCheckBox", Checked = false, Enabled = true};
+            DisposeOnTearDown(checkBoxWin);
             var checkBoxMapper = new CheckBoxMapperStub(checkBoxWin);
             //---------------Assert Precondition----------------
             Assert.IsInstanceOf<ICheckBox>(checkBoxMapper.Control);
@@ -38,6 +39,7 @@ namespace Habanero.Faces.Test.Win.StandardControls
         {
             //---------------Set up test pack-------------------
             var checkBoxWin = GetWinFormsControlAdapter();
+            DisposeOnTearDown(checkBoxWin);
             var checkBoxMapper = new CheckBoxMapperStub(checkBoxWin);
             //---------------Assert Precondition----------------
             Assert.IsInstanceOf<CheckBox>(checkBoxMapper.GetControl());

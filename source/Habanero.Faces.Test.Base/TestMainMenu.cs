@@ -22,16 +22,16 @@ using NUnit.Framework;
 
 namespace Habanero.Faces.Test.Base
 {
-    public abstract class TestMainMenu
+    public abstract class TestMainMenu:TestBaseWithDisposing
     {
         protected virtual IMainMenuHabanero CreateControl()
         {
-            return GetControlFactory().CreateMainMenu();
+            return GetControlledLifetimeFor(GetControlFactory().CreateMainMenu());
         }
 
         private IMainMenuHabanero CreateControl(HabaneroMenu menu)
         {
-            return GetControlFactory().CreateMainMenu(menu);
+            return GetControlledLifetimeFor(GetControlFactory().CreateMainMenu(menu));
         }
 
         protected abstract IControlFactory GetControlFactory();
