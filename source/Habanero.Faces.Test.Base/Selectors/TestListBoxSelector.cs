@@ -32,7 +32,7 @@ namespace Habanero.Faces.Test.Base
 
         protected override IBOColSelectorControl CreateSelector()
         {
-            return GetControlFactory().CreateListBoxSelector();
+            return GetControlledLifetimeFor(GetControlFactory().CreateListBoxSelector());
         }
 
         [Test]

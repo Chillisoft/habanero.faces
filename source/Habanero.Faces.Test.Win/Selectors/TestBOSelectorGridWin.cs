@@ -25,7 +25,7 @@ namespace Habanero.Faces.Test.Win.Selectors
             System.Windows.Forms.Form frm = new System.Windows.Forms.Form();
             frm.Controls.Add(gridBase);
             SetupGridColumnsForMyBo(gridBase);
-            return gridBase;
+            return GetControlledLifetimeFor(gridBase);
         }
     }
 }

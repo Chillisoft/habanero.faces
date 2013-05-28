@@ -24,7 +24,7 @@ namespace Habanero.Faces.Test.Win.Selectors
             IReadOnlyGridControl readOnlyGridControl = GetControlFactory().CreateReadOnlyGridControl();
             System.Windows.Forms.Form frm = new System.Windows.Forms.Form();
             frm.Controls.Add((System.Windows.Forms.Control)readOnlyGridControl);
-            return readOnlyGridControl;
+            return GetControlledLifetimeFor(readOnlyGridControl);
         }
     }
 }

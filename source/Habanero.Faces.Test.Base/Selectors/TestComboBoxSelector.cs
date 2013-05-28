@@ -31,7 +31,7 @@ namespace Habanero.Faces.Test.Base
             }
         protected override IBOColSelectorControl CreateSelector()
         {
-            return GetControlFactory().CreateComboBoxSelector();
+            return GetControlledLifetimeFor(GetControlFactory().CreateComboBoxSelector());
         }
         [Test]
         public void Test_Constructor_ComboBoxSet()

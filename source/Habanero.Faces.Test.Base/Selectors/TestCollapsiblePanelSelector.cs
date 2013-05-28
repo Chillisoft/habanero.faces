@@ -14,7 +14,7 @@ namespace Habanero.Faces.Test.Base
 
         protected override IBOColSelectorControl CreateSelector()
         {
-            return GetControlFactory().CreateCollapsiblePanelSelector();
+            return GetControlledLifetimeFor(GetControlFactory().CreateCollapsiblePanelSelector());
         }
 
         protected override void SetSelectedIndex(IBOColSelectorControl colSelector, int index)

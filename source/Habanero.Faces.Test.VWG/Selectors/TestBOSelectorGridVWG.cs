@@ -24,7 +24,7 @@ namespace Habanero.Faces.Test.VWG.Selectors
             Gizmox.WebGUI.Forms.Form frm = new Gizmox.WebGUI.Forms.Form();
             frm.Controls.Add(gridBase);
             SetupGridColumnsForMyBo(gridBase);
-            return gridBase;
+            return GetControlledLifetimeFor(gridBase);
         }
     }
 }
