@@ -26,17 +26,9 @@ msbuild_settings = {
 }
 
 #------------------------dependency settings---------------------
-$habanero_version = 'branches/v2.6-DotNet2CompactFramework'
-require 'rake-habanero.rb'
-
-$testability_version = 'branches/v2.5-CF'
-require 'rake-testabilityCF.rb'
-
-
 #------------------------project settings------------------------
 $basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/Faces/branches/V2.6-CF_Stargate'
 $solution = "source/Habanero.Faces - 2008_CF3.5.sln"
-
 #______________________________________________________________________________
 #---------------------------------TASKS----------------------------------------
 
@@ -44,10 +36,10 @@ desc "Runs the build all task"
 task :default => [:build_all]
 
 desc "Rakes habanero, builds Faces"
-task :build_all => [:create_temp, :rake_habanero, :rake_testability, :build, :delete_temp, :nuget]
+task :build_all => [:create_temp, :build, :delete_temp, :nuget]
 
 desc "Builds Faces, including tests"
-task :build => [:clean, :updatelib, :msbuild, :test, :commitlib]
+task :build => [:clean, :installNugetPackages, :msbuild, :test, :commitlib]
 
 desc "Pushes Habanero into the local nuget folder"
 task :nuget => [:publishFacesBaseNugetPackage, :publishFacesNugetPackage ]
@@ -61,39 +53,12 @@ task :clean do
 	FileUtils.rm_rf 'bin'
 end
 
-svn :update_lib_from_svn do |s|
-	s.parameters "update lib"
-end
-
-task :updatelib => :update_lib_from_svn do 
-	puts cyan("Updating lib")
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Base.dll'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Base.pdb'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Base.xml'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.BO.dll'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.BO.pdb'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.BO.xml'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Console.dll'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Console.pdb'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Console.xml'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.DB.dll'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.DB.pdb'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.DB.xml'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.dll'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.pdb'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.xml'), 'lib'	
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.Helpers.dll'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.Helpers.pdb'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Testability.Helpers.xml'), 'lib'	
-#	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.BO.dll'), 'lib'
-#	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.BO.pdb'), 'lib'
-#	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.DB.dll'), 'lib'	
-#	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.DB.pdb'), 'lib'	
-#	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.dll'), 'lib'	
-#	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.pdb'), 'lib'	
-#	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.Structure.dll'), 'lib'	
-#	FileUtils.cp Dir.glob('temp/bin/Habanero.Test.Structure.pdb'), 'lib'
-
+desc "Install nuget packages"
+getnugetpackages :installNugetPackages do |ip|
+   ip.package_names = ["Habanero.Base.v2.6-CF_Stargate", 
+						"Habanero.BO.v2.6-CF_Stargate",  
+						"Habanero.Testability.v2.5-CF_Stargate",  
+						"Habanero.Testability.Helpers.v2.5-CF_Stargate"]
 end
 
 desc "Builds the solution with msbuild"
