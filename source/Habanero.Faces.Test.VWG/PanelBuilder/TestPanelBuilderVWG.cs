@@ -17,7 +17,22 @@ namespace Habanero.Faces.Test.VWG.PanelBuilder
             return factory;
         }
 
-        protected override Sample.SampleUserInterfaceMapper GetSampleUserInterfaceMapper() { return new Sample.SampleUserInterfaceMapperVWG(); }
+        protected override Sample.SampleUserInterfaceMapper GetSampleUserInterfaceMapper()
+        {
+            return new SampleUserInterfaceMapperVWG_Fixed();
+        }
+
+        public class SampleUserInterfaceMapperVWG_Fixed : Sample.SampleUserInterfaceMapperVWG
+        {
+            protected override void SetupTypeNameVariables()
+            {
+                this._textBoxTypeName = "TextBoxVWG";
+                this._textBoxAssemblyName = "Habanero.Faces.VWG";
+                this._dateTimePickerTypeName = "DateTimePickerVWG";
+                this._dateTimePickerAssemblyName = "Habanero.Faces.VWG";
+                this._dateTimePickerMapperName = "DateTimePickerMapper";
+            }
+        }
 
         [Test]
         public void Test_BuildPanelForTab_Parameter_SetAlignment_NumericUpDown()

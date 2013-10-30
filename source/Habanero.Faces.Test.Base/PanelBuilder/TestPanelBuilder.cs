@@ -21,6 +21,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
 using Habanero.BO.ClassDefinition;
@@ -404,7 +405,7 @@ namespace Habanero.Faces.Test.Base
             //-----Row 1 Column 1
             Assert.IsInstanceOf(typeof (ILabel), panelControls[0]);
             Assert.AreEqual("Text:", panelControls[0].Text);
-            Assert.AreEqual(formColumn[0].PropertyName, panelControls[0].Name);
+            Assert.AreEqual(formColumn[0].PropertyName + "_Label", panelControls[0].Name);
             Assert.IsInstanceOf(typeof (ITextBox), panelControls[1]);
 
             Assert.IsInstanceOf(typeof (IPanel), panelControls[2]);
@@ -1682,6 +1683,126 @@ namespace Habanero.Faces.Test.Base
             Assert.AreEqual(100, panelInfo.Panel.MinimumSize.Height);
             Assert.AreEqual(200, panelInfo.Panel.MinimumSize.Width);
 
+        }
+
+        [Test]
+        public void Test_BuildPanelForForm_WhenSinglePanel_ShouldNamePanelAfterBo()
+        {
+            //---------------Set up test pack-------------------
+            var uiForm = GetSampleUIFormWithClassDef();
+            var panelBuilder = CreatePanelBuilder();
+            //---------------Assert Precondition----------------
+            //---------------Execute Test ----------------------
+            var panelInfo = panelBuilder.BuildPanelForForm(uiForm);
+            //---------------Test Result -----------------------
+            Assert.AreEqual("Sample", panelInfo.Panel.Name);
+        }
+
+        [Test]
+        public void Test_BuildPanelForForm_WhenEmptyPanel_ShouldNamePanelCorrectly()
+        {
+            //---------------Set up test pack-------------------
+            var uiForm = GetSampleUIFormWithClassDef();
+            RemoveAllFormTabs(uiForm);
+            var panelBuilder = CreatePanelBuilder();
+            //---------------Assert Precondition----------------
+            //---------------Execute Test ----------------------
+            var panelInfo = panelBuilder.BuildPanelForForm(uiForm);
+            //---------------Test Result -----------------------
+            Assert.AreEqual("Sample", panelInfo.Panel.Name);
+        }
+
+        [Test]
+        public void Test_BuildPanelForForm_WhenMultiTabs_ShouldNamePanelCorrectly()
+        {
+            //---------------Set up test pack-------------------
+            var uiForm = GetMultiTabUIFormWithClassDef();
+            var panelBuilder = CreatePanelBuilder();
+            //---------------Assert Precondition----------------
+            //---------------Execute Test ----------------------
+            var panelInfo = panelBuilder.BuildPanelForForm(uiForm);
+            //---------------Test Result -----------------------
+            Assert.AreEqual("Sample", panelInfo.Panel.Name);
+        }
+
+        private IUIForm GetSampleUIFormWithClassDef()
+        {
+            var interfaceMapper = GetSampleUserInterfaceMapper();
+            var uiForm = interfaceMapper.GetSimpleUIFormDef1Row1Column1Row();
+            uiForm.ClassDef = Sample.GetClassDef();
+            return uiForm;
+        }
+
+        private IUIForm GetMultiTabUIFormWithClassDef()
+        {
+            var interfaceMapper = GetSampleUserInterfaceMapper();
+            var uiForm = interfaceMapper.SampleUserInterfaceMapper2Tabs();
+            uiForm.ClassDef = Sample.GetClassDef();
+            return uiForm;
+        }
+
+        private static void RemoveAllFormTabs(IUIForm uiForm)
+        {
+            foreach (var formTab in uiForm.ToArray())
+            {
+                uiForm.Remove(formTab);
+            }
+        }
+
+        [Test]
+        public void Test_BuildPanelForTab_When1Prop_ShouldNameControlsCorrectly()
+        {
+            //---------------Set up test pack-------------------
+            var interfaceMapper = GetSampleUserInterfaceMapper();
+            var formTab = interfaceMapper.GetFormTabOneColumnOneRowWithWidth();
+            var panelBuilder = CreatePanelBuilder();
+            //---------------Assert Precondition----------------
+            //---------------Execute Test ----------------------
+            var panelInfo = panelBuilder.BuildPanelForTab(formTab);
+            //---------------Test Result -----------------------
+            Assert.AreEqual("SampleText", panelInfo.FieldInfos["SampleText"].InputControl.Name);
+            Assert.AreEqual("SampleText_Label", panelInfo.FieldInfos["SampleText"].LabelControl.Name);
+
+        }
+
+        [Test]
+        public void Test_BuildPanelForTab_When3DifferentProps_ShouldNameControlsCorrectly()
+        {
+            //---------------Set up test pack-------------------
+            var interfaceMapper = GetSampleUserInterfaceMapper();
+            var uiForm = interfaceMapper.SampleUserInterfaceMapper3Props();
+            var formTab = (UIFormTab)uiForm[0];
+            var panelBuilder = CreatePanelBuilder();
+            //---------------Assert Precondition----------------
+            //---------------Execute Test ----------------------
+            var panelInfo = panelBuilder.BuildPanelForTab(formTab);
+            //---------------Test Result -----------------------
+            Assert.AreEqual("SampleText", panelInfo.FieldInfos["SampleText"].InputControl.Name);
+            Assert.AreEqual("SampleDate", panelInfo.FieldInfos["SampleDate"].InputControl.Name);
+            Assert.AreEqual("SampleText2", panelInfo.FieldInfos["SampleText2"].InputControl.Name);
+            
+        }
+
+        [Test]
+        public void Test_BuildPanelForTab_WhenSamePropRepeated_ShouldNameControlsUniquely()
+        {
+            //---------------Set up test pack-------------------
+            var interfaceMapper = GetSampleUserInterfaceMapper();
+            var formTab = interfaceMapper.GetFormTabOneFieldsWithAlignment_NumericUpDown();
+            var panelBuilder = CreatePanelBuilder();
+            //---------------Assert Precondition----------------
+            //---------------Execute Test ----------------------
+            var panelInfo = panelBuilder.BuildPanelForTab(formTab);
+            //---------------Test Result -----------------------
+            Assert.AreEqual("SampleInt", panelInfo.FieldInfos[0].InputControl.Name);
+            Assert.AreEqual("SampleInt_1", panelInfo.FieldInfos[1].InputControl.Name);
+            Assert.AreEqual("SampleInt_2", panelInfo.FieldInfos[2].InputControl.Name);
+            Assert.AreEqual("SampleInt_3", panelInfo.FieldInfos[3].InputControl.Name);
+
+            Assert.AreEqual("SampleInt_Label", panelInfo.FieldInfos[0].LabelControl.Name);
+            Assert.AreEqual("SampleInt_Label_1", panelInfo.FieldInfos[1].LabelControl.Name);
+            Assert.AreEqual("SampleInt_Label_2", panelInfo.FieldInfos[2].LabelControl.Name);
+            Assert.AreEqual("SampleInt_Label_3", panelInfo.FieldInfos[3].LabelControl.Name);
         }
     }
 

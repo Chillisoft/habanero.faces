@@ -142,7 +142,7 @@ namespace Habanero.Faces.Test.Base
             IBusinessObject bo = _classDefMyBo.CreateNewBusinessObject();
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
-            IDefaultBOEditorForm defaultBOEditorForm = GetControlFactory().CreateBOEditorForm((BusinessObject)bo,"default", delegate {  });
+            IDefaultBOEditorForm defaultBOEditorForm = GetControlFactory().CreateBOEditorForm((BusinessObject)bo,"default", () => null);
             //---------------Test Result -----------------------
             Assert.IsNotNull(defaultBOEditorForm.PanelInfo);
             Assert.IsNotNull(defaultBOEditorForm.GroupControlCreator);
@@ -237,7 +237,7 @@ namespace Habanero.Faces.Test.Base
             IBusinessObject bo = _classDefMyBo.CreateNewBusinessObject();
             bo.Save();
             IDefaultBOEditorForm boEditorForm = GetControlFactory()
-                .CreateBOEditorForm((BusinessObject) bo, "default", delegate { });
+                .CreateBOEditorForm((BusinessObject) bo, "default", () => null);
 
             ShowFormIfNecessary(boEditorForm);
             EditControlValueOnForm(boEditorForm, "TestProp", "TestValue");

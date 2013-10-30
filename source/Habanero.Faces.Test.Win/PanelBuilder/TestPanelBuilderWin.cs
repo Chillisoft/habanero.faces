@@ -4,6 +4,7 @@ using Habanero.Faces.Base;
 using Habanero.Faces.Win;
 using Habanero.Test;
 using NUnit.Framework;
+using HorizontalAlignment = Habanero.Faces.Base.HorizontalAlignment;
 
 namespace Habanero.Faces.Test.Win.PanelBuilder
 {

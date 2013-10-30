@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
 using Habanero.BO.ClassDefinition;
@@ -99,6 +100,7 @@ namespace Habanero.Faces.Base
 
 
         private GroupControlCreator _groupControlCreator;
+        private readonly ControlNamingStrategy _controlNamingStrategy;
 
 //        ///<summary>
 //        /// Sets the <see cref="groupControlCreator"/> and the <see cref="individualControlCreator"/>
@@ -139,6 +141,7 @@ namespace Habanero.Faces.Base
             if (controlFactory == null) throw new ArgumentNullException("controlFactory");
             ControlFactory = controlFactory;
             this.GroupControlCreator = controlFactory.CreateTabControl;
+            _controlNamingStrategy = new ControlNamingStrategy();
         }
 
         /// <summary>
@@ -159,6 +162,7 @@ namespace Habanero.Faces.Base
             var panelInfo = new PanelInfo();
             var layoutManager =  SetupLayoutManager(formTab, panel);
             panelInfo.LayoutManager = layoutManager;
+            panelInfo.Panel = panel;
             AddFieldsToLayoutManager(formTab, panelInfo);
             SetupInputControlColumnWidth(panelInfo, formTab);
 
@@ -166,7 +170,6 @@ namespace Habanero.Faces.Base
             panel.Height = layoutManager.GetFixedHeightIncludingGaps();
             Size minSize = new Size(panel.Width, panel.Height);
             panel.MinimumSize = minSize;
-            panelInfo.Panel = panel;
 
             panelInfo.UIFormTab = formTab;
             panelInfo.MinimumPanelHeight = panel.Height;
@@ -255,6 +258,7 @@ namespace Habanero.Faces.Base
                 mainPanel = panel;
             }
             panelInfo.Panel = mainPanel;
+            mainPanel.Name = _controlNamingStrategy.GetUIFormControlName(uiForm);
             mainPanel.Size = new Size(uiForm.Width, uiForm.Height);
             panelInfo.UIForm = uiForm;
             return panelInfo;
@@ -372,6 +376,8 @@ namespace Habanero.Faces.Base
             IControlMapper controlMapper;
             IControlHabanero inputControl = ConfigureInputControl(formField, out controlMapper);
             inputControl.Dock = DockStyle.Fill;
+            inputControl.Name = _controlNamingStrategy.GetInputControlName(formField);
+            EnsureControlNameUnique(inputControl, containerControl);
             containerControl.Controls.Add(inputControl);
             return controlMapper;
         }
@@ -385,6 +391,8 @@ namespace Habanero.Faces.Base
             GridLayoutManager.ControlInfo inputControlInfo = new GridLayoutManager.ControlInfo
                 (inputControl, numberOfGridColumnsToSpan, formField.RowSpan);
 
+            inputControl.Name = _controlNamingStrategy.GetInputControlName(formField);
+            EnsureControlNameUnique(inputControl, panelInfo.Panel);
             panelInfo.LayoutManager.AddControl(inputControlInfo);
             return controlMapper;
         }
@@ -399,7 +407,7 @@ namespace Habanero.Faces.Base
             controlMapper.ClassDef = GetClassDef(formField);
             SetInputControlAlignment(formField, inputControl);
             SetInputControlNumLines(formField, inputControl);
-
+            
             controlMapper.SetPropertyAttributes(formField.Parameters);
 
             AddDecimalPlacesToNumericUpDown(formField, inputControl);
@@ -530,11 +538,18 @@ namespace Habanero.Faces.Base
         {
 //            IClassDef classDef = panelInfo.UIForm.UIDef.ClassDef;
             ILabel labelControl = ControlFactory.CreateLabel(formField.GetLabel(), formField.IsCompulsory);
-            labelControl.Name = formField.PropertyName;
+            labelControl.Name = _controlNamingStrategy.GetLabelControlName(formField);
             labelControl.Enabled = formField.Editable;
             SetToolTip(formField, labelControl);
+            var containerControl = panelInfo.Panel;
+            EnsureControlNameUnique(labelControl, containerControl);
             panelInfo.LayoutManager.AddControl(labelControl, formField.RowSpan, 1);
             return labelControl;
+        }
+
+        private void EnsureControlNameUnique(IControlHabanero labelControl, IControlHabanero containerControl)
+        {
+            labelControl.Name = _controlNamingStrategy.GetUniqueControlNameWithin(containerControl, labelControl.Name);
         }
 
         private static void SetupInputControlColumnWidth(IPanelInfo panelInfo, IUIFormTab formTab)
