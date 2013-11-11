@@ -75,7 +75,7 @@ namespace Habanero.Faces.Base
                 //TODO brett 27 May 2010: Check if dirty if dirty then 
                 // if valid Ask  have option of Save, CancelEdits, CancelClose.
                 // if not valid ask if want to CancelEdits or CancelClose
-                if ((currentBusinessObject != null) && currentBusinessObject.IsValid())
+                if ((currentBusinessObject != null) && currentBusinessObject.Status.IsValid())
                 {
                     currentBusinessObject.Save();
                 }

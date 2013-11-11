@@ -24,6 +24,7 @@ using Habanero.Base;
 using Habanero.Base.Exceptions;
 using Habanero.Base.Logging;
 using Habanero.BO;
+using Habanero.BO.Exceptions;
 using Habanero.Faces.Base.ControlMappers;
 using Habanero.Util;
 using log4net;
@@ -134,7 +135,7 @@ namespace Habanero.Faces.Base
                 RemoveCurrentBOPropHandlers();
                 _businessObject = value;
                 _logger.Log("Start Set BusinessObject (" + value + ") For Mapper (" + this.Control.Name + ")", LogCategory.Debug);
-                if (value != null) value.IsValid();//This forces the object to do validation so that the error provider is filled correctly.
+                if (value != null) value.Status.IsValid();//This forces the object to do validation so that the error provider is filled correctly.
 
                 if (_businessObject != null && _businessObject.Props.Contains(PropertyName))
                 {

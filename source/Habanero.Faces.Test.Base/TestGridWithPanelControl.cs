@@ -780,7 +780,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Assert Precondition----------------
             Assert.IsTrue(currentBO.Status.IsDirty);
             Assert.IsTrue(currentBO.Status.IsNew);
-            Assert.IsTrue(currentBO.IsValid());
+            Assert.IsTrue(currentBO.Status.IsValid());
             Assert.IsTrue(saveButton.Enabled);
             Assert.IsTrue(cancelButton.Enabled);
             Assert.IsFalse(newButton.Enabled);
@@ -812,7 +812,7 @@ namespace Habanero.Faces.Test.Base
             MyBO currentBO = (MyBO)gridWithPanelControl.BusinessObjectControl.BusinessObject;
             
             //---------------Assert Precondition----------------
-            Assert.IsFalse(currentBO.IsValid());
+            Assert.IsFalse(currentBO.Status.IsValid());
             //Assert.IsFalse(boControl.DisplayErrorsCalled); //TODO
             //---------------Execute Test ----------------------
             newButton.PerformClick();
@@ -838,7 +838,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Assert Precondition----------------
             Assert.IsTrue(firstBO.Status.IsDirty);
             Assert.IsFalse(firstBO.Status.IsNew);
-            Assert.IsFalse(firstBO.IsValid());
+            Assert.IsFalse(firstBO.Status.IsValid());
             Assert.AreEqual(0, gridWithPanelControl.ReadOnlyGridControl.Grid.SelectedRows[0].Index);
             Assert.AreSame(firstBO, gridWithPanelControl.ReadOnlyGridControl.Grid.SelectedBusinessObject);
             //Assert.IsFalse(boControl.DisplayErrorsCalled);  //TODO

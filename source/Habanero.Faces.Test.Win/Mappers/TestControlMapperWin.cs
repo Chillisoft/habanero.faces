@@ -118,12 +118,12 @@ namespace Habanero.Faces.Test.Win.Mappers
             ITextBox textBox = GetTextBoxForShapeNameWhereShapeNameCompulsory(out shape, out mapperStub);
             mapperStub.BusinessObject = shape;
             //---------------Assert Precondition----------------
-            Assert.IsFalse(mapperStub.BusinessObject.IsValid());
+            Assert.IsFalse(mapperStub.BusinessObject.Status.IsValid());
             Assert.AreNotEqual("", mapperStub.ErrorProvider.GetError(textBox));
             //---------------Execute Test ----------------------
             shape.ShapeName = TestUtil.GetRandomString();
             //---------------Test Result -----------------------
-            Assert.IsTrue(mapperStub.BusinessObject.IsValid());
+            Assert.IsTrue(mapperStub.BusinessObject.Status.IsValid());
             Assert.AreEqual("", mapperStub.ErrorProvider.GetError(textBox));
         }
         //This test is different from VWG because an edit to the properties in Windows updates the 

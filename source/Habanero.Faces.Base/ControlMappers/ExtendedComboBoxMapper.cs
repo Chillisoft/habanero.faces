@@ -72,7 +72,7 @@ namespace Habanero.Faces.Base
         {
             IBOGridAndEditorControl iboGridAndEditorControl = GetIBOGridAndEditorControl();
             IBusinessObject currentBusinessObject = iboGridAndEditorControl.CurrentBusinessObject;
-            if ((currentBusinessObject != null) && currentBusinessObject.IsValid())
+            if ((currentBusinessObject != null) && currentBusinessObject.Status.IsValid())
             {
                 currentBusinessObject.Save();
             }

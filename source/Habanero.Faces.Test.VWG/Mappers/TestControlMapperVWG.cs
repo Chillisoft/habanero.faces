@@ -84,12 +84,12 @@ namespace Habanero.Faces.Test.VWG.Mappers
             mapperStub.UpdateErrorProviderErrorMessage();
             shape.ShapeName = TestUtil.GetRandomString();
             //---------------Assert Precondition----------------
-            Assert.IsTrue(mapperStub.BusinessObject.IsValid());
+            Assert.IsTrue(mapperStub.BusinessObject.Status.IsValid());
             Assert.AreNotEqual("", mapperStub.ErrorProvider.GetError(textBox));
             //---------------Execute Test ----------------------
             mapperStub.UpdateErrorProviderErrorMessage();
             //---------------Test Result -----------------------
-            Assert.IsTrue(mapperStub.BusinessObject.IsValid());
+            Assert.IsTrue(mapperStub.BusinessObject.Status.IsValid());
             Assert.AreEqual("", mapperStub.ErrorProvider.GetError(textBox));
         }
 

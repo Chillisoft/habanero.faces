@@ -67,7 +67,7 @@ namespace Habanero.Faces.Base
             {
                 _businessObject = value;
                 if (this.BusinessObject != null)
-                    this.BusinessObject.IsValid(); //This causes the BO to run all its validation rules.
+                    this.BusinessObject.Status.IsValid(); //This causes the BO to run all its validation rules.
                 for (int fieldInfoNum = 0; fieldInfoNum < FieldInfos.Count; fieldInfoNum++)
                 {
                     FieldInfos[fieldInfoNum].ControlMapper.BusinessObject = value;

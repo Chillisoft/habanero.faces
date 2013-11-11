@@ -192,7 +192,7 @@ namespace Habanero.Faces.VWG.Grid
                 {
                     if (_newBO.Status.IsDirty)
                     {
-                        if (_newBO.IsValid())
+                        if (_newBO.Status.IsValid())
                         {
                             _newBO.Save();
                         }
@@ -223,7 +223,7 @@ namespace Habanero.Faces.VWG.Grid
         {
             if (_lastSelectedBusinessObject != null && _readOnlyGridControl.SelectedBusinessObject != _lastSelectedBusinessObject)
             {
-                if (!_lastSelectedBusinessObject.IsValid())
+                if (!_lastSelectedBusinessObject.Status.IsValid())
                 {
                     bool errors = _iboEditorControl.HasErrors;
                     _readOnlyGridControl.SelectedBusinessObject = _lastSelectedBusinessObject;
@@ -359,7 +359,7 @@ namespace Habanero.Faces.VWG.Grid
                 IBusinessObject currentBO = CurrentBusinessObject;
                 if (currentBO != null)
                 {
-                    if (!currentBO.IsValid())
+                    if (!currentBO.Status.IsValid())
                     {
                         bool errors = _iboEditorControl.HasErrors;
                         return;
@@ -710,7 +710,7 @@ namespace Habanero.Faces.VWG.Grid
         {
             if (_lastSelectedBusinessObject != null && _readOnlyGridControl.SelectedBusinessObject != _lastSelectedBusinessObject)
             {
-                if (!_lastSelectedBusinessObject.IsValid())
+                if (!_lastSelectedBusinessObject.Status.IsValid())
                 {
                     bool hasErrors = this.IBOEditorControl.HasErrors;
                     _readOnlyGridControl.SelectedBusinessObject = _lastSelectedBusinessObject;
@@ -830,7 +830,7 @@ namespace Habanero.Faces.VWG.Grid
             IBusinessObject currentBO = CurrentBusinessObject;
             if (currentBO != null)
             {
-                if (!currentBO.IsValid())
+                if (!currentBO.Status.IsValid())
                 {
                     bool hasErrors = this.IBOEditorControl.HasErrors;
                     return;

@@ -100,7 +100,7 @@ namespace Habanero.Faces.VWG
         /// </summary>
         public bool HasErrors
         {
-            get { return this.BusinessObject == null ? false : !this.BusinessObject.IsValid(); }
+            get { return this.BusinessObject == null ? false : !this.BusinessObject.Status.IsValid(); }
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Habanero.Faces.VWG
         /// </summary>
         public bool HasErrors
         {
-            get { return this.BusinessObject == null ? false : !this.BusinessObject.IsValid(); }
+            get { return this.BusinessObject == null ? false : !this.BusinessObject.Status.IsValid(); }
         }
 
         /// <summary>

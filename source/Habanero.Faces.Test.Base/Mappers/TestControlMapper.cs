@@ -1074,7 +1074,7 @@ namespace Habanero.Faces.Test.Base.Mappers
 			mapperStub.BusinessObject = shape;
 			mapperStub.UpdateErrorProviderErrorMessage();
 			//---------------Assert Precondition----------------
-			Assert.IsFalse(mapperStub.BusinessObject.IsValid());
+			Assert.IsFalse(mapperStub.BusinessObject.Status.IsValid());
 			Assert.AreNotEqual("", mapperStub.ErrorProvider.GetError(textBox));
 			//---------------Execute Test ----------------------
 			mapperStub.BusinessObject = null;
@@ -1094,12 +1094,12 @@ namespace Habanero.Faces.Test.Base.Mappers
 			mapperStub.BusinessObject = shape;
 			mapperStub.UpdateErrorProviderErrorMessage();
 			//---------------Assert Precondition----------------
-			Assert.IsFalse(mapperStub.BusinessObject.IsValid());
+			Assert.IsFalse(mapperStub.BusinessObject.Status.IsValid());
 			Assert.AreNotEqual("", mapperStub.ErrorProvider.GetError(textBox));
 			//---------------Execute Test ----------------------
 			mapperStub.BusinessObject = new Shape { ShapeName = "someName" };
 			//---------------Test Result -----------------------
-			Assert.IsTrue(mapperStub.BusinessObject.IsValid());
+			Assert.IsTrue(mapperStub.BusinessObject.Status.IsValid());
 			Assert.AreEqual("", mapperStub.ErrorProvider.GetError(textBox));
 		}
 

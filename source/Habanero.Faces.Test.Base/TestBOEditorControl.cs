@@ -232,7 +232,7 @@ namespace Habanero.Faces.Test.Base
             //---------------Execute Test ----------------------
             controlWin.BusinessObject = ContactPersonTestBO.CreateSavedContactPerson();
             //---------------Test Result -----------------------
-            Assert.IsTrue(controlWin.BusinessObject.IsValid());
+            Assert.IsTrue(controlWin.BusinessObject.Status.IsValid());
             AssertErrorProvidersHaveBeenCleared(controlWin);
         }
 
@@ -267,7 +267,7 @@ namespace Habanero.Faces.Test.Base
             IBOPanelEditorControl controlWin = CreateEditorControl(person.ClassDef);
             controlWin.BusinessObject = person;
             //---------------Assert Precondition----------------
-            Assert.IsTrue(controlWin.BusinessObject.IsValid());
+            Assert.IsTrue(controlWin.BusinessObject.Status.IsValid());
             AssertErrorProvidersHaveBeenCleared(controlWin);
             //---------------Execute Test ----------------------
             SetSurnameTextBoxToNull(controlWin);
@@ -286,7 +286,7 @@ namespace Habanero.Faces.Test.Base
             IBOPanelEditorControl controlWin = CreateEditorControl(person.ClassDef);
             controlWin.BusinessObject = person;
             //---------------Assert Precondition----------------
-            Assert.IsTrue(controlWin.BusinessObject.IsValid());
+            Assert.IsTrue(controlWin.BusinessObject.Status.IsValid());
             Assert.IsFalse(controlWin.HasErrors);
             //---------------Execute Test ----------------------
             SetSurnameTextBoxToNull(controlWin);
@@ -306,7 +306,7 @@ namespace Habanero.Faces.Test.Base
             IBOPanelEditorControl controlWin = CreateEditorControl(person.ClassDef);
             controlWin.BusinessObject = person;
             //---------------Assert Precondition----------------
-            Assert.IsTrue(controlWin.BusinessObject.IsValid());
+            Assert.IsTrue(controlWin.BusinessObject.Status.IsValid());
             //---------------Execute Test ----------------------
             bool hasErrors = controlWin.HasErrors;
             //---------------Test Result -----------------------
@@ -324,7 +324,7 @@ namespace Habanero.Faces.Test.Base
             IBOPanelEditorControl controlWin = CreateEditorControl(person.ClassDef);
             controlWin.BusinessObject = person;
             //---------------Assert Precondition----------------
-            Assert.IsTrue(controlWin.BusinessObject.IsValid());
+            Assert.IsTrue(controlWin.BusinessObject.Status.IsValid());
             Assert.IsFalse(controlWin.HasErrors);
             //---------------Execute Test ----------------------
             controlWin.BusinessObject = null;
@@ -344,7 +344,7 @@ namespace Habanero.Faces.Test.Base
             IBOPanelEditorControl controlWin = CreateEditorControl(person.ClassDef);
             controlWin.BusinessObject = person;
             //---------------Assert Precondition----------------
-            Assert.IsFalse(controlWin.BusinessObject.IsValid());
+            Assert.IsFalse(controlWin.BusinessObject.Status.IsValid());
             AssertErrorProviderHasErrors(controlWin, "Surname");
             //---------------Execute Test ----------------------
             bool hasErrors = controlWin.HasErrors;
@@ -382,7 +382,7 @@ namespace Habanero.Faces.Test.Base
             IBOPanelEditorControl controlWin = CreateEditorControl(person.ClassDef);
             controlWin.BusinessObject = person;
             //---------------Assert Precondition----------------
-            Assert.IsTrue(controlWin.BusinessObject.IsValid());
+            Assert.IsTrue(controlWin.BusinessObject.Status.IsValid());
             Assert.IsFalse(controlWin.IsDirty);
             TestUtil.AssertStringNotEmpty(person.Surname, "person.Surname");
             //---------------Execute Test ----------------------
@@ -404,7 +404,7 @@ namespace Habanero.Faces.Test.Base
             IBOPanelEditorControl controlWin = CreateEditorControl(person.ClassDef);
             controlWin.BusinessObject = person;
             //---------------Assert Precondition----------------
-            Assert.IsTrue(controlWin.BusinessObject.IsValid());
+            Assert.IsTrue(controlWin.BusinessObject.Status.IsValid());
             Assert.IsFalse(controlWin.IsDirty);
             TestUtil.AssertStringNotEmpty(person.Surname, "person.Surname");
             //---------------Execute Test ----------------------
@@ -425,7 +425,7 @@ namespace Habanero.Faces.Test.Base
             IBOPanelEditorControl controlWin = CreateEditorControl(person.ClassDef);
             controlWin.BusinessObject = person;
             //---------------Assert Precondition----------------
-            Assert.IsFalse(controlWin.BusinessObject.IsValid());
+            Assert.IsFalse(controlWin.BusinessObject.Status.IsValid());
             Assert.IsFalse(controlWin.IsDirty);
 
             //---------------Execute Test ----------------------

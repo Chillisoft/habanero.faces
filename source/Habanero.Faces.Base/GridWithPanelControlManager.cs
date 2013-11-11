@@ -129,7 +129,7 @@ namespace Habanero.Faces.Base
             if (_lastSelectedBusinessObject != null && ReadOnlyGridControl.SelectedBusinessObject != _lastSelectedBusinessObject)
             {
                 CallApplyChangesOnPanelInfo_IfStrategyAllows();
-                if (!_lastSelectedBusinessObject.IsValid())
+                if (!_lastSelectedBusinessObject.Status.IsValid())
                 {
                     SelectBusinessObjectInGrid_NoEvents(_lastSelectedBusinessObject);
                     CallApplyChangesOnPanelInfo();  // to flash the error providers
@@ -233,7 +233,7 @@ namespace Habanero.Faces.Base
             {
                 CallApplyChangesOnPanelInfo();
 
-                if (!currentBO.IsValid()) return;
+                if (!currentBO.Status.IsValid()) return;
 
                 currentBO.Save();
                 RefreshGrid_IfStrategyAllows();
@@ -249,7 +249,7 @@ namespace Habanero.Faces.Base
             {
                 CallApplyChangesOnPanelInfo_IfStrategyAllows();
 
-                if (!currentBO.IsValid())
+                if (!currentBO.Status.IsValid())
                 {
                     CallApplyChangesOnPanelInfo();  // to flash the error providers
                     return;

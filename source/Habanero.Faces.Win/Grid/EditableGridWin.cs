@@ -24,6 +24,7 @@ using Habanero.Base;
 using Habanero.Base.Exceptions;
 using Habanero.Base.Logging;
 using Habanero.BO;
+using Habanero.BO.Exceptions;
 using Habanero.Faces.Base;
 using log4net;
 using DataGridViewSelectionMode=System.Windows.Forms.DataGridViewSelectionMode;
