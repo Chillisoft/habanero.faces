@@ -9,28 +9,10 @@ require 'albacore'
 # This should be the same for most projects, but if your project is a level
 # deeper in the repo you will need to add another ..
 bs = File.dirname(__FILE__)
-bs = File.join(bs, "..") if bs.index("branches") != nil
-bs = File.join(bs, "../HabaneroCommunity/BuildScripts")
+bs = File.join(bs, "/rake-tasks")
 $buildscriptpath = File.expand_path(bs)
 $:.unshift($buildscriptpath) unless
     $:.include?(bs) || $:.include?($buildscriptpath)
-
-if (bs.index("branches") == nil)	
-	nuget_version = 'Trunk'
-	nuget_version_id = '9.9.999'
-	
-	$nuget_habanero_version	= nuget_version
-	$nuget_smooth_version =	nuget_version
-	
-	$nuget_publish_version = nuget_version
-	$nuget_publish_version_id = nuget_version_id
-else
-	$nuget_habanero_version	= 'v2.6-13_02_2012'
-	$nuget_smooth_version =	'v1.6-13_02_2012'
-	
-	$nuget_publish_version = 'v2.7-13_02_2012'
-	$nuget_publish_version_id = '2.7'
-end	
 
 $binaries_baselocation = "bin"
 $nuget_baselocation = "nugetArtifacts"
@@ -48,42 +30,48 @@ msbuild_settings = {
 #------------------------dependency settings---------------------
 #------------------------project settings------------------------
 $solution = "source/Habanero.Faces - 2010.sln"
+$solutionNuget = '"source/Habanero.Faces - 2010.sln"'
 $major_version = ''
 $minor_version = ''
 $patch_version = ''
+$nuget_apikey = ''
+$nuget_sourceurl = ''
+$nuget_publish_version = 'Trunk'
 #______________________________________________________________________________
 #---------------------------------TASKS----------------------------------------
-
 desc "Runs the build all task"
-task :default, [:major, :minor, :patch] => [:build_all]
+task :default, [:major, :minor, :patch] => [:setupvars, :build]
 
-desc "Rakes habanero+smooth, builds Faces"
-task :build_all, [:major, :minor, :patch] => [:build_all_nuget]
+desc "Pulls habanero deps from local nuget, builds , tests and pushes faces"
+task :build_test_push_internal, [:major, :minor, :patch, :apikey, :sourceurl] => [:setupvars, :installNugetPackages, :build, :nugetpush]
 
-desc "Rakes habanero+smooth, builds Faces"
-task :build_all_nuget, [:major, :minor, :patch] => [:installNugetPackages, :setupversion, :set_assembly_version, :build, :copy_to_nuget, :nuget]
+desc "Builds Testability, including tests"
+task :build, [:major, :minor, :patch]  => [:clean, :restorepackages, :setupvars, :set_assembly_version, :msbuild, :copy_to_nuget, :test]
 
-desc "Builds Faces, including tests"
-task :build, [:major, :minor, :patch] => [:clean, :setupversion, :set_assembly_version, :msbuild, :test, :copy_to_nuget]
-
-desc "Pushes Faces to Nuget"
-task :nuget => [:publishFacesBaseNugetPackage, 
-				:publishFacesVWGNugetPackage, 
-				:publishFacesWinNugetPackage,
-				:publishFacesTestBaseNugetPackage,
-				:publishFacesTestWinNugetPackage]
 #------------------------Setup Versions---------
-desc "Setup Versions"
-task :setupversion,:major ,:minor,:patch do |t, args|
-	puts cyan("Setup Versions")
+desc "Setup Variables"
+task :setupvars,:major ,:minor,:patch, :apikey, :sourceurl do |t, args|
+	puts cyan("Setup Variables")
 	args.with_defaults(:major => "0")
 	args.with_defaults(:minor => "0")
 	args.with_defaults(:patch => "0000")
+	args.with_defaults(:apikey => "")
+	args.with_defaults(:sourceurl => "")
 	$major_version = "#{args[:major]}"
 	$minor_version = "#{args[:minor]}"
 	$patch_version = "#{args[:patch]}"
+	$nuget_apikey = "#{args[:apikey]}"
+	$nuget_sourceurl = "#{args[:sourceurl]}"
 	$app_version = "#{$major_version}.#{$minor_version}.#{$patch_version}.0"
-	puts cyan("Assembly Version #{$app_version}")	
+	puts cyan("Assembly Version #{$app_version}")
+	puts cyan("Nuget key: #{$nuget_apikey} for: #{$nuget_sourceurl}")
+end
+
+
+desc "Restore Nuget Packages"
+task :restorepackages do
+	puts cyan('lib\nuget.exe restore '+"#{$solutionNuget}")
+	system 'lib\nuget.exe restore '+"#{$solutionNuget}"
 end
 
 task :set_assembly_version do
@@ -134,55 +122,73 @@ end
 
 desc "Install nuget packages"
 getnugetpackages :installNugetPackages do |ip|
-    ip.package_names = ["Habanero.Base.#{$nuget_habanero_version}",  
-						"Habanero.BO.#{$nuget_habanero_version}",  
-						"Habanero.Console.#{$nuget_habanero_version}",  
-						"Habanero.DB.#{$nuget_habanero_version}",  
-						"Habanero.Test.#{$nuget_habanero_version}",   
-						"Habanero.Test.Structure.#{$nuget_habanero_version}",   
-						"Habanero.Test.BO.#{$nuget_habanero_version}",   
-						"Habanero.Test.DB.#{$nuget_habanero_version}",   
-						"Habanero.Smooth.#{$nuget_smooth_version}",
-						"Habanero.Naked.#{$nuget_smooth_version}",
+    ip.package_names = ["Habanero.Base.#{$nuget_publish_version}",  
+						"Habanero.BO.#{$nuget_publish_version}",  
+						"Habanero.Console.#{$nuget_publish_version}",  
+						"Habanero.DB.#{$nuget_publish_version}",  
+						"Habanero.Test.#{$nuget_publish_version}",   
+						"Habanero.Test.Structure.#{$nuget_publish_version}",   
+						"Habanero.Test.BO.#{$nuget_publish_version}",   
+						"Habanero.Test.DB.#{$nuget_publish_version}",   
+						"Habanero.Smooth.#{$nuget_publish_version}",
+						"Habanero.Naked.#{$nuget_publish_version}",
 						"nunit.Trunk"]
+	ip.SourceUrl = "#{$nuget_sourceurl}/nuget"
 end
 
+desc "Pushes Faces to Nuget"
+task :nugetpush => [:publishFacesBaseNugetPackage, 
+					:publishFacesVWGNugetPackage, 
+					:publishFacesWinNugetPackage,
+					:publishFacesTestBaseNugetPackage,
+					:publishFacesTestWinNugetPackage]
+				
 desc "Publish the Habanero.Faces.Base nuget package"
-pushnugetpackages :publishFacesBaseNugetPackage do |package|
+pushnugetpackagesonline :publishFacesBaseNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Faces.Base.dll"
   package.Nugetid = "Habanero.Faces.Base.#{$nuget_publish_version}"
-  package.Version = $nuget_publish_version_id
+  package.Version = $app_version
   package.Description = "Habanero.Faces.Base"
+  package.ApiKey = "#{$nuget_apikey}"
+  package.SourceUrl = "#{$nuget_sourceurl}"
 end
 
 desc "Publish the Habanero.Faces.VWG nuget package"
-pushnugetpackages :publishFacesVWGNugetPackage do |package|
+pushnugetpackagesonline :publishFacesVWGNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Faces.VWG.dll"
   package.Nugetid = "Habanero.Faces.VWG.#{$nuget_publish_version}"
-  package.Version = $nuget_publish_version_id
+  package.Version = $app_version
   package.Description = "Habanero.Faces.VWG"
+  package.ApiKey = "#{$nuget_apikey}"
+  package.SourceUrl = "#{$nuget_sourceurl}"
 end
 
 desc "Publish the Habanero.Faces.Win nuget package"
-pushnugetpackages :publishFacesWinNugetPackage do |package|
+pushnugetpackagesonline :publishFacesWinNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Faces.Win.dll"
   package.Nugetid = "Habanero.Faces.Win.#{$nuget_publish_version}"
-  package.Version = $nuget_publish_version_id
+  package.Version = $app_version
   package.Description = "Habanero.Faces.Win"
+  package.ApiKey = "#{$nuget_apikey}"
+  package.SourceUrl = "#{$nuget_sourceurl}"
 end
 
 desc "Publish the Habanero.Faces.Test.Base nuget package"
-pushnugetpackages :publishFacesTestBaseNugetPackage do |package|
+pushnugetpackagesonline :publishFacesTestBaseNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Faces.Test.Base.dll"
   package.Nugetid = "Habanero.Faces.Test.Base.#{$nuget_publish_version}"
-  package.Version = $nuget_publish_version_id
+  package.Version = $app_version
   package.Description = "Habanero.Faces.Test.Base"
+  package.ApiKey = "#{$nuget_apikey}"
+  package.SourceUrl = "#{$nuget_sourceurl}"
 end
 
 desc "Publish the Habanero.Faces.Test.Win nuget package"
-pushnugetpackages :publishFacesTestWinNugetPackage do |package|
+pushnugetpackagesonline :publishFacesTestWinNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Faces.Test.Win.dll"
   package.Nugetid = "Habanero.Faces.Test.Win.#{$nuget_publish_version}"
-  package.Version = $nuget_publish_version_id
+  package.Version = $app_version
   package.Description = "Habanero.Faces.Test.Win"
+  package.ApiKey = "#{$nuget_apikey}"
+  package.SourceUrl = "#{$nuget_sourceurl}"
 end
