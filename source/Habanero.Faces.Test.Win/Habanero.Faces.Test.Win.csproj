@@ -73,11 +73,12 @@
       <HintPath>..\..\lib\Habanero.Test.BO.dll</HintPath>
     </Reference>
     <Reference Include="Habanero.Test.Structure">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Habanero.Test.Structure.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\nunit.framework.dll</HintPath>
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="NUnitForms">
       <SpecificVersion>False</SpecificVersion>

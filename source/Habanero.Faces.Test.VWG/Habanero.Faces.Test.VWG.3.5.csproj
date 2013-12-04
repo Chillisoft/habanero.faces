@@ -77,13 +77,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\DotNet35\Habanero.Test.dll</HintPath>
     </Reference>
+    <Reference Include="nunit.framework">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="Habanero.Test.BO">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\DotNet35\Habanero.Test.BO.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.Mocks">
       <SpecificVersion>False</SpecificVersion>
@@ -107,7 +107,9 @@
     <Compile Include="..\Common\AssemblyInfoShared.cs">
       <Link>Properties\AssemblyInfoShared.cs</Link>
     </Compile>
-    <Compile Include="Grid\TestBOGridAndEditorControlVWG.cs" />
+    <Compile Include="Grid\TestBOGridAndEditorControlVWG.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Grid\TestDataGridViewVWG.cs" />
     <Compile Include="Grid\TestEditableGridControlVWG.cs" />
     <Compile Include="Grid\TestEditableGridVWG.cs" />
@@ -116,7 +118,9 @@
     <Compile Include="Grid\TestReadOnlyGridButtonControlVWG.cs" />
     <Compile Include="Grid\TestReadOnlyGridControlVWG.cs" />
     <Compile Include="Grid\TestReadOnlyGridVWG.cs" />
-    <Compile Include="HabaneroControls\BusinessObjectControlStubVWG.cs" />
+    <Compile Include="HabaneroControls\BusinessObjectControlStubVWG.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="HabaneroControls\FilterControl\TestEnumComboBoxFilterVWG.cs" />
     <Compile Include="HabaneroControls\FilterControl\TestFilterControlBuilderVWG.cs" />
     <Compile Include="HabaneroControls\FilterControl\TestFilterControlDateVWG.cs" />
